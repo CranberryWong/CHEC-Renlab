@@ -1,0 +1,106 @@
+/**
+ * Settings
+ * Colors & Fontsize
+ */
+/**
+ * Colors
+ */
+/**
+ * Fontsize
+ */
+/**
+ * Images
+ */
+/**
+ * Font-Family
+ */
+/**
+ * Body Global Sass
+ */
+/* line 10, ../sass/component/_body.scss */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  /* line 14, ../sass/component/_body.scss */
+  html {
+    font-size: 16px;
+  }
+}
+/* line 19, ../sass/component/_body.scss */
+.container {
+  max-width: 960px;
+}
+
+/* line 23, ../sass/component/_body.scss */
+.pricing-header {
+  max-width: 700px;
+}
+
+/* line 27, ../sass/component/_body.scss */
+.card-deck .card {
+  min-width: 220px;
+}
+
+/* line 31, ../sass/component/_body.scss */
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+
+/* line 32, ../sass/component/_body.scss */
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* line 34, ../sass/component/_body.scss */
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+/* line 36, ../sass/component/_body.scss */
+body {
+  font-family: "Open Sans", "Helvetica Neue";
+  height: 100%;
+}
+
+/**
+ * Experiment Sass
+ */
+/* line 5, ../sass/component/_experiment.scss */
+.card-img-top {
+  max-width: 353px;
+}
+
+/* line 9, ../sass/component/_experiment.scss */
+.webpage-fix {
+  width: 100%;
+}
+
+/**
+ * Header Sass
+ */
+/**
+ * Header Sass
+ */
+/* line 5, ../sass/component/_main.scss */
+main {
+  min-height: 700px;
+}
+/* line 9, ../sass/component/_main.scss */
+main .main-margin {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+/* line 15, ../sass/component/_main.scss */
+main .card .card-bulletin-add {
+  color: #bdbdbd;
+}
+
+/**
+ * Footer Sass
+ */
+/* line 9, ../sass/component/_footer.scss */
+footer {
+  background-color: none;
+}

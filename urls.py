@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+from handlers import main
+
+handlers = [
+            (r"/", main.MainHandler),
+            (r"/aesthetic/statement", main.StatementHandler),
+            (r"/aesthetic/form", main.FormHandler),
+            (r"/aesthetic/note", main.NoteHandler),
+            (r"/aesthetic/start/([0-9]+)", main.WebpageHandler),
+            (r"/edit", main.EditPost),
+    ]

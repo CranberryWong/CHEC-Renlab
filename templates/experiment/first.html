@@ -1,0 +1,50 @@
+{% extends "experiment_page.html" %} {% block content %}
+
+<div class="card box-shadow" style="width: 100%;">
+    <div class="card-body">
+        <h1 class="card-title">Visual Appeal Test</h5>
+
+            <h6 class="card-subtitle mb-2 text-muted">Compare your visual preferences to people around the world.</h6>
+            <hr>
+            <p class="card-text">You're about to take a test on Lab in the Wild. Your contribution to our research allows us to learn more about
+                cultural preferences around the world. The results from your test will also tell you something about yourself!
+                Please read the following information carefully before proceeding.</p>
+
+            <p class="card-text"> Why we are doing this research: We are trying to understand what makes a website look visually appealing. More
+                specifically, the goal of this study is to find out what role our cultural background plays in shaping our
+                visual preferences. What you will have to do: You will be shown screenshots of websites. You will then be
+                asked to rate each one on a scale from 1 to 9 based on visual appeal. Your participation in this study is
+                completely voluntary, and you may refuse to participate or withdraw from the study without penalty or loss
+                of benefits to which you may otherwise be entitled. What you will get out of it: We will give you feedback
+                on how your results compare to those of other participants. The final results from this experiment will be
+                posted on our blog page. The experiment is not designed to benefit you, but you may enjoy it and enjoy comparing
+                your results with those of other participants. Privacy and Data Collection: We will not ask you for your
+                name. Any data that we collect will be securely stored on our servers. Duration: Approximately 10 minutes.</p>
+
+            <p class="card-text"> Contact information: If you have questions about this research, you may contact Professor Katharina Reinecke,
+                Paul G. Allen Center for Computer Science & Engineering, Box 352350, Seattle, WA 98195, reinecke@cs.washington.edu.
+                If you have questions about your rights as a research participant, or wish to obtain information, ask questions
+                or discuss any concerns about this study with someone other than the researcher(s), please contact the University
+                of Washington Human Subjects Division at 206-543-0098 (for international calls include the US Calling Code:
+                +1-206-543-0098).
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="iveread" onclick="iveRead();">
+                    <label class="form-check-label" for="iveread"> I have read :) </label>
+                </div>
+                <a href="/aesthetic/form" id="first-next" class="mt-4 btn btn-lg btn-block btn-primary disabled">{{ _('Next') }}</a>
+
+    </div>
+</div>
+{% end %}
+{% block customJS %}
+<script>
+    function iveRead () {
+        if ($("#iveread").is(':checked')) {
+        $("#first-next").removeClass("disabled");
+        };
+        if (! $("#iveread").is(':checked')) {
+        $("#first-next").addClass("disabled");
+        };
+    }
+</script>
+{% end %}

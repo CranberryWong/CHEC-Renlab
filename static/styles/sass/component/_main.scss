@@ -1,0 +1,23 @@
+/**
+ * Header Sass
+ */
+
+main {
+    
+    min-height: 700px;
+    
+    .main-margin {
+        margin-top: 2rem;   
+        margin-bottom: 2rem;
+    }   
+
+    .card {
+        .card-bulletin-add {
+            color: $grey-subtitle;
+        }
+
+    }
+
+}
+
+
