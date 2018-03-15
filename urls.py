@@ -9,5 +9,6 @@ handlers = [
             (r"/aesthetic/form", main.FormHandler),
             (r"/aesthetic/note", main.NoteHandler),
             (r"/aesthetic/start/([0-9]+)", main.WebpageHandler),
-            (r"/edit", main.EditPost),
+            (r"/aesthetic/ratings", main.RatingHandler),
+            (r"/finish", main.FinishHandler),
     ]

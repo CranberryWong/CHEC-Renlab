@@ -2,6 +2,7 @@
 
 from datetime import datetime
 
+import pandas as pd
 import csv
 import uuid
 import os
@@ -21,6 +22,8 @@ class Webpage(object):
         return '<webpage: %s>' % (self.id)
 
     def write2CSV(self):
+        webpageCSV = pd.read_csv(Webpage.csvName)
+
         with open(Webpage.csvName, "a+", newline='') as f:
             writer = csv.writer(f)
             self.data = [self.id, self.title, self.appeal, self.complexity, self.entropy]

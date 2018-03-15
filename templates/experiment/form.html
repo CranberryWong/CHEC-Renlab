@@ -21,11 +21,14 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputCountry">Country</label>
-                        <input type="email" class="form-control" id="inputCountry" placeholder="Country" name="country">
+                        <input type="text" class="form-control" id="inputCountry" placeholder="Country" name="country">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="inputCountry">Country</label>
-                        <input type="email" class="form-control" id="inputCountry" placeholder="Country" name="country">
+                        <label for="inputEdu">Gender</label>
+                        <select id="inputEdu" class="form-control" name="gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputEdu">Education</label>
@@ -56,4 +59,13 @@
             </form>
             </div>
     </div>
-    {% end %}
+{% end %}
+{% block customJS %}
+<script>
+    $('input:text').each(function() { 
+    if ($(this).attr('checked') ==true) { 
+        alert($(this).val()); 
+    } 
+}); 
+</script>
+{% end %}

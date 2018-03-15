@@ -18,7 +18,7 @@ class MainHandler(BaseHandler):
         user = 'Wang Chen'
         self.render("main/main.html", user = user)
 
-class FormHandler(tornado.web.RequestHandler):
+class FormHandler(BaseHandler):
     def get(self):
         self.title = "Questionaire"
         self.render("experiment/form.html")
@@ -26,7 +26,8 @@ class FormHandler(tornado.web.RequestHandler):
     def post(self):
         self.title = "Questionaire"
     
-        ever = self.get_argument('ever', default='')   
+        ever = self.get_argument('ever', default='')  
+        email = self.get_argument('email', default='') 
         name = self.get_argument('name', default='')
         gender = self.get_argument('gender', default='')
         age = self.get_argument('age', default='')
@@ -34,42 +35,53 @@ class FormHandler(tornado.web.RequestHandler):
         edu = self.get_argument('edu', default='')
         design = self.get_argument('design', default='')
         
-        newUser = User(ever, name, gender, age, country, edu, design)
+        newUser = User(ever, email, name, gender, age, country, edu, design)
         newUser.write2CSV()
-        self.set_secure_cookie('name', name)
+        self.set_secure_cookie('username', name)
         self.redirect('/aesthetic/note')
   
-class StatementHandler(tornado.web.RequestHandler):
+class StatementHandler(BaseHandler):
     def get(self):
         self.title = "Statement"
         self.render("experiment/first.html")
         
-class NoteHandler(tornado.web.RequestHandler):
+class NoteHandler(BaseHandler):
     def get(self):
         self.title = "Note"
         self.render("experiment/second.html")    
         
-class WebpageHandler(tornado.web.RequestHandler):
+class WebpageHandler(BaseHandler):
     def get(self, wid):
         self.title = "Start"
         fixation_path = "images/fixation.png"
         noise_path = "images/noise.png"
         self.render("experiment/webpage.html", path = fixation_path, webpage_path = "images/webpages/_apple.com.png", anotherpath = noise_path)
 
-class RatingHandler(tornado.web.RequestHandler):  
+class RatingHandler(BaseHandler):  
     def post(self):
         self.title = "Rating"
-        n = 1
+        n = 0
         appealRating = self.get_argument('appeal', default=4)
         complexityRating = self.get_argument('complexity', default=4)
         wid, title = WebpageList[n].split('-')
         newWebpage = Webpage(title)
-        newWebpage.appeal.append(appealRating)
-        newWebpage.complexity.append(complexityRating)
+        newWebpage.appeal.append(int(appealRating))
+        newWebpage.complexity.append(int(complexityRating))
+        newWebpage.write2CSV()
         n += 1
-        self.redirect("/aesthetic/start/"+ wid)
-                
-class EditPost(tornado.web.RequestHandler):
+        wid = 1
+        self.redirect("/aesthetic/start/"+ str(wid))
+
+class FinishHandler(BaseHandler):
+    def get(self):
+        self.title = "Thank you so much ~"
+        print(self.get_secure_cookie('name'))
+        slogan = self.get_secure_cookie(self)
+        self.clear_cookie('username')  
+        self.render("main/finish.html", slogan = slogan)
+
+'''                
+class EditPost(BaseHandler):
     def get(self):
         users = self.application.db['user']
         user = users.find_one()
@@ -81,3 +93,4 @@ class EditPost(tornado.web.RequestHandler):
             self.set_status(404)
             self.write({"error": "word not found"})            
 
+'''

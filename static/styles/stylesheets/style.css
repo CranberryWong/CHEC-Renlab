@@ -83,16 +83,12 @@ body {
 /**
  * Header Sass
  */
-/* line 5, ../sass/component/_main.scss */
-main {
-  min-height: 700px;
-}
-/* line 9, ../sass/component/_main.scss */
+/* line 7, ../sass/component/_main.scss */
 main .main-margin {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
-/* line 15, ../sass/component/_main.scss */
+/* line 13, ../sass/component/_main.scss */
 main .card .card-bulletin-add {
   color: #bdbdbd;
 }
