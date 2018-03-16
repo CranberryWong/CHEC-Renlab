@@ -5,7 +5,7 @@
 
             <h6 class="card-subtitle mb-2 text-muted">Before the experiment.</h6>
             <hr>
-            <form action="/aesthetic/form" method="POST">
+            <form action="/aesthetic/form" method="POST" id="questionaire">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputName">Name</label>
@@ -55,17 +55,20 @@
                             <option>Pro</option>
                         </select>
                     </div>
-                    <button type="submit" class="mt-4 btn btn-lg btn-block btn-primary">{{ _('Next') }}</a>
+                    <button type="button" class="mt-4 btn btn-lg btn-block btn-primary" onclick="checkForm()">{{ _('Next') }}</a>
             </form>
             </div>
     </div>
 {% end %}
 {% block customJS %}
 <script>
-    $('input:text').each(function() { 
-    if ($(this).attr('checked') ==true) { 
-        alert($(this).val()); 
-    } 
-}); 
+    function checkForm (){
+        console.log("what");
+        if ($("#inputName").val() == "" || $("#inputAge").val() == "" || $("#inputEmail").val() == "" || $("#inputCountry").val() == "") {
+            alert("Please complete the form !");
+        } else {
+            $("#questionaire").submit();
+        }
+    }; 
 </script>
 {% end %}

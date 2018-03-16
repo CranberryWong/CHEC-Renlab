@@ -63,7 +63,7 @@ class RatingHandler(BaseHandler):
         n = 0
         appealRating = self.get_argument('appeal', default=4)
         complexityRating = self.get_argument('complexity', default=4)
-        wid, title = WebpageList[n].split('-')
+        wid, title = WebpageList[n].split('_')
         newWebpage = Webpage(title)
         newWebpage.appeal.append(int(appealRating))
         newWebpage.complexity.append(int(complexityRating))
