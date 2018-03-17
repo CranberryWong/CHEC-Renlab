@@ -54,7 +54,7 @@
 </style>
 {% end %} {% block webpageMain %}
 <div class="webpage-main">
-    <img src="{{ static_url(path) }}" class="webpage-fix">
+    <img src="{{ static_url(fixation_path) }}" class="webpage-fix">
     <button type="button" id="evaluationModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" data-backdrop="static" data-keyboard="false" hidden>
         Launch evaluation modal
     </button>
@@ -87,7 +87,7 @@
                             <label for="a4"></label>
                             <input type="checkbox" id="a3" value="3" name="appeal" />
                             <label for="a3"></label>
-                            <input type="checkbox" id="a42" value="2" name="appeal" />
+                            <input type="checkbox" id="a2" value="2" name="appeal" />
                             <label for="a2"></label>
                             <input type="checkbox" id="a1" value="1" name="appeal" />
                             <label for="a1"></label>
@@ -114,7 +114,7 @@
                             
                         </div>
                     </div>
-
+                    <input type="hidden" value="{{ title }}" name="title">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-lg btn-block btn-primary" onclick="ratingHide();">Next</a>
                     </div>
@@ -144,7 +144,7 @@
             return delay(500);
         }).then(function () {
             console.log("End webpage");
-            $(".webpage-fix").attr("src", "{{ static_url(anotherpath) }}");
+            $(".webpage-fix").attr("src", "{{ static_url(noise_path) }}");
             console.log("This is noise");
             return delay(1000);
         }).then(function () {
@@ -153,6 +153,10 @@
         });
         
         function ratingHide() {
-            $('#ratingDialog').submit();
+            if ((! $("input[name='appeal']").is(':checked')) || (! $("input[name='complexity']").is(':checked'))) {
+                alert("Please Rating !");
+            } else {
+                $('#ratingDialog').submit();
+            }
         }
     </script> {% end %}

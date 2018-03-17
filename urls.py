@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from handlers import main
+from handlers import main, exception
 
 handlers = [
             (r"/", main.MainHandler),
@@ -11,4 +11,6 @@ handlers = [
             (r"/aesthetic/start/([0-9]+)", main.WebpageHandler),
             (r"/aesthetic/ratings", main.RatingHandler),
             (r"/finish", main.FinishHandler),
+
+            (r".*", exception.ErrorHandler)
     ]

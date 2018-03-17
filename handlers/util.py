@@ -13,24 +13,28 @@ class I18nHandler(BaseHandler):
             self.lang_encode = 'en_US'
         self.redirect('/')
 
-WebpageList = [
+WebpageLists = [
     # More and more use interactive webpage
 
     # Trial
-    '1_http://apple.com',
+    #'1_http://apple.com',
 
     # Webby
-    '3_http://projects.two-n.com/world-gender/',
-    '4_https://makeitok.org/',
+    #'1*http://projects.two-n.com/world-gender/',
+    '1*two-n.com',
+    '2*makeitok.org',
 
     #Brand
-    'https://www.pantone.com/',
-    '2_http://mozilla.org',
-    'https://segmentfault.com/',
-    'http://kameisyouten.ocnk.net',
-    'https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_setup/py_intro/py_intro.html#intro',
-    'http://blog.sciencenet.cn/blog.php',
-    'http://www.yinwang.org'
-    'http://www.richyli.com/tool/loremipsum/'
+    '3*mozilla.org',
+    '4*segmentfault.com',
+    '5*kameisyouten.ocnk.net',
+    #'6*https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_setup/py_intro/py_intro.html#intro',
+    '6*docs.opencv.org',
+    #'7*http://blog.sciencenet.cn/blog.php',
+    '7*blog.sciencenet.cn',
+    '8*yinwang.org',
+    #'9*http://www.richyli.com/tool/loremipsum/',
+    '9*richyli.com',
+    '10*pxtoem.com',
 
 ]

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ _(handler.title) }}</title>
-    <link rel="stylesheet" href="{{ static_url('libs/bootstrap/dist/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ static_url('libs/bootstrap/dist/css/bootstrap.min.css') }}">
     <!--<link rel="stylesheet" href="../../static/libs/bootstrap/dist/css/bootstrap.css">-->
     <link rel="stylesheet" href="{{ static_url('styles/stylesheets/style.css') }}">
     <!--<link rel="stylesheet" href="../../static/styles/style.css">-->
@@ -16,7 +16,7 @@
 <body style="padding:0;">
     {% block webpageMain %}{% end %}
     <script src="{{ static_url('libs/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ static_url('libs/bootstrap/dist/js/bootstrap.js') }}"></script> 
+    <script src="{{ static_url('libs/bootstrap/dist/js/bootstrap.min.js') }}"></script> 
     {% block customJS %}{% end %}
 </body>
 </html>

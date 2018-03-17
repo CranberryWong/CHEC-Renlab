@@ -6,10 +6,14 @@ import random
 import time
 import os
 from handlers.base import BaseHandler
-from handlers.util import WebpageList
+from handlers.util import WebpageLists
 from models.user import User
 from models.webpage import Webpage
 
+WebpageList = WebpageLists
+random.shuffle(WebpageList)
+
+Name = ''
 
 class MainHandler(BaseHandler):
     def get(self):
@@ -20,12 +24,13 @@ class MainHandler(BaseHandler):
 
 class FormHandler(BaseHandler):
     def get(self):
+        BaseHandler.initialize(self)
         self.title = "Questionaire"
         self.render("experiment/form.html")
         
     def post(self):
+        BaseHandler.initialize(self)
         self.title = "Questionaire"
-    
         ever = self.get_argument('ever', default='')  
         email = self.get_argument('email', default='') 
         name = self.get_argument('name', default='')
@@ -37,60 +42,68 @@ class FormHandler(BaseHandler):
         
         newUser = User(ever, email, name, gender, age, country, edu, design)
         newUser.write2CSV()
+        global Name
+        self.login_user = name
+        Name = name
+        print(self.login_user)
         self.set_secure_cookie('username', name)
         self.redirect('/aesthetic/note')
   
 class StatementHandler(BaseHandler):
     def get(self):
+        BaseHandler.initialize(self)
         self.title = "Statement"
         self.render("experiment/first.html")
         
 class NoteHandler(BaseHandler):
     def get(self):
+        BaseHandler.initialize(self)
         self.title = "Note"
-        self.render("experiment/second.html")    
+        global WebpageList
+        wid, title = WebpageList[0].split('*')
+        self.render("experiment/second.html", wid=int(wid))    
         
 class WebpageHandler(BaseHandler):
     def get(self, wid):
+        BaseHandler.initialize(self)
         self.title = "Start"
+        global WebpageList
         fixation_path = "images/fixation.png"
         noise_path = "images/noise.png"
-        self.render("experiment/webpage.html", path = fixation_path, webpage_path = "images/webpages/_apple.com.png", anotherpath = noise_path)
+        print(type(wid))
+        for i in WebpageList:
+            wid2, title = WebpageList[0].split('*')
+            if wid == wid2:
+                webpage_path = "images/webpages/" + title + ".png"
+                WebpageList.remove(i)
+        self.render("experiment/webpage.html", fixation_path = fixation_path, webpage_path = webpage_path, noise_path = noise_path, title = title)
 
 class RatingHandler(BaseHandler):  
     def post(self):
+        BaseHandler.initialize(self)
         self.title = "Rating"
-        n = 0
+        global WebpageList
         appealRating = self.get_argument('appeal', default=4)
         complexityRating = self.get_argument('complexity', default=4)
-        wid, title = WebpageList[n].split('_')
+        title = self.get_argument('title', default='')
         newWebpage = Webpage(title)
         newWebpage.appeal.append(int(appealRating))
         newWebpage.complexity.append(int(complexityRating))
         newWebpage.write2CSV()
-        n += 1
-        wid = 1
+        if WebpageList == []:
+            self.redirect("/finish")
+        else:
+            wid, title = WebpageList[0].split('*')
         self.redirect("/aesthetic/start/"+ str(wid))
 
 class FinishHandler(BaseHandler):
     def get(self):
+        BaseHandler.initialize(self)
         self.title = "Thank you so much ~"
-        print(self.get_secure_cookie('name'))
-        slogan = self.get_secure_cookie(self)
-        self.clear_cookie('username')  
-        self.render("main/finish.html", slogan = slogan)
-
-'''                
-class EditPost(BaseHandler):
-    def get(self):
-        users = self.application.db['user']
-        user = users.find_one()
-        if user:
-            del user["_id"]
-            self.set_status(200)
-            self.write(user)            
-        else:
-            self.set_status(404)
-            self.write({"error": "word not found"})            
-
-'''
+        global Name
+        slogan = self.login_user
+        print(self.login_user)        
+        self.clear_cookie('username')
+        global WebpageList
+        WebpageList = WebpageLists 
+        self.render("main/finish.html", slogan = Name)

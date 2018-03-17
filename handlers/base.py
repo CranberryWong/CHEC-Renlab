@@ -9,6 +9,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.title = title
         self.lang_encode = lang_encode
         self.message = None
+        self.login_user = ''
 
     def get_user_locale(self):
         return tornado.locale.get("en_US")
