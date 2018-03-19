@@ -1,6 +1,7 @@
 import tornado.web
 import tornado.locale
 from models.user import User
+# from mongoengine import *
 
 class BaseHandler(tornado.web.RequestHandler):
     
@@ -9,6 +10,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.title = title
         self.lang_encode = lang_encode
         self.message = None
+        self.uid = ''
         self.login_user = ''
 
     def get_user_locale(self):

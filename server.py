@@ -7,12 +7,14 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.locale
+# from mongoengine import connect
 
 from tornado.options import define, options
 
 from urls import handlers
 
 define('port', default=8000, help='run on the given port', type=int)
+# define('db', default='zeus', help='Database Name')
 
 class Application(tornado.web.Application):
     def __init__(self, handlers):    
@@ -23,6 +25,7 @@ class Application(tornado.web.Application):
             debug = False,            
         )
         tornado.web.Application.__init__(self, handlers, **settings)
+        # connect(options.db)
         
 def main():
     tornado.locale.load_translations(os.path.join(os.path.dirname(__file__), "csv_translations"))

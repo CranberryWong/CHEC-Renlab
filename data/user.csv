@@ -1,15 +1,1 @@
-id, ever,email,name,gender,age,country,edu,design, time,rating
-99b4d3b0-29b0-11e8-b1e5-784f4355e448,No,i@wangchen0413.cn,WANG Chen,Male,26,China,Others,Little,2018-03-17 15:58:30.463346,{}
-24e2bb9e-29e5-11e8-8405-784f4355e448,No,w,w,Male,w,w,Others,Little,2018-03-17 22:14:37.798538,{}
-7d28a12e-29e5-11e8-82a2-784f4355e448,No,w,w,Male,w,w,Others,Little,2018-03-17 22:17:05.886467,{}
-c3c77078-29e6-11e8-822f-784f4355e448,No,w,w,Male,w,w,Others,Little,2018-03-17 22:26:13.874269,{}
-1c3d7d38-29e7-11e8-9477-784f4355e448,No,w,w,Male,w,w,Others,Little,2018-03-17 22:28:42.287593,{}
-5e0c953a-29e7-11e8-9b06-784f4355e448,No,w,w,Male,w,w,Others,Little,2018-03-17 22:30:32.696939,{}
-7e2b67da-29e7-11e8-b4ac-784f4355e448,No,w,w,Male,w,w,Others,Little,2018-03-17 22:31:26.585878,{}
-7dde64b6-29e8-11e8-9179-784f4355e448,No,i@wangchen0413.cn,wang,Male,12,china,Others,Little,2018-03-17 22:38:35.576171,{}
-47fd14e8-29e9-11e8-b6d2-784f4355e448,No,i@wangchen0413.cn,wang,Male,12,China,Others,Little,2018-03-17 22:44:14.678578,{}
-a319983a-29e9-11e8-8d17-784f4355e448,No,i@wangchen0413.cn,wang,Male,26,China,Others,Little,2018-03-17 22:46:47.537667,{}
-4c8a6610-29ea-11e8-905d-784f4355e448,No,i@wangchen0413.cn,Wang Chen,Male,26,China,Others,Little,2018-03-17 22:51:31.812065,{}
-9009b8f0-29ea-11e8-9b87-784f4355e448,No,dsa,das,Female,das,dsa,Others,Little,2018-03-17 22:53:25.044269,{}
-94db9918-29ea-11e8-9bb2-784f4355e448,No,dsa,das,Female,das,dsa,Others,Little,2018-03-17 22:53:33.130596,{}
-984108f4-29ed-11e8-8b6c-784f4355e448,No,i@wangchen0413.cn,WANG Chen,Male,26,China,Others,Little,2018-03-17 23:15:07.328351,{}
+id,ever,email,name,gender,age,country,edu,design,time,rating
