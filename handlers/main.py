@@ -5,7 +5,7 @@ import tornado.locale
 import random
 import time
 import os
-import pandas as pd
+# import pandas as pd
 import csv
 from handlers.base import BaseHandler
 from handlers.util import WebpageLists

@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-import pandas as pd
+# import pandas as pd
 import csv
 import uuid
 import os
