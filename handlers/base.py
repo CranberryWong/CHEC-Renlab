@@ -1,6 +1,8 @@
 import tornado.web
 import tornado.locale
+import random
 from models.user import User
+from handlers.settings import WebpageList
 # from mongoengine import *
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -10,14 +12,15 @@ class BaseHandler(tornado.web.RequestHandler):
         self.title = title
         self.lang_encode = lang_encode
         self.message = None
-        self.uid = ''
-        self.login_user = ''
 
     def get_user_locale(self):
         return tornado.locale.get("en_US")
 
     def get_current_user(self):
-        return self.get_secure_cookie('username')    
+        return self.get_cookie('username')  
+
+    def get_current_id(self):
+        return self.get_cookie('uid')  
         
 
 

@@ -5,22 +5,26 @@ import tornado.locale
 import random
 import time
 import os
-# import pandas as pd
+import re
 import csv
 from handlers.base import BaseHandler
-from handlers.util import WebpageLists
+from handlers.settings import WebpageList
 from models.user import User
 from models.webpage import Webpage
+from functools import reduce
 
-WebpageList = WebpageLists
-random.shuffle(WebpageList)
+n_cookie = re.compile(r'(\d{1,2})-(.*)')
 
 class MainHandler(BaseHandler):
     def get(self):
         BaseHandler.initialize(self)
+        n = list(range(len(WebpageList)))
+        random.shuffle(n)
+        n = str(reduce(lambda x, y: x+y, list(map(lambda x: str(x) + "-", n))))
+        print(n)
+        self.set_cookie('n', n)
         self.title = 'Home'
-        user = 'Wang Chen'
-        self.render("main/main.html", user = user)
+        self.render("main/main.html")
 
 class FormHandler(BaseHandler):
     def get(self):
@@ -42,14 +46,9 @@ class FormHandler(BaseHandler):
         
         newUser = User(ever, email, name, gender, age, country, edu, design)
         newUser.write2CSV()
-        BaseHandler.uid = newUser.id
-        BaseHandler.login_user = name
-        global Name
-        self.login_user = name
-        Name = name
-        print(self.login_user)
-        print("/")
-        self.set_secure_cookie('username', name)
+        uid = newUser.id
+        self.set_cookie('uid', uid)
+        self.set_cookie('username', name)
         self.redirect('/aesthetic/note')
   
 class StatementHandler(BaseHandler):
@@ -62,46 +61,48 @@ class NoteHandler(BaseHandler):
     def get(self):
         BaseHandler.initialize(self)
         self.title = "Note"
-        global WebpageList
-        wid, title = WebpageList[0].split('*')
-        self.render("experiment/second.html", wid=int(wid))    
+        n = self.get_cookie('n')
+        g = n_cookie.match(n)
+        wid, title = WebpageList[int(g.group(1))].split('*')
+        self.render("experiment/second.html", wid=wid)    
         
 class WebpageHandler(BaseHandler):
     def get(self, wid):
         BaseHandler.initialize(self)
         self.title = "Start"
-        global WebpageList
         fixation_path = "images/fixation.png"
         noise_path = "images/noise.png"
-        for i in WebpageList:
-            wid2, title = WebpageList[0].split('*')
-            if wid == wid2:
-                webpage_path = "images/webpages/" + title + ".png"
-                WebpageList.remove(i)
-        self.render("experiment/webpage.html", fixation_path = fixation_path, webpage_path = webpage_path, noise_path = noise_path, title = title, wid = wid)
+        wid2, title = WebpageList[int(wid)].split('*')
+        webpage_path = "images/webpages/" + title + ".png"
+        n = self.get_cookie('n')
+        print(n)
+        g = n_cookie.match(n)
+        print(g.group(2))        
+        self.set_cookie('n', g.group(2))
+        self.render("experiment/webpage.html", fixation_path = fixation_path, webpage_path = webpage_path, noise_path = noise_path, title = title, wid = wid2)
 
 class RatingHandler(BaseHandler):  
     def post(self):
         BaseHandler.initialize(self)
         self.title = "Rating"
-        global WebpageList
         appealRating = self.get_argument('appeal', default=4)
         complexityRating = self.get_argument('complexity', default=4)
         wid = self.get_argument('wid', default='')
         print(wid)
         title = self.get_argument('title', default='anonymous')
-        
-        uid = BaseHandler.uid
+        uid = self.get_cookie('uid')
         print(uid)    
         newWebpage = Webpage(wid, title, uid)
         newWebpage.appeal = int(appealRating)
         newWebpage.complexity = int(complexityRating)
         newWebpage.write2CSV()
-        if WebpageList == []:
+        n = self.get_cookie('n')
+        if n == '':
             self.redirect("/finish")
         else:
             try: 
-                wid, title = WebpageList[0].split('*')
+                g = n_cookie.match(n)
+                wid, title = WebpageList[int(g.group(1))].split('*')
             except Exception as e:
                 print(e)
         self.redirect("/aesthetic/start/"+ str(wid))
@@ -110,12 +111,8 @@ class FinishHandler(BaseHandler):
     def get(self):
         BaseHandler.initialize(self)
         self.title = "Thank you so much ~"
-        global Name
-        global csvName
-        # slogan = self.login_user
-        print(self.login_user)    
-        print("/")
+        Name = self.get_cookie('username')
         self.clear_cookie('username')
-        global WebpageList
-        WebpageList = WebpageLists 
+        self.clear_cookie('uid')
+        self.clear_cookie('n')
         self.render("main/finish.html", slogan = Name)
