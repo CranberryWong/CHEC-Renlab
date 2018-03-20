@@ -17,7 +17,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return tornado.locale.get("en_US")
 
     def get_current_user(self):
-        return self.get_cookie('username')  
+        return self.get_secure_cookie('username')  
 
     def get_current_id(self):
         return self.get_cookie('uid')  

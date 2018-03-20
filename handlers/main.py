@@ -12,6 +12,7 @@ from handlers.settings import WebpageList
 from models.user import User
 from models.webpage import Webpage
 from functools import reduce
+from handlers.exception import ErrorHandler
 
 n_cookie = re.compile(r'(\d{1,2})-(.*)')
 
@@ -48,7 +49,7 @@ class FormHandler(BaseHandler):
         newUser.write2CSV()
         uid = newUser.id
         self.set_cookie('uid', uid)
-        self.set_cookie('username', name)
+        self.set_secure_cookie('username', name)
         self.redirect('/aesthetic/note')
   
 class StatementHandler(BaseHandler):
@@ -105,13 +106,14 @@ class RatingHandler(BaseHandler):
                 wid, title = WebpageList[int(g.group(1))].split('*')
             except Exception as e:
                 print(e)
+                ErrorHandler.write_error(500)
         self.redirect("/aesthetic/start/"+ str(wid))
 
 class FinishHandler(BaseHandler):
     def get(self):
         BaseHandler.initialize(self)
         self.title = "Thank you so much ~"
-        Name = self.get_cookie('username')
+        Name = self.get_secure_cookie('username')
         self.clear_cookie('username')
         self.clear_cookie('uid')
         self.clear_cookie('n')
