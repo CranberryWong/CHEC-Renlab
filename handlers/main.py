@@ -50,7 +50,7 @@ class FormHandler(BaseHandler):
         uid = newUser.id
         self.set_cookie('uid', uid)
         self.set_secure_cookie('username', name)
-        self.redirect('/aesthetic/note')
+        self.redirect('/aesthetic/note?trial=1')
   
 class StatementHandler(BaseHandler):
     def get(self):
@@ -61,11 +61,15 @@ class StatementHandler(BaseHandler):
 class NoteHandler(BaseHandler):
     def get(self):
         BaseHandler.initialize(self)
+        trial = self.get_argument("trial", default=0)
         self.title = "Note"
         n = self.get_cookie('n')
         g = n_cookie.match(n)
-        wid, title = WebpageList[int(g.group(1))].split('*')
-        self.render("experiment/second.html", wid=wid)    
+        if trial == '1':
+            self.render("experiment/second.html", wid=999)   
+        if trial == '0': 
+            wid, title = WebpageList[int(g.group(1))].split('*')
+            self.render("experiment/second.html", wid=wid)    
         
 class WebpageHandler(BaseHandler):
     def get(self, wid):
@@ -73,6 +77,9 @@ class WebpageHandler(BaseHandler):
         self.title = "Start"
         fixation_path = "images/fixation.png"
         noise_path = "images/noise.png"
+        if wid == '999':
+            webpage_path = "images/webpages/ted.com.png"
+            self.render("experiment/webpage.html", fixation_path = fixation_path, webpage_path = webpage_path, noise_path = noise_path, title = 'ted.com', wid = wid)
         wid2, title = WebpageList[int(wid)].split('*')
         webpage_path = "images/webpages/" + title + ".png"
         n = self.get_cookie('n')
@@ -90,24 +97,27 @@ class RatingHandler(BaseHandler):
         complexityRating = self.get_argument('complexity', default=4)
         wid = self.get_argument('wid', default='')
         print(wid)
-        title = self.get_argument('title', default='anonymous')
-        uid = self.get_cookie('uid')
-        print(uid)    
-        newWebpage = Webpage(wid, title, uid)
-        newWebpage.appeal = int(appealRating)
-        newWebpage.complexity = int(complexityRating)
-        newWebpage.write2CSV()
-        n = self.get_cookie('n')
-        if n == '':
-            self.redirect("/finish")
+        if wid == '999':
+            self.redirect('/aesthetic/note?trial=0')
         else:
-            try: 
-                g = n_cookie.match(n)
-                wid, title = WebpageList[int(g.group(1))].split('*')
-            except Exception as e:
-                print(e)
-                ErrorHandler.write_error(500)
-        self.redirect("/aesthetic/start/"+ str(wid))
+            title = self.get_argument('title', default='anonymous')
+            uid = self.get_cookie('uid')
+            print(uid)    
+            newWebpage = Webpage(wid, title, uid)
+            newWebpage.appeal = int(appealRating)
+            newWebpage.complexity = int(complexityRating)
+            newWebpage.write2CSV()
+            n = self.get_cookie('n')
+            if n == '':
+                self.redirect("/finish")
+            else:
+                try: 
+                    g = n_cookie.match(n)
+                    wid, title = WebpageList[int(g.group(1))].split('*')
+                except Exception as e:
+                    print(e)
+                    ErrorHandler.write_error(500)
+            self.redirect("/aesthetic/start/"+ str(wid))
 
 class FinishHandler(BaseHandler):
     def get(self):

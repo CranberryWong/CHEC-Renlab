@@ -3,6 +3,7 @@ WebpageList = [
 
     # Trial
     #'1_http://apple.com',
+    #'999*ted.com',
 
 
     '0*nounplus.net',
@@ -25,7 +26,15 @@ WebpageList = [
 
     #'9*http://www.richyli.com/tool/loremipsum/',
     '9*richyli.com',
-    '10*pxtoem.com'
-    
+    '10*pxtoem.com',
 
+    '11*labinthewild.org',
+    '12*yatani.jp',
+    '13*interaction-design.org',
+    '14*jlpt.jp',
+    '15*pantone.coms',
+    '16*',
+    '17*',
+    '18*',
+    '19*'
 ]

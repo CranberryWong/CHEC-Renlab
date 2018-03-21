@@ -12,4 +12,3 @@ class I18nHandler(BaseHandler):
         else:
             self.lang_encode = 'en_US'
         self.redirect('/')
-
