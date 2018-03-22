@@ -1,0 +1,135 @@
+[I 180322 00:26:46 web:2106] 200 GET / (222.229.64.201) 18.47ms
+[I 180322 00:26:54 web:2106] 200 GET / (222.229.64.201) 2.43ms
+[I 180322 00:26:55 web:2106] 200 GET / (222.229.64.201) 2.20ms
+[I 180322 00:26:55 web:2106] 200 GET / (222.229.64.201) 2.12ms
+[I 180322 00:26:55 web:2106] 200 GET / (222.229.64.201) 2.08ms
+[I 180322 00:26:55 web:2106] 200 GET / (222.229.64.201) 4.02ms
+[I 180322 00:26:56 web:2106] 200 GET / (222.229.64.201) 2.15ms
+[I 180322 00:26:56 web:2106] 200 GET / (222.229.64.201) 2.50ms
+[I 180322 00:26:56 web:2106] 200 GET / (222.229.64.201) 2.47ms
+[I 180322 00:26:56 web:2106] 200 GET / (222.229.64.201) 2.45ms
+[I 180322 00:26:59 web:2106] 200 GET / (222.229.64.201) 0.97ms
+[W 180322 00:27:01 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.56ms
+[W 180322 00:27:01 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.46ms
+[I 180322 00:27:06 web:2106] 200 GET / (222.229.64.201) 2.18ms
+[W 180322 00:27:06 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.44ms
+[W 180322 00:27:06 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.17ms
+[I 180322 00:27:07 web:2106] 200 GET / (222.229.64.201) 2.58ms
+[W 180322 00:27:07 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.32ms
+[W 180322 00:27:07 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.31ms
+[I 180322 00:27:07 web:2106] 200 GET / (222.229.64.201) 2.42ms
+[W 180322 00:27:07 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.34ms
+[W 180322 00:27:07 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.26ms
+[I 180322 00:27:08 web:2106] 200 GET / (222.229.64.201) 2.48ms
+[W 180322 00:27:08 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.32ms
+[W 180322 00:27:08 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.76ms
+[W 180322 00:27:08 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.55ms
+[I 180322 00:27:08 web:2106] 200 GET / (222.229.64.201) 2.19ms
+[W 180322 00:27:08 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.28ms
+[W 180322 00:27:08 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.50ms
+[W 180322 00:27:08 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.27ms
+[I 180322 00:27:08 web:2106] 200 GET / (222.229.64.201) 2.20ms
+[I 180322 00:27:08 web:2106] 200 GET / (222.229.64.201) 2.38ms
+[W 180322 00:27:08 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.36ms
+[W 180322 00:27:08 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.28ms
+[W 180322 00:27:08 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.47ms
+[W 180322 00:27:08 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.29ms
+[I 180322 00:27:08 web:2106] 200 GET / (222.229.64.201) 2.24ms
+[I 180322 00:27:09 web:2106] 200 GET / (222.229.64.201) 2.44ms
+[W 180322 00:27:09 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.34ms
+[I 180322 00:27:09 web:2106] 200 GET / (222.229.64.201) 2.49ms
+[W 180322 00:27:09 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.33ms
+[W 180322 00:27:09 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.30ms
+[W 180322 00:27:09 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.49ms
+[W 180322 00:27:09 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.24ms
+[I 180322 00:27:09 web:2106] 200 GET / (222.229.64.201) 2.21ms
+[W 180322 00:27:10 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.50ms
+[W 180322 00:27:10 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.28ms
+[I 180322 00:27:10 web:2106] 200 GET / (222.229.64.201) 2.22ms
+[I 180322 00:27:10 web:2106] 200 GET / (222.229.64.201) 2.42ms
+[W 180322 00:27:10 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.29ms
+[W 180322 00:27:10 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.23ms
+[I 180322 00:27:10 web:2106] 200 GET / (222.229.64.201) 2.42ms
+[W 180322 00:27:10 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.32ms
+[W 180322 00:27:10 web:2106] 404 GET /static/scripts/bootstrap.min.js.map (222.229.64.201) 1.27ms
+[I 180322 00:27:10 web:2106] 200 GET / (222.229.64.201) 2.48ms
+[W 180322 00:27:10 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.34ms
+[I 180322 00:27:10 web:2106] 200 GET / (222.229.64.201) 2.46ms
+[W 180322 00:27:10 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 1.33ms
+[W 180322 00:27:15 web:2106] 404 GET /static/styles/stylesheets/bootstrap.min.css.map (222.229.64.201) 0.42ms
+[I 180322 00:27:15 web:2106] 304 GET / (222.229.64.201) 0.67ms
+[I 180322 00:27:48 web:2106] 200 GET / (222.229.64.201) 1.06ms
+[I 180322 12:29:05 web:2106] 200 GET / (222.229.64.201) 0.63ms
+[I 180322 12:29:05 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.64.201) 3.66ms
+[I 180322 12:29:05 web:2106] 200 GET /static/styles/stylesheets/style.css?v=1888ed1a0650989f02d8b1927389499a (222.229.64.201) 4.78ms
+[I 180322 12:29:05 web:2106] 200 GET /static/images/logo.png?v=aa9283dd98267f6b7c6517faad09a63c (222.229.64.201) 3.34ms
+[I 180322 12:29:05 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.64.201) 2.05ms
+[I 180322 12:29:05 web:2106] 200 GET /static/scripts/jquery.min.js?v=2f6b11a7e914718e0290410e85366fe9 (222.229.64.201) 3.37ms
+[I 180322 12:29:05 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.64.201) 1.29ms
+[I 180322 12:29:05 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.64.201) 44.42ms
+[I 180322 12:29:43 web:2106] 200 GET /aesthetic/statement (222.229.64.201) 13.26ms
+[I 180322 12:31:28 web:2106] 200 GET / (222.229.69.61) 2.04ms
+[I 180322 12:31:28 web:2106] 200 GET /static/styles/stylesheets/style.css?v=1888ed1a0650989f02d8b1927389499a (222.229.69.61) 6.29ms
+[I 180322 12:31:28 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.69.61) 22.67ms
+[I 180322 12:31:28 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.69.61) 19.76ms
+[I 180322 12:31:28 web:2106] 200 GET /static/scripts/jquery.min.js?v=2f6b11a7e914718e0290410e85366fe9 (222.229.69.61) 6.87ms
+[I 180322 12:31:28 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.69.61) 1.70ms
+[I 180322 12:31:28 web:2106] 200 GET /static/images/logo.png?v=aa9283dd98267f6b7c6517faad09a63c (222.229.69.61) 1.35ms
+[I 180322 12:31:28 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.69.61) 1.09ms
+[I 180322 12:31:29 web:2106] 200 GET /static/favicon.ico?v=b25e58c4b8459e3f1fb064c15093b08d (222.229.69.61) 1.06ms
+[I 180322 12:31:54 web:2106] 200 GET /aesthetic/statement (222.229.69.61) 2.07ms
+[I 180322 12:33:24 web:2106] 200 GET /aesthetic/form (222.229.69.61) 4.90ms
+[I 180322 12:34:00 web:2106] 302 POST /aesthetic/form (222.229.69.61) 9.39ms
+[I 180322 12:34:00 web:2106] 200 GET /aesthetic/note?trial=1 (222.229.69.61) 8.57ms
+[I 180322 12:34:34 web:2106] 200 GET /aesthetic/start/999 (222.229.69.61) 29.58ms
+[E 180322 12:34:34 web:1621] Uncaught exception GET /aesthetic/start/999 (222.229.69.61)
+    HTTPServerRequest(protocol='http', host='222.229.69.13:8000', method='GET', uri='/aesthetic/start/999', version='HTTP/1.1', remote_ip='222.229.69.61')
+    Traceback (most recent call last):
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 1541, in _execute
+        result = method(*self.path_args, **self.path_kwargs)
+      File "/var/www/wangchen/AestheticExperiment/handlers/main.py", line 83, in get
+        wid2, title = WebpageList[int(wid)].split('*')
+    IndexError: list index out of range
+[I 180322 12:34:34 web:2106] 200 GET /static/images/fixation.png?v=8e6c18839257413c392938ac6cf94273 (222.229.69.61) 68.64ms
+[I 180322 12:34:36 web:2106] 200 GET /static/images/webpages/ted.com.png?v=6b69d9586371c7833dcac2512f3ae359 (222.229.69.61) 69.60ms
+[I 180322 12:34:37 web:2106] 200 GET /static/images/noise.png?v=9111b49d127d0c84c7cd17d9ac2e08da (222.229.69.61) 55.55ms
+[I 180322 12:34:58 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.49ms
+[I 180322 12:34:58 web:2106] 200 GET /aesthetic/note?trial=0 (222.229.69.61) 2.65ms
+[E 180322 12:35:03 web:2798] Could not open static file '/var/www/wangchen/AestheticExperiment/static/images/webpages/.png'
+[I 180322 12:35:03 web:2106] 200 GET /aesthetic/start/18 (222.229.69.61) 2.51ms
+[W 180322 12:35:05 web:2106] 404 GET /static/images/webpages/.png (222.229.69.61) 1.32ms
+[I 180322 12:35:13 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.93ms
+[I 180322 12:35:13 web:2106] 200 GET /aesthetic/start/7 (222.229.69.61) 2.02ms
+[I 180322 12:35:15 web:2106] 200 GET /static/images/webpages/blog.sciencenet.cn.png?v=0e5554466ceec312d0926d3234de4fd4 (222.229.69.61) 17.08ms
+[I 180322 12:35:22 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 6.59ms
+[I 180322 12:35:22 web:2106] 200 GET /aesthetic/start/9 (222.229.69.61) 5.47ms
+[I 180322 12:35:24 web:2106] 200 GET /static/images/webpages/richyli.com.png?v=f68e3f0456c7c0670a0e5dc21d71c39f (222.229.69.61) 5.73ms
+[I 180322 12:35:29 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 5.51ms
+[I 180322 12:35:29 web:2106] 200 GET /aesthetic/start/0 (222.229.69.61) 6.72ms
+[I 180322 12:35:30 web:2106] 200 GET /static/images/webpages/nounplus.net.png?v=5ffaa5da413a78753f328bdff2b46e93 (222.229.69.61) 6.77ms
+[I 180322 12:35:35 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 5.89ms
+[E 180322 12:35:35 web:2798] Could not open static file '/var/www/wangchen/AestheticExperiment/static/images/webpages/pantone.coms.png'
+[I 180322 12:35:35 web:2106] 200 GET /aesthetic/start/15 (222.229.69.61) 3.25ms
+[W 180322 12:35:36 web:2106] 404 GET /static/images/webpages/pantone.coms.png (222.229.69.61) 1.02ms
+[I 180322 12:35:46 web:2106] 304 GET / (222.229.69.61) 2.38ms
+Traceback (most recent call last):
+  File "server.py", line 40, in <module>
+    main()
+  File "server.py", line 34, in main
+    http_server.listen(options.port)
+  File "/usr/local/lib/python3.6/site-packages/tornado/tcpserver.py", line 144, in listen
+    sockets = bind_sockets(port, address=address)
+  File "/usr/local/lib/python3.6/site-packages/tornado/netutil.py", line 163, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 40, in <module>
+    main()
+  File "server.py", line 34, in main
+    http_server.listen(options.port)
+  File "/usr/local/lib/python3.6/site-packages/tornado/tcpserver.py", line 144, in listen
+    sockets = bind_sockets(port, address=address)
+  File "/usr/local/lib/python3.6/site-packages/tornado/netutil.py", line 163, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+[I 180322 12:49:10 web:2106] 304 GET / (222.229.64.201) 2.11ms

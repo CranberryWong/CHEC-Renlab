@@ -32,7 +32,7 @@ WebpageList = [
     '12*yatani.jp',
     '13*interaction-design.org',
     '14*jlpt.jp',
-    '15*pantone.coms',
+    '15*pantone.com',
     '16*blog.yitianshijie.net'
     #'17*',
     #'18*',
