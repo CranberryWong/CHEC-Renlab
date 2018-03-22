@@ -133,3 +133,27 @@ Traceback (most recent call last):
     sock.bind(sockaddr)
 OSError: [Errno 98] Address already in use
 [I 180322 12:49:10 web:2106] 304 GET / (222.229.64.201) 2.11ms
+[I 180322 15:56:52 web:2106] 200 GET / (222.229.64.201) 4.70ms
+[I 180322 15:56:54 web:2106] 200 GET / (222.229.64.201) 1.32ms
+[I 180322 15:57:03 web:2106] 200 GET / (222.229.64.201) 0.65ms
+[I 180322 15:57:04 web:2106] 200 GET / (222.229.64.201) 0.66ms
+Development server is running at http://127.0.0.1:8000/
+Quit the server with Ctrl-C
+6-1-11-9-4-12-10-8-16-3-0-7-2-13-5-14-15-
+0-11-3-9-2-13-8-14-6-7-12-16-4-1-5-15-10-
+2-1-0-8-4-11-13-6-3-5-15-7-10-14-12-9-16-
+15-1-6-16-11-8-14-10-2-3-9-12-0-13-5-7-4-
+Traceback (most recent call last):
+  File "server.py", line 40, in <module>
+    main()
+  File "server.py", line 37, in main
+    tornado.ioloop.IOLoop.instance().start()
+  File "/usr/local/lib/python3.6/site-packages/tornado/platform/asyncio.py", line 112, in start
+    self.asyncio_loop.run_forever()
+  File "/usr/local/lib/python3.6/asyncio/base_events.py", line 421, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.6/asyncio/base_events.py", line 1390, in _run_once
+    event_list = self._selector.select(timeout)
+  File "/usr/local/lib/python3.6/selectors.py", line 445, in select
+    fd_event_list = self._epoll.poll(timeout, max_ev)
+KeyboardInterrupt
