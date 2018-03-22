@@ -142,7 +142,7 @@
             console.log("End fixation");
             $(".webpage-fix").attr("src", "{{ static_url(webpage_path) }}");
             console.log("This is webpage");
-            return delay(500);
+            return delay(1500);
         }).then(function () {
             console.log("End webpage");
             $(".webpage-fix").attr("src", "{{ static_url(noise_path) }}");

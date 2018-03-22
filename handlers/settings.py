@@ -33,8 +33,8 @@ WebpageList = [
     '13*interaction-design.org',
     '14*jlpt.jp',
     '15*pantone.coms',
-    '16*',
-    '17*',
-    '18*',
-    '19*'
+    '16*blog.yitianshijie.net'
+    #'17*',
+    #'18*',
+    #'19*'
 ]
