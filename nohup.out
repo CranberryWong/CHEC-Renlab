@@ -297,3 +297,194 @@ KeyboardInterrupt
         wid2, title = WebpageList[int(wid)].split('*')
     IndexError: list index out of range
 [I 180323 10:29:48 web:2106] 200 GET / (222.229.64.201) 2.62ms
+[I 180323 10:32:21 web:2106] 200 GET / (222.229.69.61) 2.34ms
+[I 180323 10:32:21 web:2106] 200 GET /static/styles/stylesheets/style.css?v=b40635bbdc0f96d86e7e20c429f6164a (222.229.69.61) 16.06ms
+[I 180323 10:32:21 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.69.61) 7.64ms
+[I 180323 10:32:21 web:2106] 200 GET /static/scripts/jquery.min.js?v=2f6b11a7e914718e0290410e85366fe9 (222.229.69.61) 14.42ms
+[I 180323 10:32:21 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.69.61) 35.12ms
+[I 180323 10:32:21 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.69.61) 30.38ms
+[I 180323 10:32:21 web:2106] 200 GET /static/images/logo.png?v=aa9283dd98267f6b7c6517faad09a63c (222.229.69.61) 3.41ms
+[I 180323 10:32:21 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.69.61) 2.25ms
+[I 180323 10:32:21 web:2106] 200 GET /static/favicon.ico?v=b25e58c4b8459e3f1fb064c15093b08d (222.229.69.61) 1.60ms
+[I 180323 10:32:32 web:2106] 200 GET /aesthetic/statement (222.229.69.61) 0.58ms
+[I 180323 10:32:32 web:2106] 200 GET /favicon.ico (222.229.69.61) 0.77ms
+[I 180323 10:32:32 web:2106] 200 GET /favicon.ico (222.229.69.61) 0.64ms
+[I 180323 10:34:34 web:2106] 200 GET /aesthetic/form (222.229.69.61) 1.89ms
+[I 180323 10:34:59 web:2106] 302 POST /aesthetic/form (222.229.69.61) 2.87ms
+[I 180323 10:34:59 web:2106] 200 GET /aesthetic/note?trial=1 (222.229.69.61) 2.44ms
+[I 180323 10:35:36 web:2106] 200 GET /aesthetic/start/999 (222.229.69.61) 2.53ms
+[E 180323 10:35:36 web:1621] Uncaught exception GET /aesthetic/start/999 (222.229.69.61)
+    HTTPServerRequest(protocol='http', host='chec.ren:8000', method='GET', uri='/aesthetic/start/999', version='HTTP/1.1', remote_ip='222.229.69.61')
+    Traceback (most recent call last):
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 1541, in _execute
+        result = method(*self.path_args, **self.path_kwargs)
+      File "/var/www/wangchen/AestheticExperiment/handlers/main.py", line 83, in get
+        wid2, title = WebpageList[int(wid)].split('*')
+    IndexError: list index out of range
+[I 180323 10:35:36 web:2106] 200 GET /static/images/fixation.png?v=8e6c18839257413c392938ac6cf94273 (222.229.69.61) 80.24ms
+[I 180323 10:35:38 web:2106] 200 GET /static/images/webpages/ted.com.png?v=6b69d9586371c7833dcac2512f3ae359 (222.229.69.61) 103.10ms
+[I 180323 10:35:38 web:2106] 200 GET /static/images/noise.png?v=9111b49d127d0c84c7cd17d9ac2e08da (222.229.69.61) 75.89ms
+[I 180323 10:35:56 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 0.41ms
+[I 180323 10:35:56 web:2106] 200 GET /aesthetic/note?trial=0 (222.229.69.61) 0.75ms
+[I 180323 10:36:03 web:2106] 200 GET /aesthetic/start/12 (222.229.69.61) 2.70ms
+[I 180323 10:36:05 web:2106] 200 GET /static/images/webpages/yatani.jp.png?v=bf8ce51d1c37cfa0717920c0c28c6538 (222.229.69.61) 8.00ms
+[I 180323 10:36:12 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.28ms
+[I 180323 10:36:12 web:2106] 200 GET /aesthetic/start/7 (222.229.69.61) 2.54ms
+[I 180323 10:36:13 web:2106] 200 GET /static/images/webpages/blog.sciencenet.cn.png?v=0e5554466ceec312d0926d3234de4fd4 (222.229.69.61) 40.47ms
+[I 180323 10:36:19 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.20ms
+[I 180323 10:36:19 web:2106] 200 GET /aesthetic/start/15 (222.229.69.61) 2.70ms
+[I 180323 10:36:21 web:2106] 200 GET /static/images/webpages/pantone.com.png?v=f00068f7ea90f563906f8c19bea74bcc (222.229.69.61) 123.67ms
+[I 180323 10:36:29 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 0.62ms
+[I 180323 10:36:29 web:2106] 200 GET /aesthetic/start/11 (222.229.69.61) 0.75ms
+[I 180323 10:36:30 web:2106] 200 GET /static/images/webpages/labinthewild.org.png?v=08078c5278a2b5c671a6f705f5425618 (222.229.69.61) 30.59ms
+[I 180323 10:36:36 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.30ms
+[I 180323 10:36:36 web:2106] 200 GET /aesthetic/start/3 (222.229.69.61) 2.44ms
+[I 180323 10:36:37 web:2106] 200 GET /static/images/webpages/mozilla.org.png?v=6fdff70985486d4edf1a742475a9496b (222.229.69.61) 20.11ms
+[I 180323 10:36:45 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.21ms
+[I 180323 10:36:45 web:2106] 200 GET /aesthetic/start/8 (222.229.69.61) 2.52ms
+[I 180323 10:36:47 web:2106] 200 GET /static/images/webpages/yinwang.org.png?v=2da5866c3cc81a31efd6947f8a85efd7 (222.229.69.61) 2.84ms
+[I 180323 10:36:51 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.14ms
+[I 180323 10:36:51 web:2106] 200 GET /aesthetic/start/9 (222.229.69.61) 2.73ms
+[I 180323 10:36:53 web:2106] 200 GET /static/images/webpages/richyli.com.png?v=f68e3f0456c7c0670a0e5dc21d71c39f (222.229.69.61) 25.31ms
+[I 180323 10:36:58 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.14ms
+[I 180323 10:36:58 web:2106] 200 GET /aesthetic/start/1 (222.229.69.61) 2.75ms
+[I 180323 10:37:00 web:2106] 200 GET /static/images/webpages/two-n.com.png?v=54bbf2d4842b5099ec04cf11a0ee31fc (222.229.69.61) 15.43ms
+[I 180323 10:37:07 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.07ms
+[I 180323 10:37:07 web:2106] 200 GET /aesthetic/start/2 (222.229.69.61) 1.33ms
+[I 180323 10:37:09 web:2106] 200 GET /static/images/webpages/makeitok.org.png?v=14dd4ebcb3354db2c2a42228f7f39bc5 (222.229.69.61) 36.68ms
+[I 180323 10:37:15 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.27ms
+[I 180323 10:37:15 web:2106] 200 GET /aesthetic/start/6 (222.229.69.61) 2.69ms
+[I 180323 10:37:16 web:2106] 200 GET /static/images/webpages/docs.opencv.org.png?v=b47626f581c11a532363b075d4d11cfb (222.229.69.61) 40.22ms
+[I 180323 10:37:22 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.22ms
+[I 180323 10:37:22 web:2106] 200 GET /aesthetic/start/14 (222.229.69.61) 2.47ms
+[I 180323 10:37:23 web:2106] 200 GET /static/images/webpages/jlpt.jp.png?v=07d4c761759c07c314bad40ec6c7bcf4 (222.229.69.61) 16.28ms
+[I 180323 10:37:28 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.94ms
+[I 180323 10:37:28 web:2106] 200 GET /aesthetic/start/0 (222.229.69.61) 2.70ms
+[I 180323 10:37:30 web:2106] 200 GET /static/images/webpages/nounplus.net.png?v=5ffaa5da413a78753f328bdff2b46e93 (222.229.69.61) 26.48ms
+[I 180323 10:37:35 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.18ms
+[I 180323 10:37:35 web:2106] 200 GET /aesthetic/start/13 (222.229.69.61) 2.71ms
+[I 180323 10:37:37 web:2106] 200 GET /static/images/webpages/interaction-design.org.png?v=7ab5756095b19e94bec0a7a6301d243e (222.229.69.61) 35.14ms
+[I 180323 10:37:42 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.62ms
+[I 180323 10:37:42 web:2106] 200 GET /aesthetic/start/4 (222.229.69.61) 1.51ms
+[I 180323 10:37:44 web:2106] 200 GET /static/images/webpages/segmentfault.com.png?v=a215e691d33cf0d7491e2a42531b0d8c (222.229.69.61) 6.57ms
+[I 180323 10:37:49 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.89ms
+[I 180323 10:37:49 web:2106] 200 GET /aesthetic/start/5 (222.229.69.61) 2.53ms
+[I 180323 10:37:51 web:2106] 200 GET /static/images/webpages/kameisyouten.ocnk.net.png?v=012ea980db33353a04ea195948cdcfe0 (222.229.69.61) 85.32ms
+[I 180323 10:37:55 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.18ms
+[I 180323 10:37:55 web:2106] 200 GET /aesthetic/start/10 (222.229.69.61) 2.75ms
+[I 180323 10:37:57 web:2106] 200 GET /static/images/webpages/pxtoem.com.png?v=c39a15c266155ff6f07f415b1b219339 (222.229.69.61) 4.18ms
+[I 180323 10:38:03 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.36ms
+[I 180323 10:38:03 web:2106] 200 GET /aesthetic/start/16 (222.229.69.61) 2.70ms
+[I 180323 10:38:05 web:2106] 200 GET /static/images/webpages/blog.yitianshijie.net.png?v=33254211631f291a2daa5719b1d7d1f9 (222.229.69.61) 5.55ms
+[I 180323 10:38:09 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.11ms
+[E 180323 10:38:09 web:1621] Uncaught exception POST /aesthetic/ratings (222.229.69.61)
+    HTTPServerRequest(protocol='http', host='chec.ren:8000', method='POST', uri='/aesthetic/ratings', version='HTTP/1.1', remote_ip='222.229.69.61')
+    Traceback (most recent call last):
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 1541, in _execute
+        result = method(*self.path_args, **self.path_kwargs)
+      File "/var/www/wangchen/AestheticExperiment/handlers/main.py", line 120, in post
+        self.redirect("/aesthetic/start/"+ str(wid))
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 707, in redirect
+        raise Exception("Cannot redirect after headers have been written")
+    Exception: Cannot redirect after headers have been written
+[I 180323 10:38:09 web:2106] 200 GET /finish (222.229.69.61) 2.95ms
+[I 180323 10:38:09 web:2106] 200 GET /static/images/thanks.png?v=814591fcae3fb8428cc65b7bc0c56b2f (222.229.69.61) 24.84ms
+[I 180323 11:01:46 web:2106] 200 GET / (222.229.69.61) 1.81ms
+[I 180323 11:01:46 web:2106] 200 GET /static/styles/stylesheets/style.css?v=b40635bbdc0f96d86e7e20c429f6164a (222.229.69.61) 3.44ms
+[I 180323 11:01:46 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.69.61) 17.70ms
+[I 180323 11:01:46 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.69.61) 21.89ms
+[I 180323 11:01:46 web:2106] 200 GET /static/scripts/jquery.min.js?v=2f6b11a7e914718e0290410e85366fe9 (222.229.69.61) 5.48ms
+[I 180323 11:01:46 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.69.61) 1.47ms
+[I 180323 11:01:46 web:2106] 200 GET /static/images/logo.png?v=aa9283dd98267f6b7c6517faad09a63c (222.229.69.61) 1.38ms
+[I 180323 11:01:46 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.69.61) 1.40ms
+[I 180323 11:01:47 web:2106] 200 GET /static/favicon.ico?v=b25e58c4b8459e3f1fb064c15093b08d (222.229.69.61) 0.70ms
+[I 180323 11:02:12 web:2106] 200 GET /aesthetic/statement (222.229.69.61) 1.82ms
+[I 180323 11:02:20 web:2106] 200 GET /aesthetic/form (222.229.69.61) 2.10ms
+[I 180323 11:02:50 web:2106] 302 POST /aesthetic/form (222.229.69.61) 2.71ms
+[I 180323 11:02:50 web:2106] 200 GET /aesthetic/note?trial=1 (222.229.69.61) 2.38ms
+[I 180323 11:02:57 web:2106] 200 GET /aesthetic/start/999 (222.229.69.61) 0.69ms
+[E 180323 11:02:57 web:1621] Uncaught exception GET /aesthetic/start/999 (222.229.69.61)
+    HTTPServerRequest(protocol='http', host='chec.ren:8000', method='GET', uri='/aesthetic/start/999', version='HTTP/1.1', remote_ip='222.229.69.61')
+    Traceback (most recent call last):
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 1541, in _execute
+        result = method(*self.path_args, **self.path_kwargs)
+      File "/var/www/wangchen/AestheticExperiment/handlers/main.py", line 83, in get
+        wid2, title = WebpageList[int(wid)].split('*')
+    IndexError: list index out of range
+[I 180323 11:02:57 web:2106] 200 GET /static/images/fixation.png?v=8e6c18839257413c392938ac6cf94273 (222.229.69.61) 68.94ms
+[I 180323 11:02:59 web:2106] 200 GET /static/images/webpages/ted.com.png?v=6b69d9586371c7833dcac2512f3ae359 (222.229.69.61) 82.06ms
+[I 180323 11:03:00 web:2106] 200 GET /static/images/noise.png?v=9111b49d127d0c84c7cd17d9ac2e08da (222.229.69.61) 36.17ms
+[I 180323 11:03:17 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.28ms
+[I 180323 11:03:17 web:2106] 200 GET /aesthetic/note?trial=0 (222.229.69.61) 1.97ms
+[I 180323 11:03:21 web:2106] 200 GET /aesthetic/start/9 (222.229.69.61) 3.27ms
+[I 180323 11:03:23 web:2106] 200 GET /static/images/webpages/richyli.com.png?v=f68e3f0456c7c0670a0e5dc21d71c39f (222.229.69.61) 5.68ms
+[I 180323 11:03:35 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.26ms
+[I 180323 11:03:35 web:2106] 200 GET /aesthetic/start/12 (222.229.69.61) 2.71ms
+[I 180323 11:03:37 web:2106] 200 GET /static/images/webpages/yatani.jp.png?v=bf8ce51d1c37cfa0717920c0c28c6538 (222.229.69.61) 3.42ms
+[I 180323 11:03:42 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.91ms
+[I 180323 11:03:42 web:2106] 200 GET /aesthetic/start/10 (222.229.69.61) 2.71ms
+[I 180323 11:03:43 web:2106] 200 GET /static/images/webpages/pxtoem.com.png?v=c39a15c266155ff6f07f415b1b219339 (222.229.69.61) 5.02ms
+[I 180323 11:03:54 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.19ms
+[I 180323 11:03:54 web:2106] 200 GET /aesthetic/start/13 (222.229.69.61) 2.70ms
+[I 180323 11:03:56 web:2106] 200 GET /static/images/webpages/interaction-design.org.png?v=7ab5756095b19e94bec0a7a6301d243e (222.229.69.61) 25.69ms
+[I 180323 11:04:06 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.16ms
+[I 180323 11:04:06 web:2106] 200 GET /aesthetic/start/16 (222.229.69.61) 2.71ms
+[I 180323 11:04:08 web:2106] 200 GET /static/images/webpages/blog.yitianshijie.net.png?v=33254211631f291a2daa5719b1d7d1f9 (222.229.69.61) 4.53ms
+[I 180323 11:04:16 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.15ms
+[I 180323 11:04:16 web:2106] 200 GET /aesthetic/start/6 (222.229.69.61) 2.67ms
+[I 180323 11:04:17 web:2106] 200 GET /static/images/webpages/docs.opencv.org.png?v=b47626f581c11a532363b075d4d11cfb (222.229.69.61) 24.14ms
+[I 180323 11:04:25 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.56ms
+[I 180323 11:04:25 web:2106] 200 GET /aesthetic/start/11 (222.229.69.61) 1.97ms
+[I 180323 11:04:27 web:2106] 200 GET /static/images/webpages/labinthewild.org.png?v=08078c5278a2b5c671a6f705f5425618 (222.229.69.61) 1.42ms
+[I 180323 11:04:36 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.10ms
+[I 180323 11:04:36 web:2106] 200 GET /aesthetic/start/14 (222.229.69.61) 2.72ms
+[I 180323 11:04:38 web:2106] 200 GET /static/images/webpages/jlpt.jp.png?v=07d4c761759c07c314bad40ec6c7bcf4 (222.229.69.61) 5.54ms
+[I 180323 11:04:42 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.16ms
+[I 180323 11:04:42 web:2106] 200 GET /aesthetic/start/4 (222.229.69.61) 2.69ms
+[I 180323 11:04:44 web:2106] 200 GET /static/images/webpages/segmentfault.com.png?v=a215e691d33cf0d7491e2a42531b0d8c (222.229.69.61) 6.22ms
+[I 180323 11:04:49 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.13ms
+[I 180323 11:04:49 web:2106] 200 GET /aesthetic/start/7 (222.229.69.61) 2.72ms
+[I 180323 11:04:51 web:2106] 200 GET /static/images/webpages/blog.sciencenet.cn.png?v=0e5554466ceec312d0926d3234de4fd4 (222.229.69.61) 7.95ms
+[I 180323 11:05:01 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.10ms
+[I 180323 11:05:01 web:2106] 200 GET /aesthetic/start/1 (222.229.69.61) 2.64ms
+[I 180323 11:05:03 web:2106] 200 GET /static/images/webpages/two-n.com.png?v=54bbf2d4842b5099ec04cf11a0ee31fc (222.229.69.61) 5.10ms
+[I 180323 11:05:11 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 0.63ms
+[I 180323 11:05:11 web:2106] 200 GET /aesthetic/start/3 (222.229.69.61) 0.74ms
+[I 180323 11:05:13 web:2106] 200 GET /static/images/webpages/mozilla.org.png?v=6fdff70985486d4edf1a742475a9496b (222.229.69.61) 1.71ms
+[I 180323 11:05:18 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.33ms
+[I 180323 11:05:18 web:2106] 200 GET /aesthetic/start/15 (222.229.69.61) 2.71ms
+[I 180323 11:05:20 web:2106] 200 GET /static/images/webpages/pantone.com.png?v=f00068f7ea90f563906f8c19bea74bcc (222.229.69.61) 90.90ms
+[I 180323 11:05:27 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.59ms
+[I 180323 11:05:27 web:2106] 200 GET /aesthetic/start/2 (222.229.69.61) 1.95ms
+[I 180323 11:05:29 web:2106] 200 GET /static/images/webpages/makeitok.org.png?v=14dd4ebcb3354db2c2a42228f7f39bc5 (222.229.69.61) 5.07ms
+[I 180323 11:05:36 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.15ms
+[I 180323 11:05:36 web:2106] 200 GET /aesthetic/start/8 (222.229.69.61) 2.72ms
+[I 180323 11:05:38 web:2106] 200 GET /static/images/webpages/yinwang.org.png?v=2da5866c3cc81a31efd6947f8a85efd7 (222.229.69.61) 2.93ms
+[I 180323 11:05:43 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 1.85ms
+[I 180323 11:05:43 web:2106] 200 GET /aesthetic/start/5 (222.229.69.61) 2.37ms
+[I 180323 11:05:44 web:2106] 200 GET /static/images/webpages/kameisyouten.ocnk.net.png?v=012ea980db33353a04ea195948cdcfe0 (222.229.69.61) 61.44ms
+[I 180323 11:05:50 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.10ms
+[I 180323 11:05:50 web:2106] 200 GET /aesthetic/start/0 (222.229.69.61) 2.70ms
+[I 180323 11:05:52 web:2106] 200 GET /static/images/webpages/nounplus.net.png?v=5ffaa5da413a78753f328bdff2b46e93 (222.229.69.61) 6.79ms
+[I 180323 11:06:01 web:2106] 302 POST /aesthetic/ratings (222.229.69.61) 2.15ms
+[E 180323 11:06:01 web:1621] Uncaught exception POST /aesthetic/ratings (222.229.69.61)
+    HTTPServerRequest(protocol='http', host='chec.ren:8000', method='POST', uri='/aesthetic/ratings', version='HTTP/1.1', remote_ip='222.229.69.61')
+    Traceback (most recent call last):
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 1541, in _execute
+        result = method(*self.path_args, **self.path_kwargs)
+      File "/var/www/wangchen/AestheticExperiment/handlers/main.py", line 120, in post
+        self.redirect("/aesthetic/start/"+ str(wid))
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 707, in redirect
+        raise Exception("Cannot redirect after headers have been written")
+    Exception: Cannot redirect after headers have been written
+[I 180323 11:06:01 web:2106] 200 GET /finish (222.229.69.61) 3.35ms
+[I 180323 11:06:01 web:2106] 200 GET /static/images/thanks.png?v=814591fcae3fb8428cc65b7bc0c56b2f (222.229.69.61) 5.87ms
+[I 180323 14:18:25 web:2106] 200 GET / (222.229.64.201) 2.32ms
+[I 180323 14:18:25 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.64.201) 3.81ms
+[I 180323 14:18:25 web:2106] 200 GET /static/styles/stylesheets/style.css?v=b40635bbdc0f96d86e7e20c429f6164a (222.229.64.201) 8.65ms
+[I 180323 14:18:25 web:2106] 200 GET /static/images/logo.png?v=aa9283dd98267f6b7c6517faad09a63c (222.229.64.201) 6.57ms
+[I 180323 14:18:25 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.64.201) 3.19ms
+[I 180323 14:18:25 web:2106] 200 GET /static/scripts/jquery.min.js?v=2f6b11a7e914718e0290410e85366fe9 (222.229.64.201) 2.47ms
+[I 180323 14:18:25 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.64.201) 1.21ms
+[I 180323 14:18:25 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.64.201) 44.85ms
+[I 180323 14:18:38 web:2106] 200 GET / (222.229.64.201) 1.73ms
