@@ -31,8 +31,10 @@ def main():
     tornado.locale.load_translations(os.path.join(os.path.dirname(__file__), "csv_translations"))
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application(handlers))
-    http_server.listen(options.port)
-    print('Development server is running at http://127.0.0.1:%s/' % options.port) 
+    #http_server.listen(options.port)
+    http_server.bind(int(options.port), "0.0.0.0")
+    http_server.start(1)
+    print('Development server is running at http://0.0.0.0:%s/' % options.port) 
     print('Quit the server with Ctrl-C')
     tornado.ioloop.IOLoop.instance().start()
     

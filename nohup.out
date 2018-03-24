@@ -488,3 +488,162 @@ KeyboardInterrupt
 [I 180323 14:18:25 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.64.201) 1.21ms
 [I 180323 14:18:25 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.64.201) 44.85ms
 [I 180323 14:18:38 web:2106] 200 GET / (222.229.64.201) 1.73ms
+[I 180323 17:08:56 web:2106] 200 GET / (222.229.64.201) 0.65ms
+[I 180323 18:09:21 web:2106] 200 GET / (222.229.64.201) 0.62ms
+[I 180323 18:09:21 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.64.201) 18.91ms
+[I 180323 18:09:21 web:2106] 200 GET /static/scripts/jquery.min.js?v=2f6b11a7e914718e0290410e85366fe9 (222.229.64.201) 1.90ms
+[I 180323 18:09:21 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.64.201) 1.10ms
+[I 180323 18:09:22 web:2106] 200 GET /static/images/logo.png?v=aa9283dd98267f6b7c6517faad09a63c (222.229.64.201) 0.71ms
+[I 180323 18:09:22 web:2106] 200 GET /static/styles/stylesheets/style.css?v=b40635bbdc0f96d86e7e20c429f6164a (222.229.64.201) 0.68ms
+[I 180323 18:09:22 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.64.201) 1.24ms
+[I 180323 18:09:22 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.64.201) 43.66ms
+[I 180323 18:09:36 web:2106] 200 GET /aesthetic/statement (222.229.64.201) 0.87ms
+[I 180323 18:09:46 web:2106] 200 GET /aesthetic/form (222.229.64.201) 1.67ms
+[I 180324 08:01:20 web:2106] 200 GET / (222.229.64.201) 0.62ms
+[I 180324 08:01:20 web:2106] 200 GET /static/styles/stylesheets/style.css?v=b40635bbdc0f96d86e7e20c429f6164a (222.229.64.201) 4.23ms
+[I 180324 08:01:20 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.64.201) 6.59ms
+[I 180324 08:01:20 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.64.201) 4.05ms
+[I 180324 08:01:20 web:2106] 200 GET /static/scripts/jquery.min.js?v=2f6b11a7e914718e0290410e85366fe9 (222.229.64.201) 0.92ms
+[I 180324 08:01:20 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.64.201) 2.03ms
+[I 180324 08:01:20 web:2106] 200 GET /static/images/logo.png?v=aa9283dd98267f6b7c6517faad09a63c (222.229.64.201) 1.48ms
+[I 180324 08:01:20 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.64.201) 1.01ms
+[I 180324 08:01:20 web:2106] 200 GET /static/favicon.ico?v=b25e58c4b8459e3f1fb064c15093b08d (222.229.64.201) 0.72ms
+[I 180324 08:01:37 web:2106] 200 GET /aesthetic/statement (222.229.64.201) 0.61ms
+[I 180324 08:02:42 web:2106] 200 GET /aesthetic/form (222.229.64.201) 2.15ms
+[I 180324 08:03:16 web:2106] 302 POST /aesthetic/form (222.229.64.201) 2.80ms
+[I 180324 08:03:16 web:2106] 200 GET /aesthetic/note?trial=1 (222.229.64.201) 2.44ms
+[I 180324 08:03:57 web:2106] 200 GET /aesthetic/start/999 (222.229.64.201) 2.31ms
+[E 180324 08:03:57 web:1621] Uncaught exception GET /aesthetic/start/999 (222.229.64.201)
+    HTTPServerRequest(protocol='http', host='chec.ren:8000', method='GET', uri='/aesthetic/start/999', version='HTTP/1.0', remote_ip='222.229.64.201')
+    Traceback (most recent call last):
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 1541, in _execute
+        result = method(*self.path_args, **self.path_kwargs)
+      File "/var/www/wangchen/AestheticExperiment/handlers/main.py", line 83, in get
+        wid2, title = WebpageList[int(wid)].split('*')
+    IndexError: list index out of range
+[I 180324 08:03:57 web:2106] 200 GET /static/images/fixation.png?v=8e6c18839257413c392938ac6cf94273 (222.229.64.201) 117.66ms
+[I 180324 08:03:59 web:2106] 200 GET /static/images/webpages/ted.com.png?v=6b69d9586371c7833dcac2512f3ae359 (222.229.64.201) 30.10ms
+[I 180324 08:04:00 web:2106] 200 GET /static/images/noise.png?v=9111b49d127d0c84c7cd17d9ac2e08da (222.229.64.201) 15.09ms
+[I 180324 08:04:28 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 1.26ms
+[I 180324 08:04:28 web:2106] 200 GET /aesthetic/note?trial=0 (222.229.64.201) 2.67ms
+[I 180324 08:04:47 web:2106] 200 GET /aesthetic/start/2 (222.229.64.201) 1.99ms
+[I 180324 08:04:49 web:2106] 200 GET /static/images/webpages/makeitok.org.png?v=14dd4ebcb3354db2c2a42228f7f39bc5 (222.229.64.201) 61.89ms
+[I 180324 08:04:57 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 1.96ms
+[I 180324 08:04:57 web:2106] 200 GET /aesthetic/start/9 (222.229.64.201) 2.53ms
+[I 180324 08:04:59 web:2106] 200 GET /static/images/webpages/richyli.com.png?v=f68e3f0456c7c0670a0e5dc21d71c39f (222.229.64.201) 31.62ms
+[I 180324 08:05:10 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 0.59ms
+[I 180324 08:05:10 web:2106] 200 GET /aesthetic/start/11 (222.229.64.201) 0.75ms
+[I 180324 08:05:11 web:2106] 200 GET /static/images/webpages/labinthewild.org.png?v=08078c5278a2b5c671a6f705f5425618 (222.229.64.201) 21.09ms
+[I 180324 08:05:22 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 2.27ms
+[I 180324 08:05:22 web:2106] 200 GET /aesthetic/start/3 (222.229.64.201) 2.75ms
+[I 180324 08:05:23 web:2106] 200 GET /static/images/webpages/mozilla.org.png?v=6fdff70985486d4edf1a742475a9496b (222.229.64.201) 15.40ms
+[I 180324 08:05:32 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 1.16ms
+[I 180324 08:05:32 web:2106] 200 GET /aesthetic/start/15 (222.229.64.201) 1.83ms
+[I 180324 08:05:34 web:2106] 200 GET /static/images/webpages/pantone.com.png?v=f00068f7ea90f563906f8c19bea74bcc (222.229.64.201) 181.58ms
+[I 180324 08:05:45 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 1.19ms
+[I 180324 08:05:45 web:2106] 200 GET /aesthetic/start/7 (222.229.64.201) 1.51ms
+[I 180324 08:05:46 web:2106] 200 GET /static/images/webpages/blog.sciencenet.cn.png?v=0e5554466ceec312d0926d3234de4fd4 (222.229.64.201) 37.52ms
+[I 180324 08:06:30 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 2.21ms
+[I 180324 08:06:30 web:2106] 200 GET /aesthetic/start/13 (222.229.64.201) 2.75ms
+[I 180324 08:06:31 web:2106] 200 GET /static/images/webpages/interaction-design.org.png?v=7ab5756095b19e94bec0a7a6301d243e (222.229.64.201) 42.95ms
+[I 180324 08:06:37 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 2.14ms
+[I 180324 08:06:37 web:2106] 200 GET /aesthetic/start/12 (222.229.64.201) 2.75ms
+[I 180324 08:06:39 web:2106] 200 GET /static/images/webpages/yatani.jp.png?v=bf8ce51d1c37cfa0717920c0c28c6538 (222.229.64.201) 3.35ms
+[I 180324 08:06:46 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 2.29ms
+[I 180324 08:06:46 web:2106] 200 GET /aesthetic/start/8 (222.229.64.201) 2.75ms
+[I 180324 08:06:47 web:2106] 200 GET /static/images/webpages/yinwang.org.png?v=2da5866c3cc81a31efd6947f8a85efd7 (222.229.64.201) 3.69ms
+[I 180324 08:07:01 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 2.14ms
+[I 180324 08:07:02 web:2106] 200 GET /aesthetic/start/1 (222.229.64.201) 2.71ms
+[I 180324 08:07:03 web:2106] 200 GET /static/images/webpages/two-n.com.png?v=54bbf2d4842b5099ec04cf11a0ee31fc (222.229.64.201) 25.64ms
+[I 180324 08:07:09 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 1.94ms
+[I 180324 08:07:09 web:2106] 200 GET /aesthetic/start/4 (222.229.64.201) 2.42ms
+[I 180324 08:07:10 web:2106] 200 GET /static/images/webpages/segmentfault.com.png?v=a215e691d33cf0d7491e2a42531b0d8c (222.229.64.201) 13.67ms
+[I 180324 08:07:19 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 2.13ms
+[I 180324 08:07:19 web:2106] 200 GET /aesthetic/start/14 (222.229.64.201) 2.76ms
+[I 180324 08:07:21 web:2106] 200 GET /static/images/webpages/jlpt.jp.png?v=07d4c761759c07c314bad40ec6c7bcf4 (222.229.64.201) 28.35ms
+[I 180324 08:07:32 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 1.92ms
+[I 180324 08:07:32 web:2106] 200 GET /aesthetic/start/0 (222.229.64.201) 2.71ms
+[I 180324 08:07:33 web:2106] 200 GET /static/images/webpages/nounplus.net.png?v=5ffaa5da413a78753f328bdff2b46e93 (222.229.64.201) 29.19ms
+[I 180324 08:07:39 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 0.92ms
+[I 180324 08:07:39 web:2106] 200 GET /aesthetic/start/10 (222.229.64.201) 1.12ms
+[I 180324 08:07:40 web:2106] 200 GET /static/images/webpages/pxtoem.com.png?v=c39a15c266155ff6f07f415b1b219339 (222.229.64.201) 7.10ms
+[I 180324 08:07:48 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 0.59ms
+[I 180324 08:07:48 web:2106] 200 GET /aesthetic/start/5 (222.229.64.201) 0.75ms
+[I 180324 08:07:50 web:2106] 200 GET /static/images/webpages/kameisyouten.ocnk.net.png?v=012ea980db33353a04ea195948cdcfe0 (222.229.64.201) 63.87ms
+[I 180324 08:08:02 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 2.12ms
+[I 180324 08:08:02 web:2106] 200 GET /aesthetic/start/16 (222.229.64.201) 2.73ms
+[I 180324 08:08:03 web:2106] 200 GET /static/images/webpages/blog.yitianshijie.net.png?v=33254211631f291a2daa5719b1d7d1f9 (222.229.64.201) 25.56ms
+[I 180324 08:08:10 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 2.20ms
+[I 180324 08:08:10 web:2106] 200 GET /aesthetic/start/6 (222.229.64.201) 2.79ms
+[I 180324 08:08:11 web:2106] 200 GET /static/images/webpages/docs.opencv.org.png?v=b47626f581c11a532363b075d4d11cfb (222.229.64.201) 93.89ms
+[I 180324 08:08:20 web:2106] 302 POST /aesthetic/ratings (222.229.64.201) 1.91ms
+[E 180324 08:08:20 web:1621] Uncaught exception POST /aesthetic/ratings (222.229.64.201)
+    HTTPServerRequest(protocol='http', host='chec.ren:8000', method='POST', uri='/aesthetic/ratings', version='HTTP/1.0', remote_ip='222.229.64.201')
+    Traceback (most recent call last):
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 1541, in _execute
+        result = method(*self.path_args, **self.path_kwargs)
+      File "/var/www/wangchen/AestheticExperiment/handlers/main.py", line 120, in post
+        self.redirect("/aesthetic/start/"+ str(wid))
+      File "/usr/local/lib/python3.6/site-packages/tornado/web.py", line 707, in redirect
+        raise Exception("Cannot redirect after headers have been written")
+    Exception: Cannot redirect after headers have been written
+[I 180324 08:08:20 web:2106] 200 GET /finish (222.229.64.201) 3.78ms
+[I 180324 08:08:20 web:2106] 200 GET /static/images/thanks.png?v=814591fcae3fb8428cc65b7bc0c56b2f (222.229.64.201) 69.30ms
+[I 180324 10:40:12 web:2106] 200 GET / (222.229.64.201) 0.64ms
+[I 180324 10:40:12 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.64.201) 1.72ms
+[I 180324 10:40:12 web:2106] 200 GET /static/styles/stylesheets/style.css?v=b40635bbdc0f96d86e7e20c429f6164a (222.229.64.201) 4.04ms
+[I 180324 10:40:12 web:2106] 200 GET /static/images/logo.png?v=aa9283dd98267f6b7c6517faad09a63c (222.229.64.201) 2.49ms
+[I 180324 10:40:12 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.64.201) 1.96ms
+[I 180324 10:40:12 web:2106] 200 GET /static/scripts/bootstrap.min.js?v=14d449eb8876fa55e1ef3c2cc52b0c17 (222.229.64.201) 1.31ms
+[I 180324 10:40:12 web:2106] 200 GET /static/scripts/jquery.min.js?v=2f6b11a7e914718e0290410e85366fe9 (222.229.64.201) 2.11ms
+[I 180324 10:40:12 web:2106] 200 GET /static/libs/holderjs/holder.js?v=72c09800dd3435ad8999739fe6aefe4c (222.229.64.201) 17.49ms
+[I 180324 10:40:12 web:2106] 304 GET / (222.229.64.201) 0.70ms
+[I 180324 10:40:19 web:2106] 200 GET / (222.229.64.201) 1.33ms
+[I 180324 10:40:32 web:2106] 200 GET / (222.229.64.201) 2.16ms
+Traceback (most recent call last):
+  File "server.py", line 42, in <module>
+    main()
+  File "server.py", line 35, in main
+    http_server.bind(int(options.port), "0.0.0.0")
+  File "/usr/local/lib/python3.6/site-packages/tornado/tcpserver.py", line 191, in bind
+    backlog=backlog, reuse_port=reuse_port)
+  File "/usr/local/lib/python3.6/site-packages/tornado/netutil.py", line 163, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+[I 180324 10:48:18 web:2106] 200 GET / (222.229.64.201) 0.80ms
+[I 180324 10:48:20 web:2106] 200 GET / (222.229.64.201) 2.45ms
+[I 180324 10:48:21 web:2106] 200 GET / (222.229.64.201) 2.40ms
+Traceback (most recent call last):
+  File "server.py", line 42, in <module>
+    main()
+  File "server.py", line 35, in main
+    http_server.bind(int(options.port), "0.0.0.0")
+  File "/usr/local/lib/python3.6/site-packages/tornado/tcpserver.py", line 191, in bind
+    backlog=backlog, reuse_port=reuse_port)
+  File "/usr/local/lib/python3.6/site-packages/tornado/netutil.py", line 163, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+[I 180324 11:06:49 web:2106] 200 GET / (222.229.64.201) 18.16ms
+[I 180324 11:06:49 web:2106] 200 GET /static/images/desk-stuff.jpg?v=127e52b64a104ffb430ba6c2557a6a34 (222.229.64.201) 4.53ms
+[I 180324 11:06:49 web:2106] 200 GET /static/styles/stylesheets/bootstrap.min.css?v=450fc463b8b1a349df717056fbb3e078 (222.229.64.201) 19.78ms
+[I 180324 11:06:50 web:2106] 304 GET / (222.229.64.201) 0.70ms
+[I 180324 12:14:06 web:2106] 200 GET / (222.229.64.201) 2.44ms
+Development server is running at http://0.0.0.0:8000/
+Quit the server with Ctrl-C
+12-0-14-1-3-13-8-16-6-9-2-7-5-10-4-11-15-
+16-2-13-14-6-10-15-5-11-3-4-12-7-1-8-9-0-
+7-13-6-5-9-12-1-10-2-16-15-11-0-14-3-8-4-
+Traceback (most recent call last):
+  File "server.py", line 42, in <module>
+    main()
+  File "server.py", line 39, in main
+    tornado.ioloop.IOLoop.instance().start()
+  File "/usr/local/lib/python3.6/site-packages/tornado/platform/asyncio.py", line 112, in start
+    self.asyncio_loop.run_forever()
+  File "/usr/local/lib/python3.6/asyncio/base_events.py", line 421, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.6/asyncio/base_events.py", line 1390, in _run_once
+    event_list = self._selector.select(timeout)
+  File "/usr/local/lib/python3.6/selectors.py", line 445, in select
+    fd_event_list = self._epoll.poll(timeout, max_ev)
+KeyboardInterrupt
