@@ -38,3 +38,8 @@ WebpageList = [
     #'18*',
     #'19*'
 ]
+
+suncolor_sequence = ['#FF1E1E', '#FF7215', '#FFBB04', '#FFF72C', '#D1FF3F',
+                '#97FF4D', '#1ACD00', '#008930', '#00D3E8', '#27A3FF',
+                '#005EFE', '#0200AC', '#9975FF', '#8724FF', '#CD44FF',
+                '#FF2ED6']
