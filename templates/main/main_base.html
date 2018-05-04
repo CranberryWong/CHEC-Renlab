@@ -2,67 +2,108 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>{{ _(handler.title) }}</title>
-    <link rel="stylesheet" href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}">
-    <!--<link rel="stylesheet" href="../../static/libs/bootstrap/dist/css/bootstrap.css">-->
-    <link rel="stylesheet" href="{{ static_url('styles/stylesheets/style.css') }}">
-    <!--<link rel="stylesheet" href="../../static/styles/style.css">-->
-    {% block costomCSS %}{% end %}
-    <link rel="icon" href="{{ static_url('favicon.ico') }}">
-    <script src="{{ static_url('libs/holderjs/holder.js') }}"></script>
+  <meta charset="UTF-8">
+  <title>{{ _(handler.title) }}</title>
+  <link rel="stylesheet" href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}">
+  <!--<link rel="stylesheet" href="../../static/libs/bootstrap/dist/css/bootstrap.css">-->
+  <link rel="stylesheet" href="{{ static_url('styles/stylesheets/style.css') }}">
+  <!--<link rel="stylesheet" href="../../static/styles/style.css">-->
+  {% block costomCSS %}{% end %}
+  <link rel="icon" href="{{ static_url('favicon.ico') }}">
+  <script src="{{ static_url('libs/holderjs/holder.js') }}"></script>
 </head>
 
 <body>
-    <header>
-        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-            <a href="/" class="my-0 mr-md-auto font-weight-normal"><img src="{{ static_url('images/logo.png') }}" alt="" style="height:40px;"></a>
-            <nav class="my-2 my-md-0 mr-md-3">
-              <a class="p-2 text-dark" href="/">Home</a>
-            </nav>
-            <a class="btn btn-outline-primary" href="mailto:i@wangchen0413.cn">Contact Me</a>
-          </div>
-    </header>
-    {% block main %}
-    {% end %}
-    <div class="container">
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-            <div class="row">
-              <div class="col-12 col-md">
-                <p>🧐</p>
-                <p>Powered by WANG Chen.</p>
-                <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
-              </div>
-              <div class="col-6 col-md">
-                <h5>Features</h5>
-                <ul class="list-unstyled text-small">
-                  <li><a class="text-muted disabled" href="#">Feature</a></li>
-                  <li><a class="text-muted disabled" href="#">Documentation</a></li>
-                  <li><a class="text-muted disabled" href="#">Stuff for developers</a></li>
-                </ul>
-              </div>
-              <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                  <li><a class="text-muted disabled" href="#">Resource</a></li>
-                  <li><a class="text-muted disabled" href="#">Source</a></li>
-                  <li><a class="text-muted disabled" href="#">API</a></li>
-                </ul>
-              </div>
-              <div class="col-6 col-md">
-                <h5>About</h5>
-                <ul class="list-unstyled text-small">
-                  <li><a class="text-muted disabled" href="#">Team</a></li>
-                  <li><a class="text-muted disabled" href="#">Privacy</a></li>
-                  <li><a class="text-muted disabled" href="#">Terms</a></li>
-                </ul>
-              </div>
-            </div>
-          </footer>
+  <header>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <a href="/" class="my-0 mr-md-auto font-weight-normal">
+        <img src="{{ static_url('images/logo.png') }}" alt="" style="height:40px;">
+      </a>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/">Home</a>
+        <a class="p-2 text-dark" href="/members">Members</a>
+        <a class="p-2 text-dark" href="/news">News</a>
+        <a class="p-2 text-dark" href="/publication">Pulication</a>
+        <a class="p-2 text-dark" href="/experiment">Experiment</a>
+        <a class="p-2 text-dark" href="https://www.flickr.com/photos/123468034@N06/albums">Photos</a>
+        <a class="p-2 text-dark" href="http://checcn.xrenlab.com/">中文版</a>
+        <a class="p-2 text-dark" href="https://xrenlabjp.wordpress.com/">日本語</a>
+      </nav>
+      <!--<a class="btn btn-outline-primary" href="/" style="margin-right:20px;">Log in</a>-->
+      {% if current_user %}
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ current_user }}
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/blog">Blog</a>
+          <a class="dropdown-item" href="/resource">Resource</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/signout">Sign Out</a>
         </div>
-        <script src="{{ static_url('scripts/jquery.min.js') }}"></script>
-    <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script>
-    {% block customJS %}{% end %}
+      </div>
+      {% end %}
+    </div>
+  </header>
+  {% block main %} {% end %}
+  <div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+      <div class="row">
+        <div class="col-4 col-md">
+          <h5>Features</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted disabled" href="#">Feature</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="#">Documentation</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="#">Stuff for developers</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-4 col-md">
+          <h5>Resources</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted disabled" href="#">Resource</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="#">Source</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="#">API</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-4 col-md">
+          <h5>About</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted disabled" href="#">Team</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="#">Access</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="/signin">Sign In</a>
+            </li>
+          </ul>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-12 col-md">
+          <small class="d-block mb-3 text-muted">Kochi University of Technology，Tosayamada, Kami City，Kochi, JAPAN
+            <abbr title="Phone">P:</abbr>+81-887-57-2087</small>
+          <small class="d-block mb-3 text-muted">&copy; 2017-2018 All Rights Reserved. </small>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="{{ static_url('scripts/popper.js') }}"></script>
+  <script src="{{ static_url('scripts/jquery.min.js') }}"></script>
+  <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script> 
+  {% block customJS %}{% end %}
 </body>
 
 </html>

@@ -1,0 +1,21 @@
+{% extends "../main/main_base.html" %} {% block main %}
+{% import time %}
+<main>
+    <div class="container">
+        <div class="row">
+        <div class="col-xl-12">
+            <h2>News</h2>
+            <table class="table">
+                    {% for x in newsList %}
+                      <tr>
+                        <th scope="row"></th>
+                        <td><a href="/news/{{ x[0].split('.')[0] }}">{{ x[0].split('.')[0] }}</a></td>
+                        <td>{{ time.ctime(x[1][-1]) }}</td>                    
+                      </tr>
+                    {% end %}
+            </table>
+        </div>
+    </div>
+</div>
+</main>
+{% end %}

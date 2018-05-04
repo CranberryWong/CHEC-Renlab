@@ -1,0 +1,27 @@
+/**
+ * Header Sass
+ */
+
+.home-search-bar {
+    .form-control {
+        border: 1px solid white;
+    }
+}
+
+.home-slide-img {
+    width: 610px;
+    height: 305px; 
+    object-fit: cover;
+}
+
+.form-group--search {
+    position: relative; }
+    .form-group--search .btn-submit {
+      background: transparent;
+      border: none;
+      position: absolute;
+      top: -1px;
+      height: 100%;
+      color: #838E95;
+      padding-left: 2px;
+      padding-right: 0; }

@@ -1,0 +1,31 @@
+{% extends "../main/main_base.html" %} {% block main %}
+<main>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-6">
+                <form class="form-signin" method="POST" action="/signin">
+                    <div class="text-center mb-4 mt-4">
+                        <img class="mb-4" src="{{ static_url("images/logo-v.png") }}" alt="" width="150">
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="input" id="inputEmail" class="form-control" placeholder="Username" name="username" required autofocus>
+                    </div>
+                    <br>
+                    <div class="form-label-group">
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+                    </div>
+                    <br>
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                    <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% end %}

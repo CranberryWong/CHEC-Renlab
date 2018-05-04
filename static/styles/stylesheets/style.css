@@ -65,6 +65,58 @@ body {
 }
 
 /**
+ * Header Sass
+ */
+/* line 6, ../sass/component/_home.scss */
+.home-search-bar .form-control {
+  border: 1px solid white;
+}
+
+/* line 11, ../sass/component/_home.scss */
+.home-slide-img {
+  width: 610px;
+  height: 305px;
+  object-fit: cover;
+}
+
+/* line 17, ../sass/component/_home.scss */
+.form-group--search {
+  position: relative;
+}
+
+/* line 19, ../sass/component/_home.scss */
+.form-group--search .btn-submit {
+  background: transparent;
+  border: none;
+  position: absolute;
+  top: -1px;
+  height: 100%;
+  color: #838E95;
+  padding-left: 2px;
+  padding-right: 0;
+}
+
+/**
+ * Header Sass
+ */
+/* line 5, ../sass/component/_blog.scss */
+.blog-background {
+  margin-top: -16px;
+  width: 100%;
+  box-shadow: 8px 8px 8px 8px #999 inset;
+}
+
+/* line 11, ../sass/component/_blog.scss */
+.blog-avatar {
+  margin-top: -50px;
+}
+
+/* line 15, ../sass/component/_blog.scss */
+.blog-list {
+  padding-top: 50px;
+}
+
+/**
  * Experiment Sass
  */
 /* line 5, ../sass/component/_experiment.scss */

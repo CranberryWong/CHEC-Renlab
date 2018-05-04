@@ -2,9 +2,31 @@
 # -*- coding:utf-8 -*-
 
 from handlers import main, exception
+from handlers.home import home, news, publication
+from handlers.blog import blog
+from handlers.auth import auth
 
 handlers = [
-            (r"/", main.MainHandler),
+            # Home
+            (r"/", home.HomeHandler),
+            (r"/members", home.MembersHandler),
+            (r"/news", news.NewsHandler),
+            (r"/news/([\w./?%&=]*)", news.NewsShowHandler),
+            (r"/publication", publication.PubHandler),
+
+            # Auth
+            (r"/signin", auth.SignInHandler),
+            (r"/signout", auth.SignOutHandler),
+
+            # Blog
+            (r"/blog", blog.BlogHandler),
+            (r"/blogwriting", blog.BlogWritingHandler),
+            (r"/profile", blog.ProfileHandler),
+            (r"/blogcontent?", blog.ProfileHandler),
+            (r"/resource", blog.ResourceHandler),
+
+            # Experiment
+            (r"/experiment", main.MainHandler),
             (r"/aesthetic/statement", main.StatementHandler),
             (r"/aesthetic/form", main.FormHandler),
             (r"/aesthetic/note?", main.NoteHandler),

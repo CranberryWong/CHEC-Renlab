@@ -1,0 +1,108 @@
+{% extends "../main/main_base.html" %} {% block main %}
+<main>
+    <!--
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <p class="lead">
+        
+        </p>
+    </div>-->
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-8">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="http://0.0.0.0:8000/news/CHEC%202018%20LONG%20DISTANCE%20WALKING">
+                                <img class="d-block w-100 home-slide-img" src="https://farm1.staticflickr.com/792/27623541328_ff26c5585b_c.jpg">
+                            </a>
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2>Long Distance Walking</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="">
+                                <img class="d-block w-100 home-slide-img" src="https://farm5.staticflickr.com/4582/38350297912_7d063027d1_c.jpg">
+                            </a>
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2>HEC Workshop</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="">
+                                <img class="d-block w-100 home-slide-img" src="https://farm5.staticflickr.com/4197/34835049975_68f84b17c2_c.jpg">
+                            </a>
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2>CHI 2017</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="">
+                                <img class="d-block w-100 home-slide-img" src="https://farm9.staticflickr.com/8684/17657047671_77105a60b3_c.jpg">
+                            </a>
+                            <div class="carousel-caption d-none d-md-block">
+                                <h2>CHI 2015</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-4">
+                <!--<div class="row" style="background-color: #eeeeee;">
+                    <div class="col-4">
+                        <img class="rounded" style="width:100%;" src="http://xrenlab.com/sites/default/files/field/image/professor2.jpg">
+                    </div>
+                    <div class="col-8">
+                        <h2>About</h2>
+                        <h2>Professor</h2>
+                    </div>
+                </div>-->
+                <img src="{{ static_url('images/sakura.jpg') }}" style="width:100%;">
+            </div>
+        </div>
+
+        <div class="w-100"></div>
+        <div class="row">
+            <div class="col-3">
+                <img src="{{ static_url('images/prof.png') }}" style="width:100%;">
+            </div>
+            <div class="col-3">
+                <img src="{{ static_url('images/placeholder.jpg') }}" style="width:100%;">
+            </div>
+            <div class="col-6">
+                <div style="padding:56.25% 0 0 0;position:relative;">
+                    <iframe src="https://player.vimeo.com/video/174088176?color=ff0179&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                        frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+            </div>
+        </div>
+        <div class="row">
+            <div class="banner mt-4">
+                <a href="http://forum.chec.ren/">
+                    <img src="{{ static_url('images/banner.png') }}" alt="" class="col-12">
+                </a>
+            </div>
+        </div>
+
+    </div>
+</main>
+{% end %}
