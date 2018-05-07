@@ -116,6 +116,11 @@ body {
   padding-top: 50px;
 }
 
+/* line 21, ../sass/component/_blog.scss */
+.member-mini-list .member-mini-list-element .member-mini-list-element-img {
+  width: 50px;
+}
+
 /**
  * Experiment Sass
  */

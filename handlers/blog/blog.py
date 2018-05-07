@@ -12,22 +12,20 @@ from handlers.base import BaseHandler
 BlogURL = os.path.join(os.path.dirname('./..'), "static/members/")
 
 class BlogHandler(BaseHandler):
-    def get(self):
+    def get(self, userName):
         self.title = "Blog"
-        userName = tornado.escape.xhtml_escape(self.current_user)
         avatarURL = 'members/' + userName + '/avatar.png'
         blogList = [ (x, os.stat(BlogURL + userName + '/' + x)) for x in os.listdir(BlogURL + userName) if x not in ignore_list ]
         #blogList = list(set(list(lambda x: x[0] ,blogList)).difference(set(ignore_list)))
         self.render("blog/blog.html", title = self.title, avatarURL = avatarURL, userName = userName, blogList = blogList)
 
 class BlogWritingHandler(BaseHandler):
+    @tornado.web.authenticated
     def post(self):
         self.title = "Writing"
         userName = tornado.escape.xhtml_escape(self.current_user)
         title = self.get_argument('title', default="Weekly Progress")
         content = self.get_argument('content', default="")
-        print(title)
-        print(content)
         with open(BlogURL + userName + '/' + title+'.md', "w") as f:
             f.write(content)
         print("ok")
@@ -50,13 +48,14 @@ class BlogContentHandler(BaseHandler):
         for i in os.listdir(BlogURL + userName):
             if str(uuid.uuid3(uuid.NAMESPACE_DNS, i)) == title:
                 title = i
-        with open(BlogURL + userName + '/' + title + '.md') as f:
+        with open(BlogURL + userName + '/' + title) as f:
             content = markdown.markdown(f.read())
         self.write(content)
 
-class ResourceHandler(BaseHandler):
-    @tornado.web.authenticated
+class BlogDeletingHandler(BaseHandler):
     def get(self):
-        title = 'Resource'
-        userName = tornado.escape.xhtml_escape(self.current_user)
-        self.render("blog/resource.html", title = self.title)
+        pass
+
+class BlogRevisingHandler(BaseHandler):
+    def get(self):
+        pass

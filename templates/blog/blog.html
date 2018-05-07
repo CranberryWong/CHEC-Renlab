@@ -15,30 +15,32 @@
                 <div class="blog-list">
                     <h3>Blog</h3>
                     <hr>
+                    {% if current_user.decode('utf8') == userName %}
                     <form role="form" action="/blogwriting" method="post">
                         <div class="form-group">
                             <input type="text" class="form-control" value="Weekly Progress (yyyy.MM.dd - yyyy.MM.dd)" name="title">
                         </div>
                         <div class="form-group">
                             <textarea class="form-control" rows="7" placeholder="" name="content">
-                                ### What did I do last week?
-                                **RESEARCH**
-                                ...
-                                **ADMIN**
-                                ...
-                                **OUTCOME**
-                                ...
-                                --------------------------------------------------------------------------------------
-                                ###What am I doing?
-                                **RESEARCH**
-                                ...
-                                **ADMIN**
-                                ...
+                                #### **What did I do last week?**
+                                ##### RESEARCH
+                                - ...
+                                ##### ADMIN
+                                - ...
+                                ##### OUTCOME
+                                - ...
+                                # 
+                                ---
+                                #### **what am I doing?**
+                                ##### RESEARCH
+                                - ...
+                                ##### ADMIN
+                                - ...
                         </textarea>
                         </div>
                         <button type="submit" class="btn btn-outline-primary float-right" href="/blog">Writing new blog</button>
                     </form>
-
+                    {% end %}
                 </div>
                 <div class="clearfix"></div>
                 <br>
@@ -47,32 +49,41 @@
                     <tr>
                         <th scope="row"></th>
                         <td>
-                            <a data-toggle="collapse" href="#b{{ x[1][-1] }}" role="button" aria-expanded="false" aria-controls="b{{ x[1][-1] }}" onclick="contentRequest({{ 't' + str(uuid.uuid3(uuid.NAMESPACE_DNS,x[0])) }}, b{{ x[1][-1] }})">{{ x[0].rstrip(".md") }}</a>
-                            <div class="collapse" id="b{{ x[1][-1] }}">
+                            <a data-toggle="collapse" href="#b{{ x[1][-1] }}" role="button" aria-expanded="false" aria-controls="b{{ x[1][-1] }}" onclick="contentRequest('{{ "t" + str(uuid.uuid3(uuid.NAMESPACE_DNS,x[0])) }}', 'b{{ x[1][-1] }}')">{{ x[0].rstrip(".md") }}</a>
+                            <div class="collapse mt-3" id="b{{ x[1][-1] }}">
                                 <div class="card card-body">
                                     
                                 </div>
+                                <div class="text-right">
+                                <a href="">Revise</a> | <a href="">Delete</a>
+                            </div>
                             </div>
                         </td>
                     </tr>
                     {% end %}
                 </table>
-                <nav aria-label="...">
-                    <ul class="pagination pagination-lg">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                    </ul>
-                </nav>
+                <hr>
+                <div class="row justify-content-md-center">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-lg">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
             </div>
+            
 
         </div>
+
+        
 
     </div>
 </main>

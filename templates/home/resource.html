@@ -15,10 +15,18 @@
         <div class="col-xl-4">
             <h3>Blog List</h3>
             <hr>
+            <div class="member-mini-list">
+            {% for member in memberList %}
+            <div class="member-mini-list-element"> 
+            <img src="{{ static_url('members/'+ member + '/avatar.png') }}" alt="" class="rounded-circle member-mini-list-element-img">
+                <a href="/blog/{{ member }}">{{ member }}</a>
+            </div>   
+            {% end %}
+            </div>
+
         </div>
         <div class="col-xl-8">
-            <h3>Resource</h3>
-            <hr>
+            {% raw content %}
         </div>
         </div>
     </div>
