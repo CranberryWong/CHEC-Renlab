@@ -22,7 +22,7 @@ handlers = [
             # Blog
             (r"/blog/([\w./?%&=]*)?", blog.BlogHandler),
             (r"/blogwriting", blog.BlogWritingHandler),
-            (r"/profile", blog.ProfileHandler),
+            (r"/profile/([\w./?%&=]*)", blog.ProfileHandler),
             (r"/blogcontent?", blog.BlogContentHandler),
 
             # Experiment

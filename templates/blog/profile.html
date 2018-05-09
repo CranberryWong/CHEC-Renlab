@@ -1,23 +1,4 @@
-{% extends "../main/main_base.html" %} {% block main %}
-<main>
-    <div>
-        <img src="{{ static_url('images/blog-background.jpg') }}"  class="blog-background" alt="">    
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-3">
-                <img src="{{ static_url(avatarURL) }}" class="img-thumbnail blog-avatar" alt="">
-                <h3>{{ userName }}</h3>
-
-            </div>
-            <div class="col-9">
-                <div class="blog-list">
-                {% raw content %}
-            </div>
-            </div>
-        </div>
-
-    </div>
-</main>
+{% extends "blog_base.html" %}
+{% block content %}  
+{% raw content %}
 {% end %}

@@ -29,12 +29,12 @@ class BlogWritingHandler(BaseHandler):
         with open(BlogURL + userName + '/' + title+'.md', "w") as f:
             f.write(content)
         print("ok")
-        self.redirect("/blog")
+        self.redirect("/blog/" + userName)
 
 class ProfileHandler(BaseHandler):
-    def get(self):
+    def get(self, userName):
         self.title = "Profile"
-        userName = tornado.escape.xhtml_escape(self.current_user)
+        #userName = tornado.escape.xhtml_escape(self.current_user)
         avatarURL = 'members/' + userName + '/avatar.png'
         profileURL = BlogURL + userName + '/profile.md'
         with open(profileURL) as f:
