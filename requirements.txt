@@ -2,3 +2,4 @@ tornado
 numpy
 mongoengine
 markdown
+hashlib
