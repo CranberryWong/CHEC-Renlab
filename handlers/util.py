@@ -9,7 +9,7 @@ ignore_list = [
 
 class I18nHandler(BaseHandler):
     def get(self):
-        language = self.get_argument("lang_encode")
+        language = self.get_argument("lang")
         if language == 'zh_CN':
             self.lang_encode = 'zh_CN'
         elif language == 'ja_JP':

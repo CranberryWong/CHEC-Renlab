@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from handlers import main, exception
+from handlers import main, exception, util
 from handlers.home import home, news, documents
 from handlers.blog import blog
 from handlers.auth import auth
@@ -37,5 +37,8 @@ handlers = [
             (r"/aesthetic/ratings", main.RatingHandler),
             (r"/finish", main.FinishHandler),
 
-            (r".*", exception.ErrorHandler)
+            (r".*", exception.ErrorHandler),
+
+            #i18n
+            (r"/language?", util.I18nHandler),
     ]

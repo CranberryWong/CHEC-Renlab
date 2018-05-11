@@ -20,15 +20,15 @@
         <img src="{{ static_url('images/logo.png') }}" alt="" style="height:40px;">
       </a>
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/">Home</a>
+        <a class="p-2 text-dark" href="/">{{ _("Home") }}</a>
         <a class="p-2 text-dark" href="/members">Members</a>
         <a class="p-2 text-dark" href="/news">News</a>
         <a class="p-2 text-dark" href="/publication">Pulication</a>
         <a class="p-2 text-dark" href="/experiment">Experiment</a>
         <a class="p-2 text-dark" href="https://www.flickr.com/photos/123468034@N06/albums">Curriculum</a>
         <a class="p-2 text-dark" href="https://www.flickr.com/photos/123468034@N06/albums">Photos</a>
-        <a class="p-2 text-dark" href="http://checcn.xrenlab.com/">中文版</a>
-        <a class="p-2 text-dark" href="https://xrenlabjp.wordpress.com/">日本語</a>
+        <a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>
+        <a class="p-2 text-dark" href="/language?lang=ja_JP">日本語</a>
       </nav>
       <!--<a class="btn btn-outline-primary" href="/" style="margin-right:20px;">Log in</a>-->
       {% if current_user %}
