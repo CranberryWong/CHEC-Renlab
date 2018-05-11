@@ -31,16 +31,6 @@ class BlogWritingHandler(BaseHandler):
         print("ok")
         self.redirect("/blog/" + userName)
 
-class ProfileHandler(BaseHandler):
-    def get(self, userName):
-        self.title = "Profile"
-        #userName = tornado.escape.xhtml_escape(self.current_user)
-        avatarURL = 'members/' + userName + '/avatar.png'
-        profileURL = BlogURL + userName + '/profile.md'
-        with open(profileURL) as f:
-            content = markdown.markdown(f.read())
-        self.render("blog/profile.html", title = self.title, avatarURL = avatarURL, userName = userName, content = content)
-
 class BlogContentHandler(BaseHandler):
     def get(self):
         title = self.get_argument('title', default="")[1:]
@@ -53,9 +43,45 @@ class BlogContentHandler(BaseHandler):
         self.write(content)
 
 class BlogDeletingHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
-        pass
+        title = self.get_argument("title")
+        userName = tornado.escape.xhtml_escape(self.current_user)
+        os.remove(BlogURL + userName + '/' + title)
+        self.write("<script>console.log('Delete!')</script>")
+        self.redirect("/blog/" + userName)
 
 class BlogRevisingHandler(BaseHandler):
     def get(self):
         pass
+
+
+class ProfileHandler(BaseHandler):
+    def get(self, userName):
+        self.title = "Profile"
+        #userName = tornado.escape.xhtml_escape(self.current_user)
+        avatarURL = 'members/' + userName + '/avatar.png'
+        profileURL = BlogURL + userName + '/profile.md'
+        with open(profileURL, "r") as f:
+            content = markdown.markdown(f.read())
+        self.render("blog/profile.html", title = self.title, avatarURL = avatarURL, userName = userName, content = content)
+
+class ProfileEditingHandler(BaseHandler):
+    @tornado.web.authenticated
+    def post(self):
+        content = self.get_argument('content', default="")
+        userName = tornado.escape.xhtml_escape(self.current_user)
+        profileURL = BlogURL + userName + '/profile.md'
+        with open(profileURL, "w") as f:
+            f.write(content)
+        self.redirect("/profile/" + userName)
+
+class ProfileRequestHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        userName = tornado.escape.xhtml_escape(self.current_user)
+        profileURL = BlogURL + userName + '/profile.md'
+        with open(profileURL, "r") as f:
+            content = f.read()
+        self.write(content)
+        

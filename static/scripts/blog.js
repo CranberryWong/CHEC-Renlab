@@ -12,3 +12,26 @@ function contentRequest (title, id) {
     });
 }
 
+function profileEditingRequest (url) {
+    console.log("Profile Editing");
+    var jqxhr = $.ajax(url, {
+        method: 'get',
+    }).done(function (data) {
+        console.log("success!");
+        $('.profile-edit').html(
+            '<form role="form" action="/profilewriting" method="post">' +
+            '<button type="submit" class="btn btn-outline-primary btn-sm" style="margin-bottom:10px;">Done</button>' +
+            '<div class="form-group">' +
+            '<textarea class="form-control" rows="17" placeholder="" name="content">' +
+                data +
+            '</textarea>' +
+            '</div>' +
+            '</form>'
+        );
+        $('.profile-content').html('');
+    }).fail(function (xhr, status) {
+        console.log('失败: ' + xhr.status + ', 原因: ' + status);
+    }).always(function () {
+        console.log('请求完成: 无论成功或失败都会调用');
+    });
+}

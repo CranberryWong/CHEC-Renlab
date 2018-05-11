@@ -1,4 +1,11 @@
 {% extends "blog_base.html" %}
-{% block content %}  
+{% block content %} 
+{% if current_user.decode('utf8') == userName %}
+<div class="profile-edit">
+<button type="submit" class="btn btn-outline-primary btn-sm" onclick="profileEditingRequest('/profilerequest')" style="margin-bottom:10px;">Edit</button>
+</div>
+{% end %}
+<div class="profile-content">
 {% raw content %}
+</div>
 {% end %}

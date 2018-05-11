@@ -40,9 +40,11 @@
             <div class="card card-body">
                 
             </div>
-            <div class="text-right">
-            <a href="">Revise</a> | <a href="">Delete</a>
-        </div>
+            {% if current_user.decode('utf8') == userName %}
+            <div class="text-right blog-options">
+            <a href="">Revise</a> <span class="text-muted">|</span> <a href="/blogdeleting?title={{ x[0] }}" class="text-danger">Delete</a>
+            </div>
+            {% end %}
         </div>
     </td>
 </tr>
