@@ -108,4 +108,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-*.pyc
+# python
+*.py[cod]
