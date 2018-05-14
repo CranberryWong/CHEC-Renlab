@@ -1,1 +1,1 @@
-web: python3 server.py --port=8001
+web: python3 server.py --port=$PORT
