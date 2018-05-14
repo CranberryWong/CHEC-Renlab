@@ -1,5 +1,4 @@
-tornado
-numpy
-mongoengine
-markdown
-hashlib
+#Markdown==2.6.11
+#mongoengine==0.15.0
+#numpy==1.13.3
+#tornado==4.5.2
