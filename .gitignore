@@ -110,3 +110,6 @@ venv.bak/
 
 # python
 *.py[cod]
+
+# Folder
+static/members/*

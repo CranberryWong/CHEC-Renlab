@@ -32,9 +32,10 @@ class BlogWritingHandler(BaseHandler):
         self.redirect("/blog/" + userName)
 
 class BlogContentHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
         title = self.get_argument('title', default="")[1:]
-        userName = tornado.escape.xhtml_escape(self.current_user)
+        userName = self.get_argument('name', default="")
         for i in os.listdir(BlogURL + userName):
             if str(uuid.uuid3(uuid.NAMESPACE_DNS, i)) == title:
                 title = i
@@ -54,7 +55,6 @@ class BlogDeletingHandler(BaseHandler):
 class BlogRevisingHandler(BaseHandler):
     def get(self):
         pass
-
 
 class ProfileHandler(BaseHandler):
     def get(self, userName):

@@ -1,6 +1,6 @@
-function contentRequest (title, id) {
+function contentRequest (title, name, id) {
     console.log("here?");
-    var jqxhr = $.ajax('/blogcontent?title=' + title, {
+    var jqxhr = $.ajax('/blogcontent?title=' + title + '&name=' + name, {
         method: 'get',    
     }).done(function (data) {
         console.log('成功, 收到的数据: ');

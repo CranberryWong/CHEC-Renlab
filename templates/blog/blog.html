@@ -35,7 +35,7 @@
 <tr>
     <th scope="row"></th>
     <td>
-        <a data-toggle="collapse" href="#b{{ x[1][-1] }}" role="button" aria-expanded="false" aria-controls="b{{ x[1][-1] }}" onclick="contentRequest('{{ "t" + str(uuid.uuid3(uuid.NAMESPACE_DNS,x[0])) }}', 'b{{ x[1][-1] }}')">{{ x[0].rstrip(".md") }}</a>
+        <a data-toggle="collapse" href="#b{{ x[1][-1] }}" role="button" aria-expanded="false" aria-controls="b{{ x[1][-1] }}" onclick="contentRequest('t{{ str(uuid.uuid3(uuid.NAMESPACE_DNS,x[0])) }}', '{{ userName }}', 'b{{ x[1][-1] }}')">{{ x[0].rstrip(".md") }}</a>
         <div class="collapse mt-3" id="b{{ x[1][-1] }}">
             <div class="card card-body">
                 

@@ -30,13 +30,6 @@ class ResourceHandler(BaseHandler):
         self.render("home/resource.html", title = self.title, memberList = memberList, content = content)
 
 
-# Program your code here
-class CurriculumHandler(BaseHandler):
-    def get(self):
-        pass
-
-
-'''
 class CurriculumHandler(BaseHandler):
     def get(self):
         self.title = 'HCI Curriculum'
@@ -46,4 +39,3 @@ class CurriculumHandler(BaseHandler):
             with open(os.path.join(CurriculumURL, y + '.md'), "r") as f:
                 curriculumList.append(markdown.markdown(f.read(), extensions=['markdown.extensions.tables']))
         self.render("home/curriculum.html", title = self.title, curriculumList = curriculumList)
-'''
