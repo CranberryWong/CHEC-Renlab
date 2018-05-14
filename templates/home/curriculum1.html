@@ -1,0 +1,17 @@
+{% extends "../main/main_base.html" %} {% block main %}
+{% import time %}
+<main>
+    <div class="container">
+        <div class="row">
+        <div class="col-xl-12">
+            {% for x in curriculumList %}
+                {% raw x %}
+            {% end %}
+        </div>
+    </div>
+</div>
+</main>
+{% end %}
+{% block customJS %}
+<script src="{{ static_url('scripts/curriculum.js') }}"></script>
+{% end %}

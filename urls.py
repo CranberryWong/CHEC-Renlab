@@ -13,6 +13,10 @@ handlers = [
             (r"/news", news.NewsHandler),
             (r"/news/([\w./?%&=]*)", news.NewsShowHandler),
             (r"/publication", documents.PubHandler),
+
+            # Write the URL of curriculum
+            #(r"/curriculum", documents.CurriculumHandler),
+            
             (r"/resource", documents.ResourceHandler),
 
             # Auth

@@ -12,7 +12,7 @@ NewsURL = os.path.join(os.path.dirname('./..'), "static/news/")
 
 class NewsHandler(BaseHandler):
     def get(self):
-        self.title = "CHEC"
+        self.title = "News"
         newsList = [ (x, os.stat(NewsURL + x)) for x in os.listdir(NewsURL) if x not in ignore_list ]
         self.render("home/news.html", title = self.title, newsList = newsList)
 
