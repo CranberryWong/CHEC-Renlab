@@ -35,3 +35,19 @@ function profileEditingRequest (url) {
         console.log('请求完成: 无论成功或失败都会调用');
     });
 }
+
+function contentRevise (title) {
+    console.log("here?");
+    var jqxhr = $.ajax('/blogrevising?title=' + title, {
+        method: 'get',    
+    }).done(function (data) {
+        console.log('成功, 收到的数据: ');
+        $('#blog-form-title').val(title)
+        $('#blog-form-content').text(data)
+    }).fail(function (xhr, status) {
+        console.log('失败: ' + xhr.status + ', 原因: ' + status);
+    }).always(function () {
+        console.log('请求完成: 无论成功或失败都会调用');
+    });
+}
+

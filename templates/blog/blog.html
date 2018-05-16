@@ -2,12 +2,12 @@
 {% block content %}  
 {% import uuid %}
 {% if current_user.decode('utf8') == userName %}
-<form role="form" action="/blogwriting" method="post">
+<form role="form" action="/blogwriting" method="post" id="blog-form">
     <div class="form-group">
-        <input type="text" class="form-control" value="Weekly Progress (yyyy.MM.dd - yyyy.MM.dd)" name="title">
+        <input type="text" class="form-control" value="Weekly Progress (yyyy.MM.dd - yyyy.MM.dd)" name="title" id="blog-form-title">
     </div>
     <div class="form-group">
-        <textarea class="form-control" rows="7" placeholder="" name="content">
+        <textarea class="form-control" rows="7" placeholder="" name="content" id="blog-form-content">
             #### **What did I do last week?**
             ##### RESEARCH
             - ...
@@ -24,7 +24,7 @@
             - ...
     </textarea>
     </div>
-    <button type="submit" class="btn btn-outline-primary btn-lg btn-block" href="/blog">Writing new blog</button>
+    <button type="submit" class="btn btn-outline-primary btn-lg btn-block" href="/blog">Save</button>
 </form>
 {% end %}
 </div>
@@ -42,7 +42,7 @@
             </div>
             {% if current_user.decode('utf8') == userName %}
             <div class="text-right blog-options">
-            <a href="">Revise</a> <span class="text-muted">|</span> <a href="/blogdeleting?title={{ x[0] }}" class="text-danger">Delete</a>
+            <a href="#blog-list" onclick="contentRevise('{{ x[0].rstrip(".md") }}')">Revise</a> <span class="text-muted">|</span> <a href="/blogdeleting?title={{ x[0] }}" class="text-danger">Delete</a>
             </div>
             {% end %}
         </div>

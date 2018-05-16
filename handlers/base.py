@@ -7,14 +7,14 @@ from handlers.settings import WebpageList
 
 class BaseHandler(tornado.web.RequestHandler):
     
-    def initialize(self, title="Untitled", lang_encode="en_US"):
-        tornado.locale.set_default_locale(lang_encode)
+    def initialize(self, title="Untitled"):
         self.title = title
-        self.lang_encode = lang_encode
         self.message = None
+        self.lang = self.get_cookie('lang')
+        tornado.locale.set_default_locale("en_US")
 
     def get_user_locale(self):
-        return tornado.locale.get("en_US")
+        return tornado.locale.get(self.get_cookie('lang'))
 
     def get_current_user(self):
         return self.get_secure_cookie('user')  
@@ -22,6 +22,18 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_id(self):
         return self.get_cookie('uid')  
         
-
+class I18nHandler(BaseHandler):
+    def get(self):
+        language = self.get_argument("lang")
+        if language == 'zh_CN':
+            self.set_cookie('lang', 'zh_CN')
+        elif language == 'ja_JP':
+            self.set_cookie('lang', 'ja_JP')
+        elif language == 'en_US':
+            self.set_cookie('lang', 'en_US')
+        else:
+            self.set_cookie('lang', 'en_US')
+        tornado.locale.get(self.get_cookie('lang'))
+        self.redirect('/')
 
     

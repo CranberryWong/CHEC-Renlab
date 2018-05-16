@@ -27,8 +27,11 @@
         <a class="p-2 text-dark" href="/experiment">Experiment</a>
         <a class="p-2 text-dark" href="/curriculum">Curriculum</a>
         <a class="p-2 text-dark" href="https://www.flickr.com/photos/123468034@N06/albums">Photos</a>
-        <a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>
-        <a class="p-2 text-dark" href="/language?lang=ja_JP">日本語</a>
+        
+        {% if handler.lang == "ja_JP" or handler.lang == "en_US" %}<a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>{% end %}
+        {% if handler.lang == "en_US" or handler.lang == "zh_CN" %}<a class="p-2 text-dark" href="/language?lang=ja_JP">日本語</a>{% end %}
+        {% if handler.lang == "ja_JP" or handler.lang == "zh_CN" %}<a class="p-2 text-dark" href="/language?lang=en_US">English</a>{% end %}
+        
       </nav>
       <!--<a class="btn btn-outline-primary" href="/" style="margin-right:20px;">Log in</a>-->
       {% if current_user %}

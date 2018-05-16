@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-from handlers import main, exception, util
+from handlers import base, main, exception, util
 from handlers.home import home, news, documents
 from handlers.blog import blog
 from handlers.auth import auth
@@ -26,6 +23,7 @@ handlers = [
             (r"/profile/([\w./?%&=]*)", blog.ProfileHandler),
             (r"/blogcontent?", blog.BlogContentHandler),
             (r"/blogdeleting?", blog.BlogDeletingHandler),
+            (r"/blogrevising?", blog.BlogRevisingHandler),
             (r"/profilewriting?", blog.ProfileEditingHandler),
             (r"/profilerequest", blog.ProfileRequestHandler),
 
@@ -38,8 +36,10 @@ handlers = [
             (r"/aesthetic/ratings", main.RatingHandler),
             (r"/finish", main.FinishHandler),
 
+            # i18n
+            (r"/language?", base.I18nHandler),
+
+            # 404
             (r".*", exception.ErrorHandler),
 
-            #i18n
-            (r"/language?", util.I18nHandler),
     ]

@@ -29,7 +29,6 @@ class ResourceHandler(BaseHandler):
             content = markdown.markdown(f.read())            
         self.render("home/resource.html", title = self.title, memberList = memberList, content = content)
 
-
 class CurriculumHandler(BaseHandler):
     def get(self):
         self.title = 'HCI Curriculum'

@@ -54,7 +54,12 @@ class BlogDeletingHandler(BaseHandler):
 
 class BlogRevisingHandler(BaseHandler):
     def get(self):
-        pass
+        title = self.get_argument('title')
+        userName = tornado.escape.xhtml_escape(self.current_user)
+        with open(BlogURL + userName + '/' + title+'.md', "r") as f:
+            content = f.read()
+        self.write(content)
+
 
 class ProfileHandler(BaseHandler):
     def get(self, userName):

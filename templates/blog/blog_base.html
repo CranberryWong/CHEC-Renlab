@@ -11,7 +11,7 @@
                 <h3 class="blog-name">{{ userName }}</h3>
             </div>
             <div class="col-9">
-                <div class="blog-list">
+                <div class="blog-list" id="blog-list">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a href="/blog/{{ userName }}" class="btn {% if request.path.split('/')[1] == 'blog' %}btn-primary{% else %}btn-outline-primary{% end %} btn-lg">Blog</a>
                         <a href="/profile/{{ userName }}" class="btn {% if request.path.split('/')[1] == 'profile' %}btn-primary{% else %}btn-outline-primary{% end %} btn-lg">Profile</a>
