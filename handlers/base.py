@@ -10,7 +10,11 @@ class BaseHandler(tornado.web.RequestHandler):
     def initialize(self, title="Untitled"):
         self.title = title
         self.message = None
-        self.lang = self.get_cookie('lang')
+        if not self.get_cookie('lang'):
+            self.set_cookie('lang', 'en_US')
+            self.lang = self.get_cookie('lang')
+        else:
+            self.lang = self.get_cookie('lang')
         tornado.locale.set_default_locale("en_US")
 
     def get_user_locale(self):
