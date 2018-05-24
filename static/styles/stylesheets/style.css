@@ -80,11 +80,32 @@ body {
 }
 
 /* line 17, ../sass/component/_home.scss */
+.home-cover {
+  position: relative;
+}
+/* line 20, ../sass/component/_home.scss */
+.home-cover .home-cover-title {
+  z-index: 20;
+  position: absolute;
+  width: 100%;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  bottom: 0;
+  padding: 10px;
+  margin-bottom: 0;
+}
+/* line 31, ../sass/component/_home.scss */
+.home-cover .home-cover-picture {
+  width: 100%;
+  object-fit: cover;
+}
+
+/* line 37, ../sass/component/_home.scss */
 .form-group--search {
   position: relative;
 }
 
-/* line 19, ../sass/component/_home.scss */
+/* line 39, ../sass/component/_home.scss */
 .form-group--search .btn-submit {
   background: transparent;
   border: none;

@@ -9,8 +9,11 @@ import tornado.locale
 # from mongoengine import connect
 
 from tornado.options import define, options
+from tornado.log import enable_pretty_logging
 
 from urls import handlers
+
+enable_pretty_logging()
 
 define('port', default=8000, help='run on the given port', type=int)
 # define('db', default='zeus', help='Database Name')
@@ -28,6 +31,7 @@ class Application(tornado.web.Application):
         
 def main():
     tornado.locale.load_translations(os.path.join(os.path.dirname(__file__), "csv_translations"))
+    #tornado.options.define("log_file_prefix", default=os.path.join(os.path.dirname(__file__), "tornado_main.log"))
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application(handlers))
     #http_server.listen(options.port)

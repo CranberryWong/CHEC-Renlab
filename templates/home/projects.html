@@ -1,0 +1,20 @@
+{% extends "../main/main_base.html" %} {% block main %}
+{% import time %}
+<main>
+    <div class="container">
+        <div class="row">
+        <div class="col-xl-12">
+            <h2>Projects</h2>
+            <table class="table">
+                    {% for x in projectList %}
+                      <tr>
+                        <th scope="row"></th>
+                        <td><a href="/projects/{{ x.rstrip('.md') }}">{{ x.rstrip('.md') }}</a></td>
+                      </tr>
+                    {% end %}
+            </table>
+        </div>
+    </div>
+</div>
+</main>
+{% end %}

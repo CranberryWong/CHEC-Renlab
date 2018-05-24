@@ -18,8 +18,6 @@ class NewsHandler(BaseHandler):
 
 class NewsShowHandler(BaseHandler):
     def get(self, news):
-        print(1)
-        print(news)
         self.title = news
         with open(NewsURL + news + '.md') as f:
             content = markdown.markdown(f.read())

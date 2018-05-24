@@ -14,6 +14,26 @@
     object-fit: cover;
 }
 
+.home-cover {
+    position: relative;
+
+    .home-cover-title {
+        z-index: 20;
+        position: absolute;
+        width:100%;
+        color:white;
+        background-color:rgba(0,0,0,0.3);
+        bottom:0;
+        padding: 10px;
+        margin-bottom:0;
+    }
+
+    .home-cover-picture {
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
 .form-group--search {
     position: relative; }
     .form-group--search .btn-submit {

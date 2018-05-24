@@ -9,8 +9,8 @@
                     {% for x in newsList %}
                       <tr>
                         <th scope="row"></th>
-                        <td><a href="/news/{{ x[0].split('.')[0] }}">{{ x[0].split('.')[0] }}</a></td>
-                        <td>{{ time.ctime(x[1][-1]) }}</td>                    
+                        <td><a href="/news/{{ x[0].rstrip('.md') }}">{{ x[0].rstrip('.md').split(']')[1] }}</a></td>
+                        <td>{{ x[0].rstrip('.md').split(']')[0][1:] }}</td>                    
                       </tr>
                     {% end %}
             </table>
