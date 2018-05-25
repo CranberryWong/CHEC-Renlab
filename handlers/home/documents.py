@@ -44,7 +44,7 @@ class FacilitesHandler(BaseHandler):
     def get(self):
         self.title = "Facilities"
         with open(os.path.join(DocURL, 'facilities.md'), "r") as f:
-            content = markdown.markdown(f.read())
+            content = markdown.markdown(f.read(), extensions=['markdown.extensions.tables'])
         self.render("home/facilities.html", title = self.title, content = content)
 
 class ProjectsHandler(BaseHandler):

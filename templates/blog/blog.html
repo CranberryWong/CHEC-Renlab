@@ -4,7 +4,7 @@
 {% if current_user.decode('utf8') == userName %}
 <form role="form" action="/blogwriting" method="post" id="blog-form">
     <div class="form-group">
-        <input type="text" class="form-control" value="[yyyy.MM.dd - yyyy.MM.dd]Weekly Progress" name="title" id="blog-form-title">
+        <input type="text" class="form-control" value="[yyyy.MM.dd - yyyy.MM.dd] - Weekly Progress" name="title" id="blog-form-title">
     </div>
     <div class="form-group">
         <textarea class="form-control" rows="7" placeholder="" name="content" id="blog-form-content">
