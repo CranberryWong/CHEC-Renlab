@@ -34,7 +34,7 @@ def main():
     #tornado.options.define("log_file_prefix", default=os.path.join(os.path.dirname(__file__), "tornado_main.log"))
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application(handlers))
-    http_server.listen(options.port)
+    #http_server.listen(options.port)
     #http_server.bind(int(options.port), "0.0.0.0")
     http_server.bind(int(options.port), "localhost")
     http_server.start(1)
