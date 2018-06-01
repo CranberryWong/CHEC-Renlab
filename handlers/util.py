@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 ignore_list = [
     '.DS_Store',
     'avatar.png',

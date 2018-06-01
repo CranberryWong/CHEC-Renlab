@@ -1,4 +1,5 @@
-#! /usr/local/bin python3
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 from models.webpage import Webpage
 from handlers.settings import suncolor_sequence

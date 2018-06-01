@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 WebpageList = [
     # More and more use interactive webpage
 
