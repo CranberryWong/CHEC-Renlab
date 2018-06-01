@@ -114,3 +114,8 @@ venv.bak/
 # Folder
 static/members/
 __pycache__/
+models/__pycache__/
+handlers/__pycache__/
+handlers/auth/__pycache__/
+handlers/blog/__pycache__/
+handlers/home/__pycache__/
