@@ -11,6 +11,15 @@
   {% block costomCSS %}{% end %}
   <link rel="icon" href="{{ static_url('favicon.ico') }}">
   <script src="{{ static_url('libs/holderjs/holder.js') }}"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32872028-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-32872028-1');
+  </script>
 </head>
 
 <body>
@@ -26,11 +35,12 @@
         <a class="p-2 text-dark" href="/publication">Pulication</a>
         <a class="p-2 text-dark" href="/curriculum">Curriculum</a>
         <a class="p-2 text-dark" href="https://www.flickr.com/photos/123468034@N06/albums">Photos</a>
-        
-        {% if handler.lang == "ja_JP" or handler.lang == "en_US" %}<a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>{% end %}
-        {% if handler.lang == "en_US" or handler.lang == "zh_CN" %}<a class="p-2 text-dark" href="/language?lang=ja_JP">日本語</a>{% end %}
-        {% if handler.lang == "ja_JP" or handler.lang == "zh_CN" %}<a class="p-2 text-dark" href="/language?lang=en_US">English</a>{% end %}
-        
+
+        {% if handler.lang == "ja_JP" or handler.lang == "en_US" %}
+        <a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>{% end %} {% if handler.lang == "en_US" or handler.lang == "zh_CN" %}
+        <a class="p-2 text-dark" href="/language?lang=ja_JP">日本語</a>{% end %} {% if handler.lang == "ja_JP" or handler.lang == "zh_CN" %}
+        <a class="p-2 text-dark" href="/language?lang=en_US">English</a>{% end %}
+
       </nav>
       <!--<a class="btn btn-outline-primary" href="/" style="margin-right:20px;">Log in</a>-->
       {% if current_user %}
@@ -105,8 +115,7 @@
   </div>
   <script src="{{ static_url('scripts/popper.js') }}"></script>
   <script src="{{ static_url('scripts/jquery.min.js') }}"></script>
-  <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script> 
-  {% block customJS %}{% end %}
+  <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script> {% block customJS %}{% end %}
 </body>
 
 </html>

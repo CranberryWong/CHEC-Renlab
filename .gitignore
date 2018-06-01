@@ -112,4 +112,5 @@ venv.bak/
 *.py[cod]
 
 # Folder
-static/members/*
+static/members/
+__pycache__/
