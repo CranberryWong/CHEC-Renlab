@@ -15,6 +15,7 @@ class NewsHandler(BaseHandler):
     def get(self):
         self.title = "News"
         newsList = [ (x, os.stat(NewsURL + x)) for x in os.listdir(NewsURL) if x not in ignore_list ]
+        newsList = sorted(newsList, key=lambda x: x[0].rstrip('.md').split(']')[0][1:], reverse=True)
         self.render("home/news.html", title = self.title, newsList = newsList)
 
 class NewsShowHandler(BaseHandler):

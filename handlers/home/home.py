@@ -25,6 +25,6 @@ class MembersHandler(BaseHandler):
             "Assistant Professors": ["Zhenxin Wang", "Sayan Sarcar", "William Delamare", "Keita Mitani"],
             "Ph.D. Student": ["Kavous Salehzadeh Niksirat", "Xinhui Jiang", "Yang Li"],
             "Master Student": ["Chen Wang", "Zengyi Han", "Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu"],
-            "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Minami Namba", "Naoki Higashi", "Seira Itou"]
+            "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou"]
         }
         self.render("home/members.html", title = self.title, memberList = memberList, MemberURL = MemberURL)
