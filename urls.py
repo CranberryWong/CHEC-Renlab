@@ -29,6 +29,8 @@ handlers = [
             (r"/blogrevising?", blog.BlogRevisingHandler),
             (r"/profilewriting?", blog.ProfileEditingHandler),
             (r"/profilerequest", blog.ProfileRequestHandler),
+            (r"/passwordchanging", blog.PasswordChangeHandler),
+            (r"/customlinkchanging", blog.CustomLinkHandler),
 
             # Experiment
             (r"/experiment", main.MainHandler),

@@ -2,12 +2,10 @@
 <main>
     <div class="container">
         <div class="col-xl-12">
-            <h2>Members
-                <span class="badge badge-pill badge-warning">alpha</span>
-            </h2>
+            <h2>{{ _("Members") }}</h2>
             <hr> {% import os %} {% for k, v in memberList.items() %}
             <h4>
-                <span class="badge badge-light">{{ k }}</span>
+                <span class="badge badge-light">{{ _(k) }}</span>
             </h4>
             <div class="row">
                 {% for member in v %} {% if member in os.listdir(MemberURL) %}
@@ -17,6 +15,9 @@
                         <div class="card-body">
                             <h4 class="card-title">{{ member }}</h4>
                             <h6 class="card-subtitle mb-2 text-muted">{{ k }}</h6>
+                            {% if member in customLinkDict.keys() %}
+                                 <a href="{{ customLinkDict[member] }}">Link</a>
+                            {% end %}
                             <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
                             <!--<a href="http://www.xiangshiren.com" class="card-link">Homepage</a>-->
                         </div>

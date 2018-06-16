@@ -30,11 +30,11 @@
       </a>
       <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" href="/">{{ _("Home") }}</a>
-        <a class="p-2 text-dark" href="/members">Members</a>
-        <a class="p-2 text-dark" href="/news">News</a>
-        <a class="p-2 text-dark" href="/publication">Publication</a>
+        <a class="p-2 text-dark" href="/members">{{ _("Members") }}</a>
+        <a class="p-2 text-dark" href="/news">{{ _("News") }}</a>
+        <a class="p-2 text-dark" href="/publication">{{ _("Publications") }}</a>
         <!--<a class="p-2 text-dark" href="/curriculum">Curriculum</a>-->
-        <a class="p-2 text-dark" href="https://www.flickr.com/photos/123468034@N06/albums">Photos</a>
+        <a class="p-2 text-dark" href="https://www.flickr.com/photos/123468034@N06/albums">{{ _("Photos") }}</a>
 
         {% if handler.lang == "ja_JP" or handler.lang == "en_US" %}
         <a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>{% end %} {% if handler.lang == "en_US" or handler.lang == "zh_CN" %}
@@ -49,10 +49,10 @@
           {{ current_user }}
         </button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="/blog/{{ current_user }}">Blog</a>
-          <a class="dropdown-item" href="/resource">Resource</a>
+          <a class="dropdown-item" href="/blog/{{ current_user }}">{{ _("Blog") }}</a>
+          <a class="dropdown-item" href="/resource">{{ _("Resource") }}</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/signout">Sign Out</a>
+          <a class="dropdown-item" href="/signout">{{ _("Sign Out") }}</a>
         </div>
       </div>
       {% end %}
@@ -63,44 +63,50 @@
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
       <div class="row">
         <div class="col-4 col-md">
-          <h5>Features</h5>
+          <!--
+          <h5>{{ _("Features") }}</h5>
           <ul class="list-unstyled text-small">
+            
             <li>
-              <a class="text-muted disabled" href="#">Feature</a>
+              <a class="text-muted disabled" href="#">{{ _("Features") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="#">Documentation</a>
+              <a class="text-muted disabled" href="#">{{ _("Documentation") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="#">Stuff for developers</a>
+              <a class="text-muted disabled" href="#">{{ _("Stuff for developers") }}</a>
             </li>
+            
           </ul>
+          -->
         </div>
         <div class="col-4 col-md">
-          <h5>Resources</h5>
+          <!--<h5>{{ _("Resource") }}</h5>
           <ul class="list-unstyled text-small">
+            
             <li>
-              <a class="text-muted disabled" href="#">Resource</a>
+              <a class="text-muted disabled" href="#">{{ _("Resource") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="#">Source</a>
+              <a class="text-muted disabled" href="#">{{ _("Source") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="#">API</a>
+              <a class="text-muted disabled" href="#">{{ _("API") }}</a>
             </li>
-          </ul>
+          
+          </ul>-->
         </div>
         <div class="col-4 col-md">
-          <h5>About</h5>
+          <h5>{{ _("About") }}</h5>
           <ul class="list-unstyled text-small">
             <li>
-              <a class="text-muted disabled" href="#">Team</a>
+              <a class="text-muted disabled" href="#">{{ _("Team") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="/experiment">Experiment</a>
+              <a class="text-muted disabled" href="/experiment">{{ _("Experiment") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="/signin">Sign In</a>
+              <a class="text-muted disabled" href="/signin">{{ _("Sign In") }}</a>
             </li>
           </ul>
         </div>

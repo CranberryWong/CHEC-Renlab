@@ -17,14 +17,14 @@
             - ...
             # 
             ---
-            #### **what am I doing?**
+            #### **What am I doing?**
             ##### RESEARCH
             - ...
             ##### ADMIN
             - ...
     </textarea>
     </div>
-    <button type="submit" class="btn btn-outline-primary btn-lg btn-block" href="/blog">Save</button>
+    <button type="submit" class="btn btn-outline-primary btn-lg btn-block" href="/blog">{{ _("Save") }}</button>
 </form>
 {% end %}
 </div>
@@ -51,7 +51,6 @@
 {% end %}
 </table>
 <hr>
-<!--
 <div class="row justify-content-md-center">
     <nav aria-label="...">
         <ul class="pagination pagination-lg">
@@ -66,7 +65,7 @@
             </li>
         </ul>
     </nav>
-</div>-->
+</div>
 {% end %}
 {% block customJS %}
 <script src="{{ static_url('scripts/blog.js') }}"></script> 

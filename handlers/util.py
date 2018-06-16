@@ -6,4 +6,7 @@ ignore_list = [
     'avatar.png',
     'profile.md',
     'password.salt',
+    'custom.link',
+    'background.png',
+    'backup.zip'
 ]

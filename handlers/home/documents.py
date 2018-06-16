@@ -16,7 +16,7 @@ ProjectURL = os.path.join(DocURL, "projects")
 
 class PubHandler(BaseHandler):
     def get(self):
-        self.title = "Publication"
+        self.title = "Publications"
         with open(os.path.join(DocURL, 'publication.md'), "r") as f:
             content = markdown.markdown(f.read())
         self.render("home/publication.html", title = self.title, content = content)

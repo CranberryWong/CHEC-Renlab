@@ -6,6 +6,7 @@ import tornado.locale
 import markdown
 import os
 import uuid
+import hashlib
 
 from handlers.util import *
 from handlers.base import BaseHandler
@@ -90,4 +91,24 @@ class ProfileRequestHandler(BaseHandler):
         with open(profileURL, "r") as f:
             content = f.read()
         self.write(content)
-        
+
+class PasswordChangeHandler(BaseHandler):
+    @tornado.web.authenticated
+    def post(self):
+        password = self.get_argument('password', default="1234")
+        userName = tornado.escape.xhtml_escape(self.current_user)
+        passwordURL = BlogURL + userName + '/password.salt'
+        md5_password = hashlib.md5(password.encode("utf-8")).hexdigest()
+        with open(passwordURL, "w") as f:
+            f.write(md5_password)
+        self.redirect("/blog/" + userName)
+
+class CustomLinkHandler(BaseHandler):
+    @tornado.web.authenticated
+    def post(self):
+        link = self.get_argument('link', default="1234")
+        userName = tornado.escape.xhtml_escape(self.current_user)
+        linkURL = BlogURL + userName + '/custom.link'
+        with open(linkURL, "w") as f:
+            f.write(link)
+        self.redirect("/blog/" + userName)
