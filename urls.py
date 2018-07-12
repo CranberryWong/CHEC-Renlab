@@ -3,6 +3,8 @@ from handlers.home import home, news, documents
 from handlers.blog import blog
 from handlers.auth import auth
 
+from handlers.iss2018workshop import iss2018workshop
+
 handlers = [
             # Home
             (r"/", home.HomeHandler),
@@ -40,6 +42,12 @@ handlers = [
             (r"/aesthetic/start/([0-9]+)", main.WebpageHandler),
             (r"/aesthetic/ratings", main.RatingHandler),
             (r"/finish", main.FinishHandler),
+        
+            # HEC Workshop
+            #(r"/hec-workshop/index", base.I18nHandler),
+
+            # ISS Workshop
+            # (r"/iss2018workshop/index", iss2018workshop.IndexHandler),
 
             # i18n
             (r"/language?", base.I18nHandler),

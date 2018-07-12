@@ -1,0 +1,253 @@
+/*!
+ * IE10 viewport hack for Surface/desktop Windows 8 bug
+ * Copyright 2014-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+/*
+ * See the Getting Started docs for more information:
+ * http://getbootstrap.com/getting-started/#support-ie10-width
+ */
+@-ms-viewport     { width: device-width; }
+@-o-viewport      { width: device-width; }
+@viewport         { width: device-width; }
+
+/* Space out content a bit */
+body {
+  
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Custom page header */
+.header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 900px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 1280px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+  /* Logo Size */
+.logo {
+    height:50px;
+}
+.speaker{
+  text-align:center;
+}
+.speaker-avatar {
+    height:90px;
+}
+.speech-title {
+  margin:0 0 10px 0;
+}
+.bubble-right {
+  padding:15px 30px 15px 30px;
+  background-color:rgba(245,245,245,1);
+  border-radius: 20px;
+  position:relative;
+}
+.bubble-right:after {
+  content:"\00a0";
+  width:0;
+  height:0;
+  display:block;
+  border-style:solid;
+  border-width:15px;
+  border-color: transparent rgba(245,245,245,1) transparent transparent;
+  position:absolute;
+  z-index:-1;
+  right:0px;
+  bottom:0px;
+}
+.bubble-left {
+  padding:15px 30px 5px 30px;
+  background-color:rgba(245,245,245,1);
+  border-radius: 20px;
+  position:relative;
+}
+.bubble-left:after {
+  content:"\00a0";
+  width:0;
+  height:0;
+  display:block;
+  border-style:solid;
+  border-width:15px;
+  border-color: transparent transparent transparent rgba(245,245,245,1);
+  position:absolute;
+  z-index:-1;
+  left:0px;
+  bottom:0px;
+}
+.img-map {
+    width:100%;
+}
+.chec {
+    width:40%;
+    margin-left:30px;
+    float:right;
+}
+.school-logo{
+    float:right;
+    width:80px;
+}
+@media screen and (max-width: 992px) {
+  .nav {
+    display:none;
+  }
+  .header {
+    text-align: center;
+  }
+  
+}
+
+
+#scrollUp {
+  bottom:100px;
+  background-color: #777;
+  color: #eee;
+  font-size: 30px;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  bottom: 20px;
+  right: 20px;
+  overflow: hidden;
+  width: 46px;
+  height: 46px;
+  border: none;
+  opacity: .8;
+  padding-top:8px;
+}
+#scrollUp:hover {
+  background-color: #555555;
+  opacity: .8;
+}
+.nav>li>a {
+  color:white;
+}
+.nav>li>a:hover {
+  border-bottom:white 1px solid;
+  border-radius:0px;
+  background-color:transparent;
+}
+.header {
+  border-bottom: 1px solid #314C8E;
+}
+.nav>li>.btn:hover {
+  border-radius:4px;
+  background-color:#55AED1;
+  border-bottom:#4898B8 1px solid;
+}
+.breadcrumb-fix {
+  margin-top:40px;
+}
+
+.font-zoom-out {
+	font-size: 16px;
+	color:#666666;
+}
+
+#sider-menu {
+  margin-top:40px;
+  margin-left:80px;
+  border-radius: 6px;
+  background-color:#F5F5F5;
+  padding:30px;
+}
+
+@media screen and (max-width: 1217px)  {
+  #sider-menu {
+    display:none;
+  }
+}
+
+@media screen and (min-width: 1218px) and (max-width: 1360px) {
+  #sider-menu {
+    margin-left:10px;
+  }
+}
+
+#sider-menu .nav>li>a {
+  color:#333333;
+}
+#sider-menu .nav>li>a:hover {
+  background-color:#dddddd;
+  border-radius:6px;
+  border-bottom: none;
+}
+#sider-menu .nav>.active>a {
+  border-left: 1px solid #344C89;
+  border-bottom: none;
+  color:white;
+}
+#sider-menu .nav>.active>a:hover {
+  background-color:#344C89;
+}
+.call-finish {
+	color:#aaaaaa;
+}
