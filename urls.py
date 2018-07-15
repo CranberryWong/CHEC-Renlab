@@ -12,6 +12,7 @@ handlers = [
             (r"/news", news.NewsHandler),
             (r"/news/(.*)", news.NewsShowHandler),
             (r"/facilities", documents.FacilitesHandler),
+            (r"/intro", documents.IntroHandler),
             (r"/projects", documents.ProjectsHandler),
             (r"/projects/(.*)", documents.ProjectShowHandler),
             (r"/publication", documents.PubHandler),

@@ -41,6 +41,13 @@ class CurriculumHandler(BaseHandler):
                 curriculumList.append(markdown.markdown(f.read(), extensions=['markdown.extensions.tables']))
         self.render("home/curriculum.html", title = self.title, curriculumList = curriculumList)
 
+class IntroHandler(BaseHandler):
+    def get(self):
+        self.title = "Introduction for CHEC"
+        with open(os.path.join(DocURL, 'chec.md'), "r") as f:
+            content = markdown.markdown(f.read(), extensions=['markdown.extensions.tables'])
+        self.render("home/page.html", title = self.title, content = content)
+
 class FacilitesHandler(BaseHandler):
     def get(self):
         self.title = "Facilities"
