@@ -1,0 +1,31 @@
+{% extends "experiment_page.html" %} {% block content %}
+<div class="card box-shadow" style="width: 100%;">
+    <div class="card-body">
+        <h1 class="card-title">Some Note</h5>
+
+            <h6 class="card-subtitle mb-2 text-muted">Compare your visual preferences to people around the world.</h6>
+            <hr>
+            <p class="card-text">In this test, you will be shown a series of website screenshots. You will then rate the visual appeal (how much you like the design) of each on a scale from 1 (very unappealing) to 9 (very appealing). There are no time limitation during ratings. There will be a short practice trial before the actual test to familiarize you with what you will have to do. In the actual test, you can choose between rating up to (100) websites. </p>
+
+            <p class="card-text text-muted">However, the more websites you rate, the better your results will be as our algorithm will have more data to work with. After the test, you will be presented some test results. The results will tell you about your own aesthetic preferences and how they compare to others with similar backgrounds to you!</p>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="iveread" onclick="iveRead();">
+                <label class="form-check-label" for="iveread" id="iveread"> I have read :) </label>
+            </div>
+            <a href="/aesthetic/start/{{ wid }}" class="mt-4 btn btn-lg btn-block btn-primary disabled" id="second-next">{% if wid == 999 %}{{ _('Go trial!') }}{% else %}{{ _('Go!') }}{% end %}</a>
+    </div>
+</div>
+{% end %}
+{% block customJS %}
+<script>
+    function iveRead () {
+        if ($("#iveread").is(':checked')) {
+        $("#second-next").removeClass("disabled");
+        };
+        if (! $("#iveread").is(':checked')) {
+        $("#second-next").addClass("disabled");
+        };
+    }
+</script>
+{% end %}

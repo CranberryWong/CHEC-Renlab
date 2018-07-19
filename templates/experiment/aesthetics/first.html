@@ -1,0 +1,42 @@
+{% extends "experiment_page.html" %} {% block content %}
+
+<div class="card box-shadow" style="width: 100%;">
+    <div class="card-body">
+        <h1 class="card-title">Visual Appeal Test</h5>
+
+            <h6 class="card-subtitle mb-2 text-muted">Give your visual preference ratings to graphic user interfaces.</h6>
+            <hr>
+            <p class="card-text">You're about to take a test at CHEC experiment crowdsourcing platform. Your contribution to our research allows us to learn more about human aesthetic preferences on user interface. The further results from your test will also tell you something about yourself! Please read the following information carefully before proceeding.</p>
+<figure class="figure">
+<img src="{{ static_url('images/figure.png') }}" alt="" class="figure-img img-fluid rounded img-thumbnail" style="width:100%;">
+</figure>
+            <p class="card-text">Why we are doing this research: We are trying to understand what makes graphic user interfaces(In this test: webpages) look visually appealing. More specifically, the goal of this study is to find out a mathematic model to predict our visual preferences, and further, to develop aesthetic optimization for interface design. What you will have to do: You will be shown screenshots of websites. You will then be asked to rate each one on a scale from 1 to 9 based on visual appeal. Your participation in this study is completely voluntary, and you may refuse to participate or withdraw from the study without penalty or loss of benefits to which you may otherwise be entitled. What you will get out of it: We will give you feedback on how your results compare to those of other participants. The final results from this experiment will be posted on our page. The experiment is not designed to benefit you, but you may enjoy it and enjoy comparing your results with those of other participants. Any data that we collect will be securely stored on our servers. </p>
+
+            <p class="card-text">Duration: Approximately 25 minutes.</p>
+
+            <p class="card-text">Contact information: If you have questions about this research or your rights as a research participant, or wish to obtain information, ask questions or discuss any concerns about this study, you may contact the organizer: <a href="mailto:i@wangchen0413.cn">i@wangchen0413.cn. </a></p>
+
+            <p class="card-text">In addition, we are welcomed you to make the crowdsourcing platform better. If you find any bugs or time delay on this system, please also contact <a href="mailto:i@wangchen0413.cn">i@wangchen0413.cn.</a> </p>
+
+            <p class="card-text"><span style="color:red;">* </span>Please note: this study will use (secure) cookies to store personal information.</p>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="iveread" onclick="iveRead();">
+                    <label class="form-check-label" for="iveread"> I have read :) </label>
+                </div>
+                <a href="/aesthetic/form" id="first-next" class="mt-4 btn btn-lg btn-block btn-primary disabled">{{ _('Next') }}</a>
+
+    </div>
+</div>
+{% end %}
+{% block customJS %}
+<script>
+    function iveRead () {
+        if ($("#iveread").is(':checked')) {
+        $("#first-next").removeClass("disabled");
+        };
+        if (! $("#iveread").is(':checked')) {
+        $("#first-next").addClass("disabled");
+        };
+    }
+</script>
+{% end %}

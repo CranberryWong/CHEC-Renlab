@@ -5,7 +5,6 @@ import tornado.web
 import tornado.locale
 import random
 from models.user import User
-from handlers.settings import WebpageList
 # from mongoengine import *
 
 class BaseHandler(tornado.web.RequestHandler):

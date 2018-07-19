@@ -5,12 +5,11 @@
   <meta charset="UTF-8">
   <title>{{ _(handler.title) }}</title>
   <link rel="stylesheet" href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}">
-  <!--<link rel="stylesheet" href="../../static/libs/bootstrap/dist/css/bootstrap.css">-->
   <link rel="stylesheet" href="{{ static_url('styles/stylesheets/style.css') }}">
-  <!--<link rel="stylesheet" href="../../static/styles/style.css">-->
   {% block costomCSS %}{% end %}
   <link rel="icon" href="{{ static_url('favicon.ico') }}">
   <script src="{{ static_url('libs/holderjs/holder.js') }}"></script>
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32872028-1"></script>
   <script>
@@ -66,22 +65,12 @@
 
           <h5>{{ _("Friendly Link") }}</h5>
           <ul class="list-unstyled text-small">
-
             <li>
-              <a class="text-muted disabled" href="http://iss2018workshop.xrenlab.com">{{ _("ISS Workshop 2018") }}</a>
+              <a class="text-muted disabled" href="http://iss2018ws.xrenlab.com">{{ _("ISS Workshop 2018") }}</a>
             </li>
             <li>
               <a class="text-muted disabled" href="http://iwhec2017.xrenlab.com">{{ _("IWHEC 2017") }}</a>
-
             </li>
-            <!--
-            <li>
-              <a class="text-muted disabled" href="#">{{ _("Documentation") }}</a>
-            </li>
-            <li>
-              <a class="text-muted disabled" href="#">{{ _("Stuff for developers") }}</a>
-            </li>
-            -->
           </ul>
 
         </div>

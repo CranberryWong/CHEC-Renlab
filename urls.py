@@ -1,9 +1,9 @@
-from handlers import base, main, exception, util
+from handlers import base, exception, util
 from handlers.home import home, news, documents
 from handlers.blog import blog
 from handlers.auth import auth
 
-from handlers.iss2018workshop import iss2018workshop
+from handlers.aesthetics import main
 
 handlers = [
             # Home
@@ -42,13 +42,7 @@ handlers = [
             (r"/aesthetic/note?", main.NoteHandler),
             (r"/aesthetic/start/([0-9]+)", main.WebpageHandler),
             (r"/aesthetic/ratings", main.RatingHandler),
-            (r"/finish", main.FinishHandler),
-        
-            # HEC Workshop
-            #(r"/hec-workshop/index", base.I18nHandler),
-
-            # ISS Workshop
-            # (r"/iss2018workshop/index", iss2018workshop.IndexHandler),
+            (r"/aesthetic/finish", main.FinishHandler),
 
             # i18n
             (r"/language?", base.I18nHandler),
