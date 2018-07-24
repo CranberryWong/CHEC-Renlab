@@ -22,7 +22,6 @@ def pagePreference():
     with open(webpageCSV, "r+") as f:
         reader = csv.reader(f)
         for i in reader:
-
             if i[0] == 'id':
                 continue
             if i[1] not in webpageAData:

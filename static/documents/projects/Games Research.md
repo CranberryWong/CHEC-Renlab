@@ -1,7 +1,7 @@
 ##Games Research
 ![Games Research](https://farm1.staticflickr.com/979/40440611260_f70ce27b41_c.jpg)
 
-**Kavous Salehzadeh Niksirat  Xiangshi Ren  Chaklam Silpasuwanchai  Zhenxin Wang  Wang Xue  Katsuta Akihiro  Sanda Hiromu  Tanigawa Tomoya  Guanghui Chen  Kaechang Park**  
+**Kavous Salehzadeh Niksirat, Xiangshi Ren, Chaklam Silpasuwanchai, Zhenxin Wang, Wang Xue, Katsuta Akihiro, Sanda Hiromu, Tanigawa Tomoya, Guanghui Chen, Kaechang Park**  
 
 Games have become part of our daily lives. This project seeks to (1) improve gaming experiences and interaction techniques and (2) to apply games for the purposes of education, health, and social causes.
 
