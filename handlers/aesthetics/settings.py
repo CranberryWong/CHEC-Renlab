@@ -79,7 +79,7 @@ WebpageList = [
 '32*gingerweb.jp',
 '33*cp.pocky.jp',
 '34*aladdin-aic.com',
-'35*ho-ginza.com',
+'35*ho-ginza.net',
 '36*pandayori.com',
 '37*sekimoto.dental',
 '38*kokage-m.com',
