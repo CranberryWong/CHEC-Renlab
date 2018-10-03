@@ -1,4 +1,4 @@
-{% extends "../main/main_base.html" %} {% block main %}
+{% extends "../main/main_base.html" %} {% block main %} {% import uuid %}
 <main>
     <div class="container">
         <div class="col-xl-12">
@@ -8,10 +8,10 @@
                 <span class="badge badge-light">{{ _(k) }}</span>
             </h4>
             <div class="row">
-                {% for member in v %} {% if member in os.listdir(MemberURL) %}
+                {% for member in v %} {% if 'members-180615/'+member+'/avatar.png' in allAvatarURL %}
                 <div class="col-3">
                     <div class="card">
-                        <img class="card-img-top" src="{{ static_url('members/'+member+'/avatar.png') }}" alt="Card image cap">
+                        <img class="card-img-top" src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title">{{ member }}</h4>
                             <h6 class="card-subtitle mb-2 text-muted">{{ k }}</h6>
