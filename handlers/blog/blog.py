@@ -7,6 +7,7 @@ import markdown
 import os
 import uuid
 import hashlib
+import time
 
 from handlers.util import *
 from handlers.base import BaseHandler
@@ -18,6 +19,7 @@ class BlogHandler(BaseHandler):
         self.title = "Blog"
         avatarURL = 'members/' + userName + '/avatar.png'
         blogList = [ (x, os.stat(BlogURL + userName + '/' + x)) for x in os.listdir(BlogURL + userName) if x not in ignore_list ]
+        blogList = [(x[0], time.ctime(x[1].st_ctime)) for x in sorted(blogList, key = lambda x: x[1].st_ctime,reverse=True)]
         #blogList = list(set(list(lambda x: x[0] ,blogList)).difference(set(ignore_list)))
         self.render("blog/blog.html", title = self.title, avatarURL = avatarURL, userName = userName, blogList = blogList)
 
