@@ -9,7 +9,7 @@
             </h4>
             <div class="row">
                 {% for member in v %} {% if MemberURL+'/'+member+'/avatar.png' in allAvatarURL %}
-                <div class="col-3">
+                <div class="col-3 mb-3">
                     <div class="card">
                         <img class="card-img-top" src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" alt="Card image cap">
                         <div class="card-body">
