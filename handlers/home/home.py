@@ -50,15 +50,14 @@ class MembersHandler(BaseHandler):
         }
         customLinkDict = {}
         MemberURL=""
-        for file in myBucket.objects.all():
+        for file in myBucket.objects.filter(Prefix="members-180615/", Delimiter = '\\'):
             params = {'Bucket': BUCKET_NAME, 'Key': file.key}
             url = s3c.generate_presigned_url('get_object', params)
             # get avatar public url
             allAvatarURL[file.key] = url
             file_key = file.key
             # print(allAvatarURL[file.key])
-            tmp = file_key.split('/')[0]
-            if 'member' in tmp:
+            if 'member' in file_key.split('/')[0]:
                 MemberURL=file_key.split('/')[0]
             # get custom link content
             if 'custom.link' in file_key:
