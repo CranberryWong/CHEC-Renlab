@@ -56,7 +56,10 @@ class MembersHandler(BaseHandler):
             # get avatar public url
             allAvatarURL[file.key] = url
             file_key = file.key
-            MemberURL=file_key.split('/')[0]
+            # print(allAvatarURL[file.key])
+            tmp = file_key.split('/')[0]
+            if 'member' in tmp:
+                MemberURL=file_key.split('/')[0]
             # get custom link content
             if 'custom.link' in file_key:
                 dir = os.path.dirname(file_key)
@@ -66,7 +69,6 @@ class MembersHandler(BaseHandler):
                 s3.Bucket(BUCKET_NAME).download_file(file_key, file_key)
                 with open(file_key) as f:
                     customLinkDict[file_key.split('/')[1]] = f.read()
-
         # OLD CODE
         # for x in os.listdir(MemberURL):
         #     if os.path.isfile(MemberURL + x + '/custom.link'):
