@@ -49,12 +49,14 @@ class MembersHandler(BaseHandler):
             "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Yugandhara Suren Hiray", "Junlin Sun", "Anran Wu"]
         }
         customLinkDict = {}
+        MemberURL=""
         for file in myBucket.objects.all():
             params = {'Bucket': BUCKET_NAME, 'Key': file.key}
             url = s3c.generate_presigned_url('get_object', params)
             # get avatar public url
             allAvatarURL[file.key] = url
             file_key = file.key
+            MemberURL=file_key.split('/')[0]
             # get custom link content
             if 'custom.link' in file_key:
                 dir = os.path.dirname(file_key)
@@ -73,4 +75,4 @@ class MembersHandler(BaseHandler):
         # print(customLinkDict)
         # self.render("home/members.html", title = self.title, memberList = memberList, MemberURL = MemberURL, customLinkDict = customLinkDict)
 
-        self.render("home/members.html", title = self.title, memberList = memberList, allAvatarURL=allAvatarURL, customLinkDict = customLinkDict)
+        self.render("home/members.html", title = self.title, memberList = memberList, MemberURL = MemberURL, allAvatarURL=allAvatarURL, customLinkDict = customLinkDict)
