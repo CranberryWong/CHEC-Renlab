@@ -41,10 +41,10 @@ class MembersHandler(BaseHandler):
         memberList = {
             "Professor": ["Xiangshi Ren", "Kiyoshi Nakahara", "Kaechang Park"],
             "Associate Professor": ["Yukinobu Hoshino", "Kazunori Ueda", "Toru Kurihara"],
-            "Visiting Professor": ["Silpasuwanchai Chaklam", "Kibum Kim"],
+            "Visiting Researcher": ["Kavous Salehzadeh Niksirat", "Silpasuwanchai Chaklam", "Kibum Kim"],
             "Assistant Professor": ["Zhenxin Wang", "Sayan Sarcar", "William Delamare", "Keita Mitani"],
             "Secretary": ["Kyoko Hatakenaka"],
-            "Ph.D. Student": ["Kavous Salehzadeh Niksirat", "Xinhui Jiang", "Yang Li", "Chen Wang"],
+            "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
             "Master Student": ["Zengyi Han", "Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani"],
             "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Yugandhara Suren Hiray", "Junlin Sun", "Anran Wu"]
         }
