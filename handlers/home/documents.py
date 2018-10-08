@@ -51,7 +51,15 @@ class ResourceHandler(BaseHandler):
     def get(self):
         self.title = 'Resource'
         userName = tornado.escape.xhtml_escape(self.current_user)
+
         memberList = [ x for x in os.listdir(BlogURL) if x not in ignore_list]
+        
+        allAvatarURL={}
+        for file in myBucket.objects.filter(Prefix="members-180615/", Delimiter = '\\'):
+            params = {'Bucket': BUCKET_NAME, 'Key': file.key}
+            url = s3c.generate_presigned_url('get_object', params)
+            # get avatar public url
+            allAvatarURL[file.key] = url
         
         if not os.path.exists(dirDoc):
             os.makedirs(dirDoc)
@@ -59,7 +67,7 @@ class ResourceHandler(BaseHandler):
         
         with open(os.path.join(dirDoc, 'resource.md'), encoding='utf-8', mode="r") as f:
             content = markdown.markdown(f.read())            
-        self.render("home/resource.html", title = self.title, memberList = memberList, content = content)
+        self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL=allAvatarURL, content = content)
 
 class CurriculumHandler(BaseHandler):
     def get(self):
