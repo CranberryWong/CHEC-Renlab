@@ -22,7 +22,7 @@
             <div class="member-mini-list">
             {% for member in memberList %}
             <div class="member-mini-list-element"> 
-            <img src="{{ static_url('members/'+ member + '/avatar.png') }}" alt="" class="rounded-circle member-mini-list-element-img">
+            <img src="{{ static_url('members/'+ member + '/avatar.png') }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
                 <a href="/blog/{{ member }}">{{ member }}</a>
             </div>   
             {% end %}
