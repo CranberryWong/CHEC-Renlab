@@ -64,10 +64,18 @@ class ResourceHandler(BaseHandler):
 class CurriculumHandler(BaseHandler):
     def get(self):
         self.title = 'HCI Curriculum'
-        year = ['2014']
+        year = ['2014','2016','2017','2018']
         curriculumList = []
+        for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter = '\\'):
+            dir = os.path.dirname(file.key)
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            if file.key[-1]=="/":
+                continue
+            if not os.path.isfile(file.key):
+                s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)
         for y in year:
-            with open(os.path.join(CurriculumURL, y + '.md'), "r") as f:
+            with open(os.path.join(dir, y + '.md'), encoding='utf-8', mode="r") as f:
                 curriculumList.append(markdown.markdown(f.read(), extensions=['markdown.extensions.tables']))
         self.render("home/curriculum.html", title = self.title, curriculumList = curriculumList)
 
