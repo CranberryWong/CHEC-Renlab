@@ -5,10 +5,21 @@ import tornado
 import tornado.locale
 import markdown
 import os
+import boto3 
+import botocore
 
 from handlers.base import BaseHandler
 from handlers.util import *
 from handlers.blog.blog import BlogURL
+from boto3 import Session
+
+# AWS S3 Configuration
+BUCKET_NAME = 'chec-static'
+session = Session()
+credentials = session.get_credentials()
+current_credentials = credentials.get_frozen_credentials()
+s3 = boto3.resource('s3')
+s3c = boto3.client('s3',aws_access_key_id=current_credentials.access_key,aws_secret_access_key=current_credentials.secret_key,aws_session_token=current_credentials.token)
 
 DocURL = os.path.join(os.path.dirname('./..'), "static/documents")
 CurriculumURL = os.path.join(DocURL, "HCIcurriculum")
@@ -17,7 +28,17 @@ ProjectURL = os.path.join(DocURL, "projects")
 class PubHandler(BaseHandler):
     def get(self):
         self.title = "Publications"
-        with open(os.path.join(DocURL, 'publication.md'), "r") as f:
+
+        # AWS S3 access bucket
+        myBucket = s3.Bucket(BUCKET_NAME)
+        config = s3c._client_config
+        config.signature_version = botocore.UNSIGNED
+        dir = os.path.dirname("documents/publication.md")
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        s3.Bucket(BUCKET_NAME).download_file(dir+"/publication.md", dir+"/publication.md")
+
+        with open(os.path.join(dir, 'publication.md'), "r") as f:
             content = markdown.markdown(f.read())
         self.render("home/publication.html", title = self.title, content = content)
 
