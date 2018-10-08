@@ -107,6 +107,7 @@ class ProjectsHandler(BaseHandler):
             if not os.path.isfile(file.key):
                 s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)   
         projectList = [ x for x in os.listdir(dir+'/') if x not in ignore_list ]    
+        projectList.sort(key = lambda x: os.stat(dir+'/'+x).st_ctime)
         self.render("home/projects.html", title = self.title, projectList = projectList)
 
 class ProjectShowHandler(BaseHandler):
