@@ -38,7 +38,7 @@ class PubHandler(BaseHandler):
             os.makedirs(dir)
         s3.Bucket(BUCKET_NAME).download_file(dir+"/publication.md", dir+"/publication.md")
 
-        with open(os.path.join(dir, 'publication.md'), "r") as f:
+        with open(os.path.join(dir, 'publication.md'), encoding='utf-8', mode="r") as f:
             content = markdown.markdown(f.read())
         self.render("home/publication.html", title = self.title, content = content)
 
