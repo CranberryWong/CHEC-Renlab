@@ -31,6 +31,7 @@ CurriculumURL = os.path.join(DocURL, "HCIcurriculum")
 ProjectURL = os.path.join(DocURL, "projects")
 
 dirDoc = os.path.dirname("documents/publication.md")
+dirProjects = "documents/projects/"
 
 class PubHandler(BaseHandler):
     def get(self):
@@ -89,7 +90,7 @@ class FacilitesHandler(BaseHandler):
         if not os.path.exists(dirDoc):
             os.makedirs(dirDoc)
         s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/facilities.md", dirDoc+"/facilities.md")
-        
+
         with open(os.path.join(dirDoc, 'facilities.md'), encoding='utf-8', mode="r") as f:
             content = markdown.markdown(f.read(), extensions=['markdown.extensions.tables'])
         self.render("home/facilities.html", title = self.title, content = content)
@@ -97,13 +98,21 @@ class FacilitesHandler(BaseHandler):
 class ProjectsHandler(BaseHandler):
     def get(self):
         self.title = "Projects"
-        projectList = [ x for x in os.listdir(ProjectURL) if x not in ignore_list ]
+        for file in myBucket.objects.filter(Prefix="documents/projects/", Delimiter = '\\'):
+            dir = os.path.dirname(file.key)
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            if file.key[-1]=="/":
+                continue
+            if not os.path.isfile(file.key):
+                s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)   
+        projectList = [ x for x in os.listdir(dir+'/') if x not in ignore_list ]    
         self.render("home/projects.html", title = self.title, projectList = projectList)
 
 class ProjectShowHandler(BaseHandler):
     def get(self, project):
         print(project)
         self.title = project
-        with open(ProjectURL + '/' + project + '.md') as f:
+        with open(dirProjects + '/' + project + '.md') as f:
             content = markdown.markdown(f.read())
         self.render("home/page.html", title = self.title, content = content)
