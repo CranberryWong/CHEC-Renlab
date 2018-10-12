@@ -12,6 +12,7 @@ from handlers.base import BaseHandler
 from handlers.util import *
 from handlers.blog.blog import BlogURL
 from boto3 import Session
+from datetime import datetime
 
 # AWS S3 Configuration
 BUCKET_NAME = 'chec-static'
@@ -63,11 +64,27 @@ class ResourceHandler(BaseHandler):
         
         if not os.path.exists(dirDoc):
             os.makedirs(dirDoc)
-        s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/resource.md", dirDoc+"/resource.md")
+        if os.path.exists(dirDoc+"/resource.md"):
+            obj = s3.Object(BUCKET_NAME,  dirDoc+"/resource.md")
+            if obj.last_modified != datetime.fromtimestamp(os.path.getmtime(dirDoc+"/resource.md")):
+                os.remove(dirDoc+"/resource.md")
+                s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/resource.md", dirDoc+"/resource.md")
+        else:
+            s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/resource.md", dirDoc+"/resource.md")
+
+        if os.path.exists(dirDoc+"/agenda.md"):
+            obj = s3.Object(BUCKET_NAME,  dirDoc+"/agenda.md")
+            if obj.last_modified != datetime.fromtimestamp(os.path.getmtime(dirDoc+"/agenda.md")):
+                os.remove(dirDoc+"/agenda.md")
+                s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/agenda.md", dirDoc+"/agenda.md")
+        else:
+            s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/agenda.md", dirDoc+"/agenda.md")
         
         with open(os.path.join(dirDoc, 'resource.md'), encoding='utf-8', mode="r") as f:
             content = markdown.markdown(f.read())            
-        self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL=allAvatarURL, content = content)
+        with open(os.path.join(dirDoc, 'agenda.md'), mode="r") as a:
+            agenda = markdown.markdown(a.read())
+        self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda)
 
 class CurriculumHandler(BaseHandler):
     def get(self):
