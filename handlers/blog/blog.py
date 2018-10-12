@@ -8,16 +8,34 @@ import os
 import uuid
 import hashlib
 import time
+import boto3 
+import botocore
 
 from handlers.util import *
 from handlers.base import BaseHandler
+from boto3 import Session
+
+# AWS S3 Configuration
+BUCKET_NAME = 'chec-static'
+session = Session()
+credentials = session.get_credentials()
+current_credentials = credentials.get_frozen_credentials()
+s3 = boto3.resource('s3')
+s3c = boto3.client('s3',aws_access_key_id=current_credentials.access_key,aws_secret_access_key=current_credentials.secret_key,aws_session_token=current_credentials.token)
+
+# AWS S3 access bucket
+myBucket = s3.Bucket(BUCKET_NAME)
+config = s3c._client_config
+config.signature_version = botocore.UNSIGNED
 
 BlogURL = os.path.join(os.path.dirname('./..'), "static/members/")
 
 class BlogHandler(BaseHandler):
     def get(self, userName):
         self.title = "Blog"
-        avatarURL = 'members/' + userName + '/avatar.png'
+        params = {'Bucket': BUCKET_NAME, 'Key': 'members-180615/' + userName + '/avatar.png'}
+        avatarURL = s3c.generate_presigned_url('get_object', params)
+        # avatarURL = 'members/' + userName + '/avatar.png'
         blogList = [ (x, os.stat(BlogURL + userName + '/' + x)) for x in os.listdir(BlogURL + userName) if x not in ignore_list ]
         blogList.sort(key = lambda x: x[1].st_ctime, reverse = True)
         #blogList = list(set(list(lambda x: x[0] ,blogList)).difference(set(ignore_list)))
