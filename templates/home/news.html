@@ -9,7 +9,16 @@
                     {% for x in newsList %}
                       <tr>
                         <th scope="row"></th>
-                        <td><a href="/news/{{ x.rstrip('.md') }}">{{ x.rstrip('.md')}}</a></td>
+                        <td>
+                            <a href="/news/{{ x.rstrip('.md') }}">{{ x.rstrip('.md').replace(x[x.find("<"):x.find(">")+1],"")}}</a>
+                            <div>
+                            {% if ('<' in x) %}
+                                {% for b in x[x.find("<")+1:x.find(">")].rstrip('md').split(",") %}
+                                <a href="#" class="badge badge-primary">{{b}}</a>
+                                {% end %}
+                            {% end %}
+                            </div>
+                        </td>
                         <td>{{ x.rstrip('.md').split(']')[0][1:] }}</td>                    
                       </tr>
                     {% end %}

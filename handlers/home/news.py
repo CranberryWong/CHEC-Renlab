@@ -42,13 +42,19 @@ class NewsHandler(BaseHandler):
         # dir = dir + '/'
         # newsList = [ (x, os.stat(dir + x)) for x in os.listdir(dir) if x not in ignore_list ]
 
-        newsList = [file.key.replace("news/","") for file in myBucket.objects.filter(Prefix="news/", Delimiter = '\\') if file not in ignore_list]
+        newsList = [file.key.replace('news/','') for file in myBucket.objects.filter(Prefix='news/', Delimiter = '\\') if file not in ignore_list]
         newsList = sorted(newsList, key=lambda x: x.rstrip('.md').split(']')[0][1:], reverse=True)
         self.render("home/news.html", title = self.title, newsList = newsList)
 
 class NewsShowHandler(BaseHandler):
     def get(self, news):
         self.title = news
-        with open(dir + "/" + news + '.md', encoding='utf-8-sig') as f:
-            content = markdown.markdown(f.read())
+
+        # open the markdown directly from s3
+        s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key='news/'+news+'.md')
+        content = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
+
+        # OLD CODE
+        # with open(dir + "/" + news + '.md', encoding='utf-8-sig') as f:
+        #     content = markdown.markdown(f.read())
         self.render("home/page.html", title = self.title, content = content)
