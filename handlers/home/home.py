@@ -46,8 +46,73 @@ class MembersHandler(BaseHandler):
             "Secretary": ["Kyoko Hatakenaka"],
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
             "Master Student": ["Zengyi Han", "Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani"],
-            "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Yugandhara Suren Hiray", "Junlin Sun", "Anran Wu"]
+            "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Yugandhara Suren Hiray", "Anran Wu"]
         }
+        alumniList = {
+            "Nem Khan Dim": "",
+            "Huawei Tu": "",
+            "Minghui Sun": "",
+            "Feng Wang": "",
+            "Yizhong Xin": "",
+            "Chuanyi Liu": "",
+            "Xiaolei Zhou ": "",
+            "Xinyong Zhang": "",
+            "Jibin Yin": "",
+            "Jing Kong": "",
+            "Mahmoud Mohamed Hussein Ahmed": "",
+            "Handityo Aulia Putra": "Assistant Professor at Keimyung University, Daegu, Korea",
+            "Qinglong Wang": "",
+            "Naoteru Jinjo":"",
+            "Kousuke Kume": "",
+            "Ryo Mizobata": "",
+            "Masashi Okamoto": "",
+            "Taiga Machida": "",
+            "Ohara Yoshitaka": "",
+            "Masatoshi Kusuba": "",
+            "Yusuke Hayashi": "",
+            "Tomoki Ooya": "",
+            "Fumiya Fukutoku": "",
+            "Tomoaki Tsuchida": "",
+            "Taishi Kato": "",
+            "Masafumi Ogasawara": "",
+            "Kinya Tamura": "",
+            "Ryusuke Ueta": "",
+            "Fang Qi" : "",
+            "Masaki Obata" : "",
+            "Toshiaki Shiraki": "",
+            "Jiaxin Yu ": "",
+            "Jiabing Wang ": "",
+            "Ping Ju ": "",
+            "Kuo Pang ": "",
+            "Yingda Lu ": "",
+            "Yang Gao ": "",
+            "Yuan Fu ": "",
+            "Xin Li ": "",
+            "Dongxing Bao ": "",
+            "Xue Wang ": "",
+            "Jing Fan": "",
+            "Dongcai Wen ": "",
+            "Guanghui Chen ": "",
+            "Zijing Yang ": "",
+            "Song Donglei" : "",
+            "Tao": "",
+            "Lancy": "",
+            "MoonCake": "",
+            "Li Zhuang": "",
+            "Sun Chongliang": "",
+            "Wang Yiqun": "",
+            "Wang Xueying": "",
+            "Wang Xiaoxu": "",
+            "Xu Qihong": "",
+            "Zhang Chi": "",
+            "Dong Lei": "",
+            "Moriyama": "",
+            "Tanigawa": "",
+            "Ming Wei": "",
+            "Junlin Sun" : ""
+        }
+        allAvatarURL["members-180615/Handityo Aulia Putra/avatar.png"] = "https://media.licdn.com/dms/image/C5103AQEYVvXfbkE6Mw/profile-displayphoto-shrink_800_800/0?e=1545868800&v=beta&t=nP2BNCn54128cMsdb7p0W3KP4V7Po8f50k6-6w8qpCw"
+        allAvatarURL["members-180615/Mahmoud Mohamed Hussein Ahmed/avatar.png"]= "https://i1.rgstatic.net/ii/profile.image/283545642782721-1444613957285_Q128/Mahmoud_Hussien7.jpg"
         customLinkDict = {}
         MemberURL=""
         for file in myBucket.objects.filter(Prefix="members-180615/", Delimiter = '\\'):
@@ -76,4 +141,4 @@ class MembersHandler(BaseHandler):
         # print(customLinkDict)
         # self.render("home/members.html", title = self.title, memberList = memberList, MemberURL = MemberURL, customLinkDict = customLinkDict)
 
-        self.render("home/members.html", title = self.title, memberList = memberList, MemberURL = MemberURL, allAvatarURL=allAvatarURL, customLinkDict = customLinkDict)
+        self.render("home/members.html", title = self.title, memberList = memberList, alumniList = alumniList, MemberURL = MemberURL, allAvatarURL=allAvatarURL, customLinkDict = customLinkDict)
