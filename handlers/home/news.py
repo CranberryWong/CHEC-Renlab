@@ -31,16 +31,19 @@ class NewsHandler(BaseHandler):
     def get(self):
         self.title = "News"
 
-        for file in myBucket.objects.filter(Prefix="news/", Delimiter = '\\'):
-            dir = os.path.dirname(file.key)
-            if not os.path.exists(dir):
-                os.makedirs(dir)
-            if file.key[-1]=="/":
-                continue
-            s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)
-        dir = dir + '/'
-        newsList = [ (x, os.stat(dir + x)) for x in os.listdir(dir) if x not in ignore_list ]
-        newsList = sorted(newsList, key=lambda x: x[0].rstrip('.md').split(']')[0][1:], reverse=True)
+        # OLD CODE, last comment: 10/22/2018
+        # for file in myBucket.objects.filter(Prefix="news/", Delimiter = '\\'):
+        #     dir = os.path.dirname(file.key)
+        #     if not os.path.exists(dir):
+        #         os.makedirs(dir)
+        #     if file.key[-1]=="/":
+        #         continue
+        #     s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)
+        # dir = dir + '/'
+        # newsList = [ (x, os.stat(dir + x)) for x in os.listdir(dir) if x not in ignore_list ]
+
+        newsList = [file.key.replace("news/","") for file in myBucket.objects.filter(Prefix="news/", Delimiter = '\\') if file not in ignore_list]
+        newsList = sorted(newsList, key=lambda x: x.rstrip('.md').split(']')[0][1:], reverse=True)
         self.render("home/news.html", title = self.title, newsList = newsList)
 
 class NewsShowHandler(BaseHandler):
