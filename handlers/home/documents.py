@@ -54,7 +54,7 @@ class ResourceHandler(BaseHandler):
         userName = tornado.escape.xhtml_escape(self.current_user)
 
         memberList = [ x for x in os.listdir(BlogURL) if x not in ignore_list]
-        
+
         allAvatarURL={}
         for file in myBucket.objects.filter(Prefix="members-180615/", Delimiter = '\\'):
             params = {'Bucket': BUCKET_NAME, 'Key': file.key}

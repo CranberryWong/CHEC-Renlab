@@ -35,9 +35,56 @@
 
         </div>
         <div class="col-xl-8">
+                <!--The slide of blogs-->
+                <!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        </ol>
+                        <div class="carousel-inner member-mini-list">
+
+                            <div class="carousel-item active" style="min-height:305px;width:610px;">
+                                    <div class="member-mini-list-element"> 
+                                            <img data-src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="Generic responsive image">
+                                            <span>{{ member }}</span>
+                                            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                                            <span>Blog Title</span>
+                                    </div>
+                                    <hr>                                
+                                    <p>Blog Content</p>
+                            </div>
+                            <div class="carousel-item" style="min-height:305px;width:610px;">
+                                    <div class="member-mini-list-element"> 
+                                            <img data-src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="Generic responsive image">
+                                            <span>{{ member }}</span>
+                                            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                                            <span>Blog Title</span>
+                                    </div>
+                                    <hr>                                
+                                    <p>Blog Content</p>
+                            </div>
+
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>-->
             {% raw content %}
         </div>
         </div>
     </div>
 </main>
+{% end %}
+{% block customJS %}
+<script>
+document
+$(".carousel-inner").firstChild.addClass(".active");
+</script>
 {% end %}
