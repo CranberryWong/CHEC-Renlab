@@ -1,9 +1,21 @@
 {% extends "../main/main_base.html" %} {% block main %}
 {% import time %}
 <main>
-    <div class="container">
-        <div class="row">
-        <div class="col-xl-12">
+    <div class="container-fluid">
+        <div class="row ml-5 mr-5">
+        <div class="col-xl-2 order-xl-1 order-sm-2">
+            <h3>{{ _("Blog List") }}</h3>
+            <hr>
+            <div class="member-mini-list">
+            {% for member in memberList %}
+            <div class="member-mini-list-element"> 
+            <img src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
+                <a href="/blog/{{ member }}">{{ member }}</a>
+            </div>   
+            {% end %}
+            </div>
+        </div>
+        <div class="col-xl-7 order-xl-2 order-sm-1">
             <div class="jumbotron">
                     <h1 class="display-4">{{ _("CHEC Internal Dashboard") }}</h1>
                     <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1xjh8ILzUtVzD3tcQESAIjLPgt4w8ZnjfLxHM2ltWqao/edit?usp=sharing" role="button">Go to Cpanel</a>
@@ -21,7 +33,7 @@
                     {% raw agenda %}
             </div>
         </div>
-        <div class="col-xl-4">
+        <!-- <div class="col-xl-4">
             <h3>{{ _("Blog List") }}</h3>
             <hr>
             <div class="member-mini-list">
@@ -32,9 +44,8 @@
             </div>   
             {% end %}
             </div>
-
-        </div>
-        <div class="col-xl-8">
+        </div> -->
+        <div class="col-xl-3 order-3">
                 <!--The slide of blogs-->
                 <!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
