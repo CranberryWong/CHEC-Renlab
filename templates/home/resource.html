@@ -17,20 +17,56 @@
         </div>
         <div class="col-xl-7 order-xl-2 order-sm-1">
             <div class="jumbotron">
-                    <h1 class="display-4">{{ _("CHEC Internal Dashboard") }}</h1>
-                    <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1xjh8ILzUtVzD3tcQESAIjLPgt4w8ZnjfLxHM2ltWqao/edit?usp=sharing" role="button">Go to Cpanel</a>
-                    <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1QeAqWLD3J-DD15_YA42YWgH6gapyvoyo?usp=sharing" role="button">Seminar PPT</a>
-                    <!-- <a class="btn btn-primary btn-sm" href="https://drive.google.com/open?id=1HTur8aVl0FQi6wdToq1MFP8kOdmbQ4XGxJp_3QJvzRI" role="button">Meeting Minutes</a> -->
-                    <hr class="my-4">
-                   <p class="lead">{{ _("25th CHEC / 73rd Ren Lab Workshop Info") }}</p>
-                    <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1xjh8ILzUtVzD3tcQESAIjLPgt4w8ZnjfLxHM2ltWqao/edit#gid=1328587438" role="button">Program</a>
-                    <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1DFHm9lskkFPZCZr5oLayTd5imb7a1zBM?usp=sharing" role="button">Proceedings</a>
-                    <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1e3ubesnEk-xZHejBj7nHXXKFnF7uwMRE?usp=sharing" role="button">PPT</a>
-                    <ul>
-                       <!-- <li><strong>Maintenance Schedule: </strong>Every Sunday 20:00 ~ 24:00, please take care your writing around this time.</li>-->  
-                        <!--<li><strong>Next Week Features: </strong>Blog pagination; Change password; Customed bulletin;</li>  -->
-                    </ul>
-                    {% raw agenda %}
+                {% raw agenda %}
+            </div>
+            <!--The slide of blogs-->
+            <div id="carousel-blog" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    {% for i in range(len(memberList)) %}
+                        {% if i==0 %}
+                            <li data-target="#carousel-blog" data-slide-to="{{i}}" class="active"></li>
+                        {% else %}
+                            <li data-target="#carousel-blog" data-slide-to="{{i}}"></li>
+                        {% end %}
+                    {% end %}
+                </ol>
+                <div class="carousel-inner member-mini-list">
+                    {% for i in range(len(memberList)) %}
+                        {% if i==0 %}
+                            <div class="carousel-item active" style="min-height:305px;width:610px;">
+                        {% else %}
+                            <div class="carousel-item" style="min-height:305px;width:610px;">
+                        {% end %}
+                        <div class="member-mini-list-element"> 
+                                    <img src="{{ allAvatarURL['members-180615/'+memberList[i]+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="avatar of {{memberList[i]}}">
+                                    <span>{{ memberList[i] }}</span>
+                                    <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                                    <span>{{blogList[memberList[i]].rstrip(".md")}}</span>
+                            </div>
+                            <hr>                                
+                            <p>Blog Content</p>
+                        </div>
+                    {% end %}    
+                    <!-- <div class="carousel-item" style="min-height:305px;width:610px;">
+                            <div class="member-mini-list-element"> 
+                                    <img data-src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="Generic responsive image">
+                                    <span>{{ member }}</span>
+                                    <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                                    <span>Blog Title</span>
+                            </div>
+                            <hr>                                
+                            <p>Blog Content</p>
+                    </div> -->
+
+                </div>
+                <a class="carousel-control-prev" href="#carousel-blog" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-blog" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
         <!-- <div class="col-xl-4">
@@ -46,47 +82,22 @@
             </div>
         </div> -->
         <div class="col-xl-3 order-3">
-                <!--The slide of blogs-->
-                <!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                        </ol>
-                        <div class="carousel-inner member-mini-list">
-
-                            <div class="carousel-item active" style="min-height:305px;width:610px;">
-                                    <div class="member-mini-list-element"> 
-                                            <img data-src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="Generic responsive image">
-                                            <span>{{ member }}</span>
-                                            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                                            <span>Blog Title</span>
-                                    </div>
-                                    <hr>                                
-                                    <p>Blog Content</p>
-                            </div>
-                            <div class="carousel-item" style="min-height:305px;width:610px;">
-                                    <div class="member-mini-list-element"> 
-                                            <img data-src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="Generic responsive image">
-                                            <span>{{ member }}</span>
-                                            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                                            <span>Blog Title</span>
-                                    </div>
-                                    <hr>                                
-                                    <p>Blog Content</p>
-                            </div>
-
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>-->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ _("CHEC Internal Dashboard") }}</h5>
+                    <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1xjh8ILzUtVzD3tcQESAIjLPgt4w8ZnjfLxHM2ltWqao/edit?usp=sharing" role="button">Go to Cpanel</a>
+                    <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1QeAqWLD3J-DD15_YA42YWgH6gapyvoyo?usp=sharing" role="button">Seminar PPT</a>
+                    <a class="btn btn-primary btn-sm" href="https://drive.google.com/open?id=1HTur8aVl0FQi6wdToq1MFP8kOdmbQ4XGxJp_3QJvzRI" role="button">Meeting Minutes</a>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                <h5 class="lead">{{ _("25th CHEC / 73rd Ren Lab Workshop Info") }}</h5>
+                <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1xjh8ILzUtVzD3tcQESAIjLPgt4w8ZnjfLxHM2ltWqao/edit#gid=1328587438" role="button">Program</a>
+                <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1DFHm9lskkFPZCZr5oLayTd5imb7a1zBM?usp=sharing" role="button">Proceedings</a>
+                <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1e3ubesnEk-xZHejBj7nHXXKFnF7uwMRE?usp=sharing" role="button">PPT</a>
+                </div>
+            </div>
             {% raw content %}
         </div>
         </div>
