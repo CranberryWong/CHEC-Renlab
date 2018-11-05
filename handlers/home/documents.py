@@ -57,9 +57,11 @@ class ResourceHandler(BaseHandler):
         memberList = [ x for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
 
         blogList = {}
+        blogContent = {}
         for member in memberList:
             blogList[member] = os.path.basename(max([os.path.join(BlogURL+ member, basename) for basename in os.listdir(BlogURL + member)], key=os.path.getctime))
-            print(blogList[member])
+            with open(BlogURL + member + '/' + blogList[member], encoding='utf-8', mode="r") as f:
+                blogContent[member] = markdown.markdown(f.read())
 
         allAvatarURL={}
         for file in myBucket.objects.filter(Prefix="members-180615/", Delimiter = '\\'):
@@ -73,7 +75,7 @@ class ResourceHandler(BaseHandler):
         s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key=dirDoc+'/agenda.md')
         agenda = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
 
-        self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda, blogList = blogList)
+        self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda, blogList = blogList, blogContent = blogContent)
 
 class CurriculumHandler(BaseHandler):
     def get(self):

@@ -1,5 +1,26 @@
 {% extends "../main/main_base.html" %} {% block main %}
 {% import time %}
+<style>
+.carousel-control-prev{
+    left: -10%;
+}
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230062cc' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%230062cc' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+.carousel-indicators{
+    bottom: -10%;
+}
+.carousel-indicators li{
+    background-color: #BDBDBD; 
+}
+.carousel-indicators li.active{
+    background-color: #0062cc;
+}
+</style>
 <main>
     <div class="container-fluid">
         <div class="row ml-5 mr-5">
@@ -20,7 +41,7 @@
                 {% raw agenda %}
             </div>
             <!--The slide of blogs-->
-            <div id="carousel-blog" class="carousel slide" data-ride="carousel">
+            <div id="carousel-blog" class="carousel slide ml-5" data-ride="carousel" data-interval="false">
                 <ol class="carousel-indicators">
                     {% for i in range(len(memberList)) %}
                         {% if i==0 %}
@@ -33,9 +54,9 @@
                 <div class="carousel-inner member-mini-list">
                     {% for i in range(len(memberList)) %}
                         {% if i==0 %}
-                            <div class="carousel-item active" style="min-height:305px;width:610px;">
+                            <div class="carousel-item active ml-5" style="min-height:305px;width:610px;">
                         {% else %}
-                            <div class="carousel-item" style="min-height:305px;width:610px;">
+                            <div class="carousel-item ml-5" style="min-height:305px;width:610px;">
                         {% end %}
                         <div class="member-mini-list-element"> 
                                     <img src="{{ allAvatarURL['members-180615/'+memberList[i]+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="avatar of {{memberList[i]}}">
@@ -44,7 +65,7 @@
                                     <span>{{blogList[memberList[i]].rstrip(".md")}}</span>
                             </div>
                             <hr>                                
-                            <p>Blog Content</p>
+                            <p>{% raw blogContent[memberList[i]] %}</p>
                         </div>
                     {% end %}    
                     <!-- <div class="carousel-item" style="min-height:305px;width:610px;">
@@ -107,6 +128,6 @@
 {% block customJS %}
 <script>
 document
-$(".carousel-inner").firstChild.addClass(".active");
+$(".carousel-inner div:first").addClass("active");
 </script>
 {% end %}
