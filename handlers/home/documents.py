@@ -53,7 +53,8 @@ class ResourceHandler(BaseHandler):
         self.title = 'Resource'
         userName = tornado.escape.xhtml_escape(self.current_user)
 
-        memberList = [ x for x in os.listdir(BlogURL) if x not in ignore_list]
+        memberIgnoreList = ["Junlin Sun", "Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang"]
+        memberList = [ x for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
 
         allAvatarURL={}
         for file in myBucket.objects.filter(Prefix="members-180615/", Delimiter = '\\'):
@@ -82,7 +83,7 @@ class ResourceHandler(BaseHandler):
         
         with open(os.path.join(dirDoc, 'resource.md'), encoding='utf-8', mode="r") as f:
             content = markdown.markdown(f.read())            
-        with open(os.path.join(dirDoc, 'agenda.md'), mode="r") as a:
+        with open(os.path.join(dirDoc, 'agenda.md'), encoding='utf-8', mode="r") as a:
             agenda = markdown.markdown(a.read())
         self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda)
 
