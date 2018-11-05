@@ -62,29 +62,12 @@ class ResourceHandler(BaseHandler):
             url = s3c.generate_presigned_url('get_object', params)
             # get avatar public url
             allAvatarURL[file.key] = url
-        
-        if not os.path.exists(dirDoc):
-            os.makedirs(dirDoc)
-        if os.path.exists(dirDoc+"/resource.md"):
-            obj = s3.Object(BUCKET_NAME,  dirDoc+"/resource.md")
-            if obj.last_modified != datetime.fromtimestamp(os.path.getmtime(dirDoc+"/resource.md")):
-                os.remove(dirDoc+"/resource.md")
-                s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/resource.md", dirDoc+"/resource.md")
-        else:
-            s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/resource.md", dirDoc+"/resource.md")
+        s3_resource = s3c.get_object(Bucket=BUCKET_NAME, Key=dirDoc+'/resource.md')
+        content = markdown.markdown(s3_resource['Body'].read().decode('utf-8-sig'))
 
-        if os.path.exists(dirDoc+"/agenda.md"):
-            obj = s3.Object(BUCKET_NAME,  dirDoc+"/agenda.md")
-            if obj.last_modified != datetime.fromtimestamp(os.path.getmtime(dirDoc+"/agenda.md")):
-                os.remove(dirDoc+"/agenda.md")
-                s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/agenda.md", dirDoc+"/agenda.md")
-        else:
-            s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/agenda.md", dirDoc+"/agenda.md")
-        
-        with open(os.path.join(dirDoc, 'resource.md'), encoding='utf-8', mode="r") as f:
-            content = markdown.markdown(f.read())            
-        with open(os.path.join(dirDoc, 'agenda.md'), encoding='utf-8', mode="r") as a:
-            agenda = markdown.markdown(a.read())
+        s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key=dirDoc+'/agenda.md')
+        agenda = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
+
         self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda)
 
 class CurriculumHandler(BaseHandler):
