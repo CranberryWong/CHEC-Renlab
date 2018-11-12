@@ -60,8 +60,11 @@ class ResourceHandler(BaseHandler):
         blogContent = {}
         for member in memberList:
             blogList[member] = os.path.basename(max([os.path.join(BlogURL+ member, basename) for basename in os.listdir(BlogURL + member)], key=os.path.getctime))
-            with open(BlogURL + member + '/' + blogList[member], encoding='utf-8', mode="r") as f:
-                blogContent[member] = markdown.markdown(f.read())
+            if ".md" in blogList[member]:
+                with open(BlogURL + member + '/' + blogList[member], encoding='utf-8', mode="r") as f:
+                    blogContent[member] = markdown.markdown(f.read())
+            else:
+                blogContent[member] = " "
 
         allAvatarURL={}
         for file in myBucket.objects.filter(Prefix="members-180615/", Delimiter = '\\'):
