@@ -21,7 +21,7 @@
                         {% for member in v %} {% if MemberURL+'/'+member+'/avatar.png' in allAvatarURL %}
                         <div class="col-3 mb-3">
                             <div class="card">
-                                <img class="card-img-top" src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" alt="Card image cap">
+                                <img class="card-img-top" src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" alt="Card image cap">
                                 <div class="card-body">
                                     <h4 class="card-title">{{ member }}</h4>
                                     <h6 class="card-subtitle mb-2 text-muted">{{ k }}</h6>
@@ -46,9 +46,9 @@
                     <div class="col-6 mb-3">
                         <div class="card h-100">
                             <div class="row no-gutters h-100">
-                                {% if 'members-180615/'+k+'/avatar.png' in allAvatarURL %}
+                                {% if 'members/'+k+'/avatar.png' in allAvatarURL %}
                                 <div class="col-3">
-                                    <img src="{{ allAvatarURL['members-180615/'+k+'/avatar.png']}}" class="img-fluid w-100" alt="Card image cap">
+                                    <img src="{{ allAvatarURL['members/'+k+'/avatar.png']}}" class="img-fluid w-100" alt="Card image cap">
                                 </div>
                                 {% end %}
                                 <div class="col">

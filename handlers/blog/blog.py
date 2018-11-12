@@ -33,7 +33,7 @@ BlogURL = os.path.join(os.path.dirname('./..'), "static/members/")
 class BlogHandler(BaseHandler):
     def get(self, userName):
         self.title = "Blog"
-        params = {'Bucket': BUCKET_NAME, 'Key': 'members-180615/' + userName + '/avatar.png'}
+        params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + userName + '/avatar.png'}
         avatarURL = s3c.generate_presigned_url('get_object', params)
         # avatarURL = 'members/' + userName + '/avatar.png'
         blogList = [ (x, os.stat(BlogURL + userName + '/' + x)) for x in os.listdir(BlogURL + userName) if x not in ignore_list ]

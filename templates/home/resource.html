@@ -30,7 +30,7 @@
             <div class="member-mini-list">
             {% for member in memberList %}
             <div class="member-mini-list-element"> 
-            <img src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
+            <img src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
                 <a href="/blog/{{ member }}">{{ member }}</a>
             </div>   
             {% end %}
@@ -59,7 +59,7 @@
                             <div class="carousel-item ml-5" style="min-height:305px;width:610px;">
                         {% end %}
                         <div class="member-mini-list-element"> 
-                                    <img src="{{ allAvatarURL['members-180615/'+memberList[i]+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="avatar of {{memberList[i]}}">
+                                    <img src="{{ allAvatarURL['members/'+memberList[i]+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="avatar of {{memberList[i]}}">
                                     <span>{{ memberList[i] }}</span>
                                     <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                                     <span>{{blogList[memberList[i]].rstrip(".md")}}</span>
@@ -70,7 +70,7 @@
                     {% end %}    
                     <!-- <div class="carousel-item" style="min-height:305px;width:610px;">
                             <div class="member-mini-list-element"> 
-                                    <img data-src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="Generic responsive image">
+                                    <img data-src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="Generic responsive image">
                                     <span>{{ member }}</span>
                                     <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                                     <span>Blog Title</span>
@@ -96,7 +96,7 @@
             <div class="member-mini-list">
             {% for member in memberList %}
             <div class="member-mini-list-element"> 
-            <img src="{{ allAvatarURL['members-180615/'+member+'/avatar.png'] }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
+            <img src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
                 <a href="/blog/{{ member }}">{{ member }}</a>
             </div>   
             {% end %}

@@ -67,7 +67,7 @@ class ResourceHandler(BaseHandler):
                 blogContent[member] = " "
 
         allAvatarURL={}
-        for file in myBucket.objects.filter(Prefix="members-180615/", Delimiter = '\\'):
+        for file in myBucket.objects.filter(Prefix="members/", Delimiter = '\\'):
             params = {'Bucket': BUCKET_NAME, 'Key': file.key}
             url = s3c.generate_presigned_url('get_object', params)
             # get avatar public url

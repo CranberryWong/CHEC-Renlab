@@ -40,7 +40,7 @@ class SignInHandler(BaseHandler):
         isUser = False
         AuthURL = ""
 
-        for file in myBucket.objects.filter(Prefix="members-180615/"+username, Delimiter = '\\'):
+        for file in myBucket.objects.filter(Prefix="members/"+username, Delimiter = '\\'):
             if 'password.salt' in file.key:
                 dir = os.path.dirname(file.key)
                 if not os.path.exists(dir):
