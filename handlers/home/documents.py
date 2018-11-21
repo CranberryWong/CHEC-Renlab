@@ -54,6 +54,16 @@ class ResourceHandler(BaseHandler):
         userName = tornado.escape.xhtml_escape(self.current_user)
 
         memberIgnoreList = ["Junlin Sun", "Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang"]
+        memberList2 = {
+            "Professor": ["Xiangshi Ren", "Kiyoshi Nakahara", "Kaechang Park"],
+            "Associate Professor": ["Yukinobu Hoshino", "Kazunori Ueda", "Toru Kurihara"],
+            "Visiting Researcher": ["Kavous Salehzadeh Niksirat", "Silpasuwanchai Chaklam", "Kibum Kim"],
+            "Assistant Professor": ["Zhenxin Wang", "Sayan Sarcar", "William Delamare"],
+            "Secretary": ["Kyoko Hatakenaka"],  
+            "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
+            "Master Student": ["Zengyi Han", "Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani"],
+            "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Yugandhara Suren Hiray", "Anran Wu"]
+        }
         memberList = [ x for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
 
         blogList = {}
@@ -78,12 +88,14 @@ class ResourceHandler(BaseHandler):
         s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key=dirDoc+'/agenda.md')
         agenda = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
 
-        self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda, blogList = blogList, blogContent = blogContent)
+        
+
+        self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda, blogList = blogList, blogContent = blogContent, memberList2 = memberList2)
 
 class CurriculumHandler(BaseHandler):
     def get(self):
         self.title = 'HCI Curriculum'
-        year = ['2014','2016','2017','2018']
+        year = ['2018','2017','2016','2014']
         curriculumList = []
         for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter = '\\'):
             dir = os.path.dirname(file.key)
@@ -93,9 +105,13 @@ class CurriculumHandler(BaseHandler):
                 continue
             if not os.path.isfile(file.key):
                 s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)
+        
+        # content = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
         for y in year:
-            with open(os.path.join(dir, y + '.md'), encoding='utf-8', mode="r") as f:
-                curriculumList.append(markdown.markdown(f.read(), extensions=['markdown.extensions.tables']))
+            s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key='documents/HCIcurriculum/'+y+'.md')
+            curriculumList.append(markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'), extensions=['markdown.extensions.tables']))
+            # with open(os.path.join(dir, y + '.md'), encoding='utf-8', mode="r") as f:
+            #     curriculumList.append(markdown.markdown(f.read(), extensions=['markdown.extensions.tables']))
         self.render("home/curriculum.html", title = self.title, curriculumList = curriculumList)
 
 class IntroHandler(BaseHandler):
