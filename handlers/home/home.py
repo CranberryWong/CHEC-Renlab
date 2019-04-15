@@ -45,8 +45,8 @@ class MembersHandler(BaseHandler):
             "Assistant Professor": ["Zhenxin Wang", "Sayan Sarcar", "William Delamare", "Keita Mitani"],
             "Secretary": ["Kyoko Hatakenaka"],
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
-            "Master Student": ["Zengyi Han", "Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani"],
-            "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Yugandhara Suren Hiray", "Anran Wu"]
+            "Master Student": ["Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng"],
+            "Bachelor Student": ["Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Akinori Kondo", "Hijiri Kaneko", "Ryota Torii", "Takaaki Kubo", "Yusuke Tokito"]
         }
         alumniList = {
             "Nem Khan Dim": "",
@@ -109,7 +109,17 @@ class MembersHandler(BaseHandler):
             "Moriyama": "",
             "Tanigawa": "",
             "Ming Wei": "",
-            "Junlin Sun" : ""
+            "Junlin Sun" : "",
+            "Zengyi Han": "",
+            "Yumiko Kakuta":"", 
+            "Haruna Imada":"", 
+            "Kentarou Yoshida":"", 
+            "Arihiro Iwamoto":"", 
+            "Daichi Harada":"", 
+            "Ryutarou Mizuno":"",
+            "Yugandhara Suren Hiray":"", 
+            "Anran Wu":""
+             
         }
         allAvatarURL["members/Handityo Aulia Putra/avatar.png"] = "https://media.licdn.com/dms/image/C5103AQEYVvXfbkE6Mw/profile-displayphoto-shrink_800_800/0?e=1545868800&v=beta&t=nP2BNCn54128cMsdb7p0W3KP4V7Po8f50k6-6w8qpCw"
         allAvatarURL["members/Mahmoud Mohamed Hussein Ahmed/avatar.png"]= "https://i1.rgstatic.net/ii/profile.image/283545642782721-1444613957285_Q128/Mahmoud_Hussien7.jpg"

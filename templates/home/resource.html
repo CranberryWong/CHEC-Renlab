@@ -28,11 +28,16 @@
             <h3>{{ _("Blog List") }}</h3>
             <hr>
             <div class="member-mini-list">
-            {% for member in memberList %}
+            {% import os %} {% for k, v in memberList2.items() %}
+            <h4>
+                <span class="badge badge-light">{{ _(k) }}</span>
+            </h4>
+            {% for member in v %}
             <div class="member-mini-list-element"> 
             <img src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
                 <a href="/blog/{{ member }}">{{ member }}</a>
             </div>   
+            {% end %}
             {% end %}
             </div>
         </div>
@@ -43,6 +48,7 @@
             <!--The slide of blogs-->
             <div id="carousel-blog" class="carousel slide ml-5" data-ride="carousel" data-interval="false">
                 <ol class="carousel-indicators">
+
                     {% for i in range(len(memberList)) %}
                         {% if i==0 %}
                             <li data-target="#carousel-blog" data-slide-to="{{i}}" class="active"></li>
@@ -51,21 +57,21 @@
                         {% end %}
                     {% end %}
                 </ol>
-                <div class="carousel-inner member-mini-list">
-                    {% for i in range(len(memberList)) %}
+                <div class="carousel-inner member-mini-list" style="height:700px;width:750px;overflow:auto;">
+                    {% for i, memberval in enumerate(memberList) %}
                         {% if i==0 %}
                             <div class="carousel-item active ml-5" style="min-height:305px;width:610px;">
                         {% else %}
                             <div class="carousel-item ml-5" style="min-height:305px;width:610px;">
                         {% end %}
                         <div class="member-mini-list-element"> 
-                                    <img src="{{ allAvatarURL['members/'+memberList[i]+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="avatar of {{memberList[i]}}">
-                                    <span>{{ memberList[i] }}</span>
+                                    <img src="{{ allAvatarURL['members/'+memberval[0]+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="avatar of {{memberval[0]}}">
+                                    <span>{{ memberval[0] }}</span>
                                     <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                                    <span>{{blogList[memberList[i]].rstrip(".md")}}</span>
+                                    <span>{{blogList[memberval[0]].rstrip(".md")}}</span>
                             </div>
                             <hr>                                
-                            <p>{% raw blogContent[memberList[i]] %}</p>
+                            <p>{% raw blogContent[memberval[0]] %}</p>
                         </div>
                     {% end %}    
                     <!-- <div class="carousel-item" style="min-height:305px;width:610px;">
@@ -90,18 +96,6 @@
                 </a>
             </div>
         </div>
-        <!-- <div class="col-xl-4">
-            <h3>{{ _("Blog List") }}</h3>
-            <hr>
-            <div class="member-mini-list">
-            {% for member in memberList %}
-            <div class="member-mini-list-element"> 
-            <img src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
-                <a href="/blog/{{ member }}">{{ member }}</a>
-            </div>   
-            {% end %}
-            </div>
-        </div> -->
         <div class="col-xl-3 order-3">
             <div class="card mb-4">
                 <div class="card-body">
@@ -109,6 +103,7 @@
                     <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1xjh8ILzUtVzD3tcQESAIjLPgt4w8ZnjfLxHM2ltWqao/edit?usp=sharing" role="button">Go to Cpanel</a>
                     <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1QeAqWLD3J-DD15_YA42YWgH6gapyvoyo?usp=sharing" role="button">Seminar PPT</a>
                     <a class="btn btn-primary btn-sm" href="https://drive.google.com/open?id=1HTur8aVl0FQi6wdToq1MFP8kOdmbQ4XGxJp_3QJvzRI" role="button">Meeting Minutes</a>
+                    <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1zgzwyPSsCPeQvLmwhWhyRH3sD9yMNdQu0dus-tnESog/edit#gid=2034520609" role="button">Library Management</a>
                 </div>
             </div>
             <div class="card mb-4">

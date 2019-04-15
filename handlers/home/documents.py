@@ -53,7 +53,7 @@ class ResourceHandler(BaseHandler):
         self.title = 'Resource'
         userName = tornado.escape.xhtml_escape(self.current_user)
 
-        memberIgnoreList = ["Junlin Sun", "Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang"]
+        memberIgnoreList = ["Junlin Sun", "Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang", "Yugandhara Suren Hiray", "Anran Wu", "Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Zengyi Han"]
         memberList2 = {
             "Professor": ["Xiangshi Ren", "Kiyoshi Nakahara", "Kaechang Park"],
             "Associate Professor": ["Yukinobu Hoshino", "Kazunori Ueda", "Toru Kurihara"],
@@ -61,20 +61,23 @@ class ResourceHandler(BaseHandler):
             "Assistant Professor": ["Zhenxin Wang", "Sayan Sarcar", "William Delamare"],
             "Secretary": ["Kyoko Hatakenaka"],  
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
-            "Master Student": ["Zengyi Han", "Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani"],
-            "Bachelor Student": ["Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Yugandhara Suren Hiray", "Anran Wu"]
+            "Master Student": ["Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng"],
+            "Bachelor Student": ["Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Akinori Kondo", "Hijiri Kaneko", "Ryota Torii", "Takaaki Kubo", "Yusuke Tokito"]
         }
-        memberList = [ x for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
-
+        memberList = [ (x, os.stat(BlogURL + '/' + x)) for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
+        memberList.sort(key = lambda x: x[1].st_ctime, reverse = True)
+        
         blogList = {}
         blogContent = {}
+        blogTitle = {}
         for member in memberList:
-            blogList[member] = os.path.basename(max([os.path.join(BlogURL+ member, basename) for basename in os.listdir(BlogURL + member)], key=os.path.getctime))
-            if ".md" in blogList[member]:
-                with open(BlogURL + member + '/' + blogList[member], encoding='utf-8', mode="r") as f:
-                    blogContent[member] = markdown.markdown(f.read())
+            blogList[member[0]] = os.path.basename(max([os.path.join(BlogURL+ member[0], basename) for basename in os.listdir(BlogURL + member[0])], key=os.path.getctime))
+            if ".md" in blogList[member[0]]:
+                with open(BlogURL + member[0] + '/' + blogList[member[0]], encoding='utf-8', mode="r") as f:
+                    blogContent[member[0]] = markdown.markdown(f.read())
             else:
-                blogContent[member] = " "
+                blogList[member[0]] = " "
+                blogContent[member[0]] = " "
 
         allAvatarURL={}
         for file in myBucket.objects.filter(Prefix="members/", Delimiter = '\\'):
@@ -105,8 +108,6 @@ class CurriculumHandler(BaseHandler):
                 continue
             if not os.path.isfile(file.key):
                 s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)
-        
-        # content = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
         for y in year:
             s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key='documents/HCIcurriculum/'+y+'.md')
             curriculumList.append(markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'), extensions=['markdown.extensions.tables']))
@@ -157,6 +158,10 @@ class ProjectShowHandler(BaseHandler):
     def get(self, project):
         print(project)
         self.title = project
-        with open(dirProjects + '/' + project + '.md') as f:
-            content = markdown.markdown(f.read())
+        # with open(dirProjects + '/' + project + '.md') as f:
+        #     content = markdown.markdown(f.read())
+        # open the markdown directly from s3
+        s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key='documents/projects/'+project+'.md')
+        content = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
+
         self.render("home/page.html", title = self.title, content = content)
