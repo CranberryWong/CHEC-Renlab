@@ -7,12 +7,14 @@ from datetime import datetime
 import csv
 import uuid
 import os
+import time
 
 class Webpage(object):
     
     def __init__(self, wid, title, name):
         self.id = uuid.uuid1()
         self.wid = wid
+        self.timestamp = int(time.time() * 1000)
         self.title = title
         #self.uid = uid
         self.appeal = 0
@@ -27,6 +29,6 @@ class Webpage(object):
 
         with open(self.csvName, "a+", newline='') as f:
             writer = csv.writer(f)
-            self.data = [self.id, self.wid, self.title, self.appeal]
+            self.data = [self.id, self.wid, self.timestamp, self.title, self.appeal]
             writer.writerow(self.data)
         return "Write webpage %s" % self.title

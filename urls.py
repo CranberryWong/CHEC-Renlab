@@ -2,7 +2,7 @@ from handlers import base, exception, util
 from handlers.home import home, news, documents
 from handlers.blog import blog
 from handlers.auth import auth
-
+from handlers.visualize import visualize
 from handlers.aesthetics import main
 
 handlers = [
@@ -43,6 +43,10 @@ handlers = [
             (r"/aesthetic/start/([0-9]+)", main.WebpageHandler),
             (r"/aesthetic/ratings", main.RatingHandler),
             (r"/aesthetic/finish", main.FinishHandler),
+
+            # Visualization
+            (r"/visualization", visualize.HomeHandler),
+            (r"/visualization/main", visualize.MainHandler),
 
             # i18n
             (r"/language?", base.I18nHandler),

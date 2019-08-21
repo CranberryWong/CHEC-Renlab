@@ -51,7 +51,7 @@ class FormHandler(BaseHandler):
         uid = newUser.id
         with open(os.path.join(os.path.dirname('./..'), "data/%s.csv") % name, "a+", newline='') as f:
             writer = csv.writer(f)
-            writer.writerow(["id", "wid", "title", "appeal"])
+            writer.writerow(["id", "wid", "timestamp", "title", "appeal"])
         self.set_cookie('uid', uid)
         self.set_secure_cookie('username', name)
         self.redirect('/aesthetic/note?trial=1')
