@@ -28,9 +28,22 @@ from handlers.visualize.settings import WebpageList
 prefix = '/Pictures/buffer/'
 
 webpageDict={
+
+    # high
     'microsoft.com':6.73,
+    'pantone.com':6.23,
+
+    #middle
+    'skima.jp':5.1,
+    'designmodo.com':4.43,
+    'freebiesbug.com':5.03,
+
+    # lower
     'infoq.com':3.66,
     'olderadults.mobi':3.56,
+    'math.com':2.96,
+    'pxtoem.com':3.1,
+    'yuchrszk.blogspot.com':3.93
 }
 
 class HomeHandler(BaseHandler):
