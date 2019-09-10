@@ -46,7 +46,7 @@ handlers = [
 
             # Visualization
             (r"/visualization", visualize.HomeHandler),
-            (r"/visualization/main", visualize.MainHandler),
+            (r"/visualization/sample?", visualize.MainHandler),
 
             # i18n
             (r"/language?", base.I18nHandler),

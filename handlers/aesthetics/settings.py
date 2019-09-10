@@ -44,7 +44,7 @@ WebpageList = [
 
 WebpageList = [
 #'999*ted.com',
-'0*theboneandjointcenter.com',
+    '0*theboneandjointcenter.com',
     '1*theborneopost.com',
     '2*two-n.com',
     '3*swellnet.com',
@@ -112,7 +112,10 @@ WebpageList = [
     '65*pantone.com',
     '66*cerezo.jp',
     '67*news.livedoor.com',
+
+    # One more overlap, delete
     '68*gmo.jp',
+
     '69*tokai-tv.com', 
     '70*life-is-tech.com',
     '71*bloomberg.co.jp',
@@ -134,7 +137,10 @@ WebpageList = [
     '87*cafe-sanctuary.jp',
     '88*flanet.web.fc2.com',
     '89*fmltd.co.jp',
+
+    # can not show, delete
     '90*hanakinoboru.com.png',
+
     '91*heidicohen.com',
     '92*ironwork.jp',
     '93*jimmakos.com',
@@ -161,7 +167,9 @@ WebpageList = [
     '114*fantia.jp',
     '115*freebiesbug.com',
     '116*galaxymobile.jp',
+
     '117*gmo.jp',
+
     '118*icotto.jp',
     '119*inakami.net',
     '120*maybelline.co.jp',
@@ -194,24 +202,35 @@ WebpageList = [
     '147*mathleague.com',
     '148*math.com',
     '149*mathplayground.com',
+
+    # Ayumu's Chinese & Japanese Webpage
     '150*bilibili.com',
     '151*nicovideo.jp',
+
     '152*rakuten.co.jp',
     '153*taobao.com',
+
     '154*ihotwind.cn',
     '155*uniqlo.com.jp',
+
     '156*dianping.com',
     '157*tabelog.com',
+
     '158*sina.com.cn',
     '159*yahoo.co.jp',
+
     '160*1688.com',
     '161*netsea.jp',
+
     '162*bj.ganji.com',
     '163*sumaity.com',
+
     '164*estar.jp',
     '165*hongxiu.com',
+
     '166*tapple.me',
     '167*baihe.com',
+
     '168*360.cn',
     '169*security.ec-current.com'
 ]
