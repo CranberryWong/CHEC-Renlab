@@ -15,7 +15,7 @@ import json
 from scipy.cluster.hierarchy import fcluster
 # from matplotlib import pyplot as plt
 from PIL import Image, ImageDraw
-from scipy.misc import imresize
+# from scipy.misc import imresize
 from selenium import webdriver
 from handlers.base import BaseHandler
 from handlers.aesthetics.settings import WebpageList
