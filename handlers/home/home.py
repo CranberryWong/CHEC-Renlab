@@ -45,8 +45,8 @@ class MembersHandler(BaseHandler):
             "Assistant Professor": ["Zhenxin Wang", "Sayan Sarcar", "William Delamare", "Keita Mitani"],
             "Secretary": ["Kyoko Hatakenaka"],
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
-            "Master Student": ["Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng"],
-            "Bachelor Student": ["Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Akinori Kondo", "Hijiri Kaneko", "Ryota Torii", "Takaaki Kubo", "Yusuke Tokito"]
+            "Master Student": ["Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng", "Chunyuan Lan"],
+            "Bachelor Student": ["Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Akinori Kondo", "Hijiri Kaneko", "Ryota Torii", "Takaaki Kubo", "Yusuke Tokito", "Jiayuan Geng"]
         }
         alumniList = {
             "Nem Khan Dim": "",
