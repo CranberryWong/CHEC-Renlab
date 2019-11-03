@@ -36,15 +36,18 @@
         <a class="p-2 text-dark" href="https://www.flickr.com/photos/123468034@N06/albums">{{ _("Photos") }}</a>
 
         {% if handler.lang == "ja_JP" or handler.lang == "en_US" %}
-        <a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>{% end %} {% if handler.lang == "en_US" or handler.lang == "zh_CN" %}
-        <a class="p-2 text-dark" href="/language?lang=ja_JP">日本語</a>{% end %} {% if handler.lang == "ja_JP" or handler.lang == "zh_CN" %}
+        <a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>{% end %}
+        {% if handler.lang == "en_US" or handler.lang == "zh_CN" %}
+        <a class="p-2 text-dark" href="/language?lang=ja_JP">日本語</a>{% end %}
+        {% if handler.lang == "ja_JP" or handler.lang == "zh_CN" %}
         <a class="p-2 text-dark" href="/language?lang=en_US">English</a>{% end %}
 
       </nav>
       <!--<a class="btn btn-outline-primary" href="/" style="margin-right:20px;">Log in</a>-->
       {% if current_user %}
       <div class="btn-group">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
           {{ current_user }}
         </button>
         <div class="dropdown-menu">
@@ -66,64 +69,55 @@
           <h5>{{ _("Events") }}</h5>
           <ul class="list-unstyled text-small">
             <li>
-              <a class="text-muted disabled" href="http://iw2019.xrenlab.com">{{ _("IWHEC 2019") }}</a>
+              <a class="text-muted disabled" href="http://iw2020.xrenlab.com"  target="_blank">{{ _("IWHEC 2020") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="http://iss2018ws.xrenlab.com">{{ _("ISS Workshop 2018") }}</a>
+              <a class="text-muted disabled" href="http://iw2019.xrenlab.com" target="_blank">{{ _("IWHEC 2019") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="https://ixap2018.github.io/">{{ _("IxAP 2018") }}</a>
+              <a class="text-muted disabled" href="http://iss2018ws.xrenlab.com" target="_blank">{{ _("ISS Workshop 2018") }}</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="https://ixap2018.github.io/" target="_blank">{{ _("IxAP 2018") }}</a>
             </li>
           </ul>
 
         </div>
         <div class="col-4 col-md">
-          <h5>{{ _(" ") }}</h5> <br/>
+          <h5>{{ _(" ") }}</h5> <br />
           <ul class="list-unstyled text-small">
             <li>
-              <a class="text-muted disabled" href="http://forum.chec.ren">{{ _("IWHEC 2017") }}</a>
+              <a class="text-muted disabled" href="http://forum.chec.ren" target="_blank">{{ _("IWHEC 2017") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="http://itap2016.xrenlab.com">{{ _("ITAP 2016") }}</a>
+              <a class="text-muted disabled" href="http://itap2016.xrenlab.com" target="_blank">{{ _("ITAP 2016") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="http://idhf2016.xrenlab.com">{{ _("IDHF 2016") }}</a>
+              <a class="text-muted disabled" href="http://idhf2016.xrenlab.com" target="_blank">{{ _("IDHF 2016") }}</a>
             </li>
           </ul>
-          <!--<h5>{{ _("Resource") }}</h5>
-          <ul class="list-unstyled text-small">
-            
-            <li>
-              <a class="text-muted disabled" href="#">{{ _("Resource") }}</a>
-            </li>
-            <li>
-              <a class="text-muted disabled" href="#">{{ _("Source") }}</a>
-            </li>
-            <li>
-              <a class="text-muted disabled" href="#">{{ _("API") }}</a>
-            </li>
-          
-          </ul>-->
         </div>
         <div class="col-4 col-md">
           <h5>{{ _("About") }}</h5>
           <ul class="list-unstyled text-small">
             <li>
-              <a class="text-muted disabled" href="https://www.kochi-tech.ac.jp/english/admission/ssp_aft19oct/ssp_application_guideline.html">{{ _("KUT SSP") }}</a>
+              <a class="text-muted disabled"
+                href="https://www.kochi-tech.ac.jp/english/admission/ssp_aft19oct/ssp_application_guideline.html" target="_blank">{{ _("KUT SSP") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="/experiment">{{ _("Experiment") }}</a>
+              <a class="text-muted disabled" href="/experiment" target="_blank">{{ _("Experiment") }}</a>
             </li>
             <li>
-              <a class="text-muted disabled" href="/signin">{{ _("Sign In") }}</a>
+              <a class="text-muted disabled" href="/signin" target="_blank">{{ _("Sign In") }}</a>
             </li>
           </ul>
         </div>
         <div class="w-100"></div>
         <div class="col-12 col-md">
-          <small class="d-block mb-3 text-muted">Center for Human-Engaged Computing, Kochi University of Technology，Tosayamada, Kami City，Kochi, JAPAN
+          <small class="d-block mb-3 text-muted">Center for Human-Engaged Computing, Kochi University of
+            Technology，Tosayamada, Kami City，Kochi, JAPAN
             <abbr title="Phone">P:</abbr>+81-887-57-2087</small>
-          <small class="d-block mb-3 text-muted">&copy; 2017-2018 All Rights Reserved. </small>
+          <small class="d-block mb-3 text-muted">&copy; 2019-2020 All Rights Reserved. </small>
         </div>
       </div>
     </footer>
