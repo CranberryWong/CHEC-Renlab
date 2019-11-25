@@ -118,8 +118,12 @@ class MembersHandler(BaseHandler):
             "Daichi Harada":"", 
             "Ryutarou Mizuno":"",
             "Yugandhara Suren Hiray":"", 
-            "Anran Wu":""
-             
+            "Anran Wu":"",
+            "Heyu Wang": "",
+            "Luxi Yang": "",
+            "Mengyao Wu":"",
+            "Shuang Wang":"",
+            "Xinyue Hu":"",
         }
         allAvatarURL["members/Handityo Aulia Putra/avatar.png"] = "https://media.licdn.com/dms/image/C5103AQEYVvXfbkE6Mw/profile-displayphoto-shrink_800_800/0?e=1545868800&v=beta&t=nP2BNCn54128cMsdb7p0W3KP4V7Po8f50k6-6w8qpCw"
         allAvatarURL["members/Mahmoud Mohamed Hussein Ahmed/avatar.png"]= "https://i1.rgstatic.net/ii/profile.image/283545642782721-1444613957285_Q128/Mahmoud_Hussien7.jpg"
