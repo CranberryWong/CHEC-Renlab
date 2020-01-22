@@ -1,0 +1,74 @@
+{% extends "experiment_page.html" %} {% block content %}
+<div class="card box-shadow" style="width: 100%;">
+    <div class="card-body">
+        <h1 class="card-title">Questionaire</h5>
+
+            <h6 class="card-subtitle mb-2 text-muted">Before the experiment.</h6>
+            <hr>
+            <form action="/layout/form" method="POST" id="questionaire">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputName">Name</label>
+                        <input type="text" class="form-control" id="inputName" placeholder="Name" name="name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputAge">Age</label>
+                        <input type="text" class="form-control" id="inputAge" placeholder="Age" name="age">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputCountry">Country</label>
+                        <input type="text" class="form-control" id="inputCountry" placeholder="Country" name="country">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEdu">Gender</label>
+                        <select id="inputEdu" class="form-control" name="gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEdu">Education</label>
+                        <select id="inputEdu" class="form-control" name="edu">
+                            <option>Others</option>
+                            <option>Bachelor</option>
+                            <option>Master</option>
+                            <option>Doctor</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEver">Have you taken this test before?</label>
+                        <select id="inputEver" class="form-control" name="ever">
+                            <option>No</option>
+                            <option>Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputDesign">Do you have any design or related background?</label>
+                        <select id="inputDesign" class="form-control" name="design">
+                            <option>Little</option>
+                            <option>Some</option>
+                            <option>Middle</option>
+                            <option>Pro</option>
+                        </select>
+                    </div>
+                    <button type="button" class="mt-4 btn btn-lg btn-block btn-primary" onclick="checkForm()">{{ _('Next') }}</a>
+            </form>
+            </div>
+    </div>
+{% end %}
+{% block customJS %}
+<script>
+    function checkForm (){
+        console.log("what");
+        if ($("#inputName").val() == "" || $("#inputAge").val() == "" || $("#inputEmail").val() == "" || $("#inputCountry").val() == "") {
+            alert("Please complete the form !");
+        } else {
+            $("#questionaire").submit();
+        }
+    }; 
+</script>
+{% end %}

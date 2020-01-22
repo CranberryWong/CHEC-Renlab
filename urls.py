@@ -3,7 +3,7 @@ from handlers.home import home, news, documents
 from handlers.blog import blog
 from handlers.auth import auth
 from handlers.visualize import visualize
-from handlers.aesthetics import main
+from handlers.aesthetics import main, layoutmain
 
 handlers = [
             # Home
@@ -43,6 +43,14 @@ handlers = [
             (r"/aesthetic/start/([0-9]+)", main.WebpageHandler),
             (r"/aesthetic/ratings", main.RatingHandler),
             (r"/aesthetic/finish", main.FinishHandler),
+
+            # Layout Experiment
+            (r"/layout/statement?", layoutmain.StatementHandler),
+            (r"/layout/form", layoutmain.FormHandler),
+            (r"/layout/note?", layoutmain.NoteHandler),
+            (r"/layout/start/([0-9]+)", layoutmain.WebpageHandler),
+            (r"/layout/ratings", layoutmain.RatingHandler),
+            (r"/layout/finish", layoutmain.FinishHandler),
 
             # Visualization
             (r"/visualization", visualize.HomeHandler),

@@ -1,0 +1,189 @@
+{% extends "experiment_base.html" %} {% block costomCSS %}
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .wrapper {
+        position: relative;
+        display: inline-block;
+        border: none;
+        font-size: 14px;
+        margin: 0 auto 20px auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .wrapper input {
+        border: 0;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        position: absolute !important;
+        clip: rect(1px 1px 1px 1px);
+        clip: rect(1px, 1px, 1px, 1px);
+        opacity: 0;
+    }
+
+    .wrapper label {
+        position: relative;
+        float: right;
+        color: #C8C8C8;
+    }
+
+    .wrapper label:before {
+        margin: 5px;
+        content: "\f005";
+        font-family: FontAwesome;
+        display: inline-block;
+        font-size: 1.5em;
+        color: #ccc;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+    
+    .wrapper label[mark]::before {
+        margin-left:0.7em;
+    }
+
+    .wrapper input:checked~label:before {
+        color: #FFC107;
+    }
+
+    .wrapper label:hover~label:before {
+        color: #ffdb70;
+    }
+
+    .wrapper label:hover:before {
+        color: #FFC107;
+    }
+</style>
+{% end %} {% block webpageMain %}
+<div class="webpage-main">
+    <img src="{{ static_url(fixation_path) }}" class="webpage-fix">
+    <button type="button" id="evaluationModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+        data-backdrop="static" data-keyboard="false" hidden>
+        Launch evaluation modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Webpage evaluation</h5>
+                    <!--
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                -->
+                </div>
+                <div class="modal-body">
+                    <form action="/layout/ratings" method="POST" id="ratingDialog">
+                        <div class="webpage-appeal">
+
+                            <p class="text-center text-muted">Unappeal ~ Appeal </p>
+                            <div class="wrapper">
+                                <input type="checkbox" id="a9" value="9" name="appeal" />
+                                <label for="a9"></label>
+                                <input type="checkbox" id="a8" value="8" name="appeal" />
+                                <label for="a8"></label>
+                                <input type="checkbox" id="a7" value="7" name="appeal" />
+                                <label for="a7" mark></label>
+                                <input type="checkbox" id="a6" value="6" name="appeal" />
+                                <label for="a6"></label>
+                                <input type="checkbox" id="a5" value="5" name="appeal" />
+                                <label for="a5"></label>
+                                <input type="checkbox" id="a4" value="4" name="appeal" />
+                                <label for="a4" mark></label>
+                                <input type="checkbox" id="a3" value="3" name="appeal" />
+                                <label for="a3"></label>
+                                <input type="checkbox" id="a2" value="2" name="appeal" />
+                                <label for="a2"></label>
+                                <input type="checkbox" id="a1" value="1" name="appeal" />
+                                <label for="a1"></label>
+                            </div>
+                        </div>
+                        <!--
+                    <div class="webpage-complexity">
+                            <p class="text-center text-muted">Less Complexity ~ Much Complexity</p>
+                        <div class="wrapper">
+                            
+                            <input type="checkbox" id="c7" value="7" name="complexity" />
+                            <label for="c7"></label>
+                            <input type="checkbox" id="c6" value="6" name="complexity" />
+                            <label for="c6"></label>
+                            <input type="checkbox" id="c5" value="5" name="complexity" />
+                            <label for="c5"></label>
+                            <input type="checkbox" id="c4" value="4" name="complexity" />
+                            <label for="c4"></label>
+                            <input type="checkbox" id="c3" value="3" name="complexity" />
+                            <label for="c3"></label>
+                            <input type="checkbox" id="c2" value="2" name="complexity" />
+                            <label for="c2"></label>
+                            <input type="checkbox" id="c1" value="1" name="complexity" />
+                            <label for="c1"></label>
+                            
+                        </div>
+                    </div>
+                    -->
+                        <input type="hidden" value="{{ wid }}" name="wid">
+                        <input type="hidden" value="{{ title }}" name="title">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-lg btn-block btn-primary" onclick="ratingHide();">Next</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% end %} {% block customJS %}
+    <script>
+        'use strict';
+
+        var delay = function (s) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(resolve, s);
+            });
+        };
+
+        function loadImage(url){
+            return new Promise((resolve, reject)=>{
+                let img = new Image();
+                img.addEventListener('load', e=>resolve(img));
+                img.addEventListener('error', ()=>{
+                    reject(new Error(`Failed to load image's URL: ${url}`));
+                });
+                img.src = url;
+            })
+        }
+
+        delay().then(function () {
+            console.log("Start");
+            return delay(1500);
+        }).then(function () {
+            console.log("End fixation");
+            console.log("This is webpage");
+            return loadImage('{{ static_url(webpage_path) }}')
+                .then($(".webpage-fix").attr("src", "{{ static_url(webpage_path) }}"))
+                .catch(error=>console.error(error));
+            // $(".webpage-fix").attr("src", "{{ static_url(webpage_path) }}");
+        }).then(function () {
+            return delay({{ int(ext) }});
+        }).then(function(){
+            console.log("End webpage");
+            $(".webpage-fix").attr("src", "{{ static_url(noise_path) }}");
+            console.log("This is noise");
+            return delay(1000);
+        }).then(function () {
+            console.log("End noise");
+            $("#evaluationModal").click();
+        });
+
+        function ratingHide() {
+            if ((!$("input[name='appeal']").is(':checked'))  /*|| (! $("input[name='complexity']").is(':checked'))*/) {
+                alert("Please Rating !");
+            } else {
+                $('#ratingDialog').submit();
+            }
+        }
+    </script> {% end %}

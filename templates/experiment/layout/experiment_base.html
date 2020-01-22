@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ _(handler.title) }}</title>
+    <link rel="stylesheet" href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}">
+    <!--<link rel="stylesheet" href="../../static/libs/bootstrap/dist/css/bootstrap.css">-->
+    <link rel="stylesheet" href="{{ static_url('styles/stylesheets/style.css') }}">
+    <!--<link rel="stylesheet" href="../../static/styles/style.css">-->
+    {% block costomCSS %}{% end %}
+    <link rel="icon" href="{{ static_url('favicon.ico') }}">
+    <script src="{{ static_url('libs/holderjs/holder.js') }}"></script>
+</head>
+
+<body style="padding:0;">
+    {% block webpageMain %}{% end %}
+    <script src="{{ static_url('scripts/jquery.min.js') }}"></script>
+    <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script> 
+    {% block customJS %}{% end %}
+</body>
+</html>

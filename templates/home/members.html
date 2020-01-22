@@ -17,23 +17,27 @@
                     <h4>
                         <span class="badge badge-light">{{ _(k) }}</span>
                     </h4>
+                    <hr>
                     <div class="row">
-                        {% for member in v %} {% if MemberURL+'/'+member+'/avatar.png' in allAvatarURL %}
-                        <div class="col-3 mb-3">
-                            <div class="card">
-                                <img class="card-img-top" src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title">{{ member }}</h4>
-                                    <h6 class="card-subtitle mb-2 text-muted">{{ k }}</h6>
-                                    {% if member in customLinkDict.keys() %}
-                                         <a href="{{ customLinkDict[member] }}">Link</a>
-                                    {% end %}
-                                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-                                    <!--<a href="http://www.xiangshiren.com" class="card-link">Homepage</a>-->
+                        {% for i, j in v.items() %}
+                        <div class="col-6 mb-3">
+                            <div class="card h-100">
+                                <div class="row no-gutters h-100 align-items-center">
+                                    <div class="col-3">
+                                        <img src="{{ allAvatarURL['members/'+i+'/avatar.png'] }}" class="img-fluid w-100" alt="Card image cap">
+                                    </div>
+                                    <div class="col">
+                                        <div class="card-block px-2 mt-1 ml-1 mr-1">
+                                            {% if "link" in j %}<a href="{{ j['link'] }}">{% end %}<h5 class="card-title mb-1">{{ i }}</h5>{% if "link" in j %}</a>{% end %}
+                                            {% if "years" in j %}<small class="card-subtitle text-muted">{{ j["years"] }}</small><br>{% end %}
+                                            {% if "job" in j %}<small class="card-subtitle text-muted">{{ j["job"] }}</small>{% end %} 
+                                            {% if "affiliation" in j %}<small class="card-subtitle text-muted">{{ j["affiliation"] }}</small>{% end %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        {% end %} {% end %}
+                        {% end %}
                     </div>
                     <br>
                     {% end %}
@@ -41,8 +45,13 @@
               <div class="tab-pane fade" id="alumni" role="tabpanel" aria-labelledby="alumni-tab">
                   <h2 class="mt-4">{{ _("Alumni") }}</h2>
                   <hr>
+                  {% for k, v in alumniList.items() %}
+                  <h4>
+                    <span class="badge badge-light">{{ _(k) }}</span>
+                </h4>
+                    <hr>
                   <div class="row">
-                    {% for k, v in alumniList.items() %}
+                    <!--  for k, v in alumniList.items() 
                     <div class="col-6 mb-3">
                         <div class="card h-100">
                             <div class="row no-gutters h-100">
@@ -59,9 +68,36 @@
                                 </div>
                             </div>
                         </div>
+                    </div> end -->
+                    
+                    {% for i, j in v.items() %}
+
+                    <div class="col-6 mb-3">
+                        <div class="card h-100">
+                            <div class="row no-gutters h-100">
+                                {% if "avatar" in j %}
+                                <div class="col-3">
+                                    <img src="{{ static_url('images/alumni-avatar/' + i + '.png') }}" class="img-fluid w-100" alt="Card image cap">
+                                </div>
+                                {% else %}
+                                <div class="col-3">
+                                    <img src="{{ static_url('images/alumni-avatar/default.png') }}" class="img-fluid w-100" alt="Card image cap">
+                                </div>
+                                {% end %}
+                                <div class="col">
+                                    <div class="card-block px-2 mt-1 ml-1 mr-1">
+                                        {% if "link" in j %}<a href="{{ j['link'] }}">{% end %}<h5 class="card-title mb-1">{{ i }}</h5>{% if "link" in j %}</a>{% end %}
+                                        {% if j["years"] != '' %}<small class="card-subtitle text-muted">{{ j["years"] }}</small><br>{% end %}
+                                        {% if "job" in j %}<small class="card-subtitle text-muted">{{ j["job"] }}</small>{% end %}, 
+                                        {% if "affiliation" in j %}<small class="card-subtitle text-muted">{{ j["affiliation"] }}</small>{% end %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     {% end %}
                   </div>
+                  {% end %}
               </div>
             </div>
         </div>
