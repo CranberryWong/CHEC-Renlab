@@ -91,8 +91,6 @@ class ResourceHandler(BaseHandler):
         s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key=dirDoc+'/agenda.md')
         agenda = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
 
-        
-
         self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda, blogList = blogList, blogContent = blogContent, memberList2 = memberList2)
 
 class CurriculumHandler(BaseHandler):
