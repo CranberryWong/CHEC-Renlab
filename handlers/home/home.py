@@ -136,7 +136,7 @@ class MembersHandler(BaseHandler):
                 
             },
 
-            "Master Student": {
+            "Master Students": {
                 "Ryusuke Ueta": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Masafumi Ogasawara": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Taishi Kato": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},

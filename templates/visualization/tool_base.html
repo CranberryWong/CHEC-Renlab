@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ _(handler.title) }}</title>
+  <link rel="stylesheet" href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ static_url('styles/stylesheets/style.css') }}">
+  <!-- <link href="{{ static_url('styles/stylesheets/sticky-footer.css') }}" rel="stylesheet" crossorigin="anonymous"> -->
+  {% block costomCSS %}{% end %}
+  <link rel="icon" href="{{ static_url('favicon.ico') }}">
+  <script src="{{ static_url('libs/holderjs/holder.js') }}"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32872028-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-32872028-1');
+  </script>
+    <script src="{{ static_url('scripts/jquery.min.js') }}"></script>
+</head>
+
+<body>
+  <header>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <a href="/" class="my-0 mr-md-auto font-weight-normal">
+        <img src="{{ static_url('images/logo.png') }}" alt="" style="height:40px;">
+      </a>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/">{{ _("Home") }}</a>
+        <a class="p-2 text-dark" href="/experiment">{{ _("Experiment") }}</a>
+
+      </nav>
+    </div>
+  </header>
+  {% block main %} {% end %}
+  <div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+      <div class="row">
+        <div class="col-4 col-md">
+
+          <h5>{{ _("Events") }}</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted disabled" href="http://iw2020.xrenlab.com"  target="_blank">{{ _("IWHEC 2020") }}</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="http://iw2019.xrenlab.com" target="_blank">{{ _("IWHEC 2019") }}</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="http://iss2018ws.xrenlab.com" target="_blank">{{ _("ISS Workshop 2018") }}</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="https://ixap2018.github.io/" target="_blank">{{ _("IxAP 2018") }}</a>
+            </li>
+          </ul>
+
+        </div>
+        <div class="col-4 col-md">
+          <h5>{{ _(" ") }}</h5> <br />
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted disabled" href="http://forum.chec.ren" target="_blank">{{ _("IWHEC 2017") }}</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="http://itap2016.xrenlab.com" target="_blank">{{ _("ITAP 2016") }}</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="http://idhf2016.xrenlab.com" target="_blank">{{ _("IDHF 2016") }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-4 col-md">
+          <h5>{{ _("About") }}</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted disabled"
+                href="https://www.kochi-tech.ac.jp/english/admission/ssp_aft19oct/ssp_application_guideline.html" target="_blank">{{ _("KUT SSP") }}</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="/experiment" target="_blank">{{ _("Experiment") }}</a>
+            </li>
+            <li>
+              <a class="text-muted disabled" href="/signin" target="_blank">{{ _("Sign In") }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-12 col-md">
+          <small class="d-block mb-3 text-muted">Center for Human-Engaged Computing, Kochi University of
+            Technology，Tosayamada, Kami City，Kochi, JAPAN
+            <abbr title="Phone">P:</abbr>+81-887-57-2087</small>
+          <small class="d-block mb-3 text-muted">&copy; 2019-2020 All Rights Reserved. </small>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="{{ static_url('scripts/popper.js') }}"></script>
+  {% block customJS %}{% end %}
+  <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script> 
+</body>
+
+</html>

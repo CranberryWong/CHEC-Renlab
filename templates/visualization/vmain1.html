@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en" class="h-100 gr__getbootstrap_com">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v3.8.5">
+  <title>{{ _(handler.title) }}</title>
+
+  <!-- <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/sticky-footer/"> -->
+
+  <!-- Bootstrap core CSS -->
+  <script src="{{ static_url('scripts/jquery.min.js') }}"></script>
+
+  <link href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    canvas {
+      display: block;
+      background: rgba(0, 0, 255, 0.2);
+    }
+  </style>
+  <script type="text/javascript">
+
+  </script>
+  <link href="{{ static_url('styles/stylesheets/sticky-footer.css') }}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+</head>
+
+<body class="d-flex flex-column h-100" data-gr-c-s-loaded="true" style="position:relative;">
+  <!-- Begin page content -->
+  <main role="main" class="flex-shrink-0">
+    <div id="buttonpanel">
+        
+      {% for i in location %}
+      <div id="#first" style="position:absolute;z-index: 3;top: {{ i[1]-19 }}px; left: {{ i[0]-28 }}px;">
+      <a class="btn btn-warning rounded-pill" data-toggle="collapse" href="#{{ 'collapseExample' + str(location.index(i)+1)}}" role="button" aria-expanded="false"
+        aria-controls="{{ 'collapseExample' + str(location.index(i)+1)}}">
+        #Sg
+      </a>
+      <div class="collapse" id="{{ 'collapseExample' + str(location.index(i)+1)}}">
+        <div class="card card-body">
+          <ul>
+            {% if mark == 'd' %}
+            {% if i[2] <= 100 or i[2] >= 300 %}
+            <li>Decreasing the spacing</li>
+            {% end %}
+            {% if i[2] > 100 %}
+            <li>Decreasing the color variability</li>
+            <li>Decreasing the visual complexity</li>
+            {% end %}
+            {% end %}
+            {% if mark == 'i' %}
+            {% if i[2] <= 100 or i[2] >= 300 %}
+            <li>Increasing the spacing</li>
+            {% end %}
+            {% if i[2] > 100 %}
+            <li>Increasing the color variability</li>
+            <li>Decreasing the visual complexity</li>
+            {% end %}
+            {% end %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% end %}
+    </div>
+    {% if location != [] %}
+    <canvas id="myCanvas" width="1680" height="900" style="position:absolute;z-index: 1;"></canvas>
+    {% end %}
+    <div>
+      <img src="{{ static_url('sample/' + pagetitle + '.png') }}" alt="" style="width:100%;">
+    </div>
+
+  </main>
+  <footer class="footer mt-auto py-3" style="position:absolute;z-index: 2;width:100%;bottom:0;">
+    <div class="container">
+      <!-- <label for="customRange3">Suggestion Degree</label> -->
+      <form action="/visualization/sample?pagetitle={{pagetitle}}&appeal={{appeal}}" method="POST"  class="form-inline">
+        <div class="form-group">
+      <input type="hidden" id="pagetitle" value="{{ pagetitle }}" name="pagetitle"></div>
+      <div class="form-group">
+          <input type="hidden" id="pagetitle" value="{{ appeal }}" name="appeal"></div>
+      <!-- <div class="form-group  mr-4"><input type="range" class="custom-range" min="0" max="8" step="8" value="8" id="customRange3" name="appeall">      </div>-->
+        <button type="submit" class="btn btn-outline-secondary float-right">Design Suggestions</button>
+        <p class="ml-2" style="margin-bottom:0;"><mark> Note: the yellow circle is the optimization range. </mark></p>    
+
+    </form>
+      <hr>
+      
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups"  style="display: inline;">
+
+          <div class="btn-group mr-2 float-right" role="group" aria-label="First group">
+              <p class="mr-4 mt-1" style="display: inline; margin-bottom:0;"><i>Test Cases: </i></p>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=microsoft.com" style="color:inherit">1</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=infoq.com" style="color:inherit">2</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=olderadults.mobi" style="color:inherit">3</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=pantone.com" style="color:inherit">4</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=math.com" style="color:inherit">5</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=yuchrszk.blogspot.com" style="color:inherit">6</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=freebiesbug.com" style="color:inherit">7</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=pxtoem.com" style="color:inherit">8</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=skima.jp" style="color:inherit">9</a></button>
+            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=designmodo.com" style="color:inherit">10</a></button>
+          </div>
+     </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript">
+    // $(function () {
+    //   //添加窗口尺寸改变响应监听
+    //   $(window).resize(resizeCanvas);
+    //   //页面加载后先设置一下canvas大小
+    //   resizeCanvas();
+    // });
+
+    // //窗口尺寸改变响应（修改canvas大小）
+    // function resizeCanvas() {
+    //   $("#myCanvas").attr("width", $(window).get(0).innerWidth);
+    //   $("#myCanvas").attr("height", $(window).get(0).innerHeight);
+    // };
+
+    function draw() {
+      var canvas = document.getElementById('myCanvas');
+      if (!canvas.getContext) return;
+      var ctx = canvas.getContext("2d");
+
+      ctx.fillStyle = "rgba(255, 193, 8, 0.5)"
+      ctx.strokeStyle = "rgba(255, 193, 8, 255)"
+      // ctx.strokeRect(300, 300, 100, 150);
+      // ctx.fillRect(10, 10, 55, 50);
+
+      {% for i in location %}
+      ctx.beginPath();
+      ctx.arc({{ i[0] }}, {{ i[1] }}, {{ i[2] }}, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.fill();
+      {% end %}
+    }
+    draw();
+
+  </script>
+  <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script>
+  
+</body>
+
+</html>
