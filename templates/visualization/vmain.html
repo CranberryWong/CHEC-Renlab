@@ -59,11 +59,10 @@
               </div>
               <div class="modal-body" >
                 <canvas id="myChart" style="width:100%;height:400;"></canvas>
-                <progress id="animationProgress"  max="1" value="0" style="width: 100%"  data-toggle="tooltip" data-placement="top" title="You are better than {{ float('%0.2f'%(originappeal/9)) }} designs in our sample!"></progress>
+                <progress id="animationProgress"  max="1" value="0" style="width: 100%"  data-toggle="tooltip" data-placement="top" title="You are better than {{ float('%0.2f'%(originappeal/9*100)) }} % designs in our sample!"></progress>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
               </div>
             </div>
           </div>
@@ -99,7 +98,7 @@
           <table class="table table-hover mt-3">
             <tbody>
                 {% if mark == 'd' %}
-                {% if i[2] <= 100 %}
+                {% if i[2] <= 80 %}
                 <tr>
                   <td>
                     <details>
@@ -116,17 +115,9 @@
                 </details>
               </td>
             </tr>
-            <tr>
-              <td>
-            <details>
-              <summary class="text-primary">White space <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that proper white space will make a clear style, while bad white space may also make interface boring sometimes."> </i></summary>
-              <p>Considering to leave <a href=“https://www.interaction-design.org/literature/article/the-power-of-white-space”>white space</a> here as the interface looks like so crowded.</p>
-            </details>
-          </td>
-        </tr>
             
                 {% end %}
-                {% if i[2] > 100 and i[2] <= 300 %}
+                {% if i[2] > 80 and i[2] <= 240 %}
                 <tr>
                   <td>
                 <details>
@@ -143,16 +134,8 @@
                     </details>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                <details>
-                  <summary class="text-primary">White space <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that proper white space will make a clear style, while bad white space may also make interface boring sometimes."> </i></summary>
-                  <p>Considering to reduce your <a href=“https://www.interaction-design.org/literature/article/the-power-of-white-space”>white space</a> here because it may make the interface empty and boring.</p>
-                </details>
-              </td>
-            </tr>
                 {% end %}
-                {% if i[2] > 300 %}
+                {% if i[2] > 240 %}
                 <tr>
                   <td>
                     <details>
@@ -165,7 +148,7 @@
                     <td>
                   <details>
                     <summary class="text-primary">White space <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that proper white space will make a clear style, while bad white space may also make interface boring sometimes."> </i></summary>
-                    <p>Considering to reduce your <a href=“https://www.interaction-design.org/literature/article/the-power-of-white-space”>white space</a> here because it may make the interface empty and boring.</p>
+                    <p>Considering to leave <a href=“https://www.interaction-design.org/literature/article/the-power-of-white-space”>white space</a> here as the interface looks like so crowded.</p>
                   </details>
                 </td>
               </tr>
@@ -174,52 +157,38 @@
                 {% end %}
                 {% end %}
                 {% if mark == 'i' %}
-                {% if i[2] <= 100 %}
+                {% if i[2] <= 80 %}
+
+                <tr>
+                  <td>
+                <details>
+                  <summary class="text-primary">Spacing <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the proximity that when an individual perceives an assortment of objects, they perceive objects that are close to each other as forming a group."> </i></summary>
+                  <p>Seek to increase the spacing among elements or visual objects here, which may make this part of interface more clear and reduce the visual complexity. A knowledge of psychological <a href=“https://en.wikipedia.org/wiki/Gestalt_psychology”>Gestalt</a> effects may help.</p>
+                </details>
+              </td>
+            </tr>
+            
+                {% end %}
+                {% if i[2] > 80 and i[2] <= 240 %}
                 <tr>
                   <td>
                     <details>
                       <summary class="text-primary">Colorfulness <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the similarity that is perceptually grouped together if colors are similar to each other."> </i></summary>
-                      <p>Seeking to increase the color variability here. More colors may make your design looks active and pleasing. To understand more about the colorfulness in interface design, the knowledge of <a href="https://en.wikipedia.org/wiki/Color_spaces_with_RGB_primaries" target="_blank">RGB</a> and <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a> may help.</p>
+                      <p>Seeking to decrease the color variability here. Fewer colors will release your audience’s visual complexity and cognitive loading, or another way, using similar colors. To know more about the <a href="https://en.wikipedia.org/wiki/Color_spaces_with_RGB_primaries" target="_blank">RGB</a> and <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a> color space.</p>
                     </details>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                <details>
-                  <summary class="text-primary">Spacing <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the proximity that when an individual perceives an assortment of objects, they perceive objects that are close to each other as forming a group."> </i></summary>
-                  <p>Seek to increase the spacing among elements or visual objects here, which may make this part of interface more clear and reduce the visual complexity. A knowledge of psychological <a href=“https://en.wikipedia.org/wiki/Gestalt_psychology”>Gestalt</a> effects may help.</p>
-                </details>
-              </td>
-            </tr>
-            <td>
-              <details>
-                <summary class="text-primary">Semantic grouping <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that designers usually group elements that are functionally similar in a coherent design style."> </i></summary>
-                <p>Considering to separate your elements here to more sub-groups, which may help your semantic structure more visually clear.</p>
-              </details>
-            </td>
-          </tr>
-                {% end %}
-                {% if i[2] > 100 and i[2] <= 300 %}
-                <tr>
-                  <td>
-                <details>
-                  <summary class="text-primary">Spacing <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the proximity that when an individual perceives an assortment of objects, they perceive objects that are close to each other as forming a group."> </i></summary>
-                  <p>Seek to increase the spacing among elements or visual objects here, which may make this part of interface more clear and reduce the visual complexity. A knowledge of psychological <a href=“https://en.wikipedia.org/wiki/Gestalt_psychology”>Gestalt</a> effects may help.</p>
-                </details>
-              </td>
-            </tr>
+                    <details>
+                      <summary class="text-primary">Semantic grouping <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that designers usually group elements that are functionally similar in a coherent design style."> </i></summary>
+                      <p>Considering to separate your elements here to more sub-groups, which may help your semantic structure more visually clear.</p>
+                    </details>
+                  </td>
+                </tr>
             <tr>
-              
-                <tr>
-                  <td>
-                <details>
-                  <summary class="text-primary">White space <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that proper white space will make a clear style, while bad white space may also make interface boring sometimes."> </i></summary>
-                  <p>Considering to reduce your <a href=“https://www.interaction-design.org/literature/article/the-power-of-white-space”>white space</a> here because it may make the interface empty and boring.</p>
-                </details>
-              </td>
-            </tr>
                 {% end %}
-                {% if i[2] > 300 %}
+                {% if i[2] > 240 %}
                 <tr>
                   <td>
                     <details>
@@ -228,15 +197,6 @@
                     </details>
                   </td>
                 </tr>
-                <tr>
-                  <tr>
-                    <td>
-                      <details>
-                        <summary class="text-primary">Semantic grouping <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that designers usually group elements that are functionally similar in a coherent design style."> </i></summary>
-                        <p>Considering to regroup your elements here into fewer groups and give consistent styles, which may help to down users’ visual complexity and improve the <a href=“https://www.sciencedirect.com/science/article/pii/S1071581919301429”>visual search performance</a>.</p>
-                      </details>
-                    </td>
-                  </tr>
                 <tr>
                   <td>
                 <details>

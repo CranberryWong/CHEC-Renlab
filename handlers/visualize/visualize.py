@@ -133,7 +133,7 @@ def homogeneityModel(title, appeal):
     resolution = (1680/steps, 800/steps)
 
     # Homogeneity-number-based
-    if appeal <= 5.04:
+    if appeal <= (5.04 + 1):
         homomiddle = int(1.68433776 * appeal + 2.368360062544003) + 1
         homonumber = [homomiddle - 1, homomiddle, homomiddle + 1]
         homostep = -0.02
@@ -158,6 +158,16 @@ def homogeneityModel(title, appeal):
         print("setNum " + str(setNum))
 
         hist1 = collections.Counter([])
+
+        if setNum in homonumber:
+            setNum1 = setNum
+            while setNum1 == setNum:
+                max_d += homostep
+                clusters1 = fcluster(zm, max_d, criterion='distance')
+                hist1 = collections.Counter(clusters1)
+                setNum1 = len(set(clusters1))
+                print("setNum1:" + str(setNum1))
+
         while setNum not in homonumber:
             max_d += homostep
             clusters1 = fcluster(zm, max_d, criterion='distance')
@@ -170,6 +180,8 @@ def homogeneityModel(title, appeal):
             print("setNum1:" + str(setNum1))
             if setNum1 in homonumber:
                 break
+        
+
         print("hist1:" + str(hist1))
         diff = hist1 - hist0
         print("diff:" + str(diff))

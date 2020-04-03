@@ -40,43 +40,42 @@ class MembersHandler(BaseHandler):
 
         memberList = {
 
-            "Professor": {
+            "Professors": {
                 "Xiangshi Ren":{"link": "http://xiangshiren.com"},
                 "Kiyoshi Nakahara":{},
                 "Kaechang Park":{},
             },
 
-            "Associate Professor": {
+            "Associate Professors": {
                 "Yukinobu Hoshino":{},
                 "Kazunori Ueda":{},
                 "Toru Kurihara":{},
             },
             
-            "Visiting Researcher": {
+            "Visiting Researchers": {
                 "Kavous Salehzadeh Niksirat": {"link": "http://member.acm.org/~kavous"},
                 "Silpasuwanchai Chaklam": {},
                 "Kibum Kim": {},
             },
 
-            "Assistant Professor": {
+            "Assistant Professors": {
                 "Zhenxin Wang": {},
                 "Sayan Sarcar": {}, 
                 "William Delamare": {"link": "http://member.acm.org/~william.delamare"}, 
+                "Hamed Aliyari": {},
             },
 
             "Secretary": {
                 "Kyoko Hatakenaka": {},
             },
 
-            "Ph.D. Student": {
+            "Ph.D. Students": {
                 "Xinhui Jiang": {}, 
                 "Yang Li": {}, 
                 "Chen Wang": {},
             },
 
-            "Master Student": {
-                "Jingxin Liu": {}, 
-                "Ayumu Ono": {}, 
+            "Master Students": {
                 "Fitra Rahmamuliani": {}, 
                 "Xiaoxuan Li": {}, 
                 "Yilin Zheng": {}, 
@@ -92,12 +91,7 @@ class MembersHandler(BaseHandler):
                 "Junlin Sun": {},
             },
 
-            "Bachelor Student": {
-                "Kouya Ono": {}, 
-                "Kyoichirou Yonezawa": {}, 
-                "Mikina Nambu": {}, 
-                "Naoki Higashi": {}, 
-                "Seira Itou": {}, 
+            "Bachelor Students": {
                 "Akinori Kondo": {}, 
                 "Hijiri Kaneko": {}, 
                 "Ryota Torii": {}, 
@@ -105,6 +99,8 @@ class MembersHandler(BaseHandler):
                 "Yusuke Tokito": {}, 
                 "Saki Hiramatsu": {}, 
                 "Jiayuan Geng": {},
+                "Adachi Kenshi": {},
+                "Miyamoto Daisuke": {},
             },
         }
 
@@ -118,15 +114,15 @@ class MembersHandler(BaseHandler):
 
             },
             
-            "Ph.d. Students": {
+            "Ph.D. Students": {
                 "Kavous Salehzadeh Niksirat": {"years": '2015 ~ 2019', "job": 'Postdoctoral Fellow', "affiliation": 'École Polytechnique Fédérale de Lausanne EPFL, Switzerland', "avatar": 1},
                 "Qinglong Wang": {"years": '2015 ~ 2017', "job": 'Postdoc', "affiliation": 'Jilin University, China', "avatar": 1},
                 "Handityo Aulia Putra": {"years": '2013 ~ 2016', "job": 'Assistant Professor', "affiliation": 'Keimyung University, Daegu, Korea', "avatar": 1},
                 "Nem Khan Dim":{"years": '2013 ~ 2016', "job": 'Assistant Professor', "affiliation": 'Yangon University, Myanmar', "avatar": 1},
                 "Mahmoud Mohamed H. Ahmed": {"years": '2015 ~ 2017', "job": 'Assistant Professor', "affiliation": 'South Valley University, Egypt', "avatar": 1},
                 "Huawei Tu": {"years": '2009 ~ 2012', "job": 'Assistant Professor', "affiliation": 'La Trobe University, Australia', "avatar": 1},
-                "Minghui Sun": {"years": '', "job": 'Assistant Professor', "affiliation": 'Kunming University of Sci. and Tech., China', "avatar": 1},
-                "Feng Wang": {"years": '', "job": 'Prof. & Vice dean', "affiliation": 'Yangon University, Myanmar', "avatar": 1},
+                "Minghui Sun": {"years": '', "job": 'Assistant Professor', "affiliation": 'Jilin University, China', "avatar": 1},
+                "Feng Wang": {"years": '', "job": 'Prof. & Vice dean', "affiliation": 'Kunming University of Sci. and Tech., China', "avatar": 1},
                 "Yizhong Xin": {"years": '', "job": 'Professor', "affiliation": 'Shenyang University of Technology, China', "avatar": 1},
                 "Chuanyi Liu": {"years": '', "job": 'Associate Professor', "affiliation": 'Lanzhou University, China', "avatar": 0},
                 "Xiaolei Zhou": {"years": '', "job": 'Assistant Professor', "affiliation": 'Capital University of Economics and Business, China', "avatar": 0},
@@ -156,6 +152,8 @@ class MembersHandler(BaseHandler):
                 "Toshiaki Shiraki": {"years": '2014 ~ 2016', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Fang Qi": {"years": '2015 ~ 2017', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Zengyi Han": {"years": '2017 ~ 2018', "job": '', "affiliation": 'Kochi University of Technology & Jilin University', "avatar": 2},
+                "Jingxin Liu": {"years": '2017 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2}, 
+                "Ayumu Ono": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2}, 
             }
         }
 
