@@ -53,7 +53,7 @@ class ResourceHandler(BaseHandler):
         self.title = 'Resource'
         userName = tornado.escape.xhtml_escape(self.current_user)
 
-        memberIgnoreList = ["Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang", "Yugandhara Suren Hiray", "Anran Wu", "Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Zengyi Han","Jingxin Liu", "Ayumu Ono","Heyu Wang","Shuang Wang","Luxi Yang", "Xinyue Hu", "Mengyao Wu","Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou"]
+        memberIgnoreList = ["Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang", "Yugandhara Suren Hiray", "Anran Wu", "Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Zengyi Han","Jingxin Liu", "Ayumu Ono","Heyu Wang","Shuang Wang","Luxi Yang", "Xinyue Hu", "Mengyao Wu","Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou","Ryota Torii"]
         memberList2 = {
             "Professor": ["Junlin Sun","Xiangshi Ren", "Kiyoshi Nakahara", "Kaechang Park"],
             "Associate Professor": ["Yukinobu Hoshino", "Kazunori Ueda", "Toru Kurihara"],
@@ -62,7 +62,7 @@ class ResourceHandler(BaseHandler):
             "Secretary": ["Kyoko Hatakenaka"],  
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
             "Master Student": ["Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng","Xinpeng Li","Xi Chen","Sai Jiang","Hongyun Lyu","Jian Zhang","Zhihang Guo","Yanyin Zhou","Xiaofei Zhu","Junlin Sun"],
-            "Bachelor Student": [ "Akinori Kondo", "Hijiri Kaneko", "Ryota Torii", "Takaaki Kubo", "Yusuke Tokito", "Saki Hiramatsu", "Adachi Kenshi", "Miyamoto Daisuke"]
+            "Bachelor Student": [ "Akinori Kondo", "Hijiri Kaneko", "Takaaki Kubo", "Yusuke Tokito", "Saki Hiramatsu", "Adachi Kenshi", "Miyamoto Daisuke"]
         }
         memberList = [ (x, os.stat(BlogURL + '/' + x)) for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
         memberList.sort(key = lambda x: x[1].st_ctime, reverse = True)
@@ -128,12 +128,19 @@ class IntroHandler(BaseHandler):
 class FacilitesHandler(BaseHandler):
     def get(self):
         self.title = "Facilities"
+        filename = ''
 
         if not os.path.exists(dirDoc):
             os.makedirs(dirDoc)
-        s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/facilities.md", dirDoc+"/facilities.md")
 
-        with open(os.path.join(dirDoc, 'facilities.md'), encoding='utf-8', mode="r") as f:
+        if self.get_cookie('lang') == 'ja_JP':
+            filename = "/facilities_jp.md"
+        else:
+            filename = "/facilities.md"
+
+        s3.Bucket(BUCKET_NAME).download_file(dirDoc+filename, dirDoc+filename)
+
+        with open(os.path.join(dirDoc, filename), encoding='utf-8', mode="r") as f:
             content = markdown.markdown(f.read(), extensions=['markdown.extensions.tables'])
         self.render("home/facilities.html", title = self.title, content = content)
 
