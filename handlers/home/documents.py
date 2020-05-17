@@ -134,11 +134,11 @@ class FacilitesHandler(BaseHandler):
             os.makedirs(dirDoc)
 
         if self.get_cookie('lang') == 'ja_JP':
-            filename = "/facilities_jp.md"
+            filename = "facilities_jp.md"
         else:
-            filename = "/facilities.md"
+            filename = "facilities.md"
 
-        s3.Bucket(BUCKET_NAME).download_file(dirDoc+filename, dirDoc+filename)
+        s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/"+filename, dirDoc+"/"+filename)
 
         with open(os.path.join(dirDoc, filename), encoding='utf-8', mode="r") as f:
             content = markdown.markdown(f.read(), extensions=['markdown.extensions.tables'])
