@@ -14,8 +14,8 @@
 
   <!-- Bootstrap core CSS -->
   <script src="{{ static_url('scripts/jquery.min.js') }}"></script>
-
-  <link href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/f5d381ba8b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
   <style>
     .bd-placeholder-img {
@@ -33,52 +33,184 @@
       }
     }
 
-    canvas {
+    #myCanvas {
       display: block;
       background: rgba(0, 0, 255, 0.2);
     }
-  </style>
-  <script type="text/javascript">
 
-  </script>
+  </style>
+  
   <link href="{{ static_url('styles/stylesheets/sticky-footer.css') }}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
 </head>
 
 <body class="d-flex flex-column h-100" data-gr-c-s-loaded="true" style="position:relative;">
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ranking your design in current sample</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" >
+                <canvas id="myChart" style="width:100%;height:400;"></canvas>
+                <progress id="animationProgress"  max="1" value="0" style="width: 100%"  data-toggle="tooltip" data-placement="top" title="You are better than {{ float('%0.2f'%(originappeal/9*100)) }} % designs in our sample!"></progress>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
   <!-- Begin page content -->
   <main role="main" class="flex-shrink-0">
+    {% if mark != '' %}
+    <div class="toast" style="position:absolute;z-index: 4;right:1%;top:1%;" data-delay="10000">
+      <div class="toast-header">
+        <strong class="mr-auto text-primary">Reminder</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+      </div>
+      <div class="toast-body">
+        The yellow circles are the potential optimization ranges. You can click the center of circles to get suggestions.
+      </div>
+    </div>
+    {% end %}
+
     <div id="buttonpanel">
         
       {% for i in location %}
       <div id="#first" style="position:absolute;z-index: 3;top: {{ i[1]-19 }}px; left: {{ i[0]-28 }}px;">
-      <a class="btn btn-warning rounded-pill" data-toggle="collapse" href="#{{ 'collapseExample' + str(location.index(i)+1)}}" role="button" aria-expanded="false"
+      <a class="" data-toggle="collapse" href="#{{ 'collapseExample' + str(location.index(i)+1)}}" role="button" aria-expanded="false"
         aria-controls="{{ 'collapseExample' + str(location.index(i)+1)}}">
-        #Sg
+        <div class="spinner-grow text-warning" style="width: 3rem; height: 3rem;" role="status">
+          <span class="sr-only">Suggestions</span>
+        </div>
       </a>
       <div class="collapse" id="{{ 'collapseExample' + str(location.index(i)+1)}}">
         <div class="card card-body">
-          <ul>
-            {% if mark == 'd' %}
-            {% if i[2] <= 100 or i[2] >= 300 %}
-            <li>Decreasing the spacing</li>
-            {% end %}
-            {% if i[2] > 100 %}
-            <li>Decreasing the color variability</li>
-            <li>Decreasing the visual complexity</li>
-            {% end %}
-            {% end %}
-            {% if mark == 'i' %}
-            {% if i[2] <= 100 or i[2] >= 300 %}
-            <li>Increasing the spacing</li>
-            {% end %}
-            {% if i[2] > 100 %}
-            <li>Increasing the color variability</li>
-            <li>Decreasing the visual complexity</li>
-            {% end %}
-            {% end %}
-          </ul>
+          We have some suggestions regarding the potential aesthetic issues over this area, respectively on ...
+          <table class="table table-hover mt-3">
+            <tbody>
+                {% if mark == 'd' %}
+                {% if i[2] <= 80 %}
+                <tr>
+                  <td>
+                    <details>
+                      <summary class="text-primary">Colorfulness <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the similarity that is perceptually grouped together if colors are similar to each other."> </i></summary>
+                      <p>Seeking to decrease the color variability here. Fewer colors will release your audience’s visual complexity and cognitive loading, or another way, using similar colors. To know more about the <a href="https://en.wikipedia.org/wiki/Color_spaces_with_RGB_primaries" target="_blank">RGB</a> and <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a> color space.</p>
+                    </details>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                <details>
+                  <summary class="text-primary">Spacing <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the proximity that when an individual perceives an assortment of objects, they perceive objects that are close to each other as forming a group."> </i></summary>
+                  <p>Seek to decrease the spacing among elements or visual objects here, which may make this part of interface more visually harmonious as a whole. A knowledge of psychological <a href=“https://en.wikipedia.org/wiki/Gestalt_psychology”>Gestalt</a> effects may help.</p>
+                </details>
+              </td>
+            </tr>
+            
+                {% end %}
+                {% if i[2] > 80 and i[2] <= 240 %}
+                <tr>
+                  <td>
+                <details>
+                  <summary class="text-primary">Spacing <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the proximity that when an individual perceives an assortment of objects, they perceive objects that are close to each other as forming a group."> </i></summary>
+                  <p>Seek to decrease the spacing among elements or visual objects here, which may make this part of interface more visually harmonious as a whole. A knowledge of psychological <a href=“https://en.wikipedia.org/wiki/Gestalt_psychology”>Gestalt</a> effects may help.</p>
+                </details>
+              </td>
+            </tr>
+                <tr>
+                  <td>
+                    <details>
+                      <summary class="text-primary">Semantic grouping <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that designers usually group elements that are functionally similar in a coherent design style."> </i></summary>
+                      <p>Considering to regroup your elements here into fewer groups and give consistent styles, which may help to down users’ visual complexity and improve the <a href=“https://www.sciencedirect.com/science/article/pii/S1071581919301429”>visual search performance</a>.</p>
+                    </details>
+                  </td>
+                </tr>
+                {% end %}
+                {% if i[2] > 240 %}
+                <tr>
+                  <td>
+                    <details>
+                      <summary class="text-primary">Colorfulness <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the similarity that is perceptually grouped together if colors are similar to each other."> </i></summary>
+                      <p>Seeking to decrease the color variability here. Fewer colors will release your audience’s visual complexity and cognitive loading, or another way, using similar colors. To know more about the <a href="https://en.wikipedia.org/wiki/Color_spaces_with_RGB_primaries" target="_blank">RGB</a> and <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a> color space.</p>
+                    </details>
+                  </td>
+                </tr>
+                  <tr>
+                    <td>
+                  <details>
+                    <summary class="text-primary">White space <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that proper white space will make a clear style, while bad white space may also make interface boring sometimes."> </i></summary>
+                    <p>Considering to leave <a href=“https://www.interaction-design.org/literature/article/the-power-of-white-space”>white space</a> here as the interface looks like so crowded.</p>
+                  </details>
+                </td>
+              </tr>
+              
+                
+                {% end %}
+                {% end %}
+                {% if mark == 'i' %}
+                {% if i[2] <= 80 %}
+
+                <tr>
+                  <td>
+                <details>
+                  <summary class="text-primary">Spacing <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the proximity that when an individual perceives an assortment of objects, they perceive objects that are close to each other as forming a group."> </i></summary>
+                  <p>Seek to increase the spacing among elements or visual objects here, which may make this part of interface more clear and reduce the visual complexity. A knowledge of psychological <a href=“https://en.wikipedia.org/wiki/Gestalt_psychology”>Gestalt</a> effects may help.</p>
+                </details>
+              </td>
+            </tr>
+            
+                {% end %}
+                {% if i[2] > 80 and i[2] <= 240 %}
+                <tr>
+                  <td>
+                    <details>
+                      <summary class="text-primary">Colorfulness <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the similarity that is perceptually grouped together if colors are similar to each other."> </i></summary>
+                      <p>Seeking to decrease the color variability here. Fewer colors will release your audience’s visual complexity and cognitive loading, or another way, using similar colors. To know more about the <a href="https://en.wikipedia.org/wiki/Color_spaces_with_RGB_primaries" target="_blank">RGB</a> and <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a> color space.</p>
+                    </details>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <details>
+                      <summary class="text-primary">Semantic grouping <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that designers usually group elements that are functionally similar in a coherent design style."> </i></summary>
+                      <p>Considering to separate your elements here to more sub-groups, which may help your semantic structure more visually clear.</p>
+                    </details>
+                  </td>
+                </tr>
+            <tr>
+                {% end %}
+                {% if i[2] > 240 %}
+                <tr>
+                  <td>
+                    <details>
+                      <summary class="text-primary">Colorfulness <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on the similarity that is perceptually grouped together if colors are similar to each other."> </i></summary>
+                      <p>Seeking to increase the color variability here. More colors may make your design looks active and pleasing. To understand more about the colorfulness in interface design, the knowledge of <a href="https://en.wikipedia.org/wiki/Color_spaces_with_RGB_primaries" target="_blank">RGB</a> and <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a> may help.</p>
+                    </details>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                <details>
+                  <summary class="text-primary">White space <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="We offer this suggestion mainly based on design principles that proper white space will make a clear style, while bad white space may also make interface boring sometimes."> </i></summary>
+                  <p>Considering to reduce your <a href=“https://www.interaction-design.org/literature/article/the-power-of-white-space”>white space</a> here because it may make the interface empty and boring.</p>
+                </details>
+              </td>
+            </tr>
+                {% end %}
+                {% end %}
+
+            </tbody>
+          </table>
+  
         </div>
       </div>
     </div>
@@ -88,45 +220,126 @@
     <canvas id="myCanvas" width="1680" height="900" style="position:absolute;z-index: 1;"></canvas>
     {% end %}
     <div>
-      <img src="{{ static_url('sample/' + pagetitle + '.png') }}" alt="" style="width:100%;">
+      <img src="{{ static_url('sample/' + pagetitle + '.png') }}" alt="" style="width:100%;display:inline-block" id="webpage">
+      <img src="{{ static_url('sample/homo/' + pagetitle + '-homo.png') }}" alt="" style="width:100%;display:none" id="homo">
     </div>
 
   </main>
-  <footer class="footer mt-auto py-3" style="position:absolute;z-index: 2;width:100%;bottom:0;">
-    <div class="container">
-      <!-- <label for="customRange3">Suggestion Degree</label> -->
-      <form action="/visualization/sample?pagetitle={{pagetitle}}&appeal={{appeal}}" method="POST"  class="form-inline">
-        <div class="form-group">
-      <input type="hidden" id="pagetitle" value="{{ pagetitle }}" name="pagetitle"></div>
-      <div class="form-group">
-          <input type="hidden" id="pagetitle" value="{{ appeal }}" name="appeal"></div>
-      <!-- <div class="form-group  mr-4"><input type="range" class="custom-range" min="0" max="8" step="8" value="8" id="customRange3" name="appeall">      </div>-->
-        <button type="submit" class="btn btn-outline-secondary float-right">Design Suggestions</button>
-        <p class="ml-2" style="margin-bottom:0;"><mark> Note: the yellow circle is the optimization range. </mark></p>    
-
-    </form>
-      <hr>
-      
-      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups"  style="display: inline;">
-
-          <div class="btn-group mr-2 float-right" role="group" aria-label="First group">
-              <p class="mr-4 mt-1" style="display: inline; margin-bottom:0;"><i>Test Cases: </i></p>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=microsoft.com" style="color:inherit">1</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=infoq.com" style="color:inherit">2</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=olderadults.mobi" style="color:inherit">3</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=pantone.com" style="color:inherit">4</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=math.com" style="color:inherit">5</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=yuchrszk.blogspot.com" style="color:inherit">6</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=freebiesbug.com" style="color:inherit">7</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=pxtoem.com" style="color:inherit">8</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=skima.jp" style="color:inherit">9</a></button>
-            <button type="button" class="btn btn-secondary"><a href="/visualization/sample?pagetitle=designmodo.com" style="color:inherit">10</a></button>
+  <footer class="footer mt-auto py-3 border-top border-secondary bg-white" style="position:absolute;z-index: 2;width:100%;bottom:0;">
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2">
+          <a href="/visualization">
+            <img class="mb-4" src="{{ static_url("images/IAF.png") }}" alt="" width="200">
+          </a>
+        </div>
+        <div class="col-2">
+          <div class="bg-light px-auto text-center">
+            <div class="badge badge-muted text-wrap">
+              General aesthetic rating:
+            </div>
+            <br>
+            <h1 class="mr-1 mt-1 display-4 rounded" style="display: inline; margin-bottom:0;">{{ originappeal }}<span style="color:#bbbbbb;font-size: 61.8%;">/9</span></h1>
+          {% if originappeal >= 6 %}
+            <span class="badge badge-pill badge-success">Good!</span>
+            {% elif originappeal < 6 and originappeal > 4 %}
+            <span class="badge badge-pill badge-primary">Almost OK~</span>
+            {% elif originappeal < 4 %}
+            <span class="badge badge-pill badge-warning">Emm...🤔</span>
+            {% end %}
           </div>
-     </div>
-    </div>
+        </div>
+        <div class="col-4">
+          
+          <form action="/visualization/sample?pagetitle={{pagetitle}}&appeal={{appeal}}" method="POST"  class="form-inline">
+            <div class="form-group">
+          <input type="hidden" id="pagetitle" value="{{ pagetitle }}" name="pagetitle"></div>
+          <div class="form-group">
+              <input type="hidden" id="pagetitle" value="{{ appeal }}" name="appeal"></div>
+          <!-- <div class="form-group  mr-4"><input type="range" class="custom-range" min="0" max="8" step="8" value="8" id="customRange3" name="appeall">      </div>-->
+            <button type="submit" class="btn btn-primary btn-lg btn-block">
+              <!-- <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> -->
+              Design Suggestions
+            </button>
+
+            <!-- <p class="ml-2" style="margin-bottom:0;"><mark> Note: the yellow circle is the optimization range. </mark></p>     -->
+            <div class="mt-2 mx-auto">
+              <div class="custom-control custom-switch mx-auto">
+                <input type="checkbox" class="custom-control-input" id="homoSwitch" onclick="homoMode()">
+                <label class="custom-control-label" for="homoSwitch"><div class="badge badge-muted text-wrap mt-1" id="homoLabel">
+                  Homogeneity mode <span><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="A aesthetic metric of how coherently several perceived blocks are distributed."> </i></span>
+
+                </div>
+              </label>
+              </div>
+            </div>
+            
+        </form>
+      </div>
+      <div class="col-2 h-100">
+        <div class="bg-light text-center mx-auto" style="min-height: 91px;">
+          <button type="button" class="btn btn-outline-primary mt-4" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-chart-bar"></i> Ranking</button>
+        </div>
+
+      </div>
+      <div class="col-2"></div>
+        </div>
+        
+      
+      <hr style="color:#000000">
+      <div class="row justify-content-center">
+        <div class="col-4 text-center">
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups"  style="display: inline;">
+            <div class="btn-group" role="group" aria-label="First group" style=" text-align: center;">
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=microsoft.com" style="color:inherit">1</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=infoq.com" style="color:inherit">2</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=olderadults.mobi" style="color:inherit">3</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=pantone.com" style="color:inherit">4</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=math.com" style="color:inherit">5</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=yuchrszk.blogspot.com" style="color:inherit">6</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=freebiesbug.com" style="color:inherit">7</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=pxtoem.com" style="color:inherit">8</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=skima.jp" style="color:inherit">9</a></button>
+              <button type="button" class="btn btn-outline-primary"><a href="/visualization/sample?pagetitle=designmodo.com" style="color:inherit">10</a></button>
+            </div>
+            <i class="fas fa-question-circle text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="Test Case"> </i>
+       </div>
+        </div>
+      </div>
+      </div>
+      <!-- <label for="customRange3">Suggestion Degree</label> -->
   </footer>
 
   <script type="text/javascript">
+    $(document).ready(function(){
+    $('.toast').toast('show');
+  });
+
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    function homoMode() {
+      var homoSwitch = document.getElementById("homoSwitch");
+
+      var webpage = document.getElementById("webpage");
+      var checkBox = document.getElementById("homo");
+      var homoLabel = document.getElementById("homoLabel");
+
+      if (homoSwitch.checked == true) {
+        webpage.style.display = 'none';
+        homo.style.display = 'inline-block';
+        homoLabel.classList.remove("badge-muted");
+        homoLabel.classList.add("badge-primary");
+      } else {
+        homo.style.display = 'none';
+        webpage.style.display = 'inline-block';
+        homoLabel.classList.remove("badge-primary");
+        homoLabel.classList.add("badge-muted");
+      }
+    }
+
     // $(function () {
     //   //添加窗口尺寸改变响应监听
     //   $(window).resize(resizeCanvas);
@@ -160,8 +373,88 @@
     draw();
 
   </script>
-  <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script> {% block customJS %}{% end %}
+  <script src="{{ static_url('scripts/popper.js') }}"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="{{ static_url('scripts/Chart.min.js') }}"></script>
+  <script>
+    function detailChart() {
+      var progress = document.getElementById('animationProgress');
+    var ctx1 = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: ['1 ~ 2', '2 ~ 3', '3 ~ 4', '4 ~ 5', '5 ~ 6', '6 ~ 7', '7 ~ 8', '8 ~ 9'],
+        datasets: [{
+            label: 'Appeal frequency of designs',
+            data: {{ returned_ranking["frequency"] }},
+            order: 1,
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            borderColor: 'rgba(54, 162, 235, 1)'
+        }, {
+          type: 'line',
+            label: 'Average homogeneity numbers of this appealing',
+            data: {{ returned_ranking["homo"] }},
 
+            // Changes this dataset to become a line
+            order: 2,
+
+        }],
+        // datasets: [{
+        //     label: 'Appeal frequency of designs',
+        //     data: [5, 6, 7, 8, 7, 6, 7, 8, 3],
+        //     backgroundColor: [
+        //         'rgba(255, 99, 132, 0.2)',
+        //         'rgba(54, 162, 235, 0.2)',
+        //         'rgba(255, 206, 86, 0.2)',
+        //         'rgba(75, 192, 192, 0.2)',
+        //         'rgba(153, 102, 255, 0.2)',
+        //         'rgba(255, 159, 64, 0.2)'
+        //     ],
+        //     borderColor: [
+        //         'rgba(255, 99, 132, 1)',
+        //         'rgba(54, 162, 235, 1)',
+        //         'rgba(255, 206, 86, 1)',
+        //         'rgba(75, 192, 192, 1)',
+        //         'rgba(153, 102, 255, 1)',
+        //         'rgba(255, 159, 64, 1)'
+        //     ],
+        //     borderWidth: 1
+        // }],
+    },
+    options: {
+      tooltips: {
+        enabled: false
+      },
+
+      animation: {
+            onProgress: function(animation) {
+                progress.value = {{ originappeal/9 }}
+            }
+        },
+
+      legend: {       
+            display:true  
+        },
+
+        scales: {
+          xAxes: [{
+            offset: true,
+        }],
+            yAxes: [{
+                ticks: {
+                  beginAtZero:true,
+                }
+            }]
+        }
+    }
+
+});
+}
+
+detailChart();  
+  </script>
+
+  
 </body>
 
 </html>

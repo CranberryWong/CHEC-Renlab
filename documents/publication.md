@@ -1,7 +1,20 @@
 ## Publication
 ---
 ### [ 2019 ]
-* ##### Human-Engaged Computing: The Future of Human-Computer Interaction. [[PDF]](https://drive.google.com/file/d/1MUwxvnj0J1qrGvv7scIK9FpDDK_dYraG/view?usp=sharing) |[Springer](https://link.springer.com/article/10.1007/s42486-019-00007-0)
+
+* ##### Attention Regulation Framework: Designing Self-Regulated Mindfulness Technologies. [[PDF]](https://drive.google.com/file/d/1qQIl66M2xk4sllYFpv5di0-lQDK6bOQR/view?usp=sharing) | [ACM](https://dl.acm.org/citation.cfm?id=3359593)
+Niksirat, K. S., Silpasuwanchai, C., Cheng, P., & Ren, X. (2019). *ACM Transactions on Computer-Human Interaction (TOCHI)*, 26(6), 39.
+
+* ##### On Gesture Combination: An Exploration of a Solution to Augment Gesture Interaction. [[PDF]](https://drive.google.com/file/d/1HR48xgZJly26Cf2oGmVpLo2s_5VByVau/view?usp=sharing) | [ACM](https://dl.acm.org/citation.cfm?id=3359706)
+Delamare, W., Silpasuwanchai, C., Sarcar, S., Shiraki, T., & Ren, X. (2019, November). *In Proceedings of the 2019 ACM International Conference on Interactive Surfaces and Spaces* (pp. 135-146). ACM.
+
+* ##### Interacting with Autostereograms. [[PDF]](https://drive.google.com/file/d/1QJVRr3iFTK47eVJct5XrOT8VIe_x2HJx/view?usp=sharing) | [ACM](https://dl.acm.org/citation.cfm?id=3340141)
+Delamare, W., Kim, J., Harada, D., Irani, P., & Ren, X. (2019, October). *In Proceedings of the 21st International Conference on Human-Computer Interaction with Mobile Devices and Services* (p. 30). ACM.
+
+* ##### From UX to Engagement: Connecting Theory and Practice, Addressing Ethics and Diversity. [[PDF]](https://drive.google.com/file/d/1evxzM9XFo1I7A7EfiKvKNmm6jT6seQWf/view?usp=sharing) | [Springer](https://link.springer.com/chapter/10.1007/978-3-030-23560-4_7)
+Ole Goethe, Kavous Salehzadeh Niksirat, Ilyena Hirskyj-Douglas, Huatong Sun, Effie L.-C. Law, Xiangshi Ren. (2019) *Universal Access in Human-Computer Interaction. Theory, Methods and Tools. HCII 2019.*
+
+* ##### Human-Engaged Computing: The Future of Human-Computer Interaction. [[PDF]](https://drive.google.com/file/d/1MUwxvnj0J1qrGvv7scIK9FpDDK_dYraG/view?usp=sharing) | [Springer](https://link.springer.com/article/10.1007/s42486-019-00007-0)
 Xiangshi Ren, Chaklam Silpasuwanchai, John Cahill. (2019) *CCF Transactions on Pervasive Computing and Interactions*
 
 * ##### Crossing-Based Selection with Virtual Reality Head-Mounted Displays. [CHI 2019]. [[PDF]](https://drive.google.com/file/d/1nhpECQHgZi8B0wxuO4dDfhu7DZgH5b6x/view?usp=sharing) | [ACM](https://dl.acm.org/citation.cfm?id=3300848)

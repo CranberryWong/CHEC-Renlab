@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ _(handler.title) }}</title>
+    <link rel="stylesheet" href="{{ static_url('libs/bootstrap/dist/css/bootstrap.css') }}">
+    <!--<link rel="stylesheet" href="../../static/libs/bootstrap/dist/css/bootstrap.css">-->
+    <link rel="stylesheet" href="{{ static_url('styles/stylesheets/style.css') }}">
+    <!--<link rel="stylesheet" href="../../static/styles/style.css">-->
+    {% block costomCSS %}{% end %}
+    <link rel="icon" href="{{ static_url('favicon.ico') }}">
+    <script src="{{ static_url('libs/holderjs/holder.js') }}"></script>
+</head>
+
+<body style="padding:0;">
+    
+    <img src="{{ static_url(path) }}" class="webpage-fix">
+    <div class="rating">
+        <form action="/layout/start" method="POST">
+        <span>Low Visual Complexity </span>
+            <label class="radio-inline">
+            <input type="radio" name="rating" id="inlineRadio1" value="-3"> -3
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="rating" id="inlineRadio2" value="-2"> -2
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="rating" id="inlineRadio3" value="-1"> -1
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="rating" id="inlineRadio4" value="0"> 0
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="rating" id="inlineRadio5" value="1"> 1
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="rating" id="inlineRadio6" value="2"> 2
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="rating" id="inlineRadio7" value="3"> 3
+            </label>
+            <span> High Visual Complexity</span>
+            <button class="btn btn-primary pull-right" type="submit">Next</button>
+        </form>
+    </div>
+    <script src="{{ static_url('libs/bootstrap/dist/js/bootstrap.js') }}"></script>
+    <script src="{{ static_url('libs/jquery/dist/jquery.min.js') }}"></script>
+    {% block customJS %}{% end %}
+</body>
+
+</html>

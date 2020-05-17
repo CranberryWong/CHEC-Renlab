@@ -46,6 +46,47 @@ webpageDict={
     'yuchrszk.blogspot.com':3.93
 }
 
+
+def getReturnedRanking():
+    returned_ranking = {"frequency": [], "appeal": [], "homo": [], "entropy": []}
+
+    csv_path = os.path.join(os.path.dirname('./..'), "static/sample/")
+    with open(os.path.join(csv_path, 'ttt.csv'), "r+") as f:
+        reader = csv.reader(f)
+        sample_count = 0; sample_total = 147
+        j = 2; chart_frequency = 0; chart_appeal = 0; chart_homo = 0; chart_entropy = 0
+        
+        for i in reader:
+            if i[0] != "title":
+                sample_count += 1
+                
+                if float(i[3]) < j:
+                    chart_frequency += 1
+                    chart_appeal += float(i[3])
+                    chart_homo += float(i[-2])
+                    chart_entropy += float(i[-1])
+                else:
+                    returned_ranking["frequency"].append(chart_frequency)
+                    returned_ranking["appeal"].append(chart_appeal/chart_frequency)
+                    returned_ranking["homo"].append(chart_homo/chart_frequency)
+                    returned_ranking["entropy"].append(chart_entropy/chart_frequency)
+                    chart_frequency = 0; chart_appeal = 0; chart_homo = 0; chart_entropy = 0
+                    chart_frequency += 1
+                    chart_appeal += float(i[3])
+                    chart_homo += float(i[-2])
+                    chart_entropy += float(i[-1])
+                    j += 1
+                    if sample_count == sample_total:
+                        returned_ranking["frequency"].append(chart_frequency)
+                        returned_ranking["appeal"].append(chart_appeal/chart_frequency)
+                        returned_ranking["homo"].append(chart_homo/chart_frequency)
+                        returned_ranking["entropy"].append(chart_entropy/chart_frequency)
+    return returned_ranking
+
+global returned_ranking
+
+returned_ranking = getReturnedRanking()
+
 class HomeHandler(BaseHandler):
     def get(self):
         BaseHandler.initialize(self)
@@ -58,18 +99,21 @@ class MainHandler(BaseHandler):
         BaseHandler.initialize(self)
         appeal = webpageDict[pagetitle]
         self.title = 'Optimizing'
-        self.render("visualization/vmain.html", pagetitle = pagetitle, appeal = int(appeal) + 2, location = [], mark = '')
+        self.render("visualization/vmain.html", pagetitle = pagetitle, appeal = int(appeal) + 2, location = [], mark = '', originappeal = appeal, returned_ranking = returned_ranking)
 
     def post(self):
         BaseHandler.initialize(self)
         pagetitle = self.get_argument("pagetitle")
         appeal = self.get_argument("appeal")
+
+        originappeal = webpageDict[pagetitle]
+        
         print(appeal)
         windowWidth = 1900
         windowHeight = 900 + 123
         self.title = "Optimizing"
         location, mark = homogeneityModel(pagetitle, float(appeal))
-        self.render("visualization/vmain.html", pagetitle = pagetitle, appeal = appeal, location = location, mark = mark)
+        self.render("visualization/vmain.html", pagetitle = pagetitle, appeal = appeal, location = location, mark = mark, originappeal = originappeal, returned_ranking = returned_ranking)
         # driver = webdriver.Chrome()
         # driver.set_window_size(windowWidth, windowHeight)
         # driver.get(url)
@@ -89,7 +133,7 @@ def homogeneityModel(title, appeal):
     resolution = (1680/steps, 800/steps)
 
     # Homogeneity-number-based
-    if appeal <= 5.04:
+    if appeal <= (5.04 + 1):
         homomiddle = int(1.68433776 * appeal + 2.368360062544003) + 1
         homonumber = [homomiddle - 1, homomiddle, homomiddle + 1]
         homostep = -0.02
@@ -114,6 +158,16 @@ def homogeneityModel(title, appeal):
         print("setNum " + str(setNum))
 
         hist1 = collections.Counter([])
+
+        if setNum in homonumber:
+            setNum1 = setNum
+            while setNum1 == setNum:
+                max_d += homostep
+                clusters1 = fcluster(zm, max_d, criterion='distance')
+                hist1 = collections.Counter(clusters1)
+                setNum1 = len(set(clusters1))
+                print("setNum1:" + str(setNum1))
+
         while setNum not in homonumber:
             max_d += homostep
             clusters1 = fcluster(zm, max_d, criterion='distance')
@@ -123,12 +177,14 @@ def homogeneityModel(title, appeal):
             # print(hist1)
             # print(max_d)
             # print(histData1)
-            print(setNum1)
+            print("setNum1:" + str(setNum1))
             if setNum1 in homonumber:
                 break
-        print(hist1)
+        
+
+        print("hist1:" + str(hist1))
         diff = hist1 - hist0
-        print(diff)
+        print("diff:" + str(diff))
         if len(diff) >= 3:
             diff = diff.most_common()[:3]
         else:
@@ -136,10 +192,10 @@ def homogeneityModel(title, appeal):
 
         for i in diff:
             result = np.where(clusters1 == i[0])
-            print(result)
+            print("result:" + str(result))
             yresult = np.array(list(map(lambda y: y//steps, result)))
             xresult = np.array(list(map(lambda x: x%steps, result)))
-            print(yresult)
+            print("yresult:" + str(yresult))
 
             yresult = reject_outliers(yresult)
             xresult = reject_outliers(xresult)
@@ -151,6 +207,7 @@ def homogeneityModel(title, appeal):
             op_location.append([originx, originy, radius])
         print(op_location)
     return op_location, mark
+
         # infile = os.path.join(os.path.dirname('./../..'), "static/sample/") + title +'.png'
         # im = Image.open(infile)
         # im = array(im.convert('HSV'))
