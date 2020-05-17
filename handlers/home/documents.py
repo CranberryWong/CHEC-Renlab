@@ -53,16 +53,16 @@ class ResourceHandler(BaseHandler):
         self.title = 'Resource'
         userName = tornado.escape.xhtml_escape(self.current_user)
 
-        memberIgnoreList = ["Junlin Sun", "Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang", "Yugandhara Suren Hiray", "Anran Wu", "Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Zengyi Han"]
+        memberIgnoreList = ["Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang", "Yugandhara Suren Hiray", "Anran Wu", "Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Zengyi Han","Jingxin Liu", "Ayumu Ono","Heyu Wang","Shuang Wang","Luxi Yang", "Xinyue Hu", "Mengyao Wu","Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou"]
         memberList2 = {
-            "Professor": ["Xiangshi Ren", "Kiyoshi Nakahara", "Kaechang Park"],
+            "Professor": ["Junlin Sun","Xiangshi Ren", "Kiyoshi Nakahara", "Kaechang Park"],
             "Associate Professor": ["Yukinobu Hoshino", "Kazunori Ueda", "Toru Kurihara"],
             "Visiting Researcher": ["Kavous Salehzadeh Niksirat", "Silpasuwanchai Chaklam", "Kibum Kim"],
             "Assistant Professor": ["Zhenxin Wang", "Sayan Sarcar", "William Delamare"],
             "Secretary": ["Kyoko Hatakenaka"],  
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
-            "Master Student": ["Jingxin Liu", "Ayumu Ono", "Heyu Wang", "Shuang Wang", "Luxi Yang", "Xinyue Hu", "Mengyao Wu", "Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng"],
-            "Bachelor Student": ["Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou", "Akinori Kondo", "Hijiri Kaneko", "Ryota Torii", "Takaaki Kubo", "Yusuke Tokito"]
+            "Master Student": ["Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng","Xinpeng Li","Xi Chen","Sai Jiang","Hongyun Lyu","Jian Zhang","Zhihang Guo","Yanyin Zhou","Xiaofei Zhu","Junlin Sun"],
+            "Bachelor Student": [ "Akinori Kondo", "Hijiri Kaneko", "Ryota Torii", "Takaaki Kubo", "Yusuke Tokito", "Saki Hiramatsu", "Adachi Kenshi", "Miyamoto Daisuke"]
         }
         memberList = [ (x, os.stat(BlogURL + '/' + x)) for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
         memberList.sort(key = lambda x: x[1].st_ctime, reverse = True)
