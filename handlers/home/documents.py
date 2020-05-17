@@ -147,7 +147,13 @@ class FacilitesHandler(BaseHandler):
 class ProjectsHandler(BaseHandler):
     def get(self):
         self.title = "Projects"
-        for file in myBucket.objects.filter(Prefix="documents/projects/", Delimiter = '\\'):
+        foldername = ""
+
+        if self.get_cookie('lang') == 'ja_JP':
+            foldername = "projects_jp"
+        else:
+            foldername = "projects"
+        for file in myBucket.objects.filter(Prefix="documents/"+foldername+"/", Delimiter = '\\'):
             dir = os.path.dirname(file.key)
             if not os.path.exists(dir):
                 os.makedirs(dir)
@@ -166,7 +172,12 @@ class ProjectShowHandler(BaseHandler):
         # with open(dirProjects + '/' + project + '.md') as f:
         #     content = markdown.markdown(f.read())
         # open the markdown directly from s3
-        s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key='documents/projects/'+project+'.md')
+        if self.get_cookie('lang') == 'ja_JP':
+            foldername = "projects_jp"
+        else:
+            foldername = "projects"
+
+        s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key='documents/'+foldername+'/'+project+'.md')
         content = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
 
         self.render("home/page.html", title = self.title, content = content)
