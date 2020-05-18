@@ -55,7 +55,7 @@ class ResourceHandler(BaseHandler):
 
         memberIgnoreList = ["Kiyoshi Nakahara", "Yukinobu Hoshino", "Toru Kurihara", "Kaechang Park", "Kazunori Ueda", "Silpasuwanchai Chaklam", "Kibum Kim", "Sayan Sarcar", "Zhenxin Wang", "Yugandhara Suren Hiray", "Anran Wu", "Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Zengyi Han","Jingxin Liu", "Ayumu Ono","Heyu Wang","Shuang Wang","Luxi Yang", "Xinyue Hu", "Mengyao Wu","Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou","Ryota Torii"]
         memberList2 = {
-            "Professor": ["Junlin Sun","Xiangshi Ren", "Kiyoshi Nakahara", "Kaechang Park"],
+            "Professor": ["Xiangshi Ren", "Kiyoshi Nakahara", "Kaechang Park"],
             "Associate Professor": ["Yukinobu Hoshino", "Kazunori Ueda", "Toru Kurihara"],
             "Visiting Researcher": ["Kavous Salehzadeh Niksirat", "Silpasuwanchai Chaklam", "Kibum Kim"],
             "Assistant Professor": ["Zhenxin Wang", "Sayan Sarcar", "William Delamare"],
