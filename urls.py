@@ -4,6 +4,7 @@ from handlers.blog import blog
 from handlers.auth import auth
 from handlers.visualize import visualize
 from handlers.aesthetics import main, layoutmain
+from handlers.newblog import mainblog
 
 handlers = [
             # Home
@@ -56,10 +57,12 @@ handlers = [
             (r"/visualization", visualize.HomeHandler),
             (r"/visualization/sample?", visualize.MainHandler),
 
+            # New Blog
+            (r"/newblog/([\w./?%&=]*)?", mainblog.MainHandler),
+            
             # i18n
             (r"/language?", base.I18nHandler),
 
             # 404
             (r".*", exception.ErrorHandler),
-
     ]

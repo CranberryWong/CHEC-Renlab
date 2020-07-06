@@ -1,0 +1,5 @@
+{% extends "main_base.html" %} {% block main %} {% block content %} {% import uuid %} {% if current_user.decode('utf8') == userName %}
+
+<h1>Hello World, {{ userName }}</h1>
+
+{% end %} {% end %} {% end %}

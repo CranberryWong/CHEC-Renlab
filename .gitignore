@@ -119,3 +119,6 @@ handlers/__pycache__/
 handlers/auth/__pycache__/
 handlers/blog/__pycache__/
 handlers/home/__pycache__/
+handlers/newblog/__pycache__/
+
+nohup.out
