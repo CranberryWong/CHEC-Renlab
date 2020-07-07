@@ -157,8 +157,8 @@ span.glyphicon.glyphicon-chevron-left::before {
 }
 
 .left-nav-photo {
-    width: 6em;
-    height: 6em;
+    width: 8em;
+    height: 8em;
     object-fit: cover;
 }
 
@@ -199,7 +199,7 @@ span.glyphicon.glyphicon-chevron-left::before {
 }
 
 .left-nav-bar-blog {
-    overflow: scroll;
+    overflow: auto;
 }
 
 .phone-row i {

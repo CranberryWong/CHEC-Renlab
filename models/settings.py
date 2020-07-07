@@ -6,6 +6,6 @@ DBSETTINGS = dict(
    db_host = 'localhost',
    db_user = 'postgres',
    db_password = 'root',
-   db_port = 4025,
+   db_port = 5432,
    db_encode = 'utf8',
 )
