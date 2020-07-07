@@ -15,12 +15,13 @@ import urllib.request
 
 from handlers.util import *
 from handlers.base import BaseHandler
-from models.entity import Account, XpEvents, ProjectGroup, Project 
+from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember
 from models.entity import db_session
 from datetime import datetime
 from boto3 import Session
 from PIL import Image
 from io import BytesIO 
+from sqlalchemy.sql import exists
 
 # AWS S3 Configuration
 BUCKET_NAME = 'chec-static'
@@ -103,9 +104,25 @@ class AddProjectHandler(BaseHandler):
         newprojectgroupid = self.get_argument('newprojectgroupid', default=1)
         newprojectname = self.get_argument('newprojectname', default='')
         newprojectmembers = self.get_arguments('newprojectmembers')
-        newproject = Project(newprojectname, newprojectgroupid)
-        self.session.add(newproject)
-        self.session.commit()
+        
+        if self.session.query(exists().where(Project.project_name == newprojectname).where(Project.project_group_id == newprojectgroupid)).scalar():
+            # data already exists
+            editproject = self.session.query(Project).filter(Project.project_name==newprojectname).first()
+            editproject.project_group_id = newprojectgroupid
+            editproject.project_name = newprojectname
+            self.session.commit()           
+            for member in newprojectmembers:
+                if self.session.query(~exists().where(ProjectMember.user_id == member).where(ProjectMember.project_id == editproject.project_id)).scalar():
+                    newmember = ProjectMember(member, editproject.project_id)
+                    self.session.add(newmember)
+                    self.session.commit()
+        else:
+            newproject = Project(newprojectname, newprojectgroupid)
+            self.session.add(newproject)
+            for member in newprojectmembers:
+                newmember = ProjectMember(member, newproject.project_id)
+                self.session.add(newmember)
+            self.session.commit()
         self.redirect("/newblog/" + self.signeduser)
         self.sesion.close()
         

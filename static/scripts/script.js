@@ -115,7 +115,7 @@ $(document).ready(function() {
 
     var memberList = [
         { id: 0, text: "Xiangshi Ren" },
-        { id: 1, text: "Kiyoshi Nakahara" },
+        { id: 17, text: "Kiyoshi Nakahara" },
         { id: 2, text: "Kaechang Park" },
         { id: 3, text: "Yukinobu Hoshino" },
         { id: 4, text: "Kazunori Ueda" },
@@ -131,7 +131,7 @@ $(document).ready(function() {
         { id: 14, text: "Xinhui Jiang" },
         { id: 15, text: "Yang Li" },
         { id: 16, text: "Chen Wang" },
-        { id: 17, text: "Fitra Rahmamuliani" },
+        { id: 1, text: "Fitra Rahmamuliani" },
         { id: 18, text: "Xiaoxuan Li" },
         { id: 19, text: "Yilin Zheng" },
         { id: 20, text: "Chunyuan Lan" },

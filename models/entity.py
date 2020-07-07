@@ -2,8 +2,9 @@
 #coding:utf-8
 
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Boolean, create_engine
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.associationproxy import association_proxy
 from .settings import DBSETTINGS
 from datetime import datetime
 import urllib.request
@@ -29,6 +30,8 @@ class Account(Base):
     degree = Column(Integer)
     exp = Column(Integer)
     nationality = Column(String)
+    
+    projects=association_proxy('project_member','project')
     
     def __init__(self, username, password, email):
       self.username = username
@@ -88,6 +91,23 @@ class Project(Base):
     def __repr__(self):
         return "<Project('%s')>" % (self.project_name)
 
+class ProjectMember(Base):
+    __tablename__ = 'project_member'
+    
+    project_member_id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('account.user_id'))
+    project_id = Column(Integer, ForeignKey('project.project_id'))
+    
+    # bidirectional attribute/collection of "user"/"project_member"
+    user = relationship(Account, backref=backref("project_member", cascade="all, delete-orphan"))
+    
+    #reference to the "Project" object
+    project = relationship('Project')
+    
+    def __init__(self, user_id, project_id):
+        self.user_id = user_id
+        self.project_id = project_id
+    
 def getDBURL():
    return 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (DBSETTINGS['db_user'], DBSETTINGS['db_password'], DBSETTINGS['db_host'], DBSETTINGS['db_port'], DBSETTINGS['db_name'])
 
