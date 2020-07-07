@@ -76,14 +76,14 @@ class Project(Base):
     project_id = Column(Integer, primary_key=True)
     project_name = Column(String, nullable=False)
     created_on = Column(DateTime, nullable=False)
-    project_project_group_id = Column(Integer,ForeignKey('project_group.project_group_id'))
+    project_group_id = Column(Integer,ForeignKey('project_group.project_group_id'))
     
     pproject_group = relationship('ProjectGroup', backref='project')
     
-    def __init__(self, project_name, project_project_group_id):
+    def __init__(self, project_name, project_group_id):
         self.project_name = project_name
         self.created_on = datetime.now()
-        self.project_project_group_id = project_project_group_id
+        self.project_group_id = project_group_id
         
     def __repr__(self):
         return "<Project('%s')>" % (self.project_name)

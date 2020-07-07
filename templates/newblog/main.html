@@ -125,5 +125,41 @@
             </div>
         </div>
     </div>
+
+    <!--Modal for Add Project-->
+    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProjectModal">Add Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/newblog/addproject" method="POST">
+                        <div class="input-group mb-3">
+                            <label>Project Group</label>
+                            <select class="form-control select2-choose-project-group" name="newprojectgroupid">
+                            {% for group in projectgrouplist%}
+                            <option value="{{group.project_group_id}}">{{group.project_group_name}}</option>
+                            {% end %}
+                        </select>
+                        </div>
+                        <label for="project-name">Project Name</label>
+                        <input type="text" id="project-name" name="newprojectname" class="form-control" placeholder="Project Name..." />
+                        <label class="mt-3" for="select-project-member">Members</label>
+                        <div class="w-100">
+                            <select class="w-100 js-states form-control" name="newprojectmembers" id="select-project-member" multiple="multiple"></select>
+                        </div>
+                        <button type="submit" class="mt-3 btn btn-sm btn-primary">+ADD PROJECT</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-gray" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% end %} {% end %}

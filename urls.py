@@ -58,6 +58,7 @@ handlers = [
             (r"/visualization/sample?", visualize.MainHandler),
 
             # New Blog
+            (r"/newblog/addproject", mainblog.AddProjectHandler),
             (r"/newblog/profileedit", mainblog.ProfileEditHandler),
             (r"/newblog/([\w./?%&=]*)?", mainblog.MainHandler),
             

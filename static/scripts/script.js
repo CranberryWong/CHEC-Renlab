@@ -17,6 +17,12 @@ $(document).ready(function() {
         width: '100%'
     });
 
+    //Choose project group select2 function
+    $(".select2-choose-project-group").select2({
+        placeholder: "Choose Project Group",
+        width: '100%'
+    })
+
     //Choose date range in admin function
     $("#admin-month-picker").datetimepicker({
         viewMode: 'months',

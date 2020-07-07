@@ -15,7 +15,7 @@ import urllib.request
 
 from handlers.util import *
 from handlers.base import BaseHandler
-from models.entity import Account
+from models.entity import Account, XpEvents, ProjectGroup, Project 
 from models.entity import db_session
 from datetime import datetime
 from boto3 import Session
@@ -48,7 +48,8 @@ class MainHandler(BaseHandler):
         homeBase.init(self)
         self.user = self.session.query(Account).filter(Account.username == userName).first()
         self.title = "New Blog"
-        self.render("newblog/main.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL)
+        projectgrouplist = self.session.query(ProjectGroup).order_by(ProjectGroup.project_group_name.asc()).all()
+        self.render("newblog/main.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = projectgrouplist)
         
 class ProfileEditHandler(BaseHandler):
     def get(self):
@@ -88,3 +89,24 @@ class ProfileEditHandler(BaseHandler):
         self.session.commit()
         self.redirect("/newblog/" + edituser.username)
         self.session.close()
+        
+class AddProjectHandler(BaseHandler):
+    def get(self):
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        self.title = "New Blog"
+        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL)
+        self.session.close()
+        
+    def post(self):
+        homeBase.init(self)
+        newprojectgroupid = self.get_argument('newprojectgroupid', default=1)
+        newprojectname = self.get_argument('newprojectname', default='')
+        newprojectmembers = self.get_arguments('newprojectmembers')
+        newproject = Project(newprojectname, newprojectgroupid)
+        self.session.add(newproject)
+        self.session.commit()
+        self.redirect("/newblog/" + self.signeduser)
+        self.sesion.close()
+        
+        
