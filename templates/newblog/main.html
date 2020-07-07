@@ -1,5 +1,61 @@
-{% extends "main_base.html" %} {% block main %} {% block content %} {% import uuid %} {% if current_user.decode('utf8') == userName %}
+{% extends "main_base.html" %} {% block main %} {% import uuid %} {% if current_user.decode('utf8') == userName %}
 
-<h1>Hello World, {{ userName }}</h1>
-
-{% end %} {% end %} {% end %}
+<div class="row no-gutters ml-0">
+    <!--Left Navigation bar-->
+    <div class="col-md-3 shadow-sm left-nav-bar-blog px-4 pb-5">
+        <div class="d-flex justify-content-center pt-5 left-photo-containter">
+            <img class="rounded-circle left-nav-photo" src="{{avatarURL}}" alt="Profile photo of {{user.username}}" />
+            <small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">1</small>
+        </div>
+        <h5 class="text-center mt-3">{{user.username}}</h5>
+        <div class="level mt-3">
+            <div class="d-flex flex-row">
+                <small>Level 1</small>
+                <small class="ml-auto">{{user.exp}}/10 exp</small>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 70%" aria-valuenow="7" aria-valuemin="0" aria-valuemax="10"></div>
+            </div>
+        </div>
+        <div class="mt-5 nav flex-column nav-pills nav-left-blog">
+            <a class="nav-link active" href="./index.html" aria-selected="true">Weekly Report</a>
+            <a class="nav-link" href="./admin.html" aria-selected="false">Admin</a>
+            <div class="d-flex">
+                <a class="nav-link" href="#sub-project-list" data-toggle="collapse">Projects</a>
+                <button type="button" class="ml-auto btn btn-primary btn-sm align-self-center py-2" data-toggle="modal" data-target="#addProjectModal">+ ADD PROJECT</button>
+            </div>
+            <div class="collapse show" id="sub-project-list">
+                <div class="nav flex-column nav-pills">
+                    <a class="nav-link" href="./report.html">Planning and Reporting</a>
+                    <a class="nav-link" href="#">Fitness Tracker</a>
+                    <a class="nav-link" href="#">1D Pointing App</a>
+                </div>
+            </div>
+            <a class="nav-link" href="./Reporting/index.html" aria-selected="false">Leaderboard</a>
+            <h5 class="nav-link">Contact</h5>
+            <div class="d-flex flex-row phone-row mb-3 ml-3">
+                <div class="bg-blue rounded-circle mr-2"><i class="fa fa-phone text-white text-center p-2"></i></div>
+                <a href="tel:{{user.phone_number}}" class="align-self-center">{{user.phone_number}}</a>
+            </div>
+            <div class="d-flex flex-row phone-row mb-3 ml-3">
+                <div class="bg-blue rounded-circle mr-2"><i class="fa fa-at text-white text-center p-2"></i></div>
+                <a href="mailto:{{user.email}}" class="align-self-center">{{user.email}}</a>
+            </div>
+            <div class="d-flex flex-row phone-row mb-3 ml-3">
+                <div class="bg-green rounded-circle mr-2">
+                    <i class="fab fa-weixin text-white text-center p-2"></i>
+                </div>
+                {{user.wechat_id}}
+            </div>
+            <div class="d-flex flex-row social-media-row ml-3 mt-2">
+                <a class="bg-green rounded-circle mr-2" href="https://line.me/R/ti/p/{{user.line_id}}"><i class="fab fa-line text-white text-center p-2"></i></a>
+                <a class="bg-blue rounded-circle mr-2" href="skype:fitrakun?call"><i class="fab fa-skype text-white text-center p-2"></i></a>
+            </div>
+        </div>
+    </div>
+    <!-- Right Parts-->
+    <div class="col-md-9 pt-4 px-4 mb-5">
+        {% block content %}
+    </div>
+</div>
+{% end %} {% end %}

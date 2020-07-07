@@ -1,0 +1,255 @@
+.btn-gray {
+    color: white;
+    background-color: darkgray;
+}
+
+.btn-primary {
+    background: #007BFF;
+    border: none;
+}
+
+.custom-datalist {
+    display: none;
+}
+
+.bootstrap-datetimepicker-widget tr:hover,
+.bootstrap-datetimepicker-widget td:hover {
+    background-color: lightblue !important;
+}
+
+.input-percentage {
+    border: 1px solid #cccccc;
+    display: inline-block;
+    padding: 6px 12px;
+    width: 100%;
+}
+
+.input-percentage>input {
+    border: 0;
+    outline: none;
+    width: calc(100% - 13px) !important;
+    /* Firefox */
+    width: -moz-calc(100% - 13px) !important;
+    /* WebKit */
+    width: -webkit-calc(100% - 13px) !important;
+    /* Opera */
+    width: -o-calc(100% - 13px) !important;
+    /* Standard */
+    width: calc(100% - 13px) !important;
+}
+
+.input-percentage:after {
+    content: '%';
+}
+
+.select2-container--default .select2-selection--single {
+    height: auto !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding: 6px 12px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 7px;
+}
+
+.modal-body .col-md-12 {
+    padding-bottom: 10px;
+}
+
+.blog-title i {
+    font-size: medium;
+}
+
+.text-purple {
+    color: #7E57C2;
+}
+
+.text-brown {
+    color: #8D6E63;
+}
+
+.text-red {
+    color: #F44336;
+}
+
+.text-orange {
+    color: #FF9800;
+}
+
+.text-yellow {
+    color: #ffe234;
+}
+
+.text-primary {
+    color: #007BFF;
+}
+
+.bg-blue {
+    background: #007BFF;
+}
+
+.bg-green {
+    background: #66BB6A;
+}
+
+.bg-yellow {
+    background: #FFEE58;
+}
+
+.bg-gray {
+    background: #CCCCCC;
+}
+
+.bg-darkgray {
+    background: #707070;
+}
+
+.flex-10 {
+    flex: 0 0 10%;
+}
+
+.flex-12 {
+    flex: 0 0 12.5%;
+}
+
+.seen-by-photo {
+    width: 3em;
+    height: 3em;
+    object-fit: cover;
+}
+
+.comment-photo {
+    width: 4em;
+    height: 4em;
+    object-fit: cover;
+}
+
+.like-count {
+    font-size: small;
+    z-index: 1000;
+    margin-top: -1em;
+    cursor: pointer;
+}
+
+span.glyphicon.glyphicon-chevron-left::before {
+    content: '\f053';
+    font-family: fontAwesome;
+}
+
+.bootstrap-datetimepicker-widget table th.next::before {
+    content: '\f054';
+    font-family: fontAwesome;
+}
+
+.admin-month i {
+    position: absolute;
+    right: .5em;
+    height: 100%;
+    top: calc(100% - 50% - 10px);
+}
+
+.home-reflection-section i {
+    font-family: fontAwesome;
+    font-style: normal;
+    font-size: x-large;
+}
+
+.left-nav-photo {
+    width: 6em;
+    height: 6em;
+    object-fit: cover;
+}
+
+.left-photo-containter {
+    position: relative;
+}
+
+.left-photo-containter small {
+    position: absolute;
+    bottom: -1em;
+}
+
+.nav-left-blog>.d-flex>.nav-link,
+.nav-left-blog>.nav-link {
+    color: black;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.nav-left-blog>.d-flex>.nav-link.active,
+.nav-left-blog>.nav-link.active,
+.nav-left-blog .collapse .nav-link.active {
+    color: #007BFF;
+    font-weight: 800;
+    background: none;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15)!important;
+}
+
+.nav-left-blog .collapse .nav-link {
+    color: black;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.left-nav-bar-blog {
+    overflow: scroll;
+}
+
+.phone-row i {
+    font-size: large;
+}
+
+.social-media-row i {
+    font-size: x-large;
+}
+
+header .text-lg-center {
+    font-size: large;
+}
+
+.popover-body img {
+    height: 2rem;
+    width: 2rem;
+    object-fit: cover;
+}
+
+.popover-body .unread {
+    font-size: xx-large;
+}
+
+.popover-body {
+    overflow: auto;
+    max-height: 500px;
+}
+
+.notification-icon {
+    cursor: pointer;
+}
+
+.member-project-list img {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: cover;
+}
+
+.project-card-list .card {
+    max-height: 500px;
+    overflow: auto;
+}
+
+.project-card-list img {
+    width: 1.75rem;
+    height: 1.75rem;
+    object-fit: cover;
+}
+
+.highlight {
+    background-color: #FFEE58;
+}

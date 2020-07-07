@@ -1,5 +1,13 @@
 ## Publication
 ---
+### [ 2020 ]
+
+* ##### How We Type: Eye and Finger Movement Strategies in Mobile Typing. [[PDF]](https://drive.google.com/file/d/1V0-WoeSnIF3v2Z45poWfXzT1FrWoDSc3/view?usp=sharing) | [ACM](https://dl.acm.org/doi/abs/10.1145/3313831.3376711)
+Xinhui Jiang, Yang Li, Jussi P.P. Jokinen, Viet Ba Hirvola, Antti Oulasvirta, and Xiangshi Ren.  (2020). *In Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems (CHI ’20). Association for Computing Machinery, New York, NY, USA, 1–14.*
+
+* ##### Swap: A Replacement-based Text Revision Technique for Mobile Devices. [[PDF]](https://drive.google.com/file/d/1u7BqLEArA5oxB8vRKP-hhkpRiS7uUyy4/view?usp=sharing) | [ACM](https://dl.acm.org/doi/abs/10.1145/3313831.3376217)
+Yang Li, Sayan Sarcar, Sunjun Kim, and Xiangshi Ren. (2020). *In Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems (CHI ’20). Association for Computing Machinery, New York, NY, USA, 1–12.*
+
 ### [ 2019 ]
 
 * ##### Attention Regulation Framework: Designing Self-Regulated Mindfulness Technologies. [[PDF]](https://drive.google.com/file/d/1qQIl66M2xk4sllYFpv5di0-lQDK6bOQR/view?usp=sharing) | [ACM](https://dl.acm.org/citation.cfm?id=3359593)
