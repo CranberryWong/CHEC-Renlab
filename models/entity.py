@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.associationproxy import association_proxy
 from .settings import DBSETTINGS
 from datetime import datetime
+from datetime import timedelta
 import urllib.request
 import socket
 import struct
@@ -107,7 +108,44 @@ class ProjectMember(Base):
     def __init__(self, user_id, project_id):
         self.user_id = user_id
         self.project_id = project_id
+
+class WeeklyReport(Base):
+    __tablename__ = 'weekly_report'
     
+    weekly_report_id = Column(Integer, primary_key=True)
+    date_range_start = Column(DateTime, nullable=False)
+    date_range_end = Column(DateTime, nullable=False)
+    
+    def __init__(self, date_range_start):
+        self.date_range_start = date_range_start
+        self.date_range_end = date_range_start + timedelta(days=6)
+        
+    def __repr__(self):
+        return "<WeeklyReport('%s')>" % (self.date_range_start)
+    
+class Reflection(Base):
+    __tablename__ = 'reflection'
+    
+    reflection_id = Column(Integer, primary_key=True)
+    reflection_rate = Column(Integer, nullable=False)
+    reflection_text = Column(Text, nullable=False)
+    created_on = Column(DateTime, nullable=False)
+    weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
+    user_id = Column(Integer, ForeignKey('account.user_id'))
+    
+    reflection_report = relationship('WeeklyReport', backref='reflection')
+    reflection_user = relationship('Account', backref='reflection')
+    
+    def __init__(self, reflection_rate, reflection_text, weekly_report_id,user_id):
+        self.reflection_rate = reflection_rate
+        self.reflection_text = reflection_text
+        self.created_on = datetime.now()
+        self.weekly_report_id = weekly_report_id
+        self.user_id = user_id
+    
+    def __repr__(self):
+        return "<Reflection('%s')>" % (self.reflection_rate)
+
 def getDBURL():
    return 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (DBSETTINGS['db_user'], DBSETTINGS['db_password'], DBSETTINGS['db_host'], DBSETTINGS['db_port'], DBSETTINGS['db_name'])
 

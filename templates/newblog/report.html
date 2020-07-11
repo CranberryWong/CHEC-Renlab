@@ -1,0 +1,116 @@
+{% extends "main.html" %} {% block content %} {% import uuid %} {% if current_user.decode('utf8') == userName %}
+
+<!--Top title with date and prev and next week-->
+<div class="d-flex flex-row justify-content-center align-content-center">
+    <span class="p-2 mt-1"><small>Previous week</small></span>
+    <span class="p-2">
+        <h4 class="blog-title d-flex align-items-center">
+            <i class="fa fa-chevron-left pr-3"></i> 
+            <span id="title-date-week">June 08 - June 14</span>
+    <i class="fa fa-chevron-right pl-3"></i>
+    </h4>
+    </span>
+    <span class="p-2 mt-1"><small>Next week</small></span>
+</div>
+<!--Reflection section-->
+{% if reflection_exists == 1 %}
+<section class="home-reflection-section mb-3 shadow-sm py-1 px-3">
+    <div class="d-flex pt-2 justify-content-center text-yellow">
+        {% for i in range(reflection_content.reflection_rate) %}
+        <i class="fas fa-star mx-1"></i>{% end %}
+    </div>
+    <div class="mb-3">
+        <b>This Week Reflection</b>
+        <p class="reflection-text">{{ reflection_content.reflection_text }}</p>
+    </div>
+</section>
+{% end %}
+
+<!--MEETING LINK!-->
+<a href="" class="float-right"><i class="fa fa-tv text-blue"></i><u>Meeting Link</u></a>
+
+<div class="d-flex flex-row">
+    <!--Button trigger modal for new activity-->
+    <button type="button" class="mt-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#newactivitymodal">NEW ACTIVITY</button> {% if reflection_exists == 0 %}
+    <!--Button trigger modal for new reflection-->
+    <button type="button" class="ml-3 mt-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#newreflectionmodal">ADD REFLECTION</button> {% end %}
+</div>
+
+<!--Modal for Add Reflection-->
+<div class="modal fade" id="newreflectionmodal" tabindex="-1" role="dialog" aria-labelledby="newreflectionmodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProjectModal">REFLECTION</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+            </div>
+            <form action="/newblog/addreflection" method="POST">
+                <div class="modal-body mx-2">
+                    <small class="text-muted">This pop up will show up when you press "ADD REFLECTION" or when you access the blog on <span class="font-weight-bold">Friday</span> for the first time of the week.</small>
+                    <div class="text-center">
+                        <p class="text-dark mt-4"><b>Do you feel the activities you did last week contributed to your goals?</b></p>
+                        <p class="text-dark d-inline align-super mr-2">Not contributed at all</p>
+                        <div class="rating">
+                            <input class="rating__input hidden--visually" type="radio" id="5-star" name="newreflectionrate" value="5" required>
+                            <label class="rating__label mb-0" for="5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="4-star" name="newreflectionrate" value="4">
+                            <label class="rating__label mb-0" for="4-star" title="4 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">4 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="3-star" name="newreflectionrate" value="3">
+                            <label class="rating__label mb-0" for="3-star" title="3 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">3 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="2-star" name="newreflectionrate" value="2">
+                            <label class="rating__label mb-0" for="2-star" title="2 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">2 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="1-star" name="newreflectionrate" value="1">
+                            <label class="rating__label mb-0" for="1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
+                        </div>
+                        <p class="text-dark d-inline align-super ml-2">Extremely Contributed</p>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label for="textarea1"><b>Why or why not?</b></label>
+                        <textarea class="form-control" id="textarea1" name="newreflectiontext" rows="4" required placeholder="Write the reason..."></textarea>
+                    </div>
+                    <div class="mt-3 mb-2"><small>You cannot edit your reflection after submit</small></div>
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </div>
+                <!-- <div class="modal-footer align-left">
+                </div> -->
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal for Add Project-->
+<div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProjectModal">Add Project</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="project-name">Project Name</label>
+                    <input type="text" id="project-name" class="form-control" placeholder="Project Name..." />
+                    <label class="mt-3" for="select-project-member">Members</label>
+                    <div class="w-100">
+                        <select class="w-100 js-states form-control" id="select-project-member" multiple="multiple"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-gray" data-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn btn-sm btn-primary">+ADD PROJECT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% end %} {% end %}

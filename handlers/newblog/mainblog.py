@@ -15,9 +15,10 @@ import urllib.request
 
 from handlers.util import *
 from handlers.base import BaseHandler
-from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember
+from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection
 from models.entity import db_session
 from datetime import datetime
+from datetime import timedelta
 from boto3 import Session
 from PIL import Image
 from io import BytesIO 
@@ -42,6 +43,12 @@ class homeBase(BaseHandler):
         self.signeduser = tornado.escape.to_basestring(BaseHandler.get_current_user(self))
         params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + self.signeduser  + '/avatar.png'}
         self.avatarURL = s3c.generate_presigned_url('get_object', params)
+        day_of_the_week = datetime.today()  - timedelta(days=datetime.today().weekday() % 7)
+        if self.session.query(~exists().where(WeeklyReport.date_range_start+timedelta(days=1) > day_of_the_week)).scalar():
+            newweeklyreport = WeeklyReport(day_of_the_week)
+            self.session.add(newweeklyreport)
+            self.session.commit()
+        self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) > day_of_the_week).first()
 
 class MainHandler(BaseHandler):
     @tornado.web.authenticated
@@ -50,7 +57,13 @@ class MainHandler(BaseHandler):
         self.user = self.session.query(Account).filter(Account.username == userName).first()
         self.title = "New Blog"
         projectgrouplist = self.session.query(ProjectGroup).order_by(ProjectGroup.project_group_name.asc()).all()
-        self.render("newblog/main.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = projectgrouplist)
+        reflection_exists = 0 
+        reflection_content = ''
+        if self.session.query(exists().where(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).where(Reflection.user_id == self.user.user_id)).scalar():
+            reflection_exists = 1
+            reflection_content = self.session.query(Reflection).filter(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).filter(Reflection.user_id == self.user.user_id).first()
+        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content)
+        self.session.close()
         
 class ProfileEditHandler(BaseHandler):
     def get(self):
@@ -125,5 +138,29 @@ class AddProjectHandler(BaseHandler):
             self.session.commit()
         self.redirect("/newblog/" + self.signeduser)
         self.sesion.close()
+
+class AddReflection(BaseHandler):
+    def get(self):
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        self.title = "New Blog"
+        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL)
+        self.session.close()
+    
+    def post(self):
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        newreflectionrate = self.get_argument('newreflectionrate', default=0)
+        newreflectiontext = self.get_argument('newreflectiontext', default='')
+        
+        if self.session.query(exists().where(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).where(Reflection.user_id == self.user.user_id)).scalar():
+            self.write('<script language="javascript">alert("You already wrote your reflection");self.location="/newblog/'+self.user.username+'";</script>')
+        else:
+            newreflection = Reflection(newreflectionrate, newreflectiontext, self.weeklyreport.weekly_report_id, self.user.user_id)
+            self.session.add(newreflection)
+            self.session.commit()
+            self.redirect("/newblog/" + self.user.username)
+            
+        self.session.close()
         
         

@@ -1,3 +1,7 @@
+:root {
+    --text-yellow: #ffe234;
+}
+
 .btn-gray {
     color: white;
     background-color: darkgray;
@@ -79,7 +83,7 @@
 }
 
 .text-yellow {
-    color: #ffe234;
+    color: var(--text-yellow);
 }
 
 .text-primary {
@@ -252,4 +256,46 @@ header .text-lg-center {
 
 .highlight {
     background-color: #FFEE58;
+}
+
+.rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+.hidden--visually {
+    border: 0;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 100px;
+}
+
+.rating__label {
+    cursor: pointer;
+    color: gray;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.rating__icon::before {
+    content: "\f005";
+    font-family: fontAwesome;
+    font-size: 2em;
+}
+
+.rating__input:hover~.rating__label {
+    color: var(--text-yellow);
+}
+
+.rating__input:checked~.rating__label {
+    color: var(--text-yellow);
+}
+
+.align-super {
+    vertical-align: super;
 }
