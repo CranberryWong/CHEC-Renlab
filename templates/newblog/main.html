@@ -5,10 +5,10 @@
     <div class="col-md-3 shadow-sm left-nav-bar-blog px-4 pb-5">
         <div class="d-flex justify-content-center pt-5 left-photo-containter">
             <img class="rounded-circle left-nav-photo" src="{{avatarURL}}" alt="Profile photo of {{user.username}}" />
-            <small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">1</small>
+            <button type="button" class="btn" data-toggle="modal" data-target="#fqaModal"><small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">1</small></button>
         </div>
         <h5 class="text-center mt-3">{{user.username}}</h5>
-        <div class="level mt-3">
+        <button type="button" class="btn level mt-3 w-100" data-toggle="modal" data-target="#fqaModal">
             <div class="d-flex flex-row">
                 <small>Level 1</small>
                 <small class="ml-auto">{{user.exp}}/10 exp</small>
@@ -16,7 +16,7 @@
             <div class="progress">
                 <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 70%" aria-valuenow="7" aria-valuemin="0" aria-valuemax="10"></div>
             </div>
-        </div>
+        </button>
         <div class="mt-5 nav flex-column nav-pills nav-left-blog">
             <a class="nav-link active" href="./index.html" aria-selected="true">Weekly Report</a>
             <a class="nav-link" href="./admin.html" aria-selected="false">Admin</a>
@@ -127,11 +127,11 @@
     </div>
 
     <!--Modal for Add Project-->
-    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModal" aria-hidden="true">
+    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProjectModal">Add Project</h5>
+                    <h5 class="modal-title" id="addProjectModalLabel">Add Project</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -157,6 +157,39 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-gray" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="fqaModal" tabindex="-1" role="dialog" aria-labelledby="fqaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fqaModalLabel">FAQ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body mx-2">
+                    <div class="my-2">
+                        <p class="mb-1"><b>Q: Where can I edit my profile?</b></p>
+                        <p>A: Click edit icon next to the Contact menu to edit your profile. You can also edit your photo profile, but be careful because it will also be changed on the <b>member</b> page and all page that need your photo profile.</p>
+                    </div>
+                    <div class="my-2">
+                        <p class="mb-1"><b>Q: How do we earn the experience point for level?</b></p>
+                        <p>A: You will get <b>3</b> points for filling in the <b>reflection</b>, <b>2</b> points for <b>creating</b> new activity and <b>1</b> point for <b>editing</b> the activity.
+                            <br/> Your point will be decreasing by <b>-1</b> for <b>removing</b> an activity.
+                            <br/> So please be careful on creating an activity.
+                            <br/> You will get extra <b>2</b> points when you have an activity with progress <b>100%</b>.
+                        </p>
+                    </div>
+                    <div class="my-2">
+                        <p class="mb-1"><b>Q: What if we do not write our blog for one week? </b></p>
+                        <p>A: You will get <b>-5</b> points for not writing blog. This score will be checked on <b>Friday, 11 PM.</b></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
                 </div>
             </div>
         </div>

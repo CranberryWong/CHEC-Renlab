@@ -170,7 +170,7 @@ span.glyphicon.glyphicon-chevron-left::before {
     position: relative;
 }
 
-.left-photo-containter small {
+.left-photo-containter button {
     position: absolute;
     bottom: -1em;
 }
