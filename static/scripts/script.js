@@ -28,11 +28,16 @@ $(document).ready(function() {
         viewMode: 'months',
         format: 'MMMM YYYY',
         locale: 'en',
-        date: moment()
+        defaultDate: new Date($("#admin-month-picker").attr('data-month'))
+    })
+
+    //onclick the month on admin
+    $("#admin-month-picker").on("dp.change", function(e) {
+        $("#form-choose-admin-month").submit();
     })
 
     //Choose date range datepicker function
-    $("#date-range-datepicker").datetimepicker({
+    $(".date-range-datepicker").datetimepicker({
         format: 'YYYY.MM.DD',
         locale: moment.locale('en', {
             week: { dow: 1 }
@@ -40,12 +45,19 @@ $(document).ready(function() {
     })
 
     //Get the value of Start and End of Week
-    $('#date-range-datepicker').on('dp.change', function(e) {
-        var value = $("#date-range-datepicker").val();
+    $('.date-range-datepicker').on('dp.change', function(e) {
+        var value = $(".date-range-datepicker").val();
         var firstDate = moment(value, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
         var lastDate = moment(value, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
-        $("#date-range-datepicker").val(firstDate + " - " + lastDate);
+        $(".date-range-datepicker").val(firstDate + " - " + lastDate);
     });
+
+    $(".deleteactivitybutton").on("click tap",function(e){
+        e.preventDefault();
+        if(confirm("Are you sure you want to delete this Activity?")){-
+            $(".formdeleteactivity-"+$(this).attr("data-id")).submit();
+        }
+    })
 
     //turn on the tooltip from bootstrap
     $('[data-toggle="tooltip"]').tooltip();

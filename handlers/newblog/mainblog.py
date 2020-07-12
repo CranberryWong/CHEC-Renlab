@@ -22,7 +22,7 @@ from datetime import timedelta
 from boto3 import Session
 from PIL import Image
 from io import BytesIO 
-from sqlalchemy.sql import exists
+from sqlalchemy import exists, extract
 
 # AWS S3 Configuration
 BUCKET_NAME = 'chec-static'
@@ -44,14 +44,15 @@ class homeBase(BaseHandler):
         params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + self.signeduser  + '/avatar.png'}
         self.avatarURL = s3c.generate_presigned_url('get_object', params)
         day_of_the_week = datetime.today()  - timedelta(days=datetime.today().weekday() % 7)
-        if self.session.query(~exists().where(WeeklyReport.date_range_start+timedelta(days=1) > day_of_the_week)).scalar():
+        start_following_week = day_of_the_week + timedelta(days=7)
+        if self.session.query(~exists().where(WeeklyReport.date_range_start >= day_of_the_week).where(WeeklyReport.date_range_start < start_following_week)).scalar():
             newweeklyreport = WeeklyReport(day_of_the_week)
             self.session.add(newweeklyreport)
             self.session.commit()
-        self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) > day_of_the_week).first()
+        self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start > day_of_the_week).filter(WeeklyReport.date_range_start < start_following_week).first()
         self.user = self.session.query(Account).filter(Account.username == self.signeduser).first()
         self.projectgrouplist = self.session.query(ProjectGroup).order_by(ProjectGroup.project_group_name.asc()).all()
-        self.user_projectlist = self.session.query(Project.project_name).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
+        self.user_projectlist = self.session.query(Project.project_name).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id).all()
         self.session.close()
 
 class MainHandler(BaseHandler):
@@ -73,7 +74,8 @@ class ProfileEditHandler(BaseHandler):
         homeBase.init(self)
         self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
         self.title = "New Blog"
-        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL)
+        self.menu = 1
+        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL, menu = self.menu)
         self.session.close()
         
     def post(self):
@@ -166,25 +168,69 @@ class AddReflection(BaseHandler):
             
         self.session.close()
         
-class AddActivity(BaseHandler):
+class AddActivityHandler(BaseHandler):
     def get(self):
-        homeBase.init(self)
         homeBase.init(self)
         self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
         self.title = "New Blog"
-        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL)
+        self.menu = 2
+        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL, menu=self.menu)
         self.session.close()
         
     def post(self):
         homeBase.init(self)
         self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        newactivityname = self.get_argument('newactivityname', default='')
+        newprojectid = self.get_argument('newprojectid', default=7)
+        newdaterange = self.get_argument('newdaterange', default='')
+        newpriority = self.get_argument('newpriority', default=0)
+        newpercentage = self.get_argument('newpercentage', default=0)
+        
+        if(newdaterange=='' or newpercentage == '' or newactivityname == ''):
+            if(newprojectid == 7):
+                self.write('<script language="javascript">alert("Please input full data!");self.location="/newblog/projectadmin";</script>')
+        else:
+            daterange = newdaterange.split(" - ")
+            datestart = datetime.strptime(daterange[0], "%Y.%m.%d")  - timedelta(days=datetime.strptime(daterange[0], "%Y.%m.%d").weekday() % 7)
+            date_start_following_week = datestart + timedelta(days=7)
+            
+            if self.session.query(~exists().where(WeeklyReport.date_range_start>=datestart).where(WeeklyReport.date_range_start < date_start_following_week)).scalar():
+                postweeklyreport = WeeklyReport(datestart)
+                self.session.add(postweeklyreport)
+                self.session.commit()
+            addweeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start>=datestart).filter(WeeklyReport.date_range_start < date_start_following_week).first()
+            newactivity = Activity(newactivityname, newpriority, newpercentage, newprojectid, self.user.user_id, addweeklyreport.weekly_report_id)
+            self.session.add(newactivity)
+            self.session.commit()
+            if(newprojectid == 7):
+                self.redirect('/newblog/projectadmin')
+            self.session.close()
+
+class DeleteActivity(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        homeBase.init(self)
+        deleteactivityid = self.get_argument("deleteactivityid", default=None)
+        self.session.query(Activity).filter(Activity.activity_id == deleteactivityid).delete()
+        self.session.commit()
+        self.redirect('/newblog/projectadmin')
         self.session.close()
 
 class ProjectAdminHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
         homeBase.init(self)
         self.title = "Project Admin - New Blog"
         self.menu = 2
-        self.render("newblog/project_admin.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu)
+        self.user_projectlist = self.session.query(Project.project_name).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
+        activitylist = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == self.user.user_id).filter(Activity.project_id == 7).filter(extract('month',WeeklyReport.date_range_start)==datetime.today().month).all()
+        self.render("newblog/project_admin.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = activitylist, adminmonth = datetime.today())
         
-        
+    def post(self):
+        homeBase.init(self)
+        self.title = "Project Admin - New Blog"
+        self.menu = 2
+        newmonth = datetime.strptime(self.get_argument('newmonth', default=datetime.today().month), '%B %Y')
+        self.user_projectlist = self.session.query(Project.project_name).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
+        activitylist = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == self.user.user_id).filter(Activity.project_id == 7).filter(extract('month',WeeklyReport.date_range_start)==newmonth.month).all()
+        self.render("newblog/project_admin.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = activitylist, adminmonth = newmonth)

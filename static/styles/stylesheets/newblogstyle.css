@@ -31,15 +31,15 @@
 .input-percentage>input {
     border: 0;
     outline: none;
-    width: calc(100% - 13px) !important;
+    width: calc(100% - 20px) !important;
     /* Firefox */
-    width: -moz-calc(100% - 13px) !important;
+    width: -moz-calc(100% - 20px) !important;
     /* WebKit */
-    width: -webkit-calc(100% - 13px) !important;
+    width: -webkit-calc(100% - 20px) !important;
     /* Opera */
-    width: -o-calc(100% - 13px) !important;
+    width: -o-calc(100% - 20px) !important;
     /* Standard */
-    width: calc(100% - 13px) !important;
+    width: calc(100% - 20px) !important;
 }
 
 .input-percentage:after {
@@ -298,4 +298,8 @@ header .text-lg-center {
 
 .align-super {
     vertical-align: super;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu{
+    width: 100%;
 }
