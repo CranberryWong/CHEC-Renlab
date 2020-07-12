@@ -18,20 +18,19 @@
             </div>
         </button>
         <div class="mt-5 nav flex-column nav-pills nav-left-blog">
-            <a class="nav-link active" href="./index.html" aria-selected="true">Weekly Report</a>
-            <a class="nav-link" href="/newblog/projectadmin" aria-selected="false">Admin</a>
+            <a class="nav-link {% if menu == 1 %} active {% end %}" href="/newblog/{{userName}}" aria-selected="true">Weekly Report</a>
+            <a class="nav-link {% if menu == 2 %} active {% end %}" href="/newblog/projectadmin" aria-selected="false">Admin</a>
             <div class="d-flex">
                 <a class="nav-link" href="#sub-project-list" data-toggle="collapse">Projects</a>
                 <button type="button" class="ml-auto btn btn-primary btn-sm align-self-center py-2" data-toggle="modal" data-target="#addProjectModal">+ ADD PROJECT</button>
             </div>
             <div class="collapse show" id="sub-project-list">
                 <div class="nav flex-column nav-pills">
-                    <a class="nav-link" href="./report.html">Planning and Reporting</a>
-                    <a class="nav-link" href="#">Fitness Tracker</a>
-                    <a class="nav-link" href="#">1D Pointing App</a>
+                    {% for project in projectlist%} {% if project.project_name != "Admin" %}
+                    <a class="nav-link" href="./report.html">{{ project.project_name }}</a> {% end %} {% end %}
                 </div>
             </div>
-            <a class="nav-link" href="./Reporting/index.html" aria-selected="false">Leaderboard</a>
+            <a class="nav-link {% if menu == 3 %} active {% end %}" href="./Reporting/index.html" aria-selected="false">Leaderboard</a>
             <div class="d-flex flex-row">
                 <h5 class="nav-link">Contact</h5>
                 <button type="button" class="btn rounded-circle phone-row" data-toggle="modal" data-target="#editProfileModal">
