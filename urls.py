@@ -61,6 +61,7 @@ handlers = [
             (r"/newblog/addreflection", mainblog.AddReflection),
             (r"/newblog/addproject", mainblog.AddProjectHandler),
             (r"/newblog/profileedit", mainblog.ProfileEditHandler),
+            (r"/newblog/projectadmin", mainblog.ProjectAdminHandler),
             (r"/newblog/([\w./?%&=]*)?", mainblog.MainHandler),
             
             # i18n

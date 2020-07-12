@@ -146,6 +146,36 @@ class Reflection(Base):
     def __repr__(self):
         return "<Reflection('%s')>" % (self.reflection_rate)
 
+class Activity(Base):
+    __tablename__ = 'activity'
+    
+    activity_id = Column(Integer, primary_key=True)
+    activity_name = Column(Text, nullable=False)
+    priority = Column(Integer)
+    progress_percentage = Column(Integer)
+    created_on = Column(DateTime, nullable=False)
+    last_modify = Column(DateTime)
+    project_id = Column(Integer, ForeignKey('project.project_id'))
+    user_id = Column(Integer, ForeignKey('account.user_id'))
+    weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
+    
+    activity_project = relationship('Project', backref='activity')
+    activity_user = relationship('Account', backref='activity')
+    activity_weeklyreport = relationship ('WeeklyReport', backref='activity')
+    
+    def __init__(self, activity_name, priority, progress_percentage, project_id, user_id, weekly_report_id):
+        self.activity_name = activity_name
+        self.priority = priority
+        self.progress_percentage = progress_percentage
+        self.project_id = project_id 
+        self.user_id = user_id
+        self.weekly_report_id = weekly_report_id 
+        self.created_on = datetime.now()
+        self.last_modify = datetime.now() 
+    
+    def __repr__(self):
+        return "<Activity('%s')>" % (self.activity_name)
+
 def getDBURL():
    return 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (DBSETTINGS['db_user'], DBSETTINGS['db_password'], DBSETTINGS['db_host'], DBSETTINGS['db_port'], DBSETTINGS['db_name'])
 

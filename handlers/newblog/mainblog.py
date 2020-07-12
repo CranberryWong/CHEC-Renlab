@@ -15,7 +15,7 @@ import urllib.request
 
 from handlers.util import *
 from handlers.base import BaseHandler
-from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection
+from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection, Activity
 from models.entity import db_session
 from datetime import datetime
 from datetime import timedelta
@@ -36,7 +36,7 @@ s3c = boto3.client('s3',aws_access_key_id=current_credentials.access_key,aws_sec
 myBucket = s3.Bucket(BUCKET_NAME)
 config = s3c._client_config
 config.signature_version = botocore.UNSIGNED
-  
+
 class homeBase(BaseHandler):
     def init(self):
         self.session = db_session.getSession
@@ -49,20 +49,21 @@ class homeBase(BaseHandler):
             self.session.add(newweeklyreport)
             self.session.commit()
         self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) > day_of_the_week).first()
+        self.user = self.session.query(Account).filter(Account.username == self.signeduser).first()
+        self.projectgrouplist = self.session.query(ProjectGroup).order_by(ProjectGroup.project_group_name.asc()).all()
+        self.session.close()
 
 class MainHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, userName):
         homeBase.init(self)
-        self.user = self.session.query(Account).filter(Account.username == userName).first()
         self.title = "New Blog"
-        projectgrouplist = self.session.query(ProjectGroup).order_by(ProjectGroup.project_group_name.asc()).all()
         reflection_exists = 0 
         reflection_content = ''
         if self.session.query(exists().where(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).where(Reflection.user_id == self.user.user_id)).scalar():
             reflection_exists = 1
             reflection_content = self.session.query(Reflection).filter(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).filter(Reflection.user_id == self.user.user_id).first()
-        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content)
+        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content)
         self.session.close()
         
 class ProfileEditHandler(BaseHandler):
@@ -162,5 +163,26 @@ class AddReflection(BaseHandler):
             self.redirect("/newblog/" + self.user.username)
             
         self.session.close()
+        
+class AddActivity(BaseHandler):
+    def get(self):
+        homeBase.init(self)
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        self.title = "New Blog"
+        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL)
+        self.session.close()
+        
+    def post(self):
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        self.session.close()
+
+class ProjectAdminHandler(BaseHandler):
+    def get(self):
+        homeBase.init(self)
+        self.title = "Project Admin - New Blog"
+        
+        self.render("newblog/project_admin.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist)
         
         

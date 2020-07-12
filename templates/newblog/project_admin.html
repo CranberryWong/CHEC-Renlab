@@ -1,0 +1,113 @@
+{% extends "main.html" %} {% block content %} {% import uuid %} {% if current_user.decode('utf8') == userName %}
+
+<h2 class="mt-2 mb-0"><b>Admin</b></h2>
+
+<!--MEETING LINK!-->
+<a href="" class="float-right"><i class="fa fa-tv text-blue"></i><u>Meeting Link</u></a>
+
+<div class="d-flex flex-row justify-content-start mt-4">
+    <!--Button trigger modal for new activity-->
+    <button type="button" class="mr-3 btn btn-primary btn-sm" data-toggle="modal" data-target="#newactivitymodal">NEW ACTIVITY</button>
+    <div class="input-group w-auto admin-month">
+        <input type="text" class="form-control" aria-describedby="basic-addon2" id="admin-month-picker">
+        <i class="fa fa-chevron-down"></i>
+    </div>
+</div>
+
+<!--Reporting and Planning Section-->
+<section class="reporting-planning my-5">
+    <div class="reporting border-bottom pb-4">
+        <div class="project-section mb-3">
+            <div class="d-flex flex-column">
+                <div class="no-gutters row border">
+                    <span class="col-6 pl-3 py-2 text-wrap mr-auto">Update Assistive Interfaces for People with Visual Impairments and Air-based interfaces projects in Japanese</span>
+                    <span class="col-3 px-1 text-wrap text-center border-left border-right py-2">June 01 - June 07</span>
+                    <span class="col-2 flex-10 border-right px-2 py-2 text-center"><i class="fa fa-flag text-center pr-1 text-orange"></i> P2 </span>
+                    <span class="col-2 flex-12 px-3 bg-green text-center text-white py-2">DONE</span>
+                </div>
+                <div class="no-gutters row border">
+                    <span class="col-6 pl-3 py-2 text-wrap mr-auto">Discuss with <a href=""> @Adachi Kenshi</a> about our new design</span>
+                    <span class="col-3 px-1 text-wrap text-center border-left border-right py-2">June 01 - June 07</span>
+                    <span class="col-2 flex-10 border-right px-2 py-2 text-center"><i class="fa fa-flag text-center pr-1 text-primary"></i> P3 </span>
+                    <span class="col-2 flex-12 px-3 bg-green text-center text-white py-2">DONE</span>
+                </div>
+                <div class="no-gutters row border">
+                    <span class="col-6 pl-3 py-2 text-wrap mr-auto">Meeting with <a href=""> @Adachi Kenshi</a> about dividing job on programming</span>
+                    <span class="col-3 px-1 text-wrap text-center border-left border-right py-2">June 08 - June 14</span>
+                    <span class="col-2 flex-10 border-right px-2 py-2 text-center"><i class="fa fa-flag text-center pr-1 text-red"></i> P1 </span>
+                    <span class="col-2 flex-12 px-3 bg-green text-center text-white py-2">80%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!--Modal for New Activity-->
+<div class="modal fade" id="newactivitymodal" tabindex="-1" role="dialog" aria-labelledby="newactivitymodallabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New Activity</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="activity-name">Activity</label>
+                        <div class="input-group col-md-12 ">
+                            <input type="text" class="form-control" id="activity-name" placeholder="Enter Activity..." aria-placeholder="Enter Activity...">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="project-name">Project</label>
+                        <div class="input-group col-md-12">
+                            <select class="form-control select2-project-name" id="project-name" disabled aria-disabled="">
+                                <option></option>
+                                <option selected>Admin</option>
+                                <option>Activity Reporting and Plan Sharing</option>
+                                <option>Fitness Tracker</option>
+                                <option>1D Pointing Task</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="date-range">Date Range</label>
+                        <div class="input-group col-md-12" id="date-range">
+                            <input type="text" id="date-range-datepicker" placeholder="Choose Date Range" class="form-control col-md-12" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="priority-level">Priority</label>
+                        <div class="input-group col-md-12">
+                            <select class="form-control" id="priority-level">
+                                <option value=" " disabled selected hidden>Choose Priority</option>
+                                <option value='1'> P1</option>
+                                <option> P2</option>
+                                <option> P3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="percentage ">Percentage</label>
+                        <div class="input-group col-md-12">
+                            <span class="input-percentage "><input type="number" min="0" max="100" id="percentage " placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gray" data-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn btn-primary">SUBMIT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%end%} {%end%}
