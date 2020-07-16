@@ -14,7 +14,7 @@
                 <small class="ml-auto">{{user.exp}}/10 exp</small>
             </div>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 70%" aria-valuenow="7" aria-valuemin="0" aria-valuemax="10"></div>
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{user.exp}}%" aria-valuenow="{{user.exp}}" aria-valuemin="0" aria-valuemax="10"></div>
             </div>
         </button>
         <div class="mt-5 nav flex-column nav-pills nav-left-blog">
