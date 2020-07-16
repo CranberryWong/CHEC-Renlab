@@ -43,7 +43,7 @@
                         <!-- Add activity row -->
                         <form action="/newblog/addactivity" method="POST">
                             <tr class="row">
-                                <td class="col-6 ml-auto">
+                                <td class="col-5 ml-auto">
                                     <input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity...">
                                 </td>
                                 <td class="col-3 text-wrap">
@@ -57,14 +57,16 @@
                                         <option value="3"> P3</option>
                                     </select>
                                 </td>
-                                <td class="col-2 flex-12 text-center mr-auto report-progress">
+                                <td class="col-2 flex-12 text-center report-progress">
                                     <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" id="percentage " placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                </td>
+                                <td class="col-1 mr-auto">
+                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                                 <select class="d-none form-control select2-project-name" name="newprojectid" id="admin-project-name" disabled aria-disabled="">
                                     <option selected value="7">Admin</option>
                                 </select>
                             </tr>
-                            <tr><td><button type="submit" class="btn btn-primary">SUBMIT ACTIVITY</button></td></tr>
                         </form>
                     </tbody>
                 </table>

@@ -66,6 +66,50 @@
     font-size: medium;
 }
 
+.text-project-0{
+    color: #7E57C2;
+}
+
+.text-project-1{
+    color: #00bcd4;
+}
+
+.text-project-2{
+    color: #4caf50;
+}
+
+.text-project-3{
+    color: #009688;
+}
+
+.text-project-4{
+    color: #3f51b5;
+}
+
+.text-project-5{
+    color: #cddc39;
+}
+
+.text-project-6{
+    color: #263238;
+}
+
+.text-project-7{
+    color: #ff5722;
+}
+
+.text-project-8{
+    color: #dd2c00;
+}
+
+.text-project-9{
+    color: #f06292;
+}
+
+.text-project-admin{
+    color: #8D6E63;
+}
+
 .text-purple {
     color: #7E57C2;
 }
@@ -302,4 +346,8 @@ header .text-lg-center {
 
 .bootstrap-datetimepicker-widget.dropdown-menu{
     width: 100%;
+}
+
+.addbutton button{
+    font-size: 1.5em;
 }

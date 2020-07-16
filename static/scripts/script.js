@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
-    var today = new Date();
-    $("#title-date-week").text(moment(today, "YYYY.MM.DD").day(1).format("MMMM DD") + " - " + moment(today, "YYYY.MM.DD").day(7).format("MMMM DD"));
+    // var today = new Date();
+    // $("#title-date-week").text(moment(today, "YYYY.MM.DD").day(1).format("MMMM DD") + " - " + moment(today, "YYYY.MM.DD").day(7).format("MMMM DD"));
+    
     $('.like-count').each(function() {
         if (parseInt($(this).find('.number').attr('data-like-number')) > 0) {
             $(this).show();
@@ -36,8 +37,91 @@ $(document).ready(function() {
         $("#form-choose-admin-month").submit();
     })
 
-    //Choose date range datepicker function
-    $(".date-range-datepicker").datetimepicker({
+    $(".date-range-datepicker").each(function(){
+        //Choose date range datepicker function
+        var value = ''; 
+        if ($(this).attr("data-week")==1){
+            var firstDate = moment().day(1).format("YYYY.MM.DD");
+            var lastDate = moment().day(7).format("YYYY.MM.DD");
+            value = "" + firstDate + " - " + lastDate;
+        } else
+        if ($(this).attr("data-week")==2){
+            var firstDate = moment().add(7, 'days').day(1).format("YYYY.MM.DD");
+            var lastDate = moment().add(7, 'days').day(7).format("YYYY.MM.DD");
+            value = "" + firstDate + " - " + lastDate;
+        }
+        $(this).datetimepicker({
+            format: 'YYYY.MM.DD',
+            locale: moment.locale('en', {
+                week: { dow: 1 }
+            })
+        }).on('dp.change', function(e) {
+            //Get the value of Start and End of Week
+            var val = $(this).val();
+            var firstDate = moment(val, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
+            var lastDate = moment(val, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
+            $(this).val(firstDate + " - " + lastDate);
+        });
+        $(this).val(value);
+    });
+
+    $(document).click(function(e) {
+        if (($(e.target).closest(".editable-report").length != 0)) {
+            alert("Clicked outside!");
+        }
+    });
+
+    $(".editable-report").each(function(){
+        $(this).find("td").on('click tap', function(e){
+            $(this).closest('tr').find('[data-type="text"]').html('<input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity..." value="'+$(this).closest('tr').find('[data-type="text"]').attr("data-value")+'">')
+            
+            $(this).closest('tr').find('[data-type="datepicker"]').html('<input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="1"/>')
+            $(this).closest('tr').find('[data-type="datepicker"]').find('input').datetimepicker({
+                format: 'YYYY.MM.DD',
+                locale: moment.locale('en', {
+                    week: { dow: 1 }
+                })
+            }).on('dp.change', function(e) {
+                //Get the value of Start and End of Week
+                var val = $(this).val();
+                var firstDate = moment(val, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
+                var lastDate = moment(val, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
+                $(this).val(firstDate + " - " + lastDate);
+            });
+            $(this).closest('tr').find('[data-type="datepicker"]').find('input').val($(this).closest('tr').find('[data-type="datepicker"]').attr("data-value"));
+
+            $(this).closest('tr').find('[data-type="select"]').html('<select class="form-control" name="newpriority"><option value="0" disabled hidden>Priority</option><option value="1"> P1</option><option value="2"> P2</option><option value="3"> P3</option></select>')
+            $(this).closest('tr').find('[data-type="select"]').find("select").val($(this).closest('tr').find('[data-type="select"]').attr("data-value"))
+
+            $(this).closest('tr').find('[data-type="number"').html('<span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="'+$(this).closest('tr').find('[data-type="number"').attr("data-value")+'"></span>')
+
+            if ($(this).attr("data-type")=="text"){
+                if($(this).find('input').is(':focus')) return this;
+                // $(this).html('<input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity..." value="'+$(this).attr("data-value")+'">').find('input').trigger('focus')
+                $(this).find('input').trigger('focus')
+            } else
+            if ($(this).attr("data-type") == "datepicker"){
+                if($(this).find('input').is(':focus')) return this;
+                // $(this).html('<input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="1"/>').find('input').trigger('focus')
+                $(this).find('input').trigger('focus')
+            } else
+            if ($(this).attr("data-type") == "select"){
+                if($(this).find('select').is(':focus')) return this;
+                // $(this).html('<select class="form-control" name="newpriority"><option value="0" disabled hidden>Priority</option><option value="1"> P1</option><option value="2"> P2</option><option value="3"> P3</option></select>').find('select').trigger('focus')
+                $(this).find('select').trigger('focus')
+                // $(this).find("select").val($(this).attr("data-value"))
+            } else
+            if($(this).attr("data-type") == "number"){
+                if($(this).find('input').is(':focus')) return this;
+                // $(this).html('<span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="'+$(this).attr("data-value")+'"></span>').find('input').trigger('focus')
+                $(this).find('input').trigger('focus')
+            }
+            $(this).closest('tr').find('td:last').html("<button type='submit' class='btn btn-primary'>SUBMIT</button>")
+        });
+    })
+
+     //Choose date range datepicker function
+     $(".modal-date-range-datepicker").datetimepicker({
         format: 'YYYY.MM.DD',
         locale: moment.locale('en', {
             week: { dow: 1 }
@@ -45,12 +129,19 @@ $(document).ready(function() {
     })
 
     //Get the value of Start and End of Week
-    $('.date-range-datepicker').on('dp.change', function(e) {
-        var value = $(".date-range-datepicker").val();
+    $('.modal-date-range-datepicker').on('dp.change', function(e) {
+        var value = $(".modal-date-range-datepicker").val();
         var firstDate = moment(value, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
         var lastDate = moment(value, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
-        $(".date-range-datepicker").val(firstDate + " - " + lastDate);
+        $(".modal-date-range-datepicker").val(firstDate + " - " + lastDate);
     });
+
+
+    $(".addbutton").each(function(){
+        $(this).prev().hide()
+    }).on('click',function(e){
+        $(this).prev().toggle()
+    })
 
     $(".deleteactivitybutton").on("click tap",function(e){
         e.preventDefault();
