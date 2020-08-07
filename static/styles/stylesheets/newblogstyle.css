@@ -138,6 +138,10 @@
     background: #007BFF;
 }
 
+.bg-blue-transparent {
+    background: rgba(0,123,255,0.1);
+}
+
 .bg-green {
     background: #66BB6A;
 }
@@ -152,6 +156,10 @@
 
 .bg-darkgray {
     background: #707070;
+}
+
+.flex-5 {
+    flex: 0 0 5%;
 }
 
 .flex-10 {
@@ -350,4 +358,14 @@ header .text-lg-center {
 
 .addbutton button{
     font-size: 1.5em;
+}
+
+.leaderboard-name{
+    font-size: 1.1em;
+}
+
+.photo-leaderboard{
+    width: 3em;
+    height: 3em;
+    object-fit: cover;
 }

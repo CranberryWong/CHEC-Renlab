@@ -64,6 +64,7 @@ handlers = [
             (r"/newblog/addactivity",mainblog.AddActivityHandler),
             (r"/newblog/deleteactivity", mainblog.DeleteActivity),
             (r"/newblog/projectadmin", mainblog.ProjectAdminHandler),
+            (r"/newblog/leaderboard", mainblog.LeaderboardHandler),
             (r"/newblog/([\w./?%&=]*)?", mainblog.MainHandler),
             
             # i18n

@@ -405,4 +405,34 @@ $(document).ready(function() {
         }
     });
 
+    var leaderboardtop = document.getElementsByClassName('leaderboardtop')
+    var leaderboardbottom = document.getElementsByClassName('leaderboardbottom')
+
+    if(leaderboardtop.length>0){
+        $(".topboard").show();
+        $(".topboard").on("click",function(){
+            $(".leaderboardtop").toggle();
+            if($(this).text() == 'Show the top')
+            {
+                $(this).text('Hide the top');
+            }
+            else{
+                $(this).text('Show the top');
+            }
+        })
+    }
+    if (leaderboardbottom.length > 0){
+        $(".bottomboard").show();
+        $(".bottomboard").on("click",function(){
+            $(".leaderboardbottom").toggle();
+            if($(this).text() == 'Show the bottom')
+            {
+                $(this).text('Hide the bottom');
+            }
+            else{
+                $(this).text('Show the bottom');
+            }
+        })
+    }
+
 });

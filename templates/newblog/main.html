@@ -5,16 +5,16 @@
     <div class="col-md-3 shadow-sm left-nav-bar-blog px-4 pb-5">
         <div class="d-flex justify-content-center pt-5 left-photo-containter">
             <img class="rounded-circle left-nav-photo" src="{{avatarURL}}" alt="Profile photo of {{user.username}}" />
-            <button type="button" class="btn" data-toggle="modal" data-target="#fqaModal"><small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">1</small></button>
+            <button type="button" class="btn" data-toggle="modal" data-target="#fqaModal"><small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">{{userlevel}}</small></button>
         </div>
         <h5 class="text-center mt-3">{{user.username}}</h5>
         <button type="button" class="btn level mt-3 w-100" data-toggle="modal" data-target="#fqaModal">
             <div class="d-flex flex-row">
-                <small>Level 1</small>
+                <small>Level {{userlevel}}</small>
                 <small class="ml-auto">{{user.exp}}/10 exp</small>
             </div>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{user.exp}}%" aria-valuenow="{{user.exp}}" aria-valuemin="0" aria-valuemax="10"></div>
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{user.exp / 10 * 100}}%" aria-valuenow="{{user.exp}}" aria-valuemin="0" aria-valuemax="10"></div>
             </div>
         </button>
         <div class="mt-5 nav flex-column nav-pills nav-left-blog">
@@ -30,7 +30,7 @@
                     <a class="nav-link" href="./report.html">{{ project.project_name }}</a> {% end %} {% end %}
                 </div>
             </div>
-            <a class="nav-link {% if menu == 3 %} active {% end %}" href="./Reporting/index.html" aria-selected="false">Leaderboard</a>
+            <a class="nav-link {% if menu == 3 %} active {% end %}" href="/newblog/leaderboard" aria-selected="false">Leaderboard</a>
             <div class="d-flex flex-row">
                 <h5 class="nav-link">Contact</h5>
                 <button type="button" class="btn rounded-circle phone-row" data-toggle="modal" data-target="#editProfileModal">
@@ -86,9 +86,9 @@
                                         <input type="file" name="newphotoprofile" class="custom-file-input" id="customFile" accept="image/*">
                                         <label class="custom-file-label text-truncate" for="customFile">Choose file</label>
                                     </div>
-                                    <div class='d-flex justify-content-center pt-5 left-photo-containter d-none'>
+                                    <div class='d-flex justify-content-center pt-5 left-photo-containter'>
                                         <img class='rounded-circle left-nav-photo' src='{{avatarURL}}' alt='Profile photo of {{user.username}}' id='edit-profile-photo' />
-                                        <small class='align-self-endlevel bg-blue text-white text-center px-4 py-1' id='user-level-1'>1</small>
+                                        <button type="button" class="btn"><small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">{{userlevel}}</small></button>
                                     </div>
                                 </div>
                             </div>
