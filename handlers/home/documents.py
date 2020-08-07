@@ -58,7 +58,7 @@ class ResourceHandler(BaseHandler):
             "Professor": ["Xiangshi Ren",  "Kaechang Park"],
             "Associate Professor": ["Yukinobu Hoshino"],
             "Visiting Researcher": ["Kavous Salehzadeh Niksirat", "Huawei Tu", "Kibum Kim", "Sayan Sarcar", "William Delamare"],
-            "Assistant Professor": ["Zhenxin Wang"],
+            "Assistant Professor": ["Zhenxin Wang","Hamed Aliyari"],
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
             "Master Student": ["Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng","Xinpeng Li","Xi Chen","Sai Jiang","Hongyun Lyu","Jian Zhang","Zhihang Guo","Xiaofei Zhu","Junlin Sun"],
             "Bachelor Student": [ "Akinori Kondo", "Hijiri Kaneko", "Takaaki Kubo", "Yusuke Tokito", "Saki Hiramatsu", "Adachi Kenshi", "Miyamoto Daisuke"]
