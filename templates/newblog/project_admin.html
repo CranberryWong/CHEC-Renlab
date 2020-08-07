@@ -1,4 +1,4 @@
-{% extends "main.html" %} {% block content %} {% import uuid %} {% from datetime import datetime %} {% if current_user.decode('utf8') == userName %}
+{% extends "main.html" %} {% block content %} {% import uuid %} {% from datetime import datetime %}
 
 <h2 class="mt-2 mb-0"><b>Admin</b></h2>
 
@@ -40,6 +40,7 @@
                             </td>
                         </tr>
                         {% end %}
+                        {%if visitor == 0%}
                         <!-- Add activity row -->
                         <form action="/newblog/addactivity" method="POST">
                             <tr class="row">
@@ -68,6 +69,7 @@
                                 </select>
                             </tr>
                         </form>
+                        {%end%}
                     </tbody>
                 </table>
             </div>
@@ -141,4 +143,4 @@
 </div>
 
 
-{%end%} {%end%}
+{%end%}

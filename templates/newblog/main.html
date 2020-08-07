@@ -1,4 +1,4 @@
-{% extends "main_base.html" %} {% block main %} {% import uuid %} {% if current_user.decode('utf8') == userName %}
+{% extends "main_base.html" %} {% block main %} {% import uuid %}
 
 <div class="row no-gutters ml-0">
     <!--Left Navigation bar-->
@@ -11,18 +11,20 @@
         <button type="button" class="btn level mt-3 w-100" data-toggle="modal" data-target="#fqaModal">
             <div class="d-flex flex-row">
                 <small>Level {{userlevel}}</small>
-                <small class="ml-auto">{{user.exp}}/10 exp</small>
+                <small class="ml-auto">{{user.exp}}/{{ maxexp }} exp</small>
             </div>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{user.exp / 10 * 100}}%" aria-valuenow="{{user.exp}}" aria-valuemin="0" aria-valuemax="10"></div>
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{user.exp / maxexp * 100}}%" aria-valuenow="{{user.exp}}" aria-valuemin="0" aria-valuemax="{{ maxexp }}"></div>
             </div>
         </button>
         <div class="mt-5 nav flex-column nav-pills nav-left-blog">
             <a class="nav-link {% if menu == 1 %} active {% end %}" href="/newblog/{{userName}}" aria-selected="true">Weekly Report</a>
-            <a class="nav-link {% if menu == 2 %} active {% end %}" href="/newblog/projectadmin" aria-selected="false">Admin</a>
+            <a class="nav-link {% if menu == 2 %} active {% end %}" href="/newblog/{{userName}}/projectadmin" aria-selected="false">Admin</a>
             <div class="d-flex">
                 <a class="nav-link" href="#sub-project-list" data-toggle="collapse">Projects</a>
+                {%if visitor == 0%}
                 <button type="button" class="ml-auto btn btn-primary btn-sm align-self-center py-2" data-toggle="modal" data-target="#addProjectModal">+ ADD PROJECT</button>
+                {% end %}
             </div>
             <div class="collapse show" id="sub-project-list">
                 <div class="nav flex-column nav-pills">
@@ -30,12 +32,14 @@
                     <a class="nav-link" href="./report.html">{{ project.project_name }}</a> {% end %} {% end %}
                 </div>
             </div>
-            <a class="nav-link {% if menu == 3 %} active {% end %}" href="/newblog/leaderboard" aria-selected="false">Leaderboard</a>
+            <a class="nav-link {% if menu == 3 %} active {% end %}" href="/newblog/{{userName}}/leaderboard" aria-selected="false">Leaderboard</a>
             <div class="d-flex flex-row">
                 <h5 class="nav-link">Contact</h5>
+                {% if visitor == 0%}
                 <button type="button" class="btn rounded-circle phone-row" data-toggle="modal" data-target="#editProfileModal">
                     <i class="text-muted fa fa-edit"></i>
                 </button>
+                {%end%}
             </div>
             <div class="d-flex flex-row phone-row mb-3 ml-3">
                 <div class="bg-blue rounded-circle mr-2"><i class="fa fa-phone text-white text-center p-2"></i></div>
@@ -194,4 +198,4 @@
         </div>
     </div>
 </div>
-{% end %} {% end %}
+{% end %}

@@ -63,9 +63,9 @@ handlers = [
             (r"/newblog/profileedit", mainblog.ProfileEditHandler),
             (r"/newblog/addactivity",mainblog.AddActivityHandler),
             (r"/newblog/deleteactivity", mainblog.DeleteActivity),
-            (r"/newblog/projectadmin", mainblog.ProjectAdminHandler),
-            (r"/newblog/leaderboard", mainblog.LeaderboardHandler),
-            (r"/newblog/([\w./?%&=]*)?", mainblog.MainHandler),
+            (r"/newblog/(?P<userName>[\w.%]+)", mainblog.MainHandler),
+            (r"/newblog/(?P<userName>[\w.%]+)(?:/projectadmin)?/?$", mainblog.ProjectAdminHandler),
+            (r"/newblog/(?P<userName>[\w.%]+)(?:/leaderboard)?/?$", mainblog.LeaderboardHandler),
             
             # i18n
             (r"/language?", base.I18nHandler),
