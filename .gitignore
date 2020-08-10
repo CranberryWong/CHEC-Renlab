@@ -122,3 +122,5 @@ handlers/home/__pycache__/
 handlers/newblog/__pycache__/
 
 nohup.out
+
+*.salt

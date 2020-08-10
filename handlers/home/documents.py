@@ -118,9 +118,15 @@ class IntroHandler(BaseHandler):
 
         if not os.path.exists(dirDoc):
             os.makedirs(dirDoc)
-        s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/chec.md", dirDoc+"/chec.md")
+            
+        if self.get_cookie('lang') == 'ja_JP':
+            filename = "chec_jp.md"
+        else:
+            filename = "chec.md"
+            
+        s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/"+filename, dirDoc+"/"+filename)
 
-        with open(os.path.join(dirDoc, 'chec.md'), encoding='utf-8', mode="r") as f:
+        with open(os.path.join(dirDoc, filename), encoding='utf-8', mode="r") as f:
             content = markdown.markdown(f.read(), extensions=['markdown.extensions.tables'])
         self.render("home/page.html", title = self.title, content = content)
 
