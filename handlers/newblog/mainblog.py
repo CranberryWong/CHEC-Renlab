@@ -15,7 +15,7 @@ import urllib.request
 
 from handlers.util import *
 from handlers.base import BaseHandler
-from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection, Activity
+from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection, Activity, SeenBy
 from models.entity import db_session
 from datetime import datetime
 from datetime import timedelta

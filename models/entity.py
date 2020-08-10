@@ -176,6 +176,25 @@ class Activity(Base):
     def __repr__(self):
         return "<Activity('%s')>" % (self.activity_name)
 
+class SeenBy(Base):
+    __tablename__ = "seen_by"
+    
+    seen_by_id = Column(Integer, primary_key = True)
+    weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
+    user_id = Column(Integer, ForeignKey('account.user_id'))
+    data_seen = Column(Integer, nullable=False)
+    
+    seenby_weeklyreport = relationship('WeeklyReport', backref='seen_by')
+    seenby_userid = relationship('Account', backref='seen_by')
+    
+    def __init__(self, weekly_report_id, user_id, data_seen):
+        self.weekly_report_id = weekly_report_id
+        self.user_id = user_id
+        self.data_seen = data_seen
+        
+    def __repr__(self):
+        return "<SeenBy('%s')>" % (self.seen_by_id)
+
 def getDBURL():
    return 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (DBSETTINGS['db_user'], DBSETTINGS['db_password'], DBSETTINGS['db_host'], DBSETTINGS['db_port'], DBSETTINGS['db_name'])
 
