@@ -58,9 +58,9 @@ class ResourceHandler(BaseHandler):
             "Professor": ["Xiangshi Ren",  "Kaechang Park"],
             "Associate Professor": ["Yukinobu Hoshino"],
             "Visiting Researcher": ["Kavous Salehzadeh Niksirat", "Huawei Tu", "Kibum Kim", "Sayan Sarcar", "William Delamare"],
-            "Assistant Professor": ["Zhenxin Wang","Hamed Aliyari"],
+            "Assistant Professor": ["Zhenxin Wang"],
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
-            "Master Student": ["Fitra Rahmamuliani", "Xiaoxuan Li", "Yilin Zheng","Xinpeng Li","Xi Chen","Sai Jiang","Hongyun Lyu","Jian Zhang","Zhihang Guo","Xiaofei Zhu","Junlin Sun"],
+            "Master Student": ["Yilin Zheng","Xinpeng Li","Xi Chen","Sai Jiang","Hongyun Lyu","Jian Zhang","Zhihang Guo","Xiaofei Zhu","Junlin Sun"],
             "Bachelor Student": [ "Akinori Kondo", "Hijiri Kaneko", "Takaaki Kubo", "Yusuke Tokito", "Saki Hiramatsu", "Adachi Kenshi", "Miyamoto Daisuke"]
         }
         memberList = [ (x, os.stat(BlogURL + '/' + x)) for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
@@ -118,12 +118,12 @@ class IntroHandler(BaseHandler):
 
         if not os.path.exists(dirDoc):
             os.makedirs(dirDoc)
-            
+
         if self.get_cookie('lang') == 'ja_JP':
             filename = "chec_jp.md"
         else:
             filename = "chec.md"
-            
+
         s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/"+filename, dirDoc+"/"+filename)
 
         with open(os.path.join(dirDoc, filename), encoding='utf-8', mode="r") as f:

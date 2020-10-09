@@ -59,7 +59,7 @@ class MembersHandler(BaseHandler):
 
             "Assistant Professors": {
                 "Zhenxin Wang": {},
-                "Hamed Aliyari": {},
+                #"Hamed Aliyari": {},
             },
 
 
@@ -70,8 +70,8 @@ class MembersHandler(BaseHandler):
             },
 
             "Master Students": {
-                "Fitra Rahmamuliani": {},
-                "Xiaoxuan Li": {},
+                #"Fitra Rahmamuliani": {},
+                #"Xiaoxuan Li": {},
                 "Yilin Zheng": {},
                 "Chunyuan Lan": {},
                 #"Xinpeng Li": {},
