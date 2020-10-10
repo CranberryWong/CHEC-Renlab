@@ -70,8 +70,6 @@ class MembersHandler(BaseHandler):
             },
 
             "Master Students": {
-                #"Fitra Rahmamuliani": {},
-                #"Xiaoxuan Li": {},
                 "Yilin Zheng": {},
                 "Chunyuan Lan": {},
                 #"Xinpeng Li": {},
@@ -146,6 +144,8 @@ class MembersHandler(BaseHandler):
                 "Zengyi Han": {"years": '2017 ~ 2018', "job": '', "affiliation": 'Kochi University of Technology & Jilin University', "avatar": 2},
                 "Jingxin Liu": {"years": '2017 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Ayumu Ono": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
+                "Fitra Rahmamuliani": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
+                "Xiaoxuan Li": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
             }
         }
 
