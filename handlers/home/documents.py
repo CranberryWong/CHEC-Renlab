@@ -29,6 +29,7 @@ config.signature_version = botocore.UNSIGNED
 
 DocURL = os.path.join(os.path.dirname('./..'), "static/documents")
 CurriculumURL = os.path.join(DocURL, "HCIcurriculum")
+pastCurriculumURL = os.path.join(DocURL, "HCIcurriculum")
 ProjectURL = os.path.join(DocURL, "projects")
 
 dirDoc = os.path.dirname("documents/publication.md")
@@ -95,7 +96,7 @@ class ResourceHandler(BaseHandler):
 class CurriculumHandler(BaseHandler):
     def get(self):
         self.title = 'HCI Curriculum'
-        year = ['2018','2017','2016','2014']
+        year = ['2018']
         curriculumList = []
         for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter = '\\'):
             dir = os.path.dirname(file.key)
@@ -111,6 +112,28 @@ class CurriculumHandler(BaseHandler):
             # with open(os.path.join(dir, y + '.md'), encoding='utf-8', mode="r") as f:
             #     curriculumList.append(markdown.markdown(f.read(), extensions=['markdown.extensions.tables']))
         self.render("home/curriculum.html", title = self.title, curriculumList = curriculumList)
+
+
+class pastCurriculumHandler(BaseHandler):
+  def get(self):
+    self.title = 'HCI Curriculum'
+    year = ['2017','2016','2014']
+    curriculumList = []
+    for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter='\\'):
+      dir = os.path.dirname(file.key)
+      if not os.path.exists(dir):
+        os.makedirs(dir)
+      if file.key[-1] == "/":
+        continue
+      if not os.path.isfile(file.key):
+        s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)
+    for y in year:
+      s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key='documents/HCIcurriculum/' + y + '.md')
+      curriculumList.append(markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'),
+                                              extensions=['markdown.extensions.tables']))
+      # with open(os.path.join(dir, y + '.md'), encoding='utf-8', mode="r") as f:
+      #     curriculumList.append(markdown.markdown(f.read(), extensions=['markdown.extensions.tables']))
+    self.render("home/curriculum.html", title=self.title, curriculumList=curriculumList)
 
 class IntroHandler(BaseHandler):
     def get(self):

@@ -17,7 +17,8 @@ handlers = [
             (r"/projects", documents.ProjectsHandler),
             (r"/projects/(.*)", documents.ProjectShowHandler),
             (r"/publication", documents.PubHandler),
-            (r"/curriculum", documents.CurriculumHandler),            
+            (r"/curriculum", documents.CurriculumHandler),
+            (r"/pastcurriculum", documents.pastCurriculumHandler),
             (r"/resource", documents.ResourceHandler),
 
             # Auth
@@ -59,7 +60,7 @@ handlers = [
 
             # New Blog
             (r"/newblog/([\w./?%&=]*)?", mainblog.MainHandler),
-            
+
             # i18n
             (r"/language?", base.I18nHandler),
 
