@@ -79,6 +79,7 @@ class MembersHandler(BaseHandler):
                 #"Zhihang Guo": {},
                 "Xiaofei Zhu": {},
                 "Junlin Sun": {},
+                "Fitra Rahmamuliani":{},
             },
 
             "Bachelor Students": {
