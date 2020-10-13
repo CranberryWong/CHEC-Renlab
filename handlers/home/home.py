@@ -59,7 +59,6 @@ class MembersHandler(BaseHandler):
 
             "Assistant Professors": {
                 "Zhenxin Wang": {},
-                #"Hamed Aliyari": {},
             },
 
 
