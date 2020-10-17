@@ -15,7 +15,7 @@ import urllib.request
 
 from handlers.util import *
 from handlers.base import BaseHandler
-from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection, Activity, SeenBy
+from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection, Activity, SeenBy, Comment
 from models.entity import db_session
 from datetime import datetime
 from datetime import timedelta
@@ -106,7 +106,12 @@ class MainHandler(BaseHandler):
             self.visitor = 0
         else:
             self.visitor = 1
+            self.currentuser = self.user
             self.user = self.session.query(Account).filter(Account.username == userName).first()
+            if self.session.query(~exists().where(SeenBy.user_id == self.user.user_id).where(SeenBy.weekly_report_id == self.weeklyreport.weekly_report_id).where(SeenBy.seen_by_user_id == self.currentuser.user_id)).scalar():
+                self.newseenby = SeenBy(self.weeklyreport.weekly_report_id, self.user.user_id, datetime.now(), self.currentuser.user_id)
+                self.session.add(self.newseenby)
+                self.session.commit()
             # photo profile 
             self.params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + userName  + '/avatar.png'}
             self.avatarURL = s3c.generate_presigned_url('get_object', self.params)
@@ -114,6 +119,14 @@ class MainHandler(BaseHandler):
             self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id).all()
             self.user_level = self.session.query(func.max(XpEvents.level)).filter(self.user.exp - XpEvents.min_xp >= 0).scalar()
             self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
+        
+        self.seen_by_report = self.session.query(SeenBy).filter(SeenBy.user_id == self.user.user_id).filter(SeenBy.weekly_report_id == self.weeklyreport.weekly_report_id).order_by(SeenBy.seen_by_user_id.desc()).all()
+        seenbyAvatarURL={}
+        
+        for seenby in self.seen_by_report:
+            self.seenbyuser = self.session.query(Account).filter(Account.user_id == seenby.seen_by_user_id).first()
+            self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + self.seenbyuser.username  + '/avatar.png'}
+            seenbyAvatarURL[seenby.seen_by_id] = s3c.generate_presigned_url('get_object', self.param) 
         
         # reflection
         if self.session.query(exists().where(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).where(Reflection.user_id == self.user.user_id)).scalar():
@@ -136,7 +149,7 @@ class MainHandler(BaseHandler):
         self.allactivity.append(self.thisweekactivity)
         self.allactivity.append(self.nextweekactivity)
         
-        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor)
+        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, seenbydata = self.seen_by_report, seenbyAvatarURL = seenbyAvatarURL)
         self.session.close()
         
 class ProfileEditHandler(BaseHandler):
@@ -353,3 +366,30 @@ class LeaderboardHandler(BaseHandler):
                 self.userindex = idx
         
         self.render("newblog/leaderboard.html", title = self.title, menu = self.menu, userName = userName, avatarURL = self.avatarURL, user = self.user, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, leaderboard = self.leaderboards, userlevel = self.user_level, userrank = self.userindex, maxexp = self.maxexp, visitor = self.visitor)
+        
+class AddCommentHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        self.title = "New Blog"
+        self.menu = 1
+        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL, menu=self.menu, userlevel = self.user_level, maxexp = self.maxexp)
+        self.session.close()
+    
+    def post(self):
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        
+        self.newcommentext = self.get_argument('newcommentext', default='')
+        self.newuserid = self.get_argument('newuserid', default=0)
+        self.newcommentedby = self.user.user_id
+        self.newweeklyreportid = self.weeklyreport
+        self.newstars = self.get_argument('newstars', default=0)
+        
+        newcomment = Comment(self.newcommentext,self.newuserid,self.newcommentedby,self.newweeklyreportid.weekly_report_id,0,self.newstars)
+        self.session.add(newcomment)
+        self.session.commit()
+        self.redirect("/newblog/" + self.user.username)
+        
+        self.session.close()

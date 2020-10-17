@@ -171,22 +171,29 @@
 }
 
 .seen-by-photo {
-    width: 3em;
-    height: 3em;
+    width: 2.5em;
+    height: 2.5em;
     object-fit: cover;
 }
 
+.seen-by h5 {
+    font-size: 1.05em;
+}
+
+
 .comment-photo {
-    width: 4em;
-    height: 4em;
+    width: 3em;
+    height: 3em;
     object-fit: cover;
 }
 
 .like-count {
     font-size: small;
     z-index: 1000;
-    margin-top: -1em;
     cursor: pointer;
+    height: max-content;
+    margin-left: -1.5em;
+    margin-bottom: -1em;
 }
 
 span.glyphicon.glyphicon-chevron-left::before {

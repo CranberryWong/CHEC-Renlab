@@ -181,19 +181,45 @@ class SeenBy(Base):
     
     seen_by_id = Column(Integer, primary_key = True)
     weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
-    user_id = Column(Integer, ForeignKey('account.user_id'))
-    data_seen = Column(Integer, nullable=False)
+    user_id = Column(Integer)
+    date_seen = Column(DateTime)
+    seen_by_user_id = Column(Integer, ForeignKey('account.user_id'))
     
     seenby_weeklyreport = relationship('WeeklyReport', backref='seen_by')
     seenby_userid = relationship('Account', backref='seen_by')
     
-    def __init__(self, weekly_report_id, user_id, data_seen):
+    def __init__(self, weekly_report_id, user_id, date_seen, seen_by_user_id):
         self.weekly_report_id = weekly_report_id
         self.user_id = user_id
-        self.data_seen = data_seen
+        self.date_seen = date_seen
+        self.seen_by_user_id = seen_by_user_id
         
     def __repr__(self):
         return "<SeenBy('%s')>" % (self.seen_by_id)
+    
+class Comment(Base):
+    __tablename__ = "comment"
+    
+    comment_id = Column(Integer, primary_key = True)
+    comment_text = Column(Text, nullable = False)
+    user_id = Column(Integer)
+    commented_by = Column(Integer, ForeignKey('account.user_id'))
+    weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
+    like_count = Column(Integer)
+    stars = Column(Integer)
+    created_on = Column(DateTime)
+    
+    def __init__(self, comment_text, user_id, commented_by, weekly_report_id, like_count, stars):
+        self.comment_text = comment_text
+        self.user_id = user_id
+        self.commented_by = commented_by
+        self.weekly_report_id = weekly_report_id
+        self.like_count = like_count
+        self.stars = stars
+        self.created_on = datetime.now()
+    
+    def __repr__(self):
+        return "<Comment('%s')>" % (self.comment_id)
 
 def getDBURL():
    return 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (DBSETTINGS['db_user'], DBSETTINGS['db_password'], DBSETTINGS['db_host'], DBSETTINGS['db_port'], DBSETTINGS['db_name'])
