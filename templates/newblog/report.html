@@ -201,7 +201,7 @@
                     <div class="d-flex flex-row mx-2 col-md-12 col-sm-12">
                         <button class="btn btn-link text-body like-comment" data-id="1" data-has-like="{{comment.like_count}}"><small><b>Like</b></small></button>
                         <button class="btn btn-link text-body ml-4 reply-comment"><small><b>Reply</b></small></button>
-                        <span class="text-black-50 align-self-center ml-5"><small>{{timeago.format(comment.created_on, datetime.now() + timedelta(seconds = 60 * 3.4))}}</small></span>
+                        <span class="text-black-50 align-self-center ml-5"><small>{{timeago.format(comment.created_on, datetime.now())}}</small></span>
                     </div>
                 </div>
             </div>

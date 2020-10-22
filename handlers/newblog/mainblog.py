@@ -138,7 +138,7 @@ class MainHandler(BaseHandler):
         self.commentsname = {}
         self.commentsAvatarURL = {}
         for comment in self.comments:
-            self.commentuser = self.session.query(Account).filter(Account.user_id == comment.user_id).first()
+            self.commentuser = self.session.query(Account).filter(Account.user_id == comment.commented_by).first()
             self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + self.commentuser.username  + '/avatar.png'}
             self.commentsAvatarURL[comment.comment_id] = s3c.generate_presigned_url('get_object', self.param) 
             self.commentsname[comment.comment_id] = self.commentuser.username
@@ -398,10 +398,13 @@ class AddCommentHandler(BaseHandler):
         self.newweeklyreportid = self.weeklyreport
         self.newstars = self.get_argument('newstars', default=0)
         
+        
+        self.newuser = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
+        
         newcomment = Comment(self.newcommentext,self.newuserid,self.newcommentedby,self.newweeklyreportid.weekly_report_id,0,self.newstars)
         self.session.add(newcomment)
         self.session.commit()
         
-        self.redirect("/newblog/" + self.user.username)
+        self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
         
         self.session.close()
