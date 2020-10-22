@@ -1,4 +1,4 @@
-{% extends "main.html" %} {% block content %} {% import uuid %} {% from datetime import datetime %} {% from datetime import timedelta%} 
+{% extends "main.html" %} {% block content %} {% import uuid %} {% import timeago %} {% from datetime import datetime %} {% from datetime import timedelta%} 
 
 <!--Top title with date and prev and next week-->
 <div class="d-flex flex-row justify-content-center align-content-center">
@@ -185,27 +185,29 @@
 <!--Comments Section-->
 <section class="comments px-3">
     <h5 class="text-muted">Comments(1)</h4>
+    {% for comment in comments%}
     <div class="my-4">
         <div class="media position-relative reply-comment-section">
-            <img src="https://chec-static.s3.amazonaws.com/members/Takaaki%20Kubo/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=%2B%2BF%2BaJCEpAvH77zFRZUdOlvF5T0%3D&Expires=1597732228" alt="Takaaki Kubo" class="mr-3 rounded-circle comment-photo" />
+            <img src="{{commentsAvatarURL[comment.comment_id]}}" alt="Avatar {{commentsname[comment.comment_id]}}" class="mr-3 rounded-circle comment-photo" />
             <div class="media-body ml-3">
                 <div class="comment-section row">
                     <div class="rounded shadow-sm py-3 pl-3 pr-5 col-md-auto">
-                        <b class="commentator">Takaaki Kubo</b>
-                        <p class="comment-content mb-0 mt-1">Can you tell me the title of the paper that you read?</p>
+                        <b class="commentator">{{commentsname[comment.comment_id]}}</b>
+                        <p class="comment-content mb-0 mt-1">{{comment.comment_text}}</p>
                     </div>
                     <div class="like-count rounded align-self-end bg-darkgray text-white py-1 px-2">
-                        <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id="1" data-like-number="0" data-has-like="0">0</span>
+                        <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id="1" data-like-number="{{comment.like_count}}" data-has-like="{{comment.like_count}}">{{comment.like_count}}</span>
                     </div>
                     <div class="d-flex flex-row mx-2 col-md-12 col-sm-12">
-                        <button class="btn btn-link text-body like-comment" data-id="1" data-has-like="0"><small><b>Like</b></small></button>
+                        <button class="btn btn-link text-body like-comment" data-id="1" data-has-like="{{comment.like_count}}"><small><b>Like</b></small></button>
                         <button class="btn btn-link text-body ml-4 reply-comment"><small><b>Reply</b></small></button>
-                        <span class="text-black-50 align-self-center ml-5"><small>1 day ago</small></span>
+                        <span class="text-black-50 align-self-center ml-5"><small>{{timeago.format(comment.created_on, datetime.now() + timedelta(seconds = 60 * 3.4))}}</small></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {% end %}
     <div class="give-comment">
         <div class="media position-relative">
             <img src="https://chec-static.s3.amazonaws.com/members/Fitra%20Rahmamuliani/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=c%2FZGb31S1VjB1IXO96hsQe4MHdg%3D&Expires=1597732227" alt="Fitra Rahmamuliani Avatar" class="mr-3 rounded-circle comment-photo" />
