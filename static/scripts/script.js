@@ -150,6 +150,13 @@ $(document).ready(function() {
         }
     })
 
+    $(".delete-comment").on("click tap",function(e){
+        e.preventDefault();
+        if(confirm("Are you sure you want to delete this Comment?")){-
+            $(".formdeletecomment-"+$(this).attr("data-id")).submit();
+        }
+    })
+
     //turn on the tooltip from bootstrap
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -309,6 +316,12 @@ $(document).ready(function() {
             return $(".notification-container").html();
         },
         'placement': 'bottom',
+    })
+
+    $(document).on("click", ".edit-comment", function(e){
+        $(this).parents(".comment-section").find(".shadow-sm").html('<form class="d-flex flex-row" action="/newblog/editcomment" method="POST"> <input name="newcommenttext" type="text" class="form-control" value="'+$(this).parents(".comment-section").find(".comment-content").text()+'"/> <input type="hidden" name="newcommentid" value="'+ $(this).attr("data-commentid") +'"/> <button class="btn btn-primary ml-2" type="submit">SUBMIT</button> </form>');
+        $(this).parents(".comment-section").find(".shadow-sm").removeClass("shadow-sm");
+        $(this).addClass("d-none")
     })
 
     $('.sort-report-title').click(function(e) {

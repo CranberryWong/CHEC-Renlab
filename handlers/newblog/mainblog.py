@@ -102,11 +102,12 @@ class MainHandler(BaseHandler):
         
         self.daterange = "" + self.weeklyreport.date_range_start.strftime("%B %d") + " - " + self.weeklyreport.date_range_end.strftime("%B %d")
         
+        self.currentuser = self.user
+        
         if userName == self.signeduser: 
             self.visitor = 0
         else:
             self.visitor = 1
-            self.currentuser = self.user
             self.user = self.session.query(Account).filter(Account.username == userName).first()
             if self.session.query(~exists().where(SeenBy.user_id == self.user.user_id).where(SeenBy.weekly_report_id == self.weeklyreport.weekly_report_id).where(SeenBy.seen_by_user_id == self.currentuser.user_id)).scalar():
                 self.newseenby = SeenBy(self.weeklyreport.weekly_report_id, self.user.user_id, datetime.now(), self.currentuser.user_id)
@@ -160,7 +161,7 @@ class MainHandler(BaseHandler):
         self.allactivity.append(self.thisweekactivity)
         self.allactivity.append(self.nextweekactivity)
         
-        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, seenbydata = self.seen_by_report, seenbyAvatarURL = seenbyAvatarURL, comments = self.comments, commentsAvatarURL = self.commentsAvatarURL, commentsname = self.commentsname)
+        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, seenbydata = self.seen_by_report, seenbyAvatarURL = seenbyAvatarURL, comments = self.comments, commentsAvatarURL = self.commentsAvatarURL, commentsname = self.commentsname, currentuser= self.currentuser)
         self.session.close()
         
 class ProfileEditHandler(BaseHandler):
@@ -407,4 +408,46 @@ class AddCommentHandler(BaseHandler):
         
         self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
         
+        self.session.close()
+        
+class EditCommentHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        self.title = "New Blog"
+        self.menu = 1
+        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL, menu=self.menu, userlevel = self.user_level, maxexp = self.maxexp)
+        self.session.close()
+        
+    def post(self):
+        homeBase.init(self)
+        
+        self.newcommentid = self.get_argument('newcommentid', default=0)
+        self.newcommenttext = self.get_argument('newcommenttext', default='')
+        self.newstars = self.get_argument('newstars', default=0)
+        
+        if self.session.query(exists().where(Comment.comment_id == self.newcommentid)).scalar():
+            self.comment = self.session.query(Comment).filter(Comment.comment_id == self.newcommentid).first()
+            self.comment.comment_text = self.newcommenttext
+            self.comment.stars = self.newstars
+            self.comment.created_on = datetime.now()
+            self.newuser = self.session.query(Account).filter(Account.user_id == self.comment.user_id).first()
+            self.session.commit()
+            self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
+        
+        self.session.close()
+        
+class DeleteCommentHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        homeBase.init(self)
+        deletecommentid = self.get_argument("deletecommentid", default=None)
+        
+        self.comment = self.session.query(Comment).filter(Comment.comment_id == deletecommentid).first()
+        self.newuser = self.session.query(Account).filter(Account.user_id == self.comment.user_id).first()
+        
+        self.session.query(Comment).filter(Comment.comment_id == deletecommentid).delete()
+        self.session.commit()
+        self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
         self.session.close()

@@ -64,6 +64,8 @@ handlers = [
             (r"/newblog/addactivity",mainblog.AddActivityHandler),
             (r"/newblog/deleteactivity", mainblog.DeleteActivity),
             (r"/newblog/addcomment", mainblog.AddCommentHandler),
+            (r"/newblog/editcomment", mainblog.EditCommentHandler),
+            (r"/newblog/deletecomment",mainblog.DeleteCommentHandler),
             (r"/newblog/(?P<userName>[\w.%]+)", mainblog.MainHandler),
             (r"/newblog/(?P<userName>[\w.%]+)(?:/projectadmin)?/?$", mainblog.ProjectAdminHandler),
             (r"/newblog/(?P<userName>[\w.%]+)(?:/leaderboard)?/?$", mainblog.LeaderboardHandler),

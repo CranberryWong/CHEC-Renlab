@@ -192,9 +192,20 @@
             <div class="media-body ml-3">
                 <div class="comment-section row">
                     <div class="rounded shadow-sm py-3 pl-3 pr-5 col-md-auto">
-                        <b class="commentator">{{commentsname[comment.comment_id]}}</b>
-                        <p class="comment-content mb-0 mt-1">{{comment.comment_text}}</p>
+                        <b class="commentator">{{commentsname[comment.comment_id]}}</b> 
+                        <p class="comment-content mb-0 mt-1">{{comment.comment_text}}</p> 
                     </div>
+                    {% if currentuser.user_id == comment.commented_by %}
+                    <div class="px-2 align-self-center d-flex flex-row">
+                        <button type="button" class="btn text-muted edit-comment" data-commentid = {{comment.comment_id}}>
+                            <i class="fa fa-edit"></i> 
+                        </button>
+                        <form action="/newblog/deletecomment" method="GET" class="formdeletecomment-{{comment.comment_id}}">
+                            <input type="hidden" name="deletecommentid" value="{{comment.comment_id}}">
+                            <button type="submit" class="btn text-muted delete-comment" data-id="{{comment.comment_id}}"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </div>
+                    {% end %}
                     <div class="like-count rounded align-self-end bg-darkgray text-white py-1 px-2">
                         <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id="1" data-like-number="{{comment.like_count}}" data-has-like="{{comment.like_count}}">{{comment.like_count}}</span>
                     </div>
