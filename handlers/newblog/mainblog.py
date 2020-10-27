@@ -15,7 +15,7 @@ import urllib.request
 
 from handlers.util import *
 from handlers.base import BaseHandler
-from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection, Activity, SeenBy, Comment
+from models.entity import Account, XpEvents, ProjectGroup, Project, ProjectMember, WeeklyReport, Reflection, Activity, SeenBy, Comment, Like
 from models.entity import db_session
 from datetime import datetime
 from datetime import timedelta
@@ -87,6 +87,7 @@ class MainHandler(BaseHandler):
                 self.session.commit()
                 
             self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) >= self.date_start).filter(WeeklyReport.date_range_start < self.date_end).first()
+            shareweeklyreport = self.weeklyreport
             
             if self.session.query(~exists().where(WeeklyReport.date_range_start+timedelta(days=1) >= self.date_end).where(WeeklyReport.date_range_start < (self.date_end + timedelta(days = 7)))).scalar():
                 self.newweeklyreport = WeeklyReport(self.date_end)
@@ -135,14 +136,23 @@ class MainHandler(BaseHandler):
             reflection_content = self.session.query(Reflection).filter(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).filter(Reflection.user_id == self.user.user_id).first()
             
         #comments
-        self.comments = self.session.query(Comment).filter(Comment.user_id == self.user.user_id).filter(Comment.weekly_report_id == self.weeklyreport.weekly_report_id).order_by(Comment.created_on.desc()).all()
+        self.comments = list()
+        self.commentquery = self.session.query(Comment).filter(Comment.user_id == self.user.user_id).filter(Comment.weekly_report_id == self.weeklyreport.weekly_report_id).order_by(Comment.created_on.desc()).all()
         self.commentsname = {}
         self.commentsAvatarURL = {}
-        for comment in self.comments:
+        for comment in self.commentquery:
             self.commentuser = self.session.query(Account).filter(Account.user_id == comment.commented_by).first()
             self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + self.commentuser.username  + '/avatar.png'}
             self.commentsAvatarURL[comment.comment_id] = s3c.generate_presigned_url('get_object', self.param) 
             self.commentsname[comment.comment_id] = self.commentuser.username
+            self.liked_by = 0
+            if self.session.query(exists().where(Like.user_id == self.currentuser.user_id).where(Like.comment_id == comment.comment_id).where(Like.weekly_report_id == self.weeklyreport.weekly_report_id)).scalar():   
+                self.liked_by = 1
+            self.commentinside = {"comment_id": comment.comment_id, "comment_text": comment.comment_text, "user_id": comment.user_id, "commented_by": comment.commented_by, "weekly_report_id": comment.weekly_report_id, "like_count": comment.like_count, "stars": comment.stars, "created_on": comment.created_on, "liked_by_user": self.liked_by, "like_data": self.session.query(Like).filter(Like.user_id == self.currentuser.user_id).filter(Like.comment_id == comment.comment_id).filter(Like.weekly_report_id == self.weeklyreport.weekly_report_id).first()}
+            self.comments.append(self.commentinside)
+        
+        #likes
+        # self.likes = self.session.query(Like).filter(Like.user_id == currentuser.user_id).filter(Like.weekly_report_id == self.weeklyreport.weekly_report_id).all()
         
         self.allactivity = list()
         self.thisweekactivity = list()
@@ -161,7 +171,7 @@ class MainHandler(BaseHandler):
         self.allactivity.append(self.thisweekactivity)
         self.allactivity.append(self.nextweekactivity)
         
-        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, seenbydata = self.seen_by_report, seenbyAvatarURL = seenbyAvatarURL, comments = self.comments, commentsAvatarURL = self.commentsAvatarURL, commentsname = self.commentsname, currentuser= self.currentuser)
+        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, seenbydata = self.seen_by_report, seenbyAvatarURL = seenbyAvatarURL, comments = self.comments, commentsAvatarURL = self.commentsAvatarURL, commentsname = self.commentsname, currentuser= self.currentuser, weeklyreportid = self.weeklyreport.weekly_report_id)
         self.session.close()
         
 class ProfileEditHandler(BaseHandler):
@@ -396,7 +406,7 @@ class AddCommentHandler(BaseHandler):
         self.newcommentext = self.get_argument('newcommentext', default='')
         self.newuserid = self.get_argument('newuserid', default=0)
         self.newcommentedby = self.user.user_id
-        self.newweeklyreportid = self.weeklyreport
+        self.newweeklyreportid = self.get_argument('newweeklyreportid', default=0)
         self.newstars = self.get_argument('newstars', default=0)
         
         
@@ -406,7 +416,7 @@ class AddCommentHandler(BaseHandler):
         self.session.add(newcomment)
         self.session.commit()
         
-        self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
+        self.redirect("/newblog/" + self.newuser.username + "?date=" + self.newweeklyreportid.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
         
         self.session.close()
         
@@ -451,3 +461,51 @@ class DeleteCommentHandler(BaseHandler):
         self.session.commit()
         self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
         self.session.close()
+
+class AddLikeHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        homeBase.init(self)
+        self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
+        self.title = "New Blog"
+        self.menu = 1
+        self.render("newblog/main.html", title = self.title, userName = self.user.username, user = self.user, avatarURL = self.avatarURL, menu=self.menu, userlevel = self.user_level, maxexp = self.maxexp)
+        self.session.close()
+    
+    def post(self):
+        homeBase.init(self)
+        
+        self.newuserid = self.get_argument('newuserid', default=0)
+        self.newcommentid = self.get_argument('newcommentid', default=0)
+        self.newweeklyreportid = self.get_argument('newweeklyreportid', default=0)
+        
+        self.newlike = Like(self.newuserid, self.newweeklyreportid, self.newcommentid)
+        self.session.add(self.newlike)
+        
+        self.comment = self.session.query(Comment).filter(Comment.comment_id == self.newcommentid).first()
+        self.comment.like_count = self.comment.like_count + 1
+        self.session.commit()
+        
+        self.user = self.session.query(Account).filter(Account.user_id == self.comment.user_id).first()
+        self.weeklyreporturl = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.newweeklyreportid).first()
+        
+        self.redirect("/newblog/" + self.user.username  + "?date=" + self.weeklyreporturl.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
+        self.session.close()
+
+class DeleteLikeHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        homeBase.init(self)
+        deletelikeid = self.get_argument("deletelikeid", default=None)
+        
+        self.like = self.session.query(Like).filter(Like.like_id == deletelikeid).first()
+        self.comment = self.session.query(Comment).filter(Comment.comment_id == self.like.comment_id).first()
+        self.comment.like_count = self.comment.like_count - 1
+        self.userdata = self.session.query(Account).filter(Account.user_id == self.comment.user_id).first()
+        self.weeklyreportdata = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.like.weekly_report_id).first()
+        
+        self.session.query(Like).filter(Like.like_id == deletelikeid).delete()
+        self.session.commit()
+        self.redirect("/newblog/" + self.userdata.username + "?date=" + self.weeklyreportdata.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
+        self.session.close()
+    

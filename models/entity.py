@@ -209,6 +209,9 @@ class Comment(Base):
     stars = Column(Integer)
     created_on = Column(DateTime)
     
+    comment_commentedby = relationship('Account', backref='comment')
+    comment_weeklyreport = relationship('WeeklyReport', backref='comment')
+    
     def __init__(self, comment_text, user_id, commented_by, weekly_report_id, like_count, stars):
         self.comment_text = comment_text
         self.user_id = user_id
@@ -220,6 +223,28 @@ class Comment(Base):
     
     def __repr__(self):
         return "<Comment('%s')>" % (self.comment_id)
+
+class Like(Base):
+    __tablename__ = "like"
+    
+    like_id = Column(Integer, primary_key = True)
+    user_id = Column(Integer, ForeignKey('account.user_id'))
+    weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
+    comment_id = Column(Integer, ForeignKey('comment.comment_id'))
+    created_on = Column(DateTime)
+    
+    like_userid = relationship('Account', backref='like')
+    like_weeklyreport = relationship('WeeklyReport', backref='like')
+    like_comment = relationship('Comment', backref='like')
+    
+    def __init__(self, user_id, weekly_report_id, comment_id):
+        self.user_id = user_id
+        self.weekly_report_id = weekly_report_id
+        self.comment_id = comment_id 
+        self.created_on = datetime.now()
+    
+    def __repr__(self):
+        return "<Like('%s')>" % (self.like_id)
 
 def getDBURL():
    return 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (DBSETTINGS['db_user'], DBSETTINGS['db_password'], DBSETTINGS['db_host'], DBSETTINGS['db_port'], DBSETTINGS['db_name'])
