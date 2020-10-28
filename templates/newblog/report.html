@@ -1,4 +1,4 @@
-{% extends "main.html" %} {% block content %} {% import uuid %} {% import timeago %} {% from datetime import datetime %} {% from datetime import timedelta%} 
+{% extends "main.html" %} {% block content %} {% import uuid %} 
 
 <!--Top title with date and prev and next week-->
 <div class="d-flex flex-row justify-content-center align-content-center">
@@ -184,16 +184,21 @@
 
 <!--Comments Section-->
 <section class="comments px-3">
-    <h5 class="text-muted">Comments(1)</h4>
-    {% for comment in comments%}
+    <h5 class="text-muted">Comments{% if len(comments)>0 %}({{len(comments)}}){% end %}</h4>
+    {% for comment in comments %}
     <div class="my-4">
         <div class="media position-relative reply-comment-section">
             <img src='{{commentsAvatarURL[comment.get("comment_id")]}}' alt='Avatar {{commentsname[comment.get("comment_id")]}}' class="mr-3 rounded-circle comment-photo" />
             <div class="media-body ml-3">
                 <div class="comment-section row">
-                    <div class="rounded shadow-sm py-3 pl-3 pr-5 col-md-auto">
-                        <b class="commentator">{{commentsname[comment.get("comment_id")]}}</b> 
-                        <p class="comment-content mb-0 mt-1">{{comment.get("comment_text")}}</p> 
+                    <div class="d-flex flex-row">
+                        <div class="rounded shadow-sm py-3 pl-3 pr-5">
+                            <b class="commentator">{{commentsname[comment.get("comment_id")]}}</b> 
+                            <p class="comment-content mb-0 mt-1">{{comment.get("comment_text")}}</p> 
+                        </div>
+                        <div class="like-count col-md-auto rounded align-self-end bg-darkgray text-white py-1 px-2">
+                            <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id='{{comment.get("comment_id")}}' data-like-number='{{comment.get("like_count")}}' data-has-like='{{comment.get("like_count")}}'>{{comment.get("like_count")}}</span>
+                        </div>
                     </div>
                     {% if currentuser.user_id == comment.get("commented_by") %}
                     <div class="px-2 align-self-center d-flex flex-row">
@@ -206,17 +211,14 @@
                         </form>
                     </div>
                     {% end %}
-                    <div class="like-count rounded align-self-end bg-darkgray text-white py-1 px-2">
-                        <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id="1" data-like-number='{{comment.get("like_count")}}' data-has-like='{{comment.get("like_count")}}'>{{comment.get("like_count")}}</span>
-                    </div>
                     <div class="d-flex flex-row mx-2 col-md-12 col-sm-12">
                         {% if comment.get("liked_by_user") == 1%}
-                            <form action="/newblog/deletelike" method="GET">
+                            <form action="/newblog/deletelike" method="GET" class='delete-like-form-{{comment.get("comment_id")}}'>
                                 <input type="hidden" name="deletelikeid" value='{{comment.get("like_data").like_id}}'/>
                                 <button type="submit" class="btn btn-link text-primary like-comment" data-id="1" data-has-like='{{comment.get("like_count")}}'><small><i class="fas fa-thumbs-up mr-2"></i><b>Like</b></small></button>
                             </form>
                         {% else %}
-                        <form action="/newblog/addlike" method="POST">
+                        <form action="/newblog/addlike" method="POST" class='add-like-form-{{comment.get("comment_id")}}'>
                             <input type="hidden" name="newuserid" value="{{currentuser.user_id}}"/>
                             <input type="hidden" name="newcommentid" value='{{comment.get("comment_id")}}'/>
                             <input type="hidden" name="newweeklyreportid" value="{{weeklyreportid}}"/>
@@ -227,16 +229,74 @@
                         <span class="text-black-50 align-self-center ml-5"><small>{{timeago.format(comment.get("created_on"), datetime.now())}}</small></span>
                     </div>
                 </div>
+                {% for reply in comment.get("replies") %}
+                <div class="media position-relative reply-comment-section w-100 mt-2"> 
+                    <img src='{{comment.get("replies_avatar")[reply.reply_id]}}' alt='{{comment.get("replies_name")[reply.reply_id]}} Avatar' class="mr-3 rounded-circle comment-photo" /> 
+                    <div class="media-body row"> 
+                        <div class="comment-section col-md-auto"> 
+                            <div class="d-flex flex-row">
+                                <div class="rounded shadow-sm pl-3 py-3 pr-5 col-md-auto"> 
+                                    <b class="commentator">{{comment.get("replies_name")[reply.reply_id]}}</b>
+                                    <p class="reply-comment-content mb-0 mt-1">{{reply.reply_text}}</p> 
+                                </div> 
+                                <div class="like-count rounded col-md-auto align-self-end float-right bg-darkgray text-white py-1 px-2"> 
+                                    <i class="fa fa-thumbs-up mr-2"></i>
+                                    <span class="number" data-id='{{comment.get("comment_id")}}-{{reply.reply_id}}' data-like-number="{{reply.like_count}}" data-has-like="{{reply.like_count}}">{{reply.like_count}}</span> 
+                                </div> 
+                                {% if currentuser.user_id == reply.user_id %}
+                                <div class="px-2 align-self-center d-flex flex-row">
+                                    <button type="button" class="btn text-muted edit-reply" data-replyid = '{{reply.reply_id}}'>
+                                        <i class="fa fa-edit"></i> 
+                                    </button>
+                                    <form action="/newblog/deletereply" method="GET" class='formdeletereply-{{reply.reply_id}}'>
+                                        <input type="hidden" name="deletereplyid" value='{{reply.reply_id}}'>
+                                        <button type="submit" class="btn text-muted delete-reply" data-id='{{reply.reply_id}}'><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </div>
+                                {% end %}
+                            </div>
+                            <div class="d-flex flex-row mx-2 col-md-12"> 
+                                {% if comment.get("reply_liked_by").get(reply.reply_id) == 1 %}
+                                <form action="/newblog/deletelikereply" method="GET" class='delete-like-form-{{comment.get("comment_id")}}-{{reply.reply_id}}'>
+                                    <input type="hidden" name="deletereplylikeid" value='{{comment.get("reply_like_data").get(reply.reply_id).like_reply_id}}'/>
+                                    <button type="submit" class="btn btn-link text-primary like-comment" data-id='{{comment.get("comment_id")}}-{{reply.reply_id}}' data-has-like='{{reply.like_count}}'><small><i class="fas fa-thumbs-up mr-2"></i><b>Like</b></small></button>
+                                </form>
+                                {% else %}
+                                <form action="/newblog/addlikereply" method="POST" class='add-like-form-{{comment.get("comment_id")}}-{{reply.reply_id}}'>
+                                    <input type="hidden" name="newuserid" value="{{currentuser.user_id}}"/>
+                                    <input type="hidden" name="newreplyid" value='{{reply.reply_id}}'/>
+                                    <input type="hidden" name="newweeklyreportid" value="{{weeklyreportid}}"/>
+                                    <button type="submit" class="btn btn-link like-comment text-muted" data-id='{{comment.get("comment_id")}}-{{reply.reply_id}}'  data-has-like='{{reply.like_count}}'><small><i class="fas fa-thumbs-up mr-2"></i><b>Like</b></small></button>
+                                </form>
+                                {% end %}
+                                <button class="btn btn-link text-muted ml-4 reply-comment"><small><i class="fas fa-reply mr-2"></i><b>Reply</b></small></button> 
+                                <span class="text-black-50 align-self-center ml-5"><small>{{timeago.format(reply.created_on, datetime.now())}}</small></span> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div>
+                {% end %}
+                <div class = "mt-3 media position-relative">
+                    <img src = "{{currentuseravatarURL}}" alt = "{{currentuser.username}} Avatar" class = "mr-3 rounded-circle comment-photo" /> 
+                    <div class = "media-body align-self-center"> 
+                        <form class = "d-flex flex-row mb-0 reply-comment-form" id="reply-form" action="/newblog/addreply" method="POST">
+                            <input type = "text" name="newreplytext" class = "form-control flex-grow-1 reply-comment-input" placeholder = "Write a reply..." /> 
+                            <input type="hidden" name="newparentcommentid" value='{{comment.get("comment_id")}}'/>
+                            <button type = "submit" class = "btn btn-primary ml-2 reply-comment-submit" > REPLY </button>
+                        </form> 
+                    </div> 
+                </div>
             </div>
         </div>
     </div>
     {% end %}
     <div class="give-comment">
         <div class="media position-relative">
-            <img src="https://chec-static.s3.amazonaws.com/members/Fitra%20Rahmamuliani/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=c%2FZGb31S1VjB1IXO96hsQe4MHdg%3D&Expires=1597732227" alt="Fitra Rahmamuliani Avatar" class="mr-3 rounded-circle comment-photo" />
+            <img src='{{currentuseravatarURL}}' alt="{{currentuser.username}} Avatar" class="mr-3 rounded-circle comment-photo" />
             <div class="media-body align-self-center">
                 <form class="d-flex flex-row mb-0" action="/newblog/addcomment" method="POST">
                     <input type="text" class="form-control flex-grow-1 input-comment" placeholder="Write a comment..." name="newcommentext" />
+                    <input type="hidden" name="newweeklyreportid" value="{{weeklyreportid}}"/>
                     <input type="hidden" value="{{user.user_id}}" name="newuserid" />
                     <button type="submit" class="btn btn-primary ml-2">SUBMIT</button>
                 </form>

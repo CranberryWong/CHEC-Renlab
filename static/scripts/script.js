@@ -6,6 +6,11 @@ $(document).ready(function() {
     $('.like-count').each(function() {
         if (parseInt($(this).find('.number').attr('data-like-number')) > 0) {
             $(this).show();
+            var id = $(this).find(".number").attr("data-id");
+            if($(".delete-like-form-" + id)[0]){
+                $(this).removeClass("bg-darkgray");
+                $(this).addClass("bg-blue");
+            }
         } else {
             $(this).hide();
         }
@@ -157,31 +162,53 @@ $(document).ready(function() {
         }
     })
 
+    $(".delete-reply").on("click tap",function(e){
+        e.preventDefault();
+        if(confirm("Are you sure you want to delete this Reply?")){-
+            $(".formdeletereply-"+$(this).attr("data-id")).submit();
+        }
+    })
+
+    //click the notification function
+    $(document).on("click tap", ".read-notif", function(e){
+        var classname=$(this).attr("class")
+        var n = classname.lastIndexOf('-');
+        var id = classname.substring(n + 1);
+        $(".readnotificationform-" + id).submit()
+    })
+
     //turn on the tooltip from bootstrap
     $('[data-toggle="tooltip"]').tooltip();
 
     //like icon and number
     $(document).on("click tap", ".like-count", function(e) {
-        var id = $(this).parent().find('.number').attr('data-id');
-        var currentCount = parseInt($(this).parent().find('.number').attr('data-like-number'));
-        var hasLike = $(this).parent().find('.number').attr('data-has-like');
-        var newCount, newHasLike;
-        if (hasLike == 0) {
-            newCount = currentCount + 1;
-            newHasLike = 1;
-        } else {
-            newCount = currentCount - 1;
-            newHasLike = 0;
+        var id = $(this).find('.number').attr('data-id')
+        if($(".delete-like-form-" + id)[0]){
+            $(".delete-like-form-" + id).find("button").click()
         }
-        $(this).parent().find('.number').attr('data-has-like', newHasLike);
-        $(this).parent().find('.number').attr('data-like-number', newCount);
-        $(this).parent().find('.number').html(newCount);
-        $(this).parent().find('.like-comment[data-id="' + id + '"').attr('data-has-like', newHasLike);
-        if (newCount > 0) {
-            $(this).show();
-        } else {
-            $(this).hide();
+        if ($(".add-like-form-" + id)[0]){
+            $(".add-like-form-" + id).find("button").click()
         }
+        // var id = $(this).parent().find('.number').attr('data-id');
+        // var currentCount = parseInt($(this).parent().find('.number').attr('data-like-number'));
+        // var hasLike = $(this).parent().find('.number').attr('data-has-like');
+        // var newCount, newHasLike;
+        // if (hasLike == 0) {
+        //     newCount = currentCount + 1;
+        //     newHasLike = 1;
+        // } else {
+        //     newCount = currentCount - 1;
+        //     newHasLike = 0;
+        // }
+        // $(this).parent().find('.number').attr('data-has-like', newHasLike);
+        // $(this).parent().find('.number').attr('data-like-number', newCount);
+        // $(this).parent().find('.number').html(newCount);
+        // $(this).parent().find('.like-comment[data-id="' + id + '"').attr('data-has-like', newHasLike);
+        // if (newCount > 0) {
+        //     $(this).show();
+        // } else {
+        //     $(this).hide();
+        // }
     });
 
     //like button under the comment
@@ -210,14 +237,14 @@ $(document).ready(function() {
 
     //reply form showing up when press reply button
     $('.reply-comment').one('click tap', function() {
-        $(this).closest('.media-body').append('<div class = "mt-3 media position-relative"><img src = "https://chec-static.s3.amazonaws.com/members/Fitra%20Rahmamuliani/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=c%2FZGb31S1VjB1IXO96hsQe4MHdg%3D&Expires=1597732227" alt = "Avatar" class = "mr-3 rounded-circle comment-photo" /> <div class = "media-body align-self-center"> <form class = "d-flex flex-row mb-0 reply-comment-form" id="reply-form"><input type = "text" class = "form-control flex-grow-1 reply-comment-input" placeholder = "Write a reply..." /> <button type = "button" class = "btn btn-primary ml-2 reply-comment-submit" > COMMENT </button> </form> </div> </div>');
-        $('.reply-comment-input').focus();
-        $('.reply-comment-input').suggest('@', {
+        // $(this).closest('.media-body').append('<div class = "mt-3 media position-relative"><img src = "https://chec-static.s3.amazonaws.com/members/Fitra%20Rahmamuliani/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=c%2FZGb31S1VjB1IXO96hsQe4MHdg%3D&Expires=1597732227" alt = "Avatar" class = "mr-3 rounded-circle comment-photo" /> <div class = "media-body align-self-center"> <form class = "d-flex flex-row mb-0 reply-comment-form" id="reply-form"><input type = "text" class = "form-control flex-grow-1 reply-comment-input" placeholder = "Write a reply..." /> <button type = "button" class = "btn btn-primary ml-2 reply-comment-submit" > COMMENT </button> </form> </div> </div>');
+        $(this).parents('.media-body').find('.reply-comment-input').focus();
+        $(this).parents('.media-body').find('.reply-comment-input').suggest('@', {
             data: memberList,
             map: function(user) {
                 return {
-                    value: user.name,
-                    text: '<strong>' + user.name + '</strong>'
+                    value: user.text,
+                    text: '<strong>' + user.text + '</strong>'
                 }
             }
         });
@@ -281,33 +308,43 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on("keypress", ".reply-comment-input", function(e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            var inputVal = $(this).val();
-            $(".reply-comment-submit").click();
+    $('.reply-comment-input').suggest('@', {
+        data: memberList,
+        map: function(user) {
+            return {
+                value: user.text,
+                text: '<strong>' + user.text + '</strong>'
+            }
         }
     });
 
-    $(document).on("submit", "#reply-form", function(e) {
-        e.preventDefault();
-    })
+    // $(document).on("keypress", ".reply-comment-input", function(e) {
+    //     if (e.which == 13) {
+    //         e.preventDefault();
+    //         var inputVal = $(this).val();
+    //         $(".reply-comment-submit").click();
+    //     }
+    // });
 
-    $(document).on("click", ".reply-comment-submit", function(e) {
-        var newId = parseInt($(this).parents().siblings('.comment-section').find('.like-comment').attr('data-id')) + 1;
+    // $(document).on("submit", "#reply-form", function(e) {
+    //     e.preventDefault();
+    // })
 
-        $(this).parents().siblings('.comment-section').append('<div class="media position-relative reply-comment-section w-100 mt-2"> <img src="https://chec-static.s3.amazonaws.com/members/Fitra%20Rahmamuliani/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=c%2FZGb31S1VjB1IXO96hsQe4MHdg%3D&Expires=1597732227" alt="Avatar" class="mr-3 rounded-circle comment-photo" /> <div class="media-body row"> <div class="comment-section col-md-auto"> <div class="rounded shadow-sm p-3"> <b class="commentator">Fitra Rahmamuliani</b><p class="comment-content mb-0 mt-1">' + $(".reply-comment-input").val() + '</p> </div> <div class="like-count rounded align-self-end float-right bg-darkgray text-white py-1 px-2"> <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id="' + newId + '" data-like-number="0" data-has-like="0">0</span> </div> <div class="d-flex flex-row mx-2 col-md-12"> <button class="btn btn-link text-body like-comment" data-id="' + newId + '" data-has-like="0"><small><b>Like</b></small></button> <button class="btn btn-link text-body ml-4 reply-comment"><small><b>Reply</b></small></button> <span class="text-black-50 align-self-center ml-5"><small>15 seconds ago</small></span> </div> </div> </div> </div>');
+    // $(document).on("click", ".reply-comment-submit", function(e) {
+    //     var newId = parseInt($(this).parents().siblings('.comment-section').find('.like-comment').attr('data-id')) + 1;
 
-        $('.like-count').each(function() {
-            if (parseInt($(this).find('.number').attr('data-like-number')) > 0) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        })
-        $(".reply-comment-input").val('');
-        $(".reply-comment-input").focus();
-    });
+    //     $(this).parents().siblings('.comment-section').append('<div class="media position-relative reply-comment-section w-100 mt-2"> <img src="https://chec-static.s3.amazonaws.com/members/Fitra%20Rahmamuliani/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=c%2FZGb31S1VjB1IXO96hsQe4MHdg%3D&Expires=1597732227" alt="Avatar" class="mr-3 rounded-circle comment-photo" /> <div class="media-body row"> <div class="comment-section col-md-auto"> <div class="rounded shadow-sm p-3"> <b class="commentator">Fitra Rahmamuliani</b><p class="comment-content mb-0 mt-1">' + $(".reply-comment-input").val() + '</p> </div> <div class="like-count rounded align-self-end float-right bg-darkgray text-white py-1 px-2"> <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id="' + newId + '" data-like-number="0" data-has-like="0">0</span> </div> <div class="d-flex flex-row mx-2 col-md-12"> <button class="btn btn-link text-body like-comment" data-id="' + newId + '" data-has-like="0"><small><b>Like</b></small></button> <button class="btn btn-link text-body ml-4 reply-comment"><small><b>Reply</b></small></button> <span class="text-black-50 align-self-center ml-5"><small>15 seconds ago</small></span> </div> </div> </div> </div>');
+
+    //     $('.like-count').each(function() {
+    //         if (parseInt($(this).find('.number').attr('data-like-number')) > 0) {
+    //             $(this).show();
+    //         } else {
+    //             $(this).hide();
+    //         }
+    //     })
+    //     $(".reply-comment-input").val('');
+    //     $(".reply-comment-input").focus();
+    // });
 
     $(".notification-icon").popover({
         boundary: 'window',
@@ -321,6 +358,12 @@ $(document).ready(function() {
     $(document).on("click", ".edit-comment", function(e){
         $(this).parents(".comment-section").find(".shadow-sm").html('<form class="d-flex flex-row" action="/newblog/editcomment" method="POST"> <input name="newcommenttext" type="text" class="form-control" value="'+$(this).parents(".comment-section").find(".comment-content").text()+'"/> <input type="hidden" name="newcommentid" value="'+ $(this).attr("data-commentid") +'"/> <button class="btn btn-primary ml-2" type="submit">SUBMIT</button> </form>');
         $(this).parents(".comment-section").find(".shadow-sm").removeClass("shadow-sm");
+        $(this).addClass("d-none")
+    })
+
+    $(document).on("click", ".edit-reply", function(e){
+        $(this).closest(".reply-comment-section").find(".shadow-sm").html('<form class="d-flex flex-row" action="/newblog/editreply" method="POST"> <input name="newreplytext" type="text" class="form-control" value="'+$(this).closest(".reply-comment-section").find(".reply-comment-content").text()+'"/> <input type="hidden" name="newreplyid" value="'+ $(this).attr("data-replyid") +'"/> <button class="btn btn-primary ml-2" type="submit">SUBMIT</button> </form>');
+        $(this).closest(".reply-comment-section").find(".shadow-sm").removeClass("shadow-sm");
         $(this).addClass("d-none")
     })
 

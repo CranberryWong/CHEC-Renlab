@@ -158,6 +158,14 @@
     background: #707070;
 }
 
+.notification-row{
+    cursor: pointer;
+}
+
+.notification-row:hover{
+    background: rgba(0,123,255,0.1);
+}
+
 .flex-5 {
     flex: 0 0 5%;
 }
@@ -193,7 +201,7 @@
     cursor: pointer;
     height: max-content;
     margin-left: -1.5em;
-    margin-bottom: -1em;
+    margin-bottom: 0;
 }
 
 span.glyphicon.glyphicon-chevron-left::before {

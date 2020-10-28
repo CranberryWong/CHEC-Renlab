@@ -246,6 +246,83 @@ class Like(Base):
     def __repr__(self):
         return "<Like('%s')>" % (self.like_id)
 
+class Reply(Base):
+    __tablename__ = "reply"
+    
+    reply_id = Column(Integer, primary_key = True)
+    reply_text = Column(Text, nullable = False)
+    parent_comment_id = Column(Integer, ForeignKey('comment.comment_id'))
+    user_id = Column(Integer, ForeignKey('account.user_id'))
+    like_count = Column(Integer)
+    created_on = Column(DateTime)
+    
+    reply_commentid = relationship('Comment', backref='reply')
+    reply_userid = relationship('Account', backref='reply')
+    
+    def __init__(self, reply_text, parent_comment_id, user_id, like_count):
+        self.reply_text = reply_text
+        self.parent_comment_id = parent_comment_id
+        self.user_id = user_id
+        self.like_count = like_count
+        self.created_on = datetime.now()
+    
+    def __repr__(self):
+        return "<Reply('%s')>" % (self.reply_id)
+
+class ReplyLike(Base):
+    __tablename__ = "like_reply"
+    
+    like_reply_id = Column(Integer, primary_key = True)
+    reply_id = Column(Integer, ForeignKey('reply.reply_id'))
+    weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
+    user_id = Column(Integer, ForeignKey('account.user_id'))
+    created_on = Column(DateTime)
+    
+    replylike_reply = relationship('Reply', backref = 'like_reply')
+    replylike_weeklyreport = relationship('WeeklyReport', backref = 'like_reply')
+    replylike_userid = relationship('Account', backref = 'like_reply')
+    
+    def __init__(self, reply_id, weekly_report_id, user_id):
+        self.reply_id = reply_id
+        self.weekly_report_id = weekly_report_id
+        self.user_id = user_id
+        self.created_on = datetime.now()
+    
+    def __repr__(self):
+        return "<ReplyLike('%s')>" % (self.like_reply_id)
+
+class Notification(Base):
+    __tablename__ = "notification"
+    
+    notification_id = Column(Integer, primary_key = True)
+    recipient_id = Column(Integer, nullable = False)
+    sender_id = Column(Integer, ForeignKey('account.user_id'))
+    link_weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
+    link_username = Column(Text)
+    click_by_user = Column(Integer)
+    reference_text = Column(Text)
+    created_on = Column(DateTime)
+    reference_type = Column(Integer)
+    reference_id = Column(Integer)
+    
+    notification_userid = relationship('Account', backref = 'notification')
+    notification_weeklyreportid = relationship('WeeklyReport', backref='notification')
+    
+    def __init__(self, recipient_id, sender_id, link_weekly_report_id, link_username, click_by_user, reference_text, reference_type, reference_id):
+        self.recipient_id = recipient_id
+        self.sender_id = sender_id
+        self.link_weekly_report_id = link_weekly_report_id
+        self.link_username = link_username
+        self.click_by_user = click_by_user
+        self.reference_text = reference_text
+        self.reference_type = reference_type
+        self.reference_id = reference_id
+        self.created_on = datetime.now()
+    
+    def __repr__(self):
+        return "<Notification('%s')>" % (self.notification_id)
+    
+
 def getDBURL():
    return 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (DBSETTINGS['db_user'], DBSETTINGS['db_password'], DBSETTINGS['db_host'], DBSETTINGS['db_port'], DBSETTINGS['db_name'])
 
