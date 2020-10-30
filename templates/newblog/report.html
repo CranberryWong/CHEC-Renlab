@@ -1,4 +1,4 @@
-{% extends "main.html" %} {% block content %} {% import uuid %} 
+{% extends "main.html" %} {% block content %} {% import uuid %}
 
 <!--Top title with date and prev and next week-->
 <div class="d-flex flex-row justify-content-center align-content-center">
@@ -52,7 +52,7 @@
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
                                 <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
-                                    <span class="edit-activity-data">{{activity.Activity.activity_name}}</span>
+                                    <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
                                 <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
                                     <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>

@@ -12,6 +12,7 @@ import json
 import boto3 
 import botocore
 import urllib.request
+import re
 
 from handlers.util import *
 from handlers.base import BaseHandler
@@ -22,7 +23,7 @@ from datetime import timedelta
 from boto3 import Session
 from PIL import Image
 from io import BytesIO 
-from sqlalchemy import exists, extract, func
+from sqlalchemy import exists, extract, func, literal
 
 # AWS S3 Configuration
 BUCKET_NAME = 'chec-static'
@@ -65,7 +66,7 @@ class homeBase(BaseHandler):
         self.user_level = self.session.query(func.max(XpEvents.level)).filter(self.user.exp - XpEvents.min_xp >= 0).scalar()
         self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
         
-        self.notification_query = self.session.query(Notification).filter(Notification.recipient_id == self.user.user_id).all()
+        self.notification_query = self.session.query(Notification).filter(Notification.recipient_id == self.user.user_id).order_by(Notification.created_on.desc()).all()
         
         self.notifications =  list()
         for notification in self.notification_query:
@@ -323,7 +324,7 @@ class AddActivityHandler(BaseHandler):
         homeBase.init(self)
         self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
         newactivityname = self.get_argument('newactivityname', default='')
-        newprojectid = self.get_a3rgument('newprojectid', default=7)
+        newprojectid = self.get_argument('newprojectid', default=7)
         newdaterange = self.get_argument('newdaterange', default='')
         newpriority = self.get_argument('newpriority', default=0)
         newpercentage = self.get_argument('newpercentage', default=0)
@@ -332,7 +333,7 @@ class AddActivityHandler(BaseHandler):
             if(newprojectid == 7):
                 self.write('<script language="javascript">alert("Please input full data!");self.location="/newblog/projectadmin";</script>')           
         else:
-            if(newpercentage > 100 or newpercentage < 0):
+            if(int(newpercentage) > 100 or int(newpercentage) < 0):
                 self.write('<script language="javascript">alert("Please input the right percentage (0 - 100)!");self.location="/newblog/projectadmin";</script>')     
             else: 
                 daterange = newdaterange.split(" - ")
@@ -344,8 +345,9 @@ class AddActivityHandler(BaseHandler):
                     self.session.add(postweeklyreport)
                     self.session.commit()
                 addweeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start>=datestart).filter(WeeklyReport.date_range_start < date_start_following_week).first()
-                newactivity = Activity(newactivityname, newpriority, newpercentage, newprojectid, self.user.user_id, addweeklyreport.weekly_report_id)
+                newactivity = Activity(newactivityname, newpriority.strip("P"), newpercentage, newprojectid, self.user.user_id, addweeklyreport.weekly_report_id)
                 self.session.add(newactivity)
+                self.session.flush()
                                     
                 self.userexp = self.session.query(Account).filter(Account.user_id == self.user.user_id).first()
             
@@ -353,6 +355,28 @@ class AddActivityHandler(BaseHandler):
                     self.userexp.exp = self.userexp.exp + 4
                 else:
                     self.userexp.exp = self.userexp.exp + 2                
+                
+                #processing comment text for the mention
+                self.mentioneduser = re.findall(r'@(\w+)', newactivityname)
+                self.modifiedcommenttext = newactivityname
+                if len(self.mentioneduser)>0:
+                    for idx, mention in enumerate(self.mentioneduser):
+                        #get mentioned userid
+                        self.mentionuser = self.session.query(Account).filter(Account.username.contains(mention)).all()
+                        
+                        while(len(self.mentionuser)>1):
+                            self.newmention = re.findall(r'{mention}(\w+)', newactivityname)
+                            self.mentionuser = self.session.query(Account).filter(Account.username.contains(self.newmention)).all()
+                                                                    
+                        #use the full name to change the text to the link
+                        self.modifiedcommenttext = self.modifiedcommenttext.replace("@" + self.mentionuser[0].username, "<a href='/newblog/" + self.mentionuser[0].username+"'>" + "@" + self.mentionuser[0].username + "</a>")
+                        print(self.modifiedcommenttext)
+                        
+                        #notify mentioned user
+                        self.mentionnotification = Notification(self.mentionuser[0].user_id, self.user.user_id, addweeklyreport.weekly_report_id, self.user.username, 5, "mentioned you: " + newactivityname, 1, newactivity.activity_id)
+                        self.session.add(self.mentionnotification)
+                
+                newactivity.activity_name = self.modifiedcommenttext
                 
                 self.session.commit()
                 if(newprojectid == 7):
@@ -417,6 +441,30 @@ class EditActivityHandler(BaseHandler):
                 self.newactivity.priority = self.newpriority
                 self.newactivity.progress_percentage = self.newpercentage
                 self.newactivity.weekly_report_id = self.newweeklyreport.weekly_report_id
+                
+                #processing comment text for the mention
+                self.mentioneduser = re.findall(r'@(\w+)', self.newactivityname)
+                self.exludeduser = re.findall(r">@(\w+)", self.newactivityname)
+                self.mentioneduser = list(set(self.mentioneduser)^set(self.exludeduser))
+                self.modifiedcommenttext = self.newactivityname
+                if len(self.mentioneduser)>0:
+                    for idx, mention in enumerate(self.mentioneduser):
+                        #get mentioned userid
+                        self.mentionuser = self.session.query(Account).filter(Account.username.contains(mention)).all()
+                        
+                        while(len(self.mentionuser)>1):
+                            self.newmention = re.findall(r'{mention}(\w+)', self.newactivityname)
+                            self.mentionuser = self.session.query(Account).filter(Account.username.contains(self.newmention)).all()
+                                                                    
+                        #use the full name to change the text to the link
+                        self.modifiedcommenttext = self.modifiedcommenttext.replace("@" + self.mentionuser[0].username, "<a href='/newblog/" + self.mentionuser[0].username+"'>" + "@" + self.mentionuser[0].username + "</a>")
+                        print(self.modifiedcommenttext)
+                        
+                        #notify mentioned user
+                        self.mentionnotification = Notification(self.mentionuser[0].user_id, self.newuser.user_id, self.newweeklyreport.weekly_report_id, self.newuser.username, 5, "mentioned you: " + self.newactivityname, 1, self.newactivity.activity_id)
+                        self.session.add(self.mentionnotification)
+                
+                self.newactivity.activity_name = self.modifiedcommenttext
                 
                 #commit all the data to database
                 self.session.commit()
@@ -532,7 +580,6 @@ class AddCommentHandler(BaseHandler):
         self.newweeklyreportid = self.get_argument('newweeklyreportid', default=0)
         self.newstars = self.get_argument('newstars', default=0)
         
-        
         self.newuser = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
         self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.newweeklyreportid).first()
         
@@ -543,7 +590,29 @@ class AddCommentHandler(BaseHandler):
         if(self.newuserid != self.newcommentedby):
             self.newnotification = Notification(self.newuserid, self.newcommentedby, self.newweeklyreportid, self.newuser.username, 0, "commented: " + self.newcommentext, 1, newcomment.comment_id)
             self.session.add(self.newnotification)
-            
+        
+        #processing comment text for the mention
+        self.mentioneduser = re.findall(r'@(\w+)', self.newcommentext)
+        self.modifiedcommenttext = self.newcommentext
+        if len(self.mentioneduser)>0:
+            for idx, mention in enumerate(self.mentioneduser):
+                #get mentioned userid
+                self.mentionuser = self.session.query(Account).filter(Account.username.contains(mention)).all()
+                
+                while(len(self.mentionuser)>1):
+                    self.newmention = re.findall(r'{mention}(\w+)', self.self.newcommentext)
+                    self.mentionuser = self.session.query(Account).filter(Account.username.contains(self.newmention)).all()
+                                                              
+                #use the full name to change the text to the link
+                self.modifiedcommenttext = self.modifiedcommenttext.replace("@" + self.mentionuser[0].username, "<a href='/newblog/" + self.mentionuser[0].username+"'>" + "@" + self.mentionuser[0].username + "</a>")
+                print(self.modifiedcommenttext)
+                
+                #notify mentioned user
+                self.mentionnotification = Notification(self.mentionuser[0].user_id, self.newcommentedby, self.newweeklyreportid, self.newuser.username, 5, "mentioned you: " + self.newcommentext, 1, newcomment.comment_id)
+                self.session.add(self.mentionnotification)
+        
+        newcomment.comment_text = self.modifiedcommenttext
+        
         self.userexp = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
         self.userexp.exp = self.userexp.exp + 1
         
@@ -578,8 +647,34 @@ class EditCommentHandler(BaseHandler):
             self.newuser = self.session.query(Account).filter(Account.user_id == self.comment.user_id).first()
             
             if(self.comment.user_id != self.comment.commented_by):
-                self.newnotification = Notification(self.comment.user_id, self.comment.commented_by, self.comment.weekly_report_id, self.newuser.username, 0, "edited comment: " + self.newcommentext, 1, self.comment.comment_id)
+                self.newnotification = Notification(self.comment.user_id, self.comment.commented_by, self.comment.weekly_report_id, self.newuser.username, 0, "edited comment: " + self.newcommenttext, 1, self.comment.comment_id)
                 self.session.add(self.newnotification)
+        
+            #processing comment text for the mention
+            self.mentioneduser = re.findall(r'@(\w+)', self.newcommenttext)
+            self.exludeduser = re.findall(r">@(\w+)", self.newcommenttext)
+            self.mentioneduser = list(set(self.mentioneduser)^set(self.exludeduser))
+            self.modifiedcommenttext = self.newcommenttext
+            if len(self.mentioneduser)>0:
+                for idx, mention in enumerate(self.mentioneduser):
+                    #get mentioned userid
+                    self.mentionuser = self.session.query(Account).filter(Account.username.contains(mention)).all()
+                    
+                    while(len(self.mentionuser)>1):
+                        self.newmention = re.findall(r'{mention}(\w+)', self.self.newcommenttext)
+                        self.mentionuser = self.session.query(Account).filter(Account.username.contains(self.newmention)).all()
+                                                                
+                    #use the full name to change the text to the link
+                    self.modifiedcommenttext = self.modifiedcommenttext.replace("@" + self.mentionuser[0].username, "<a href='/newblog/" + self.mentionuser[0].username+"'>" + "@" + self.mentionuser[0].username + "</a>")
+                    print(self.modifiedcommenttext)
+                    
+                    #notify mentioned user
+                    self.mentionnotification = Notification(self.mentionuser[0].user_id, self.comment.commented_by, self.comment.weekly_report_id, self.newuser.username, 5, "mentioned you: " + self.newcommenttext, 1, self.comment.comment_id)
+                    self.session.add(self.mentionnotification)
+            
+            self.comment.comment_text = self.modifiedcommenttext
+            
+            self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.comment.weekly_report_id).first()
             
             self.session.commit()
             self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
@@ -717,6 +812,28 @@ class AddReplyHandler(BaseHandler):
         self.userexp = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
         self.userexp.exp = self.userexp.exp + 1
         
+        #processing comment text for the mention
+        self.mentioneduser = re.findall(r'@(\w+)', self.newreplytext)
+        self.modifiedcommenttext = self.newreplytext
+        if len(self.mentioneduser)>0:
+            for idx, mention in enumerate(self.mentioneduser):
+                #get mentioned userid
+                self.mentionuser = self.session.query(Account).filter(Account.username.contains(mention)).all()
+                
+                while(len(self.mentionuser)>1):
+                    self.newmention = re.findall(r'{mention}(\w+)', self.self.newreplytext)
+                    self.mentionuser = self.session.query(Account).filter(Account.username.contains(self.newmention)).all()
+                                                            
+                #use the full name to change the text to the link
+                self.modifiedcommenttext = self.modifiedcommenttext.replace("@" + self.mentionuser[0].username, "<a href='/newblog/" + self.mentionuser[0].username+"'>" + "@" + self.mentionuser[0].username + "</a>")
+                print(self.modifiedcommenttext)
+                
+                #notify mentioned user
+                self.mentionnotification = Notification(self.mentionuser[0].user_id, self.newuserid, self.comment.weekly_report_id, self.newuser.username, 5, "mentioned you: " + self.newreplytext, 1, self.reply.reply_id)
+                self.session.add(self.mentionnotification)
+        
+        self.reply.reply_text = self.modifiedcommenttext
+        
         self.session.commit()
         
         self.redirect("/newblog/" + self.newuser.username + "?date=" + self.newweeklyreportid.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
@@ -754,8 +871,32 @@ class EditReplyHandler(BaseHandler):
             
             if(self.comment.commented_by != self.reply.user_id):
                 self.notification_comment = Notification(self.comment.commented_by, self.reply.user_id, self.comment.weekly_report_id, self.newuser.username, 0, "edited reply: " + self.newreplytext, 3, self.reply.reply_id)
-                self.session.add(self.notification_comment) 
-                        
+                self.session.add(self.notification_comment)
+            
+            #processing comment text for the mention
+            self.mentioneduser = re.findall(r'@(\w+)', self.newreplytext)
+            self.exludeduser = re.findall(r">@(\w+)", self.newreplytext)
+            self.mentioneduser = list(set(self.mentioneduser)^set(self.exludeduser))
+            self.modifiedcommenttext = self.newreplytext
+            if len(self.mentioneduser)>0:
+                for idx, mention in enumerate(self.mentioneduser):
+                    #get mentioned userid
+                    self.mentionuser = self.session.query(Account).filter(Account.username.contains(mention)).all()
+                    
+                    while(len(self.mentionuser)>1):
+                        self.newmention = re.findall(r'{mention}(\w+)', self.self.newreplytext)
+                        self.mentionuser = self.session.query(Account).filter(Account.username.contains(self.newmention)).all()
+                                                                
+                    #use the full name to change the text to the link
+                    self.modifiedcommenttext = self.modifiedcommenttext.replace("@" + self.mentionuser[0].username, "<a href='/newblog/" + self.mentionuser[0].username+"'>" + "@" + self.mentionuser[0].username + "</a>")
+                    print(self.modifiedcommenttext)
+                    
+                    #notify mentioned user
+                    self.mentionnotification = Notification(self.mentionuser[0].user_id, self.reply.user_id, self.comment.weekly_report_id, self.newuser.username, 5, "mentioned you: " + self.newreplytext, 1, self.reply.reply_id)
+                    self.session.add(self.mentionnotification)
+            
+            self.reply.reply_text = self.modifiedcommenttext
+
             self.session.commit()
             self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.comment.weekly_report_id).first()
             self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))

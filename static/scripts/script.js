@@ -3,6 +3,10 @@ $(document).ready(function() {
     // var today = new Date();
     // $("#title-date-week").text(moment(today, "YYYY.MM.DD").day(1).format("MMMM DD") + " - " + moment(today, "YYYY.MM.DD").day(7).format("MMMM DD"));
     
+    $('.comment-content, .reply-comment-content, .activity-name-data').each(function(){
+        $(this).html($(this).text())
+    })
+
     $('.like-count').each(function() {
         if (parseInt($(this).find('.number').attr('data-like-number')) > 0) {
             $(this).show();
@@ -377,15 +381,34 @@ $(document).ready(function() {
     })
 
     $(document).on("click", ".edit-comment", function(e){
-        $(this).parents(".comment-section").find(".shadow-sm").html('<form class="d-flex flex-row" action="/newblog/editcomment" method="POST"> <input name="newcommenttext" type="text" class="form-control" value="'+$(this).parents(".comment-section").find(".comment-content").text()+'"/> <input type="hidden" name="newcommentid" value="'+ $(this).attr("data-commentid") +'"/> <button class="btn btn-primary ml-2" type="submit">SUBMIT</button> </form>');
+        $(this).parents(".comment-section").find(".shadow-sm").html('<form class="d-flex flex-row" action="/newblog/editcomment" method="POST"> <input name="newcommenttext" type="text" class="form-control edit-comment-inputtext" value="'+$(this).parents(".comment-section").find(".comment-content").text()+'"/> <input type="hidden" name="newcommentid" value="'+ $(this).attr("data-commentid") +'"/> <button class="btn btn-primary ml-2" type="submit">SUBMIT</button> </form>');
         $(this).parents(".comment-section").find(".shadow-sm").removeClass("shadow-sm");
         $(this).addClass("d-none")
+        $('.edit-comment-inputtext').suggest('@', {
+            data: memberList,
+            map: function(user) {
+                return {
+                    value: user.text,
+                    text: '<strong>' + user.text + '</strong>'
+                }
+            }
+        });
     })
 
     $(document).on("click", ".edit-reply", function(e){
-        $(this).closest(".reply-comment-section").find(".shadow-sm").html('<form class="d-flex flex-row" action="/newblog/editreply" method="POST"> <input name="newreplytext" type="text" class="form-control" value="'+$(this).closest(".reply-comment-section").find(".reply-comment-content").text()+'"/> <input type="hidden" name="newreplyid" value="'+ $(this).attr("data-replyid") +'"/> <button class="btn btn-primary ml-2" type="submit">SUBMIT</button> </form>');
+        $(this).closest(".reply-comment-section").find(".shadow-sm").html('<form class="d-flex flex-row" action="/newblog/editreply" method="POST"> <input name="newreplytext" type="text" class="form-control edit-reply-inputtext" value="'+$(this).closest(".reply-comment-section").find(".reply-comment-content").text()+'"/> <input type="hidden" name="newreplyid" value="'+ $(this).attr("data-replyid") +'"/> <button class="btn btn-primary ml-2" type="submit">SUBMIT</button> </form>');
         $(this).closest(".reply-comment-section").find(".shadow-sm").removeClass("shadow-sm");
         $(this).addClass("d-none")
+        
+        $('.edit-reply-inputtext').suggest('@', {
+            data: memberList,
+            map: function(user) {
+                return {
+                    value: user.text,
+                    text: '<strong>' + user.text + '</strong>'
+                }
+            }
+        });
     })
 
     $('.sort-report-title').click(function(e) {
