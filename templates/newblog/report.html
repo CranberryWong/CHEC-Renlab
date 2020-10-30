@@ -259,8 +259,13 @@
                 <div class="comment-section row">
                     <div class="d-flex flex-row">
                         <div class="rounded shadow-sm py-3 pl-3 pr-5">
-                            <a href='/newblog/{{commentsname[comment.get("comment_id")]}}' class="text-decoration-none text-body"><b class="commentator">{{commentsname[comment.get("comment_id")]}}</b></a> 
-                            <p class="comment-content mb-0 mt-1">{{comment.get("comment_text")}}</p> 
+                            <a href='/newblog/{{commentsname[comment.get("comment_id")]}}' class="text-decoration-none text-body"><b class="commentator">{{commentsname[comment.get("comment_id")]}}</b></a>
+                            <div class="comment-content-stars-text">
+                                {% if comment.get("stars") > 0 %}                                 
+                                {% for i in range(comment.get("stars")) %}
+                                <i class="fas fa-star text-yellow"></i>{% end %} {% end %}
+                                <p class="comment-content mb-0 mt-1">{{comment.get("comment_text")}}</p> 
+                            </div>
                         </div>
                         <div class="like-count col-md-auto rounded align-self-end bg-darkgray text-white py-1 px-2">
                             <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id='{{comment.get("comment_id")}}' data-like-number='{{comment.get("like_count")}}' data-has-like='{{comment.get("like_count")}}'>{{comment.get("like_count")}}</span>
@@ -364,11 +369,29 @@
         <div class="media position-relative">
             <img src='{{currentuseravatarURL}}' alt="{{currentuser.username}} Avatar" class="mr-3 rounded-circle comment-photo" />
             <div class="media-body align-self-center">
-                <form class="d-flex flex-row mb-0" action="/newblog/addcomment" method="POST">
-                    <input type="text" class="form-control flex-grow-1 input-comment" placeholder="Write a comment..." name="newcommentext" />
-                    <input type="hidden" name="newweeklyreportid" value="{{weeklyreportid}}"/>
-                    <input type="hidden" value="{{user.user_id}}" name="newuserid" />
-                    <button type="submit" class="btn btn-primary ml-2">SUBMIT</button>
+                <form class="mb-0" action="/newblog/addcomment" method="POST">
+                    <div class="rating rating-comment mb-2">
+                        <input class="rating__input hidden--visually" type="radio" id="5-star" name="newstars" value="5">
+                        <label class="rating__label mb-0" for="5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
+
+                        <input class="rating__input hidden--visually" type="radio" id="4-star" name="newstars" value="4">
+                        <label class="rating__label mb-0" for="4-star" title="4 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">4 out of 5 rating</span></label>
+
+                        <input class="rating__input hidden--visually" type="radio" id="3-star" name="newstars" value="3">
+                        <label class="rating__label mb-0" for="3-star" title="3 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">3 out of 5 rating</span></label>
+
+                        <input class="rating__input hidden--visually" type="radio" id="2-star" name="newstars" value="2">
+                        <label class="rating__label mb-0" for="2-star" title="2 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">2 out of 5 rating</span></label>
+
+                        <input class="rating__input hidden--visually" type="radio" id="1-star" name="newstars" value="1">
+                        <label class="rating__label mb-0" for="1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <input type="text" class="form-control flex-grow-1 input-comment" placeholder="Write a comment..." name="newcommentext" />
+                        <input type="hidden" name="newweeklyreportid" value="{{weeklyreportid}}"/>
+                        <input type="hidden" value="{{user.user_id}}" name="newuserid" />
+                        <button type="submit" class="btn btn-primary ml-2">SUBMIT</button>
+                    </div>
                 </form>
             </div>
         </div>

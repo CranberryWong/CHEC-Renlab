@@ -341,6 +341,10 @@ header .text-lg-center {
     flex-direction: row-reverse;
 }
 
+.rating-comment .rating__label{
+    font-size: 0.8em !important;
+}
+
 .hidden--visually {
     border: 0;
     clip: rect(1px 1px 1px 1px);
