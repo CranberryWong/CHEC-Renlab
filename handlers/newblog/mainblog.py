@@ -323,7 +323,7 @@ class AddActivityHandler(BaseHandler):
         homeBase.init(self)
         self.user=self.session.query(Account).filter(Account.username == self.signeduser).first()
         newactivityname = self.get_argument('newactivityname', default='')
-        newprojectid = self.get_argument('newprojectid', default=7)
+        newprojectid = self.get_a3rgument('newprojectid', default=7)
         newdaterange = self.get_argument('newdaterange', default='')
         newpriority = self.get_argument('newpriority', default=0)
         newpercentage = self.get_argument('newpercentage', default=0)
@@ -815,13 +815,15 @@ class AddReplyLikeHandler(BaseHandler):
         
         self.reply = self.session.query(Reply).filter(Reply.reply_id == self.newreplyid).first()
         self.reply.like_count = self.reply.like_count + 1
+        
         self.comment = self.session.query(Comment).filter(Comment.comment_id == self.reply.parent_comment_id).first()
         self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.comment.weekly_report_id).first()
         self.user = self.session.query(Account).filter(Account.user_id == self.comment.user_id).first()
         
-        if(self.reply.user_id != self.newuserid):
+        if str(self.reply.user_id) != self.likereply.user_id:     
             self.notification = Notification(self.reply.user_id, self.newuserid, self.weeklyreport.weekly_report_id, self.user.username, 0, "liked your reply: " + self.reply.reply_text, 4, self.likereply.like_reply_id)
             self.session.add(self.notification)
+            self.session.flush()
         
         self.userexp = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
         self.userexp.exp = self.userexp.exp + 1
