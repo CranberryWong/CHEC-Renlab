@@ -252,7 +252,9 @@
     {% for comment in comments %}
     <div class="my-4">
         <div class="media position-relative reply-comment-section top-comment-section">
-            <img src='{{commentsAvatarURL[comment.get("comment_id")]}}' alt='Avatar {{commentsname[comment.get("comment_id")]}}' class="mr-3 rounded-circle comment-photo" />
+            <a href='/newblog/{{commentsname[comment.get("comment_id")]}}'>
+                <img src='{{commentsAvatarURL[comment.get("comment_id")]}}' alt='Avatar {{commentsname[comment.get("comment_id")]}}' class="mr-3 rounded-circle comment-photo" />
+            </a>
             <div class="media-body ml-3">
                 <div class="comment-section row">
                     <div class="d-flex flex-row">
@@ -295,12 +297,16 @@
                 </div>
                 {% for reply in comment.get("replies") %}
                 <div class="media position-relative reply-comment-section w-100 mt-2"> 
-                    <img src='{{comment.get("replies_avatar")[reply.reply_id]}}' alt='{{comment.get("replies_name")[reply.reply_id]}} Avatar' class="mr-3 rounded-circle comment-photo" /> 
+                    <a href='/newblog/{{comment.get("replies_name")[reply.reply_id]}}'>
+                        <img src='{{comment.get("replies_avatar")[reply.reply_id]}}' alt='{{comment.get("replies_name")[reply.reply_id]}} Avatar' class="mr-3 rounded-circle comment-photo" /> 
+                    </a>
                     <div class="media-body row"> 
                         <div class="comment-section col-md-auto"> 
                             <div class="d-flex flex-row">
                                 <div class="rounded shadow-sm pl-3 py-3 pr-5 col-md-auto"> 
-                                    <b class="commentator">{{comment.get("replies_name")[reply.reply_id]}}</b>
+                                    <a class="text-decoration-none text-body" href='/newblog/{{comment.get("replies_name")[reply.reply_id]}}'>
+                                        <b class="commentator">{{comment.get("replies_name")[reply.reply_id]}}</b>
+                                    </a>
                                     <p class="reply-comment-content mb-0 mt-1">{{reply.reply_text}}</p> 
                                 </div> 
                                 <div class="like-count rounded col-md-auto align-self-end float-right bg-darkgray text-white py-1 px-2"> 
