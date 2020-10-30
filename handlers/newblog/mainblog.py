@@ -515,7 +515,7 @@ class ProjectAdminHandler(BaseHandler):
             self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id).all()
             self.user_level = self.session.query(func.max(XpEvents.level)).filter(self.user.exp - XpEvents.min_xp >= 0).scalar()
             self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
-        self.render("newblog/project_admin.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = self.activitylist, adminmonth = datetime.today(), userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor)
+        self.render("newblog/project_admin.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = self.activitylist, adminmonth = datetime.today(), userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications)
         self.session.close()
         
     def post(self):
@@ -558,7 +558,7 @@ class LeaderboardHandler(BaseHandler):
             if board.username == self.signeduser:
                 self.userindex = idx
         
-        self.render("newblog/leaderboard.html", title = self.title, menu = self.menu, userName = userName, avatarURL = self.avatarURL, user = self.user, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, leaderboard = self.leaderboards, userlevel = self.user_level, userrank = self.userindex, maxexp = self.maxexp, visitor = self.visitor)
+        self.render("newblog/leaderboard.html", title = self.title, menu = self.menu, userName = userName, avatarURL = self.avatarURL, user = self.user, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, leaderboard = self.leaderboards, userlevel = self.user_level, userrank = self.userindex, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications)
         
 class AddCommentHandler(BaseHandler):
     @tornado.web.authenticated
