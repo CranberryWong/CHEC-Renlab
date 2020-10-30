@@ -45,15 +45,19 @@ $(document).ready(function() {
     $(".date-range-datepicker").each(function(){
         //Choose date range datepicker function
         var value = ''; 
-        if ($(this).attr("data-week")==1){
-            var firstDate = moment().day(1).format("YYYY.MM.DD");
-            var lastDate = moment().day(7).format("YYYY.MM.DD");
-            value = "" + firstDate + " - " + lastDate;
-        } else
-        if ($(this).attr("data-week")==2){
-            var firstDate = moment().add(7, 'days').day(1).format("YYYY.MM.DD");
-            var lastDate = moment().add(7, 'days').day(7).format("YYYY.MM.DD");
-            value = "" + firstDate + " - " + lastDate;
+        if($(this).val() != ''){
+            value = $(this).val()
+        } else {
+            if ($(this).attr("data-week")==1){
+                var firstDate = moment().day(1).format("YYYY.MM.DD");
+                var lastDate = moment().day(7).format("YYYY.MM.DD");
+                value = "" + firstDate + " - " + lastDate;
+            } else
+            if ($(this).attr("data-week")==2){
+                var firstDate = moment().add(7, 'days').day(1).format("YYYY.MM.DD");
+                var lastDate = moment().add(7, 'days').day(7).format("YYYY.MM.DD");
+                value = "" + firstDate + " - " + lastDate;
+            }
         }
         $(this).datetimepicker({
             format: 'YYYY.MM.DD',
@@ -66,64 +70,78 @@ $(document).ready(function() {
             var firstDate = moment(val, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
             var lastDate = moment(val, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
             $(this).val(firstDate + " - " + lastDate);
+        }).on('dp.hide', function(e){
+            if($(this).val() != ''){
+                var val = $(this).val()
+                var firstDate = moment(val, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
+                var lastDate = moment(val, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
+                $(this).val(firstDate + " - " + lastDate);
+            }
+        }).on('dp.show',function(e){
+            if($(this).val() != ''){
+                var val = $(this).val()
+                var firstDate = moment(val, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
+                var lastDate = moment(val, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
+                $(this).val(firstDate + " - " + lastDate);
+            }
         });
         $(this).val(value);
     });
 
-    $(document).click(function(e) {
-        if (($(e.target).closest(".editable-report").length != 0)) {
-            alert("Clicked outside!");
-        }
-    });
+    // $(document).click(function(e) {
+    //     if (($(e.target).closest(".editable-report").length != 0)) {
+    //         alert("Clicked outside!");
+    //     }
+    // });
 
-    $(".editable-report").each(function(){
-        $(this).find("td").on('click tap', function(e){
-            $(this).closest('tr').find('[data-type="text"]').html('<input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity..." value="'+$(this).closest('tr').find('[data-type="text"]').attr("data-value")+'">')
+    // $(".editable-report").each(function(){
+    //     $(this).find("td").on('click tap', function(e){
+    //         $(this).closest('tr').find('[data-type="text"]').html('<input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity..." value="'+$(this).closest('tr').find('[data-type="text"]').attr("data-value")+'">')
             
-            $(this).closest('tr').find('[data-type="datepicker"]').html('<input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="1"/>')
-            $(this).closest('tr').find('[data-type="datepicker"]').find('input').datetimepicker({
-                format: 'YYYY.MM.DD',
-                locale: moment.locale('en', {
-                    week: { dow: 1 }
-                })
-            }).on('dp.change', function(e) {
-                //Get the value of Start and End of Week
-                var val = $(this).val();
-                var firstDate = moment(val, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
-                var lastDate = moment(val, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
-                $(this).val(firstDate + " - " + lastDate);
-            });
-            $(this).closest('tr').find('[data-type="datepicker"]').find('input').val($(this).closest('tr').find('[data-type="datepicker"]').attr("data-value"));
+    //         $(this).closest('tr').find('[data-type="datepicker"]').html('<input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="1"/>')
+    //         $(this).closest('tr').find('[data-type="datepicker"]').find('input').datetimepicker({
+    //             format: 'YYYY.MM.DD',
+    //             locale: moment.locale('en', {
+    //                 week: { dow: 1 }
+    //             })
+    //         }).on('dp.change', function(e) {
+    //             //Get the value of Start and End of Week
+    //             var val = $(this).val();
+    //             var firstDate = moment(val, "YYYY.MM.DD").day(1).format("YYYY.MM.DD");
+    //             var lastDate = moment(val, "YYYY.MM.DD").day(7).format("YYYY.MM.DD");
+    //             $(this).val(firstDate + " - " + lastDate);
+    //         });
+    //         $(this).closest('tr').find('[data-type="datepicker"]').find('input').val($(this).closest('tr').find('[data-type="datepicker"]').attr("data-value"));
 
-            $(this).closest('tr').find('[data-type="select"]').html('<select class="form-control" name="newpriority"><option value="0" disabled hidden>Priority</option><option value="1"> P1</option><option value="2"> P2</option><option value="3"> P3</option></select>')
-            $(this).closest('tr').find('[data-type="select"]').find("select").val($(this).closest('tr').find('[data-type="select"]').attr("data-value"))
+    //         $(this).closest('tr').find('[data-type="select"]').html('<select class="form-control" name="newpriority"><option value="0" disabled hidden>Priority</option><option value="1"> P1</option><option value="2"> P2</option><option value="3"> P3</option></select>')
+    //         $(this).closest('tr').find('[data-type="select"]').find("select").val($(this).closest('tr').find('[data-type="select"]').attr("data-value"))
 
-            $(this).closest('tr').find('[data-type="number"').html('<span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="'+$(this).closest('tr').find('[data-type="number"').attr("data-value")+'"></span>')
+    //         $(this).closest('tr').find('[data-type="number"').html('<span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="'+$(this).closest('tr').find('[data-type="number"').attr("data-value")+'"></span>')
 
-            if ($(this).attr("data-type")=="text"){
-                if($(this).find('input').is(':focus')) return this;
-                // $(this).html('<input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity..." value="'+$(this).attr("data-value")+'">').find('input').trigger('focus')
-                $(this).find('input').trigger('focus')
-            } else
-            if ($(this).attr("data-type") == "datepicker"){
-                if($(this).find('input').is(':focus')) return this;
-                // $(this).html('<input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="1"/>').find('input').trigger('focus')
-                $(this).find('input').trigger('focus')
-            } else
-            if ($(this).attr("data-type") == "select"){
-                if($(this).find('select').is(':focus')) return this;
-                // $(this).html('<select class="form-control" name="newpriority"><option value="0" disabled hidden>Priority</option><option value="1"> P1</option><option value="2"> P2</option><option value="3"> P3</option></select>').find('select').trigger('focus')
-                $(this).find('select').trigger('focus')
-                // $(this).find("select").val($(this).attr("data-value"))
-            } else
-            if($(this).attr("data-type") == "number"){
-                if($(this).find('input').is(':focus')) return this;
-                // $(this).html('<span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="'+$(this).attr("data-value")+'"></span>').find('input').trigger('focus')
-                $(this).find('input').trigger('focus')
-            }
-            $(this).closest('tr').find('td:last').html("<button type='submit' class='btn btn-primary'>SUBMIT</button>")
-        });
-    })
+    //         if ($(this).attr("data-type")=="text"){
+    //             if($(this).find('input').is(':focus')) return this;
+    //             // $(this).html('<input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity..." value="'+$(this).attr("data-value")+'">').find('input').trigger('focus')
+    //             $(this).find('input').trigger('focus')
+    //         } else
+    //         if ($(this).attr("data-type") == "datepicker"){
+    //             if($(this).find('input').is(':focus')) return this;
+    //             // $(this).html('<input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="1"/>').find('input').trigger('focus')
+    //             $(this).find('input').trigger('focus')
+    //         } else
+    //         if ($(this).attr("data-type") == "select"){
+    //             if($(this).find('select').is(':focus')) return this;
+    //             // $(this).html('<select class="form-control" name="newpriority"><option value="0" disabled hidden>Priority</option><option value="1"> P1</option><option value="2"> P2</option><option value="3"> P3</option></select>').find('select').trigger('focus')
+    //             $(this).find('select').trigger('focus')
+    //             // $(this).find("select").val($(this).attr("data-value"))
+    //         } else
+    //         if($(this).attr("data-type") == "number"){
+    //             if($(this).find('input').is(':focus')) return this;
+    //             // $(this).html('<span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="'+$(this).attr("data-value")+'"></span>').find('input').trigger('focus')
+    //             $(this).find('input').trigger('focus')
+    //         }
+    //         $(this).closest('tr').find('td:last').html("<button type='submit' class='btn btn-primary'>SUBMIT</button>")
+    //     });
+    // })
 
      //Choose date range datepicker function
      $(".modal-date-range-datepicker").datetimepicker({
@@ -238,8 +256,11 @@ $(document).ready(function() {
     //reply form showing up when press reply button
     $('.reply-comment').one('click tap', function() {
         // $(this).closest('.media-body').append('<div class = "mt-3 media position-relative"><img src = "https://chec-static.s3.amazonaws.com/members/Fitra%20Rahmamuliani/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=c%2FZGb31S1VjB1IXO96hsQe4MHdg%3D&Expires=1597732227" alt = "Avatar" class = "mr-3 rounded-circle comment-photo" /> <div class = "media-body align-self-center"> <form class = "d-flex flex-row mb-0 reply-comment-form" id="reply-form"><input type = "text" class = "form-control flex-grow-1 reply-comment-input" placeholder = "Write a reply..." /> <button type = "button" class = "btn btn-primary ml-2 reply-comment-submit" > COMMENT </button> </form> </div> </div>');
-        $(this).parents('.media-body').find('.reply-comment-input').focus();
-        $(this).parents('.media-body').find('.reply-comment-input').suggest('@', {
+        if($(this).closest('.top-comment-section').find('.reply-form-div').hasClass('d-none')){   
+            $(this).closest('.top-comment-section').find('.reply-form-div').removeClass('d-none');
+        }
+        $(this).closest('.top-comment-section').find('.reply-form-div').find('.reply-comment-input').focus();
+        $(this).closest('.top-comment-section').find('.reply-form-div').find('.reply-comment-input').suggest('@', {
             data: memberList,
             map: function(user) {
                 return {

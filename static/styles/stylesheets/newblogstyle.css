@@ -302,6 +302,17 @@ header .text-lg-center {
 
 .notification-icon {
     cursor: pointer;
+    position: relative;
+}
+
+.notification-icon .badge{
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
 }
 
 .member-project-list img {

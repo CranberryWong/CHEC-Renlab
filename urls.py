@@ -62,6 +62,7 @@ handlers = [
             (r"/newblog/addproject", mainblog.AddProjectHandler),
             (r"/newblog/profileedit", mainblog.ProfileEditHandler),
             (r"/newblog/addactivity",mainblog.AddActivityHandler),
+            (r"/newblog/editactivity", mainblog.EditActivityHandler),
             (r"/newblog/deleteactivity", mainblog.DeleteActivity),
             (r"/newblog/addcomment", mainblog.AddCommentHandler),
             (r"/newblog/editcomment", mainblog.EditCommentHandler),

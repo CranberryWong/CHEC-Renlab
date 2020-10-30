@@ -135,12 +135,13 @@ class MainHandler(BaseHandler):
             self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
         
         self.seen_by_report = self.session.query(SeenBy).filter(SeenBy.user_id == self.user.user_id).filter(SeenBy.weekly_report_id == self.weeklyreport.weekly_report_id).order_by(SeenBy.seen_by_user_id.desc()).all()
-        seenbyAvatarURL={}
+        self.seenbydata = list()
         
         for seenby in self.seen_by_report:
             self.seenbyuser = self.session.query(Account).filter(Account.user_id == seenby.seen_by_user_id).first()
             self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + self.seenbyuser.username  + '/avatar.png'}
-            seenbyAvatarURL[seenby.seen_by_id] = s3c.generate_presigned_url('get_object', self.param) 
+            self.seenbydatainside = {'seen_by_id' : seenby.seen_by_id, 'seen_by_username' : self.seenbyuser.username, 'avatarURL' : s3c.generate_presigned_url('get_object', self.param), 'date_seen' : seenby.date_seen}
+            self.seenbydata.append(self.seenbydatainside)
         
         # reflection
         if self.session.query(exists().where(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).where(Reflection.user_id == self.user.user_id)).scalar():
@@ -198,7 +199,7 @@ class MainHandler(BaseHandler):
         self.allactivity.append(self.thisweekactivity)
         self.allactivity.append(self.nextweekactivity)
         
-        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, seenbydata = self.seen_by_report, seenbyAvatarURL = seenbyAvatarURL, comments = self.comments, commentsAvatarURL = self.commentsAvatarURL, commentsname = self.commentsname, currentuser= self.currentuser, weeklyreportid = self.weeklyreport.weekly_report_id, currentuseravatarURL = self.currentuseravatarURL, notifications = self.notifications)
+        self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, comments = self.comments, commentsAvatarURL = self.commentsAvatarURL, commentsname = self.commentsname, currentuser= self.currentuser, weeklyreportid = self.weeklyreport.weekly_report_id, currentuseravatarURL = self.currentuseravatarURL, notifications = self.notifications, seenbydatafull = self.seenbydata )
         self.session.close()
         
 class ProfileEditHandler(BaseHandler):
@@ -237,6 +238,10 @@ class ProfileEditHandler(BaseHandler):
                 in_mem_file.seek(0)
                 s3c.put_object(Bucket=BUCKET_NAME,Body=in_mem_file,Key='members/' + self.signeduser + '/avatar.png')
                 # image.save(articles_path + filename, quality=150)
+        self.session.flush()
+        if(edituser.email != '' and edituser.phone_number != '' and edituser.wechat_id != '' and edituser.line_id != '' and edituser.skype_id != ''):
+            edituser.exp = edituser.exp + 5
+        
         self.session.commit()
         self.redirect("/newblog/" + edituser.username)
         self.session.close()
@@ -296,6 +301,10 @@ class AddReflection(BaseHandler):
         else:
             newreflection = Reflection(newreflectionrate, newreflectiontext, self.weeklyreport.weekly_report_id, self.user.user_id)
             self.session.add(newreflection)
+            
+            self.userexp = self.session.query(Account).filter(Account.user_id == self.user.user_id).first()
+            self.userexp.exp = self.userexp.exp + 3 
+            
             self.session.commit()
             self.redirect("/newblog/" + self.user.username)
             
@@ -321,32 +330,119 @@ class AddActivityHandler(BaseHandler):
         
         if(newdaterange=='' or newpercentage == '' or newactivityname == ''):
             if(newprojectid == 7):
-                self.write('<script language="javascript">alert("Please input full data!");self.location="/newblog/projectadmin";</script>')
+                self.write('<script language="javascript">alert("Please input full data!");self.location="/newblog/projectadmin";</script>')           
         else:
-            daterange = newdaterange.split(" - ")
-            datestart = datetime.strptime(daterange[0], "%Y.%m.%d")  - timedelta(days=datetime.strptime(daterange[0], "%Y.%m.%d").weekday() % 7)
-            date_start_following_week = datestart + timedelta(days=7)
+            if(newpercentage > 100 or newpercentage < 0):
+                self.write('<script language="javascript">alert("Please input the right percentage (0 - 100)!");self.location="/newblog/projectadmin";</script>')     
+            else: 
+                daterange = newdaterange.split(" - ")
+                datestart = datetime.strptime(daterange[0], "%Y.%m.%d")  - timedelta(days=datetime.strptime(daterange[0], "%Y.%m.%d").weekday() % 7)
+                date_start_following_week = datestart + timedelta(days=7)
+                
+                if self.session.query(~exists().where(WeeklyReport.date_range_start>=datestart).where(WeeklyReport.date_range_start < date_start_following_week)).scalar():
+                    postweeklyreport = WeeklyReport(datestart)
+                    self.session.add(postweeklyreport)
+                    self.session.commit()
+                addweeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start>=datestart).filter(WeeklyReport.date_range_start < date_start_following_week).first()
+                newactivity = Activity(newactivityname, newpriority, newpercentage, newprojectid, self.user.user_id, addweeklyreport.weekly_report_id)
+                self.session.add(newactivity)
+                                    
+                self.userexp = self.session.query(Account).filter(Account.user_id == self.user.user_id).first()
             
-            if self.session.query(~exists().where(WeeklyReport.date_range_start>=datestart).where(WeeklyReport.date_range_start < date_start_following_week)).scalar():
-                postweeklyreport = WeeklyReport(datestart)
-                self.session.add(postweeklyreport)
+                if (newpercentage == 100):
+                    self.userexp.exp = self.userexp.exp + 4
+                else:
+                    self.userexp.exp = self.userexp.exp + 2                
+                
                 self.session.commit()
-            addweeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start>=datestart).filter(WeeklyReport.date_range_start < date_start_following_week).first()
-            newactivity = Activity(newactivityname, newpriority, newpercentage, newprojectid, self.user.user_id, addweeklyreport.weekly_report_id)
-            self.session.add(newactivity)
-            self.session.commit()
-            if(newprojectid == 7):
-                self.redirect('/newblog/projectadmin')
-            else:
-                self.redirect('/newblog/'+self.signeduser)
-            self.session.close()
+                if(newprojectid == 7):
+                    self.redirect('/newblog/projectadmin')
+                else:
+                    self.redirect('/newblog/'+self.signeduser)
+                self.session.close()
+
+class EditActivityHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        homeBase.init(self)
+        
+    def post(self):
+        homeBase.init(self)
+        self.newactivityid = self.get_argument('newactivityid', default=0)
+        self.newactivityname = self.get_argument('newactivityname', default='')
+        self.newdaterange = self.get_argument('newdaterange', default='')
+        self.newpriority = self.get_argument('newpriority',default=3)
+        self.newpercentage = int(self.get_argument('newpercentage', default=0))
+        self.activitylocation = int(self.get_argument('activitylocation',default=7))
+        
+        #check the data is empty or not
+        if(self.newdaterange=='' or self.newpercentage == '' or self.newactivityname == ''):
+            self.write('<script language="javascript">alert("Please input full data!");self.location="/newblog/projectadmin";</script>')
+        else:
+            if(self.newpercentage > 100 or self.newpercentage < 0):
+                self.write('<script language="javascript">alert("Please input the right percentage (0 - 100)!");self.location="/newblog/projectadmin";</script>')       
+            #check whether the activity is exist
+            if self.session.query(exists().where(Activity.activity_id == self.newactivityid)).scalar():
+                self.newactivity = self.session.query(Activity).filter(Activity.activity_id == self.newactivityid).first()
+                
+                #parse the newdaterange into daterange start and daterange end
+                self.daterange = self.newdaterange.split(" - ")
+                self.datestart = datetime.strptime(self.daterange[0], "%Y.%m.%d")  - timedelta(days=datetime.strptime(self.daterange[0], "%Y.%m.%d").weekday() % 7)
+                self.date_start_following_week = self.datestart + timedelta(days=7)
+                
+                #if the new date range is not exist, create a new weeklyreport data
+                if self.session.query(~exists().where(WeeklyReport.date_range_start>= self.datestart).where(WeeklyReport.date_range_start < self.date_start_following_week)).scalar():
+                    self.postweeklyreport = WeeklyReport(self.datestart)
+                    self.session.add(self.postweeklyreport)
+                    self.session.flush()
+                
+                #get new weeklyreport id
+                self.newweeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start>=self.datestart).filter(WeeklyReport.date_range_start < self.date_start_following_week).first()
+                
+                #take the user's database
+                self.newuser = self.session.query(Account).filter(Account.user_id == self.newactivity.user_id).first()
+                
+                #add user exp point +1 every editing
+                self.newuser.exp = self.newuser.exp + 1
+                
+                #check whether the new percentage is decreasing from 100% or not 
+                if (self.newactivity.progress_percentage == 100 and self.newpercentage < 100):
+                    self.newuser.exp = self.newuser.exp - 2
+                else: 
+                    if (self.newactivity.progress_percentage < 100 and self.newpercentage == 100):
+                        self.newuser.exp = self.newuser.exp + 2
+                
+                #edit the database
+                self.newactivity.activity_name = self.newactivityname
+                self.newactivity.priority = self.newpriority
+                self.newactivity.progress_percentage = self.newpercentage
+                self.newactivity.weekly_report_id = self.newweeklyreport.weekly_report_id
+                
+                #commit all the data to database
+                self.session.commit()
+                
+                #redirecting the page
+                if(self.activitylocation == 7):
+                    self.redirect('/newblog/projectadmin')
+                else:
+                    self.redirect('/newblog/'+self.signeduser + "?date=" + self.datestart.strftime("%Y-%m-%d %H:%M:%S.%f"))
+        
+        self.session.close()
+            
+        
 
 class DeleteActivity(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         homeBase.init(self)
         deleteactivityid = self.get_argument("deleteactivityid", default=None)
+        self.activity = self.session.query(Activity).filter(Activity.activity_id == deleteactivityid).first()
+        
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.activity.user_id).first()
+        self.userexp.exp = self.userexp.exp - 1 
+        
         self.session.query(Activity).filter(Activity.activity_id == deleteactivityid).delete()
+                
         self.session.commit()
         self.redirect('/newblog/projectadmin')
         self.session.close()
@@ -447,6 +543,9 @@ class AddCommentHandler(BaseHandler):
         if(self.newuserid != self.newcommentedby):
             self.newnotification = Notification(self.newuserid, self.newcommentedby, self.newweeklyreportid, self.newuser.username, 0, "commented: " + self.newcommentext, 1, newcomment.comment_id)
             self.session.add(self.newnotification)
+            
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
+        self.userexp.exp = self.userexp.exp + 1
         
         self.session.commit()
         
@@ -498,8 +597,19 @@ class DeleteCommentHandler(BaseHandler):
         self.notification = self.session.query(Notification).filter(Notification.reference_type == 1).filter(Notification.reference_id == self.comment.comment_id).filter(Notification.sender_id == self.comment.commented_by).first()
         self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.comment.weekly_report_id).first()
         
-        self.session.query(Comment).filter(Comment.comment_id == deletecommentid).delete()
         self.session.query(Notification).filter(Notification.reference_type == 1).filter(Notification.reference_id == self.comment.comment_id).filter(Notification.sender_id == self.comment.commented_by).delete()
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.comment.commented_by).first()
+        self.userexp.exp = self.userexp.exp - 1
+        
+        self.replies = self.session.query(Reply).filter(Reply.parent_comment_id == deletecommentid).all()
+        
+        if self.session.query(exists().where(Reply.parent_comment_id == deletecommentid)).scalar():
+            for reply in self.replies:
+                self.session.query(ReplyLike).filter(ReplyLike.reply_id == reply.reply_id).delete()
+        
+        self.session.query(Reply).filter(Reply.parent_comment_id == deletecommentid).delete()
+        self.session.query(Like).filter(Like.comment_id == deletecommentid).delete()        
+        self.session.query(Comment).filter(Comment.comment_id == deletecommentid).delete()
         
         self.session.commit()
         self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
@@ -536,6 +646,9 @@ class AddLikeHandler(BaseHandler):
             self.newnotification = Notification(self.comment.user_id, self.comment.commented_by, self.newweeklyreportid, self.user.username, 0, "like this comment: " + self.comment.comment_text, 2, self.newlike.like_id)
             self.session.add(self.newnotification)
         
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
+        self.userexp.exp = self.userexp.exp + 1
+        
         self.session.commit()
         
         
@@ -555,8 +668,12 @@ class DeleteLikeHandler(BaseHandler):
         self.weeklyreportdata = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.like.weekly_report_id).first()
         self.notification = self.session.query(Notification).filter(Notification.reference_type == 2).filter(Notification.reference_id == self.like.like_id).filter(Notification.sender_id == self.comment.commented_by).first()
         
-        self.session.query(Like).filter(Like.like_id == deletelikeid).delete()
         self.session.query(Notification).filter(Notification.reference_type == 2).filter(Notification.reference_id == self.like.like_id).filter(Notification.sender_id == self.comment.commented_by).delete()
+        
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.like.user_id).first()
+        self.userexp.exp = self.userexp.exp - 1
+        
+        self.session.query(Like).filter(Like.like_id == deletelikeid).delete()
         
         self.session.commit()
         self.redirect("/newblog/" + self.userdata.username + "?date=" + self.weeklyreportdata.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
@@ -596,7 +713,10 @@ class AddReplyHandler(BaseHandler):
         if (self.comment.commented_by != self.newuserid):
             self.notification_comment = Notification(self.comment.commented_by, self.newuserid, self.newweeklyreportid.weekly_report_id, self.newuser.username, 0, "replied: " + self.newreplytext, 3, self.reply.reply_id)
             self.session.add(self.notification_comment)   
-            
+        
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
+        self.userexp.exp = self.userexp.exp + 1
+        
         self.session.commit()
         
         self.redirect("/newblog/" + self.newuser.username + "?date=" + self.newweeklyreportid.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
@@ -635,8 +755,7 @@ class EditReplyHandler(BaseHandler):
             if(self.comment.commented_by != self.reply.user_id):
                 self.notification_comment = Notification(self.comment.commented_by, self.reply.user_id, self.comment.weekly_report_id, self.newuser.username, 0, "edited reply: " + self.newreplytext, 3, self.reply.reply_id)
                 self.session.add(self.notification_comment) 
-            
-            
+                        
             self.session.commit()
             self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == self.comment.weekly_report_id).first()
             self.redirect("/newblog/" + self.newuser.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
@@ -660,6 +779,11 @@ class DeleteReplyHandler(BaseHandler):
         
         self.session.query(Notification).filter(Notification.reference_type == 3).filter(Notification.reference_id == self.reply.reply_id).filter(Notification.recipient_id == self.comment.user_id).delete()
         self.session.query(Notification).filter(Notification.reference_type == 3).filter(Notification.reference_id == self.reply.reply_id).filter(Notification.recipient_id == self.comment.commented_by).delete()
+        
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.reply.user_id).first()
+        self.userexp.exp = self.userexp.exp - 1
+        
+        self.session.query(ReplyLike).filter(ReplyLike.reply_id == deletereplyid).delete()
         self.session.query(Reply).filter(Reply.reply_id == deletereplyid).delete()
         
         self.session.commit()
@@ -699,6 +823,8 @@ class AddReplyLikeHandler(BaseHandler):
             self.notification = Notification(self.reply.user_id, self.newuserid, self.weeklyreport.weekly_report_id, self.user.username, 0, "liked your reply: " + self.reply.reply_text, 4, self.likereply.like_reply_id)
             self.session.add(self.notification)
         
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.newuserid).first()
+        self.userexp.exp = self.userexp.exp + 1
         self.session.commit()
         
         self.redirect("/newblog/" + self.user.username + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
@@ -723,6 +849,9 @@ class DeleteReplyLikeHandler(BaseHandler):
         self.session.query(Notification).filter(Notification.reference_type == 4).filter(Notification.reference_id == self.replylike.like_reply_id).filter(Notification.sender_id == self.replylike.user_id).delete()
         self.session.query(ReplyLike).filter(ReplyLike.like_reply_id == deletereplylikeid).delete()
         self.reply.like_count = self.reply.like_count - 1
+        
+        self.userexp = self.session.query(Account).filter(Account.user_id == self.replylike.user_id).first()
+        self.userexp.exp = self.userexp.exp - 1
         
         self.session.commit()
         
