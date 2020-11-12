@@ -98,6 +98,12 @@ $(document).ready(function() {
     //     }
     // });
 
+    $(document).on("click tap",".editactivitybutton", function(e){
+        $(this).closest(".editable-report").find(".edit-activity-data").addClass("d-none");
+        $(this).closest(".editable-report").find(".edit-activity-input").removeClass("d-none");
+        $(this).closest(".editable-report").find("td:last").addClass("d-none");
+    })
+
     // $(".editable-report").each(function(){
     //     $(this).find("td").on('click tap', function(e){
     //         $(this).closest('tr').find('[data-type="text"]').html('<input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity..." value="'+$(this).closest('tr').find('[data-type="text"]').attr("data-value")+'">')
@@ -476,7 +482,7 @@ $(document).ready(function() {
         if ($('.report-table[data-id="' + id + '"]').is(":visible")) {
             $('.row').removeClass('d-none');
             $('.report-table[data-id="' + id + '"] .row').filter(function() {
-                var result = $(this).find('.col-6').text().toLowerCase().indexOf(filter);
+                var result = $(this).find('.activity-name-data').text().toLowerCase().indexOf(filter);
                 $(this).toggle(result > -1);
             });
         } else {
@@ -486,8 +492,17 @@ $(document).ready(function() {
             });
             // $('.card-report').find('.card .card-body h5:not(:contains("' + filter + '"))').parent().parent().addClass('d-none');
             e.preventDefault();
-
         }
+    })
+
+    $('.search-activity-title').keypress(function(e) {
+        if(e.which == 13 || e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
+
+    $('.carousel').carousel({
+        interval: 0
     })
 
     // Add the following code if you want the name of the file appear on select

@@ -328,6 +328,7 @@ class AddActivityHandler(BaseHandler):
         newdaterange = self.get_argument('newdaterange', default='')
         newpriority = self.get_argument('newpriority', default=0)
         newpercentage = self.get_argument('newpercentage', default=0)
+        self.activitylocation = int(self.get_argument('activitylocation',default=7))
         
         if(newdaterange=='' or newpercentage == '' or newactivityname == ''):
             if(newprojectid == 7):
@@ -379,10 +380,11 @@ class AddActivityHandler(BaseHandler):
                 newactivity.activity_name = self.modifiedcommenttext
                 
                 self.session.commit()
-                if(newprojectid == 7):
-                    self.redirect('/newblog/projectadmin')
+                #redirecting the page
+                if(self.activitylocation == 7):
+                    self.redirect('/newblog/'+self.signeduser+'/projectadmin?date=' + datestart.strftime("%Y-%m-%d %H:%M:%S.%f"))
                 else:
-                    self.redirect('/newblog/'+self.signeduser)
+                    self.redirect('/newblog/'+self.signeduser + "?date=" + datestart.strftime("%Y-%m-%d %H:%M:%S.%f"))
                 self.session.close()
 
 class EditActivityHandler(BaseHandler):
@@ -471,7 +473,10 @@ class EditActivityHandler(BaseHandler):
                 
                 #redirecting the page
                 if(self.activitylocation == 7):
-                    self.redirect('/newblog/projectadmin')
+                    self.redirect('/newblog/'+self.signeduser+'/projectadmin?date=' + self.datestart.strftime("%Y-%m-%d %H:%M:%S.%f"))
+                elif(self.activitylocation == 3):
+                    self.projectname = self.session.query(Project).filter(Project.project_id == self.newactivity.project_id).first()
+                    self.redirect('/newblog/'+self.signeduser+'/project?name=' + self.projectname.project_name)
                 else:
                     self.redirect('/newblog/'+self.signeduser + "?date=" + self.datestart.strftime("%Y-%m-%d %H:%M:%S.%f"))
         
@@ -484,7 +489,10 @@ class DeleteActivity(BaseHandler):
     def get(self):
         homeBase.init(self)
         deleteactivityid = self.get_argument("deleteactivityid", default=None)
+        self.activitylocation = int(self.get_argument('activitylocation',default=7))
         self.activity = self.session.query(Activity).filter(Activity.activity_id == deleteactivityid).first()
+        self.projectname = self.session.query(Project).filter(Project.project_id == self.activity.project_id).first()
+        self.weeklyreport =  self.session.query(WeeklyReport).filter(WeeklyReport.weekly_report_id == Activity.weekly_report_id).first()
         
         self.userexp = self.session.query(Account).filter(Account.user_id == self.activity.user_id).first()
         self.userexp.exp = self.userexp.exp - 1 
@@ -492,7 +500,15 @@ class DeleteActivity(BaseHandler):
         self.session.query(Activity).filter(Activity.activity_id == deleteactivityid).delete()
                 
         self.session.commit()
-        self.redirect('/newblog/projectadmin')
+        
+        #redirecting the page
+        if(self.activitylocation == 7):
+            self.redirect('/newblog/'+self.signeduser+'/projectadmin?date=' + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
+        elif(self.activitylocation == 3):
+            self.redirect('/newblog/'+self.signeduser+'/project?name=' + self.projectname.project_name)
+        else:
+            self.redirect('/newblog/'+self.signeduser + "?date=" + self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
+        
         self.session.close()
 
 class ProjectAdminHandler(BaseHandler):
@@ -501,8 +517,14 @@ class ProjectAdminHandler(BaseHandler):
         homeBase.init(self)
         self.title = "Project Admin - New Blog"
         self.menu = 2
+        self.date = self.get_argument('date', None)
         self.user_projectlist = self.session.query(Project.project_name).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
-        self.activitylist = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == self.user.user_id).filter(Activity.project_id == 7).filter(extract('month',WeeklyReport.date_range_start)==datetime.today().month).all()
+        self.adminmonth = datetime.today()
+        if self.date is None:
+            self.activitylist = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == self.user.user_id).filter(Activity.project_id == 7).filter(extract('month',WeeklyReport.date_range_start)==datetime.today().month).order_by(WeeklyReport.date_range_start.desc()).all()
+        else:
+            self.activitylist = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == self.user.user_id).filter(Activity.project_id == 7).filter(extract('month',WeeklyReport.date_range_start)==datetime.strptime(self.date, "%Y-%m-%d %H:%M:%S.%f").month).order_by(WeeklyReport.date_range_start.desc()).all()
+            self.adminmonth = datetime.strptime(self.date, "%Y-%m-%d %H:%M:%S.%f")
         if userName == self.signeduser: 
             self.visitor = 0
         else:
@@ -515,17 +537,32 @@ class ProjectAdminHandler(BaseHandler):
             self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id).all()
             self.user_level = self.session.query(func.max(XpEvents.level)).filter(self.user.exp - XpEvents.min_xp >= 0).scalar()
             self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
-        self.render("newblog/project_admin.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = self.activitylist, adminmonth = datetime.today(), userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications)
+        self.render("newblog/project_admin.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = self.activitylist, adminmonth = self.adminmonth, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications)
         self.session.close()
         
-    def post(self):
+    def post(self, userName):
         homeBase.init(self)
         self.title = "Project Admin - New Blog"
         self.menu = 2
         newmonth = datetime.strptime(self.get_argument('newmonth', default=datetime.today().month), '%B %Y')
+        
+        if userName == self.signeduser: 
+            self.visitor = 0
+        else:
+            self.visitor = 1
+            self.user = self.session.query(Account).filter(Account.username == userName).first()
+            # photo profile 
+            self.params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + userName  + '/avatar.png'}
+            self.avatarURL = s3c.generate_presigned_url('get_object', self.params)
+            self.projectgrouplist = self.session.query(ProjectGroup).order_by(ProjectGroup.project_group_name.asc()).all()
+            self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id).all()
+            self.user_level = self.session.query(func.max(XpEvents.level)).filter(self.user.exp - XpEvents.min_xp >= 0).scalar()
+            self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
+        
         self.user_projectlist = self.session.query(Project.project_name).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
         self.activitylist = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == self.user.user_id).filter(Activity.project_id == 7).filter(extract('month',WeeklyReport.date_range_start)==newmonth.month).all()
-        self.render("newblog/project_admin.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = self.activitylist, adminmonth = newmonth, userlevel = self.user_level, maxexp = self.maxexp)
+        self.render("newblog/project_admin.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = self.activitylist, adminmonth = newmonth, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications)
+        self.session.close()
         
 
 class LeaderboardHandler(BaseHandler):
@@ -1017,3 +1054,51 @@ class ReadNofiticationHandler(BaseHandler):
         self.redirect("/newblog/"+self.notification.link_username+"?date="+self.weeklyreport.date_range_start.strftime("%Y-%m-%d %H:%M:%S.%f"))
         
         self.session.close()
+    
+class ViewProjectHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self, userName):
+        homeBase.init(self)
+        self.name = self.get_argument('name', '')
+        self.title = self.name + " Project - New Blog"
+        self.menu = 4
+        self.projectdata = None
+        self.projectmembers = None
+        self.projectmembersdata = list()
+        self.activitydata = None
+
+        if self.name:
+            self.projectdata = self.session.query(Project).filter(Project.project_name.contains(self.name)).first()
+            self.projectmembers = self.session.query(Account).outerjoin(ProjectMember).outerjoin(Project).filter(ProjectMember.project_id == self.projectdata.project_id).all()
+            self.menu = 3 + self.projectdata.project_id
+            for member in self.projectmembers:
+                self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + member.username  + '/avatar.png'}
+                self.memberphoto = s3c.generate_presigned_url('get_object', self.param)
+                self.activitydata = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == member.user_id).filter(Activity.project_id == self.projectdata.project_id).order_by(Activity.weekly_report_id.desc()).all()
+                self.members = {"user_id": member.user_id, "username": member.username, "photoURL": self.memberphoto, "activitydata": self.activitydata} 
+                self.projectmembersdata.append(self.members)
+
+        if userName == self.signeduser: 
+            self.visitor = 0
+        else:
+            self.visitor = 1 
+            self.user = self.session.query(Account).filter(Account.username == userName).first()
+            # photo profile 
+            self.params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + userName  + '/avatar.png'}
+            self.avatarURL = s3c.generate_presigned_url('get_object', self.params)
+            self.projectgrouplist = self.session.query(ProjectGroup).order_by(ProjectGroup.project_group_name.asc()).all()
+            self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id).all()
+            self.user_level = self.session.query(func.max(XpEvents.level)).filter(self.user.exp - XpEvents.min_xp >= 0).scalar()
+            self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
+        
+        # reflection
+        reflection_exists = 0
+        reflection_content = None
+        if self.session.query(exists().where(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).where(Reflection.user_id == self.user.user_id)).scalar():
+            reflection_exists = 1
+            reflection_content = self.session.query(Reflection).filter(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).filter(Reflection.user_id == self.user.user_id).first()
+        
+        self.render("newblog/projects.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist,reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectdata = self.projectdata, projectmembers = self.projectmembersdata)
+        self.session.close()
+        
+        

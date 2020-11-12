@@ -1,5 +1,6 @@
 :root {
     --text-yellow: #ffe234;
+    --bg-blue: #007BFF;
 }
 
 .btn-gray {
@@ -139,7 +140,7 @@
 }
 
 .bg-blue-transparent {
-    background: rgba(0,123,255,0.1);
+    background-color: rgba(0,123,255,0.1);
 }
 
 .bg-green {
@@ -398,4 +399,35 @@ header .text-lg-center {
     width: 3em;
     height: 3em;
     object-fit: cover;
+}
+
+.carousel-control-prev{
+    width: max-content;
+}
+
+.carousel-control-next{
+    width: max-content;
+}
+
+.carousel-control-prev-icon{
+    /* margin-left: -160px;  */
+    /* width: auto; */
+}
+
+.carousel-control-next-icon{
+    /* margin-right: -150px;  */
+    /* width: auto; */
+}
+
+.carousel-indicators{
+    margin-bottom: -4%;
+}
+
+.carousel-indicators li{
+    background-color: var(--bg-blue);
+}
+
+.carousel-item{
+    height: 400px;
+    overflow: auto;
 }

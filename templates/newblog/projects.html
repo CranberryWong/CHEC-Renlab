@@ -1,0 +1,330 @@
+{% extends "main.html" %} {% block content %} {% import uuid %} {% from datetime import datetime %}
+<h3 class="mt-2"><b>{{projectdata.project_name}}</b></h3>
+<div class="member-project-list d-flex flex-row my-4">
+    <p class="align-self-center">Members:</p>
+    {% for member in projectmembers%}
+    <a href = '/newblog/{{member.get("username")}}'>
+        <img class="rounded-circle ml-2" src='{{member.get("photoURL")}}' alt='Photo Profile {{member.get("username")}}'>
+    </a>
+    {% end %}
+</div>
+
+<!--Reflection section-->
+{% if reflection_exists == 1 %}
+<section class="home-reflection-section mb-3 shadow-sm py-1 px-3">
+    <div class="d-flex pt-2 justify-content-center text-yellow">
+        {% for i in range(reflection_content.reflection_rate) %}
+        <i class="fas fa-star mx-1"></i>{% end %}
+    </div>
+    <div class="mb-3">
+        <b>This Week Reflection</b>
+        <p class="reflection-text">{{ reflection_content.reflection_text }}</p>
+    </div>
+</section>
+{% end %}
+
+<!--MEETING LINK!-->
+<a href="" class="float-right"><i class="fa fa-tv text-blue"></i><u> Meeting Link</u></a>
+
+{% if visitor == 0%}
+<div class="d-flex flex-row">
+    <!--Button trigger modal for new activity-->
+    <button type="button" class="mt-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#newactivitymodal">NEW ACTIVITY</button> {% if reflection_exists == 0 %}
+    <!--Button trigger modal for new reflection-->
+    <button type="button" class="ml-3 mt-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#newreflectionmodal">ADD REFLECTION</button> {% end %}
+</div>
+{% end %}
+
+<!--Reporting and Planning Section-->
+<div class="mt-5 project-card-list">
+    <div id="carouselExampleIndicators" class="carousel slide px-5">
+        <ol class="carousel-indicators">
+            {% for i in range(len(projectmembers)) %}
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}" class="{% if i == 0 %}active {% end %}"></li>
+            {% end %}
+        </ol>
+        <div class="carousel-inner">
+          {% for i,member in enumerate(projectmembers)%}
+          <div class="carousel-item {% if i == 0 %}active{% end %}">
+            <div class="card mb-4">
+                <div class="card-header bg-transparent d-flex flex-row">
+                    <img class="rounded-circle" src='{{member.get("photoURL")}}'>
+                    <h5 class="ml-3 align-self-center mb-0">{{member.get("username")}}</h5>
+                </div>
+                <div class="card-body">
+                    <form class="d-flex flex-rows mt-3">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Sort
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <h6 class="dropdown-header">Sort by</h6>
+                                <a class="dropdown-item sort-report-title" href="#" data-id="1">Activity Title</a>
+                                <a class="dropdown-item sort-report-date" href="#" data-id="1">Date</a>
+                                <a class="dropdown-item sort-report-priority" href="#" data-id="1">Priority</a>
+                                <a class="dropdown-item sort-report-progress" href="#" data-id="1">Progress</a>
+                            </div>
+                        </div>
+                        <input class="form-control ml-3 mr-sm-2 search-activity-title" type="search" placeholder="Search Activity..." aria-label="Search" data-id="1">
+                    </form>
+        
+                    <table class="table mt-3 report-table" data-id="1">
+                        <tbody>
+                            {% for activity in member.get("activitydata")%}
+                            <tr class="row editable-report">
+                                <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
+                                    <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                        <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
+                                        <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
+                                    </td>
+                                    <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
+                                        <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
+                                        <span class="edit-activity-data">
+                                            {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
+                                        </span>
+                                    </td>
+                                    <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
+                                        <select class="form-control edit-activity-input d-none" name="newpriority">
+                                            <option value="0" disabled hidden>Priority</option>
+                                            <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
+                                            <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
+                                            <option value="3" {% if activity.Activity.priority == 3 %} selected {% end %}> P3</option>
+                                        </select>
+                                        <span class="edit-activity-data">
+                                            <i class="fa fa-flag text-center pr-1 {% if activity.Activity.priority == 1%}text-red{% end %} {% if activity.Activity.priority == 2%}text-orange{% end %} {% if activity.Activity.priority == 3%}text-primary{% end %}"></i> P{{activity.Activity.priority}}
+                                        </span>
+                                    </td>
+                                    <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
+                                        data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
+                                        <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}" /></span>
+                                        <span class="edit-activity-data">
+                                            {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
+                                        </span>
+                                    </td> 
+                                    <td class="col-1 edit-activity-input d-none">
+                                        <input type="hidden" name="newactivityid" value="{{activity.Activity.activity_id}}"/>
+                                        <input type="hidden" name="activitylocation" value="3"/>
+                                        <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                    </td>
+                                </form>
+                                <td class="col-1 mr-auto text-muted py-2">
+                                    <span class="edit-activity-data d-flex flex-row">
+                                    <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
+                                    <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
+                                        <input type="hidden" name="deleteactivityid" value="{{activity.Activity.activity_id}}">
+                                        <input type="hidden" name="activitylocation" value="3"/>
+                                        <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                    </span>
+                                </td>
+                            </tr>
+                            {% end %}
+                        </tbody>
+                    </table>
+        
+                    <div class="card-columns card-report mt-3  d-none" data-id="1">
+                        <div class="card shadow border-0">
+                            <div class="card-body d-flex flex-column">
+                                <div class="priority mb-2"><i class="fa fa-flag text-center pr-1 text-orange"></i> P2 </div>
+                                <h5 class="card-title">Design our blog based on the design implication
+                                </h5>
+                                <small class="project-name text-purple">Planning and Reporting</small>
+                                <p class="card-text card-date mt-2">June 01 - June 07</p>
+                                <div class="report-progress text-white text-center bg-green text-wrap py-1 px-3 align-self-start" data-progress="100">DONE</div>
+                            </div>
+                        </div>
+                        <div class="card shadow border-0">
+                            <div class="card-body d-flex flex-column">
+                                <div class="priority mb-2"><i class="fa fa-flag text-center pr-1 text-red"></i> P1 </div>
+                                <h5 class="card-title">Ask all members feedback (until Tuesday, June 09)
+                                </h5>
+                                <small class="project-name text-purple">Planning and Reporting</small>
+                                <p class="card-text card-date mt-2">June 08 - June 14</p>
+                                <div class="report-progress text-center bg-yellow text-wrap py-1 px-3 align-self-start" data-progress="50">50%</div>
+                            </div>
+                        </div>
+                        <div class="card shadow border-0">
+                            <div class="card-body d-flex flex-column">
+                                <div class="priority mb-2"><i class="fa fa-flag text-center pr-1 text-red"></i> P1 </div>
+                                <h5 class="card-title">Discuss with <a href="">@Wang Chen</a> about the implementation
+                                </h5>
+                                <small class="project-name text-purple">Planning and Reporting</small>
+                                <p class="card-text card-date mt-2">June 08 - June 14</p>
+                                <div class="report-progress text-center bg-gray text-wrap py-1 px-3 align-self-start" data-progress="0">Not started</div>
+                            </div>
+                        </div>
+                        <div class="card shadow border-0">
+                            <div class="card-body d-flex flex-column">
+                                <div class="priority mb-2"><i class="fa fa-flag text-center pr-1 text-red"></i> P1 </div>
+                                <h5 class="card-title">Implement the Design to Front-end
+                                </h5>
+                                <small class="project-name text-purple">Planning and Reporting</small>
+                                <p class="card-text card-date mt-2">June 08 - June 14</p>
+                                <div class="report-progress text-center bg-yellow text-wrap py-1 px-3 align-self-start" data-progress="10">10%</div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="d-none flex-column my-2">
+                        <div class="no-gutters row border">
+                            <span class="col-6 pl-3 py-2 text-wrap mr-auto">Design our blog based on the design implicationDesign our blog based on the design implicationDesign our blog based on the design implicationDesign our blog based on the design implicationDesign our blog based on the design implicationDesign our blog based on the design implication</span>
+                            <span class="col-3 px-1 text-wrap text-center border-left border-right py-2">June 01 - June 07</span>
+                            <span class="col-2 flex-10 border-right px-2 py-2 text-center"><i class="fa fa-flag text-center pr-1 text-red"></i> P1 </span>
+                            <span class="col-2 flex-12 px-3 bg-green text-center text-white py-2">DONE</span>
+                        </div>
+                        <div class="no-gutters row border">
+                            <span class="col-6 pl-3 py-2 text-wrap mr-auto">Ask all members feedback (until Tuesday, June 09)</span>
+                            <span class="col-3 px-1 text-wrap text-center border-left border-right py-2">June 08 - June 14</span>
+                            <span class="col-2 flex-10 border-right px-2 py-2 text-center"><i class="fa fa-flag text-center pr-1 text-red"></i> P1 </span>
+                            <span class="col-2 flex-12 px-3 bg-yellow text-center py-2">50%</span>
+                        </div>
+                        <div class="no-gutters row border">
+                            <span class="col-6 pl-3 py-2 text-wrap mr-auto">Discuss with <a href="">@Wang Chen</a> about the implementation</span>
+                            <span class="col-3 px-1 text-wrap text-center border-left border-right py-2">June 08 - June 14</span>
+                            <span class="col-2 flex-10 border-right px-2 py-2 text-center"><i class="fa fa-flag text-center pr-1 text-red"></i> P1 </span>
+                            <span class="col-2 flex-12 px-3 bg-gray text-center text-wrap py-2">Not started</span>
+                        </div>
+                        <div class="no-gutters row border">
+                            <span class="col-6 pl-3 py-2 text-wrap mr-auto">Implement the Design to Front-end</span>
+                            <span class="col-3 px-1 text-wrap text-center border-left border-right py-2">June 08 - June 14</span>
+                            <span class="col-2 flex-10 border-right px-2 py-2 text-center"><i class="fa fa-flag text-center pr-1 text-red"></i> P1 </span>
+                            <span class="col-2 flex-12 px-3 bg-yellow text-center text-wrap py-2">10%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          {% end %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true">
+            <i class="fas fa-chevron-left bg-blue rounded-circle py-1 px-2"></i>
+          </span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true">
+            <i class="fas fa-chevron-right bg-blue rounded-circle py-1 px-2"></i>
+          </span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+</div>
+
+<!--Modal for New Activity-->
+<div class="modal fade" id="newactivitymodal" tabindex="-1" role="dialog" aria-labelledby="newactivitymodallabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New Activity</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="/newblog/addactivity" method="POST">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="activity-name">Activity</label>
+                            <div class="input-group col-md-12 ">
+                                <input type="text" class="form-control"  name="newactivityname" id="activity-name" placeholder="Enter Activity..." aria-placeholder="Enter Activity...">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="newactivity-project-name">Project</label>
+                            <div class="input-group col-md-12">
+                                <select class="form-control select2-project-name" name="newprojectid" id="newactivity-project-name">
+                                    <option></option>
+                                    {% for project in projectlist%}
+                                    <option value={{project.project_id}}>{{project.project_name}}</option>
+                                    {% end %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="date-range">Date Range</label>
+                            <div class="input-group col-md-12" id="date-range">
+                                <input type="text" placeholder="Choose Date Range" class="form-control col-md-12 modal-date-range-datepicker" name="newdaterange" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="priority-level">Priority</label>
+                            <div class="input-group col-md-12">
+                                <select class="form-control" id="priority-level" name="newpriority">
+                                    <option value=" " disabled selected hidden>Choose Priority</option>
+                                    <option value='1'> P1</option>
+                                    <option> P2</option>
+                                    <option> P3</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="percentage ">Percentage</label>
+                            <div class="input-group col-md-12">
+                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="activitylocation" value="0"/>
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gray" data-dismiss="modal">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal for Add Reflection-->
+<div class="modal fade" id="newreflectionmodal" tabindex="-1" role="dialog" aria-labelledby="newreflectionlabelmodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newreflectionlabelmodal">REFLECTION</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+            </div>
+            <form action="/newblog/addreflection" method="POST">
+                <div class="modal-body mx-2">
+                    <small class="text-muted">This pop up will show up when you press "ADD REFLECTION" or when you access the blog on <span class="font-weight-bold">Friday</span> for the first time of the week.</small>
+                    <div class="text-center">
+                        <p class="text-dark mt-4"><b>Do you feel the activities you did last week contributed to your goals?</b></p>
+                        <p class="text-dark d-inline align-super mr-2">Not contributed at all</p>
+                        <div class="rating">
+                            <input class="rating__input hidden--visually" type="radio" id="5-star" name="newreflectionrate" value="5" required>
+                            <label class="rating__label mb-0" for="5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="4-star" name="newreflectionrate" value="4">
+                            <label class="rating__label mb-0" for="4-star" title="4 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">4 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="3-star" name="newreflectionrate" value="3">
+                            <label class="rating__label mb-0" for="3-star" title="3 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">3 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="2-star" name="newreflectionrate" value="2">
+                            <label class="rating__label mb-0" for="2-star" title="2 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">2 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="1-star" name="newreflectionrate" value="1">
+                            <label class="rating__label mb-0" for="1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
+                        </div>
+                        <p class="text-dark d-inline align-super ml-2">Extremely Contributed</p>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label for="textarea1"><b>Why or why not?</b></label>
+                        <textarea class="form-control" id="textarea1" name="newreflectiontext" rows="4" required placeholder="Write the reason..."></textarea>
+                    </div>
+                    <div class="mt-3 mb-2"><small>You cannot edit your reflection after submit</small></div>
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </div>
+                <!-- <div class="modal-footer align-left">
+                </div> -->
+            </form>
+        </div>
+    </div>
+</div>
+
+{%end%}

@@ -29,7 +29,7 @@
             <div class="collapse show" id="sub-project-list">
                 <div class="nav flex-column nav-pills">
                     {% for project in projectlist%} {% if project.project_name != "Admin" %}
-                    <a class="nav-link" href="./report.html">{{ project.project_name }}</a> {% end %} {% end %}
+                    <a class="nav-link {% if menu == (3+project.project_id) %} active {% end %}" href="/newblog/{{userName}}/project?name={{project.project_name}}">{{ project.project_name }}</a> {% end %} {% end %}
                 </div>
             </div>
             <a class="nav-link {% if menu == 3 %} active {% end %}" href="/newblog/{{userName}}/leaderboard" aria-selected="false">Leaderboard</a>

@@ -8,7 +8,7 @@
 <div class="d-flex flex-row justify-content-start mt-4">
     <!--Button trigger modal for new activity-->
     <!-- <button type="button" class="mr-3 btn btn-primary btn-sm" data-toggle="modal" data-target="#newactivityadminmodal">NEW ACTIVITY</button> -->
-    <form id="form-choose-admin-month" action="/newblog/projectadmin" method="POST">
+    <form id="form-choose-admin-month" action="/newblog/{{userName}}/projectadmin" method="POST">
         <div class="input-group w-auto admin-month">
             <input type="text" name="newmonth" class="form-control" aria-describedby="basic-addon2" id="admin-month-picker" data-month="{{adminmonth}}">
             <i class="fa fa-chevron-down"></i>
@@ -24,19 +24,51 @@
                 <table class="table mt-3 report-table border-bottom">
                     <tbody>
                         {% for activity in activitylist%}
-                        <tr class="row">
-                            <td class="col-5 ml-auto">{{activity.Activity.activity_name}}</td>
-                            <td class="col-3 text-wrap">{{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}</td>
-                            <td class="col-2 flex-10 priority"><i class="fa fa-flag text-center pr-1 {% if activity.Activity.priority == 1%}text-red{% end %} {% if activity.Activity.priority == 2%}text-orange{% end %} {% if activity.Activity.priority == 3%}text-primary{% end %}"></i> P{{activity.Activity.priority}}
-                            </td>
-                            <td class="col-2 flex-12 text-center report-progress {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
-                                data-progress="{{activity.Activity.progress_percentage}}">
-                                {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} </td>
-                            <td class="col-1 mr-auto text-muted">
+                        <tr class="row editable-report">
+                            <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
+                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                    <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
+                                    <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
+                                </td>
+                                <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
+                                    <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
+                                    <span class="edit-activity-data">
+                                        {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
+                                    </span>
+                                </td>
+                                <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
+                                    <select class="form-control edit-activity-input d-none" name="newpriority">
+                                        <option value="0" disabled hidden>Priority</option>
+                                        <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
+                                        <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
+                                        <option value="3" {% if activity.Activity.priority == 3 %} selected {% end %}> P3</option>
+                                    </select>
+                                    <span class="edit-activity-data">
+                                        <i class="fa fa-flag text-center pr-1 {% if activity.Activity.priority == 1%}text-red{% end %} {% if activity.Activity.priority == 2%}text-orange{% end %} {% if activity.Activity.priority == 3%}text-primary{% end %}"></i> P{{activity.Activity.priority}}
+                                    </span>
+                                </td>
+                                <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
+                                    data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}" /></span>
+                                    <span class="edit-activity-data">
+                                        {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
+                                    </span>
+                                </td> 
+                                <td class="col-1 edit-activity-input d-none">
+                                    <input type="hidden" name="newactivityid" value="{{activity.Activity.activity_id}}"/>
+                                    <input type="hidden" name="activitylocation" value="7"/>
+                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                </td>
+                            </form>
+                            <td class="col-1 mr-auto text-muted py-2">
+                                <span class="edit-activity-data d-flex flex-row">
+                                <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
                                 <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
                                     <input type="hidden" name="deleteactivityid" value="{{activity.Activity.activity_id}}">
+                                    <input type="hidden" name="activitylocation" value="7"/>
                                     <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
                                 </form>
+                                </span>
                             </td>
                         </tr>
                         {% end %}
@@ -62,6 +94,7 @@
                                     <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" id="percentage " placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
                                 </td>
                                 <td class="col-1 mr-auto">
+                                    <input type="hidden" name="activitylocation" value="7"/>
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                                 <select class="d-none form-control select2-project-name" name="newprojectid" id="admin-project-name" disabled aria-disabled="">
