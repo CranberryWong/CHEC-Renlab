@@ -1114,6 +1114,133 @@ class LatestBlogHandler(BaseHandler):
         self.activitydata = None
         self.visitor = 0
         
-        self.render("newblog/latestblog.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, menu = self.menu, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectlist = self.user_projectlist)
+        if userName == self.signeduser: 
+            self.visitor = 0
+        else:
+            self.visitor = 1
+            self.user = self.session.query(Account).filter(Account.username == userName).first()
+            if self.session.query(~exists().where(SeenBy.user_id == self.user.user_id).where(SeenBy.weekly_report_id == self.weeklyreport.weekly_report_id).where(SeenBy.seen_by_user_id == self.currentuser.user_id)).scalar():
+                self.newseenby = SeenBy(self.weeklyreport.weekly_report_id, self.user.user_id, datetime.now(), self.currentuser.user_id)
+                self.session.add(self.newseenby)
+                self.session.commit()
+            # photo profile 
+            self.params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + userName  + '/avatar.png'}
+            self.avatarURL = s3c.generate_presigned_url('get_object', self.params)
+            self.projectgrouplist = self.session.query(ProjectGroup).order_by(ProjectGroup.project_group_name.asc()).all()
+            self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id).all()
+            self.user_level = self.session.query(func.max(XpEvents.level)).filter(self.user.exp - XpEvents.min_xp >= 0).scalar()
+            self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
+
+        self.latestusers = self.session.query(Account).filter(Account.degree > 0).all() 
+
+        self.latestusersdata = list()
+        # get activity and project for every user
+        for latestuser in self.latestusers:
+            self.allactivity = []
+            self.thisweekactivity = []
+            self.nextweekactivity = []
+            #get activities for each projects
+            if self.session.query(exists().where(Activity.weekly_report_id == self.weeklyreport.weekly_report_id).where(Activity.user_id == latestuser.user_id)).scalar():   
+                self.thisweekprojectlist = self.session.query(Project).outerjoin(Activity).filter(Activity.user_id == latestuser.user_id).filter(Activity.weekly_report_id == self.weeklyreport.weekly_report_id)
+                
+                self.nextweekprojectlist = self.session.query(Project).outerjoin(Activity).filter(Activity.user_id == latestuser.user_id).filter(Activity.weekly_report_id == self.nextweeklyreport.weekly_report_id)
+                
+                for project in self.thisweekprojectlist:
+                    self.thisweekactivity.append([project,self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == latestuser.user_id).filter(Activity.project_id == project.project_id).filter(WeeklyReport.weekly_report_id == self.weeklyreport.weekly_report_id).all()])
+                
+                for project in self.nextweekprojectlist:
+                    self.nextweekactivity.append([project,self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == latestuser.user_id).filter(Activity.project_id == project.project_id).filter(WeeklyReport.weekly_report_id == self.nextweeklyreport.weekly_report_id).all()])
+                
+                self.allactivity.append(self.thisweekactivity)
+                self.allactivity.append(self.nextweekactivity)
+
+                # get user name and photo
+                self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + latestuser.username  + '/avatar.png'}
+                self.photoURL = s3c.generate_presigned_url('get_object', self.param) 
+                self.daterange = "" + self.weeklyreport.date_range_start.strftime("%B %d") + " - " + self.weeklyreport.date_range_end.strftime("%B %d")
+                self.datainside = {"user_id": latestuser.user_id, "username": latestuser.username, "photoURL": self.photoURL, "daterange": self.daterange, "allactivity": self.allactivity}
+                self.latestusersdata.append(self.datainside)
+                print(self.latestusersdata)
+                print("1")
+                
+            else:
+
+                # date_range_start < this.weeklyreport
+                self.latestweeklyreports = self.session.query(WeeklyReport).outerjoin(Activity).filter(Activity.user_id == latestuser.user_id).filter(WeeklyReport.date_range_start < self.weeklyreport.date_range_start).distinct().order_by(WeeklyReport.date_range_start.desc()).limit(3).all()
+
+
+                # get the prev. weeklyreport id, if the prev has activity, show the prev as next week projectlist and nextweekactivity
+                if self.latestweeklyreports:
+                    if (self.latestweeklyreports[0].date_range_start - self.latestweeklyreports[1].date_range_start) <= timedelta(days=7):
+                        self.thisweekprojectlist = self.session.query(Project).outerjoin(Activity).filter(Activity.user_id == latestuser.user_id).filter(Activity.weekly_report_id == self.latestweeklyreports[1].weekly_report_id)
+                        
+                        self.nextweekprojectlist = self.session.query(Project).outerjoin(Activity).filter(Activity.user_id == latestuser.user_id).filter(Activity.weekly_report_id == self.latestweeklyreports[0].weekly_report_id)
+                        
+                        for project in self.thisweekprojectlist:
+                            self.thisweekactivity.append([project,self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == latestuser.user_id).filter(Activity.project_id == project.project_id).filter(WeeklyReport.weekly_report_id == self.latestweeklyreports[1].weekly_report_id).all()])
+                        
+                        for project in self.nextweekprojectlist:
+                            self.nextweekactivity.append([project,self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == latestuser.user_id).filter(Activity.project_id == project.project_id).filter(WeeklyReport.weekly_report_id == self.latestweeklyreports[0].weekly_report_id).all()])
+
+                        self.allactivity.append(self.thisweekactivity)
+                        self.allactivity.append(self.nextweekactivity)
+
+                        # get user name and photo
+                        self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + latestuser.username  + '/avatar.png'}
+                        self.photoURL = s3c.generate_presigned_url('get_object', self.param) 
+                        self.daterange = "" + self.latestweeklyreports[1].date_range_start.strftime("%B %d") + " - " + self.latestweeklyreports[1].date_range_end.strftime("%B %d")
+                        self.datainside = {"user_id": latestuser.user_id, "username": latestuser.username, "photoURL": self.photoURL, "daterange": self.daterange, "allactivity": self.allactivity}
+                        self.latestusersdata.append(self.datainside)
+                        print(self.latestusersdata)
+                        print("2")
+
+                    else:
+                        # if the prev does not has activity, show the current as this week and next week will be empty 
+
+                        # get next weeklyreport data
+                        self.nextweek = self.latestweeklyreports[0].date_range_start + timedelta(days=7)
+                        self.endnextweek = self.latestweeklyreports[0].date_range_start + timedelta(days=14)
+                        if self.session.query(~exists().where(WeeklyReport.date_range_start+timedelta(days=1) >= self.nextweek).where(WeeklyReport.date_range_start < self.endnextweek)).scalar():
+                            self.newweeklyreport = WeeklyReport(self.nextweek)
+                            self.session.add(self.newweeklyreport)
+                            self.session.flush()
+                        self.nextweeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) >= self.nextweek).filter(WeeklyReport.date_range_start < self.endnextweek).first()
+
+                        # get project and activities
+                        self.thisweekprojectlist = self.session.query(Project).outerjoin(Activity).filter(Activity.user_id == latestuser.user_id).filter(Activity.weekly_report_id == self.latestweeklyreports[0].weekly_report_id)
+                        
+                        self.nextweekprojectlist = self.session.query(Project).outerjoin(Activity).filter(Activity.user_id == latestuser.user_id).filter(Activity.weekly_report_id == self.nextweeklyreport.weekly_report_id)
+                        
+                        for project in self.thisweekprojectlist:
+                            self.thisweekactivity.append([project,self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == latestuser.user_id).filter(Activity.project_id == project.project_id).filter(WeeklyReport.weekly_report_id == self.latestweeklyreports[0].weekly_report_id).all()])
+                        
+                        for project in self.nextweekprojectlist:
+                            self.nextweekactivity.append([project,self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == latestuser.user_id).filter(Activity.project_id == project.project_id).filter(WeeklyReport.weekly_report_id == self.nextweeklyreport.weekly_report_id).all()])
+
+                        self.allactivity.append(self.thisweekactivity)
+                        self.allactivity.append(self.nextweekactivity)
+
+                        # get user name and photo
+                        self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + latestuser.username  + '/avatar.png'}
+                        self.photoURL = s3c.generate_presigned_url('get_object', self.param) 
+                        self.daterange = "" + self.latestweeklyreports[0].date_range_start.strftime("%B %d") + " - " + self.latestweeklyreports[0].date_range_end.strftime("%B %d")
+                        self.datainside = {"user_id": latestuser.user_id, "username": latestuser.username, "photoURL": self.photoURL, "daterange": self.daterange, "allactivity": self.allactivity}
+                        self.latestusersdata.append(self.datainside)
+                        print(self.latestusersdata)
+                        print("3")
+                else:
+                    # empty blog
+                    # get user name and photo
+                    self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + latestuser.username  + '/avatar.png'}
+                    self.photoURL = s3c.generate_presigned_url('get_object', self.param) 
+                    self.daterange = "" + self.weeklyreport.date_range_start.strftime("%B %d") + " - " + self.weeklyreport.date_range_end.strftime("%B %d")
+                    self.datainside = {"user_id": latestuser.user_id, "username": latestuser.username, "photoURL": self.photoURL, "daterange": self.daterange, "allactivity": self.allactivity}
+                    self.latestusersdata.append(self.datainside)
+                    print(self.latestusersdata)
+                    print("4")
+
+        print(self.latestusersdata)
+        print("total")
+
+        self.render("newblog/latestblog.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, menu = self.menu, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectlist = self.user_projectlist, latestuserdatas = self.latestusersdata)
         self.session.close()
-    
