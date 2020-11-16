@@ -427,7 +427,7 @@ header .text-lg-center {
     background-color: var(--bg-blue);
 }
 
-.carousel-item{
+.carousel-item-projects{
     height: 400px;
     overflow: auto;
 }

@@ -45,7 +45,7 @@
         </ol>
         <div class="carousel-inner">
           {% for i,member in enumerate(projectmembers)%}
-          <div class="carousel-item {% if i == 0 %}active{% end %}">
+          <div class="carousel-item carousel-item-projects {% if i == 0 %}active{% end %}">
             <div class="card mb-4">
                 <div class="card-header bg-transparent d-flex flex-row">
                     <img class="rounded-circle" src='{{member.get("photoURL")}}'>
