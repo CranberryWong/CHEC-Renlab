@@ -527,6 +527,7 @@ class ProjectAdminHandler(BaseHandler):
             self.adminmonth = datetime.strptime(self.date, "%Y-%m-%d %H:%M:%S.%f")
         if userName == self.signeduser: 
             self.visitor = 0
+            self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id).all()
         else:
             self.visitor = 1
             self.user = self.session.query(Account).filter(Account.username == userName).first()
@@ -1061,7 +1062,7 @@ class ViewProjectHandler(BaseHandler):
         homeBase.init(self)
         self.name = self.get_argument('name', '')
         self.title = self.name + " Project - New Blog"
-        self.menu = 4
+        self.menu = 5
         self.projectdata = None
         self.projectmembers = None
         self.projectmembersdata = list()
@@ -1070,7 +1071,7 @@ class ViewProjectHandler(BaseHandler):
         if self.name:
             self.projectdata = self.session.query(Project).filter(Project.project_name.contains(self.name)).first()
             self.projectmembers = self.session.query(Account).outerjoin(ProjectMember).outerjoin(Project).filter(ProjectMember.project_id == self.projectdata.project_id).all()
-            self.menu = 3 + self.projectdata.project_id
+            self.menu = 4 + self.projectdata.project_id
             for member in self.projectmembers:
                 self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + member.username  + '/avatar.png'}
                 self.memberphoto = s3c.generate_presigned_url('get_object', self.param)
@@ -1101,4 +1102,18 @@ class ViewProjectHandler(BaseHandler):
         self.render("newblog/projects.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist,reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectdata = self.projectdata, projectmembers = self.projectmembersdata)
         self.session.close()
         
+class LatestBlogHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self, userName):
+        homeBase.init(self)
+        self.title = "Latest CHEC Blog"
+        self.menu = 4
+        self.projectdata = None
+        self.projectmembers = None
+        self.projectmembersdata = list()
+        self.activitydata = None
+        self.visitor = 0
         
+        self.render("newblog/latestblog.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, menu = self.menu, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectlist = self.user_projectlist)
+        self.session.close()
+    
