@@ -2,6 +2,9 @@
 ---
 ### [ 2020 ]
 
+* ##### Twelve Agendas on Interacting with Information: A Human-Engaged Computing Perspective. [[PDF]](https://drive.google.com/file/d/1kHATtyYzwQFsH1_-Ad1ySbK2UfAAbzem/view?usp=sharing) | [sciendo](https://content.sciendo.com/view/journals/dim/4/3/article-p191.xml)
+Chen Wang, Xiaojun (Jenny) Yuan, Xiangshi Ren. (2020). *Data and Information Management*, 4(3): 191–199.
+
 * ##### How We Type: Eye and Finger Movement Strategies in Mobile Typing. [[PDF]](https://drive.google.com/file/d/1V0-WoeSnIF3v2Z45poWfXzT1FrWoDSc3/view?usp=sharing) | [ACM](https://dl.acm.org/doi/abs/10.1145/3313831.3376711)
 Xinhui Jiang, Yang Li, Jussi P.P. Jokinen, Viet Ba Hirvola, Antti Oulasvirta, and Xiangshi Ren.  (2020). *In Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems (CHI ’20). Association for Computing Machinery, New York, NY, USA, 1–14.*
 
