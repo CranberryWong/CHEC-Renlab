@@ -42,31 +42,23 @@ class MembersHandler(BaseHandler):
 
             "Professors": {
                 "Xiangshi Ren":{"link": "http://xiangshiren.com"},
-                "Kiyoshi Nakahara":{},
                 "Kaechang Park":{},
             },
 
             "Associate Professors": {
                 "Yukinobu Hoshino":{},
-                "Kazunori Ueda":{},
-                "Toru Kurihara":{},
             },
             
             "Visiting Researchers": {
                 "Kavous Salehzadeh Niksirat": {"link": "http://member.acm.org/~kavous"},
-                "Silpasuwanchai Chaklam": {},
+                "Huawei Tu": {},
                 "Kibum Kim": {},
+                "Sayan Sarcar": {},
+                "William Delamare": {"link": "http://member.acm.org/~william.delamare"},
             },
 
             "Assistant Professors": {
                 "Zhenxin Wang": {},
-                "Sayan Sarcar": {}, 
-                "William Delamare": {"link": "http://member.acm.org/~william.delamare"}, 
-                "Hamed Aliyari": {},
-            },
-
-            "Secretary": {
-                "Kyoko Hatakenaka": {},
             },
 
             "Ph.D. Students": {
@@ -76,16 +68,16 @@ class MembersHandler(BaseHandler):
             },
 
             "Master Students": {
-                "Fitra Rahmamuliani": {}, 
+                # "Fitra Rahmamuliani": {}, 
                 "Xiaoxuan Li": {}, 
                 "Yilin Zheng": {}, 
                 "Chunyuan Lan": {}, 
-                "Xinpeng Li": {}, 
-                "Xi Chen": {}, 
-                "Sai Jiang": {}, 
-                "Hongyun Lyu": {}, 
-                "Jian Zhang": {}, 
-                "Zhihang Guo": {}, 
+                # "Xinpeng Li": {}, 
+                # "Xi Chen": {}, 
+                # "Sai Jiang": {}, 
+                # "Hongyun Lyu": {}, 
+                # "Jian Zhang": {}, 
+                # "Zhihang Guo": {}, 
                 "Yanyin Zhou": {},
                 "Xiaofei Zhu": {},
                 "Junlin Sun": {},
@@ -113,7 +105,7 @@ class MembersHandler(BaseHandler):
                 "Kibum Kim":{"years": '2012 ~ 2014', "job": 'Associate Professor', "affiliation": 'Hanyang University, South Korea', "avatar": 1},
 
             },
-            
+
             "Ph.D. Students": {
                 "Kavous Salehzadeh Niksirat": {"years": '2015 ~ 2019', "job": 'Postdoctoral Fellow', "affiliation": 'École Polytechnique Fédérale de Lausanne EPFL, Switzerland', "avatar": 1},
                 "Qinglong Wang": {"years": '2015 ~ 2017', "job": 'Postdoc', "affiliation": 'Jilin University, China', "avatar": 1},
@@ -129,7 +121,7 @@ class MembersHandler(BaseHandler):
                 "Xinyong Zhang": {"years": '', "job": 'Associate Professor', "affiliation": 'Renmin University of China, China', "avatar": 1},
                 "Jibin Yin": {"years": '', "job": 'Associate Professor', "affiliation": 'Kunming University of Sci. and Tech., China', "avatar": 1},
                 "Jing Kong": {"years": '', "job": 'Research fellow', "affiliation": 'Nagoya University, Japan', "avatar": 0},
-                
+
             },
 
             "Master Students": {
@@ -152,8 +144,10 @@ class MembersHandler(BaseHandler):
                 "Toshiaki Shiraki": {"years": '2014 ~ 2016', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Fang Qi": {"years": '2015 ~ 2017', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Zengyi Han": {"years": '2017 ~ 2018', "job": '', "affiliation": 'Kochi University of Technology & Jilin University', "avatar": 2},
-                "Jingxin Liu": {"years": '2017 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2}, 
-                "Ayumu Ono": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2}, 
+                "Jingxin Liu": {"years": '2017 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
+                "Ayumu Ono": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
+                "Fitra Rahmamuliani": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
+                "Xiaoxuan Li": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
             }
         }
 
