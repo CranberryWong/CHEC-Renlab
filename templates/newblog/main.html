@@ -18,7 +18,8 @@
             </div>
         </button>
         <div class="mt-5 nav flex-column nav-pills nav-left-blog">
-            <a class="nav-link {% if menu == 1 %} active {% end %}" href="/newblog/{{userName}}" aria-selected="true">Weekly Report</a>
+            <a class="nav-link {% if menu == 1 %} active {% end %}" href="/newblog/{{userName}}" aria-selected="true">Weekly Report</a> 
+            <a class="nav-link {% if menu == 4 %} active {% end %}" href="/newblog/{{userName}}/latestblog" aria-selected="true">CHEC Latest Blogs</a>
             <a class="nav-link {% if menu == 2 %} active {% end %}" href="/newblog/{{userName}}/projectadmin" aria-selected="false">Admin</a>
             <div class="d-flex">
                 <a class="nav-link" href="#sub-project-list" data-toggle="collapse">Projects</a>
@@ -29,7 +30,7 @@
             <div class="collapse show" id="sub-project-list">
                 <div class="nav flex-column nav-pills">
                     {% for project in projectlist%} {% if project.project_name != "Admin" %}
-                    <a class="nav-link" href="./report.html">{{ project.project_name }}</a> {% end %} {% end %}
+                    <a class="nav-link {% if menu == (4 + project.project_id) %} active {% end %}" href="/newblog/{{userName}}/project?name={{project.project_name}}">{{ project.project_name }}</a> {% end %} {% end %}
                 </div>
             </div>
             <a class="nav-link {% if menu == 3 %} active {% end %}" href="/newblog/{{userName}}/leaderboard" aria-selected="false">Leaderboard</a>

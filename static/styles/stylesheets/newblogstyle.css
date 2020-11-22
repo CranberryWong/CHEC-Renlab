@@ -1,5 +1,6 @@
 :root {
     --text-yellow: #ffe234;
+    --bg-blue: #007BFF;
 }
 
 .btn-gray {
@@ -139,7 +140,7 @@
 }
 
 .bg-blue-transparent {
-    background: rgba(0,123,255,0.1);
+    background-color: rgba(0,123,255,0.1);
 }
 
 .bg-green {
@@ -158,6 +159,14 @@
     background: #707070;
 }
 
+.notification-row{
+    cursor: pointer;
+}
+
+.notification-row:hover{
+    background: rgba(0,123,255,0.1);
+}
+
 .flex-5 {
     flex: 0 0 5%;
 }
@@ -171,22 +180,29 @@
 }
 
 .seen-by-photo {
-    width: 3em;
-    height: 3em;
+    width: 2.5em;
+    height: 2.5em;
     object-fit: cover;
 }
 
+.seen-by h5 {
+    font-size: 1.05em;
+}
+
+
 .comment-photo {
-    width: 4em;
-    height: 4em;
+    width: 3em;
+    height: 3em;
     object-fit: cover;
 }
 
 .like-count {
     font-size: small;
     z-index: 1000;
-    margin-top: -1em;
     cursor: pointer;
+    height: max-content;
+    margin-left: -1.5em;
+    margin-bottom: 0;
 }
 
 span.glyphicon.glyphicon-chevron-left::before {
@@ -287,6 +303,17 @@ header .text-lg-center {
 
 .notification-icon {
     cursor: pointer;
+    position: relative;
+}
+
+.notification-icon .badge{
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
 }
 
 .member-project-list img {
@@ -313,6 +340,10 @@ header .text-lg-center {
 .rating {
     display: inline-flex;
     flex-direction: row-reverse;
+}
+
+.rating-comment .rating__label{
+    font-size: 0.8em !important;
 }
 
 .hidden--visually {
@@ -368,4 +399,35 @@ header .text-lg-center {
     width: 3em;
     height: 3em;
     object-fit: cover;
+}
+
+.carousel-control-prev{
+    width: max-content;
+}
+
+.carousel-control-next{
+    width: max-content;
+}
+
+.carousel-control-prev-icon{
+    /* margin-left: -160px;  */
+    /* width: auto; */
+}
+
+.carousel-control-next-icon{
+    /* margin-right: -150px;  */
+    /* width: auto; */
+}
+
+.carousel-indicators{
+    margin-bottom: -4%;
+}
+
+.carousel-indicators li{
+    background-color: var(--bg-blue);
+}
+
+.carousel-item-projects{
+    height: 400px;
+    overflow: auto;
 }
