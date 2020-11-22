@@ -17,7 +17,7 @@ Base = declarative_base()
 class Account(Base):
     __tablename__ = 'account'
     
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, nullable=False)
     password = Column(String, nullable=False)
     email = Column(String)
@@ -55,7 +55,7 @@ class Account(Base):
 class XpEvents(Base):
     __tablename__ = 'xp_events'
     
-    xp_events_id = Column(Integer, primary_key=True)
+    xp_events_id = Column(Integer, primary_key=True, autoincrement=True)
     level = Column(Integer,nullable=False)
     min_xp = Column(Integer)
     
@@ -65,7 +65,7 @@ class XpEvents(Base):
 class ProjectGroup(Base):
     __tablename__ = 'project_group'
     
-    project_group_id = Column(Integer, primary_key=True)
+    project_group_id = Column(Integer, primary_key=True, autoincrement=True)
     project_group_name = Column(Text, nullable=False)
     
     def __init__(self, project_group_name):
@@ -77,7 +77,7 @@ class ProjectGroup(Base):
 class Project(Base):
     __tablename__ = 'project'
     
-    project_id = Column(Integer, primary_key=True)
+    project_id = Column(Integer, primary_key=True, autoincrement=True)
     project_name = Column(String, nullable=False)
     created_on = Column(DateTime, nullable=False)
     project_group_id = Column(Integer,ForeignKey('project_group.project_group_id'))
@@ -95,7 +95,7 @@ class Project(Base):
 class ProjectMember(Base):
     __tablename__ = 'project_member'
     
-    project_member_id = Column(Integer, primary_key=True)
+    project_member_id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('account.user_id'))
     project_id = Column(Integer, ForeignKey('project.project_id'))
     
@@ -112,7 +112,7 @@ class ProjectMember(Base):
 class WeeklyReport(Base):
     __tablename__ = 'weekly_report'
     
-    weekly_report_id = Column(Integer, primary_key=True)
+    weekly_report_id = Column(Integer, primary_key=True, autoincrement=True)
     date_range_start = Column(DateTime, nullable=False)
     date_range_end = Column(DateTime, nullable=False)
     
@@ -126,7 +126,7 @@ class WeeklyReport(Base):
 class Reflection(Base):
     __tablename__ = 'reflection'
     
-    reflection_id = Column(Integer, primary_key=True)
+    reflection_id = Column(Integer, primary_key=True, autoincrement=True)
     reflection_rate = Column(Integer, nullable=False)
     reflection_text = Column(Text, nullable=False)
     created_on = Column(DateTime, nullable=False)
@@ -149,7 +149,7 @@ class Reflection(Base):
 class Activity(Base):
     __tablename__ = 'activity'
     
-    activity_id = Column(Integer, primary_key=True)
+    activity_id = Column(Integer, primary_key=True, autoincrement=True)
     activity_name = Column(Text, nullable=False)
     priority = Column(Integer)
     progress_percentage = Column(Integer)
@@ -179,7 +179,7 @@ class Activity(Base):
 class SeenBy(Base):
     __tablename__ = "seen_by"
     
-    seen_by_id = Column(Integer, primary_key = True)
+    seen_by_id = Column(Integer, primary_key = True, autoincrement=True)
     weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
     user_id = Column(Integer)
     date_seen = Column(DateTime)
@@ -200,7 +200,7 @@ class SeenBy(Base):
 class Comment(Base):
     __tablename__ = "comment"
     
-    comment_id = Column(Integer, primary_key = True)
+    comment_id = Column(Integer, primary_key = True, autoincrement=True)
     comment_text = Column(Text, nullable = False)
     user_id = Column(Integer)
     commented_by = Column(Integer, ForeignKey('account.user_id'))
@@ -227,7 +227,7 @@ class Comment(Base):
 class Like(Base):
     __tablename__ = "like"
     
-    like_id = Column(Integer, primary_key = True)
+    like_id = Column(Integer, primary_key = True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('account.user_id'))
     weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
     comment_id = Column(Integer, ForeignKey('comment.comment_id'))
@@ -249,7 +249,7 @@ class Like(Base):
 class Reply(Base):
     __tablename__ = "reply"
     
-    reply_id = Column(Integer, primary_key = True)
+    reply_id = Column(Integer, primary_key = True, autoincrement=True)
     reply_text = Column(Text, nullable = False)
     parent_comment_id = Column(Integer, ForeignKey('comment.comment_id'))
     user_id = Column(Integer, ForeignKey('account.user_id'))
@@ -272,7 +272,7 @@ class Reply(Base):
 class ReplyLike(Base):
     __tablename__ = "like_reply"
     
-    like_reply_id = Column(Integer, primary_key = True)
+    like_reply_id = Column(Integer, primary_key = True, autoincrement=True)
     reply_id = Column(Integer, ForeignKey('reply.reply_id'))
     weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
     user_id = Column(Integer, ForeignKey('account.user_id'))
@@ -294,7 +294,7 @@ class ReplyLike(Base):
 class Notification(Base):
     __tablename__ = "notification"
     
-    notification_id = Column(Integer, primary_key = True)
+    notification_id = Column(Integer, primary_key = True, autoincrement=True)
     recipient_id = Column(Integer, nullable = False)
     sender_id = Column(Integer, ForeignKey('account.user_id'))
     link_weekly_report_id = Column(Integer, ForeignKey('weekly_report.weekly_report_id'))
