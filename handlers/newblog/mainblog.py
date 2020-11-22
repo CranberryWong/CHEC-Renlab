@@ -1131,7 +1131,7 @@ class LatestBlogHandler(BaseHandler):
             self.user_level = self.session.query(func.max(XpEvents.level)).filter(self.user.exp - XpEvents.min_xp >= 0).scalar()
             self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
 
-        self.latestusers = self.session.query(Account).filter(Account.degree > 0).all() 
+        self.latestusers = self.session.query(Account).outerjoin(Activity).filter(Account.degree > 0).order_by(Activity.last_modify.asc()).all() 
 
         self.latestusersdata = list()
         # get activity and project for every user
