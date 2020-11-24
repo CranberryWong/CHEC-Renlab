@@ -17,7 +17,8 @@ handlers = [
             (r"/projects", documents.ProjectsHandler),
             (r"/projects/(.*)", documents.ProjectShowHandler),
             (r"/publication", documents.PubHandler),
-            (r"/curriculum", documents.CurriculumHandler),            
+            (r"/curriculum", documents.CurriculumHandler),
+            (r"/pastcurriculum", documents.pastcurriculumHandler),
             (r"/resource", documents.ResourceHandler),
 
             # Auth
@@ -80,7 +81,7 @@ handlers = [
             (r"/newblog/(?P<userName>[\w.%]+)(?:/projectadmin)?/?$", mainblog.ProjectAdminHandler),
             (r"/newblog/(?P<userName>[\w.%]+)(?:/latestblog)?/?$", mainblog.LatestBlogHandler),
             (r"/newblog/(?P<userName>[\w.%]+)(?:/leaderboard)?/?$", mainblog.LeaderboardHandler),
-            
+
             # i18n
             (r"/language?", base.I18nHandler),
 
