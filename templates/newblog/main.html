@@ -11,11 +11,12 @@
         <button type="button" class="btn level mt-3 w-100" data-toggle="modal" data-target="#fqaModal">
             <div class="d-flex flex-row">
                 <small>Level {{userlevel}}</small>
-                <small class="ml-auto">{{user.exp}}/{{ maxexp }} exp</small>
+                <small class="ml-auto">{{user.exp - minexp}}/{{ maxexp - minexp }} exp</small>
             </div>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{user.exp / maxexp * 100}}%" aria-valuenow="{{user.exp}}" aria-valuemin="0" aria-valuemax="{{ maxexp }}"></div>
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ (user.exp - minexp ) / ( maxexp - minexp ) * 100}}%" aria-valuenow="{{user.exp - minexp}}" aria-valuemin="0" aria-valuemax="{{ maxexp - minexp }}"></div>
             </div>
+            <small>Total: {{user.exp}} exp</small>
         </button>
         <div class="mt-5 nav flex-column nav-pills nav-left-blog">
             <a class="nav-link {% if menu == 1 %} active {% end %}" href="/newblog/{{userName}}" aria-selected="true">Weekly Report</a> 
