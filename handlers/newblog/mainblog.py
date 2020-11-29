@@ -49,14 +49,14 @@ class homeBase(BaseHandler):
         if self.session.query(~exists().where(WeeklyReport.date_range_start+timedelta(days=1) >= self.day_of_the_week).where(WeeklyReport.date_range_start < self.start_following_week)).scalar():
             self.newweeklyreport = WeeklyReport(self.day_of_the_week)
             self.session.add(self.newweeklyreport)
-            self.session.commit()
+            self.session.flush()
         self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) >= self.day_of_the_week).filter(WeeklyReport.date_range_start < self.start_following_week).first()
         
         end_following_week = self.start_following_week + timedelta(days=14)
         if self.session.query(~exists().where(WeeklyReport.date_range_start+timedelta(days=1) >= self.start_following_week).where(WeeklyReport.date_range_start < end_following_week)).scalar():
             self.newweeklyreport = WeeklyReport(self.start_following_week)
             self.session.add(self.newweeklyreport)
-            self.session.commit()
+            self.session.flush()
         self.nextweeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) >= self.start_following_week).filter(WeeklyReport.date_range_start < end_following_week).first()
         
         self.user = self.session.query(Account).filter(Account.username == self.signeduser).first()
@@ -96,7 +96,7 @@ class MainHandler(BaseHandler):
             if self.session.query(~exists().where(WeeklyReport.date_range_start+timedelta(days=1) >= self.date_start).where(WeeklyReport.date_range_start < self.date_end)).scalar():
                 self.newweeklyreport = WeeklyReport(self.date_start)
                 self.session.add(self.newweeklyreport)
-                self.session.commit()
+                self.session.flush()
                 
             self.weeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) >= self.date_start).filter(WeeklyReport.date_range_start < self.date_end).first()
             shareweeklyreport = self.weeklyreport
@@ -104,7 +104,7 @@ class MainHandler(BaseHandler):
             if self.session.query(~exists().where(WeeklyReport.date_range_start+timedelta(days=1) >= self.date_end).where(WeeklyReport.date_range_start < (self.date_end + timedelta(days = 7)))).scalar():
                 self.newweeklyreport = WeeklyReport(self.date_end)
                 self.session.add(self.newweeklyreport)
-                self.session.commit()
+                self.session.flush()
                 
             self.nextweeklyreport = self.session.query(WeeklyReport).filter(WeeklyReport.date_range_start+timedelta(days=1) >= self.date_end).filter(WeeklyReport.date_range_start < (self.date_end + timedelta(days = 7))).first()
             self.dateprev =  self.date_start - timedelta(days=7)
@@ -126,7 +126,7 @@ class MainHandler(BaseHandler):
             if self.session.query(~exists().where(SeenBy.user_id == self.user.user_id).where(SeenBy.weekly_report_id == self.weeklyreport.weekly_report_id).where(SeenBy.seen_by_user_id == self.currentuser.user_id)).scalar():
                 self.newseenby = SeenBy(self.weeklyreport.weekly_report_id, self.user.user_id, datetime.now(), self.currentuser.user_id)
                 self.session.add(self.newseenby)
-                self.session.commit()
+                self.session.flush()
             # photo profile 
             self.params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + userName  + '/avatar.png'}
             self.avatarURL = s3c.generate_presigned_url('get_object', self.params)
@@ -199,6 +199,7 @@ class MainHandler(BaseHandler):
         
         self.allactivity.append(self.thisweekactivity)
         self.allactivity.append(self.nextweekactivity)
+        self.session.commit()
         
         self.render("newblog/report.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, allactivity = self.allactivity, dateprev= self.dateprev, datenext = self.datenext, daterange = self.daterange, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, comments = self.comments, commentsAvatarURL = self.commentsAvatarURL, commentsname = self.commentsname, currentuser= self.currentuser, weeklyreportid = self.weeklyreport.weekly_report_id, currentuseravatarURL = self.currentuseravatarURL, notifications = self.notifications, seenbydatafull = self.seenbydata )
         self.session.close()
@@ -587,7 +588,7 @@ class LeaderboardHandler(BaseHandler):
             self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
         
         self.leaderboards = list()
-        self.leaderboard = self.session.query(Account.user_id, Account.username, Account.exp).order_by(Account.exp.desc()).all()
+        self.leaderboard = self.session.query(Account.user_id, Account.username, Account.exp).filter(Account.degree > 0).order_by(Account.exp.desc()).all()
         for idx,board in enumerate(self.leaderboard):
             self.level = self.session.query(func.max(XpEvents.level)).filter(board.exp - XpEvents.min_xp >= 0).scalar()
             self.params = {'Bucket': BUCKET_NAME, 'Key': 'members/' + board.username + '/avatar.png'}
