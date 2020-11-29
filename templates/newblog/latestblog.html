@@ -22,10 +22,10 @@
 <div class="carousel-item {% if i == 0 %}active{% end %}">
 <div class="d-flex flex-row align-content-center my-5">
     <span class="p-2">
-        <img class="rounded-circle photo-leaderboard" src='{{latestuserdata.get("photoURL")}}' alt='Avatar {{latestuserdata.get("username")}}'>
+        <a href="/newblog/{{latestuserdata.get("username")}}"><img class="rounded-circle photo-leaderboard" src='{{latestuserdata.get("photoURL")}}' alt='Avatar {{latestuserdata.get("username")}}'></a>
     </span>
     <span class="p-2 align-self-center">
-        <h4 class="mb-0">{{latestuserdata.get("username")}} |</h4>
+        <h4 class="mb-0"><a class="text-decoration-none text-body" href="/newblog/{{latestuserdata.get("username")}}">{{latestuserdata.get("username")}} |</a></h4>
     </span>
     <span class="p-2 align-self-center">
         <h4 class="blog-title d-flex align-items-center mb-0">
