@@ -20,6 +20,16 @@ $(document).ready(function() {
         }
     })
 
+    // show pop up add reflection on friday
+    var todayday = new Date().getDay()
+    //if friday
+    if(todayday == 5){
+        if($(".add-reflection-btn").length !=0 && $("#newreflectionmodal").length != 0){
+            //show popup reflection
+            $('#newreflectionmodal').modal('show');
+        }
+    }
+
     //Choose project select2 function
     $(".select2-project-name").select2({
         placeholder: "Choose Project",
