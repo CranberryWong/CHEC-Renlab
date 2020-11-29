@@ -73,7 +73,7 @@
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
                                     data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
-                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}" /></span>
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}" /></span>
                                     <span class="edit-activity-data">
                                         {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
                                     </span>
@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress">
-                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage"></span>
                                 </td>
                                 <td class="col-1 mr-auto">
                                     <input type="hidden" name="activitylocation" value="0"/>
@@ -171,7 +171,7 @@
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
                                     data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
-                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}"></span>
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}"></span>
                                     <span class="edit-activity-data">
                                         {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
                                     </span>
@@ -212,7 +212,7 @@
                                     </select>
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress">
-                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage"></span>
                                 </td>
                                 <td class="col-1 mr-auto">
                                     <input type="hidden" name="activitylocation" value="0"/>
@@ -531,7 +531,7 @@
                         <div class="col-md-12">
                             <label for="percentage ">Percentage</label>
                             <div class="input-group col-md-12">
-                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage"></span>
                             </div>
                         </div>
                     </div>
