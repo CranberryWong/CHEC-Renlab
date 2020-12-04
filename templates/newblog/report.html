@@ -45,7 +45,7 @@
         <div class="project-section mb-3">
             <h6 class="project-name mt-3 {% if eachactivity[0].project_name=='Admin' %}text-project-admin{%else%}text-project-{{eachactivity[0].project_id % 10}}{%end%}">{{eachactivity[0].project_name}}</h6>
             <div class="d-flex flex-column">
-                <table class="table report-table">
+                <table class="table report-table border-bottom">
                     <tbody>
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
