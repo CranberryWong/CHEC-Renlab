@@ -1275,5 +1275,10 @@ class LatestBlogHandler(BaseHandler):
                     self.datainside = {"user_id": latestuser.user_id, "username": latestuser.username, "photoURL": self.photoURL, "daterange": self.daterange, "allactivity": self.allactivity}
                     self.latestusersdata.append(self.datainside)
 
-        self.render("newblog/latestblog.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, menu = self.menu, userlevel = self.user_level, minexp = self.minexp, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectlist = self.user_projectlist, latestuserdatas = self.latestusersdata)
+        # Meeting agenda
+        self.dirDoc = os.path.dirname("documents/publication.md")
+        s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key=self.dirDoc+'/agenda.md')
+        self.meetingagenda = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
+        
+        self.render("newblog/latestblog.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, menu = self.menu, userlevel = self.user_level, minexp = self.minexp, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectlist = self.user_projectlist, latestuserdatas = self.latestusersdata, meetingagenda = self.meetingagenda)
         self.session.close()
