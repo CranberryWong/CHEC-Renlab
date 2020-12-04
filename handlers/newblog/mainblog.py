@@ -521,7 +521,7 @@ class ProjectAdminHandler(BaseHandler):
         self.title = "Project Admin - New Blog"
         self.menu = 2
         self.date = self.get_argument('date', None)
-        self.user_projectlist = self.session.query(Project.project_name).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
+        self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
         self.adminmonth = datetime.today()
         if self.date is None:
             self.activitylist = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == self.user.user_id).filter(Activity.project_id == 7).filter(extract('month',WeeklyReport.date_range_start)==datetime.today().month).order_by(WeeklyReport.date_range_start.desc()).all()
@@ -551,6 +551,8 @@ class ProjectAdminHandler(BaseHandler):
         self.menu = 2
         newmonth = datetime.strptime(self.get_argument('newmonth', default=datetime.today().month), '%B %Y')
         
+        self.user_projectlist = self.session.query(Project).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
+        
         if userName == self.signeduser: 
             self.visitor = 0
         else:
@@ -565,7 +567,6 @@ class ProjectAdminHandler(BaseHandler):
             self.minexp = self.session.query(XpEvents.min_xp).filter(self.user_level == XpEvents.level).scalar()
             self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
         
-        self.user_projectlist = self.session.query(Project.project_name).outerjoin(ProjectMember).outerjoin(Account).filter(ProjectMember.user_id == self.user.user_id)
         self.activitylist = self.session.query(Activity, WeeklyReport).outerjoin(WeeklyReport).filter(Activity.user_id == self.user.user_id).filter(Activity.project_id == 7).filter(extract('month',WeeklyReport.date_range_start)==newmonth.month).all()
         self.render("newblog/project_admin.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, projectlist = self.user_projectlist, menu = self.menu, activitylist = self.activitylist, adminmonth = newmonth, userlevel = self.user_level, minexp = self.minexp, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications)
         self.session.close()
