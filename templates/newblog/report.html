@@ -84,8 +84,8 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
-                            {% if visitor == 0%}
                             <td class="col-1 mr-auto text-muted py-2">
+                                {% if visitor == 0%}
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
                                 <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
@@ -94,10 +94,11 @@
                                     <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                                 </span>
+                                {% end %}
                             </td>
-                            {% end %}
                         </tr>
                         {% end %}
+                        {% if visitor == 0%}
                         <form action="/newblog/addactivity" method="POST">
                             <tr class="row">
                                 <td class="col-5 ml-auto">
@@ -124,6 +125,7 @@
                                 <input type="hidden" name="newprojectid" value="{{eachactivity[0].project_id}}">
                             </tr>
                         </form>
+                        {% end %}
                         <!-- Add activity row -->
                         {% if visitor == 0%}
                         <tr class="addbutton">
@@ -186,8 +188,8 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
-                            {% if visitor == 0%}
                             <td class="col-1 mr-auto text-muted py-2">
+                                {% if visitor == 0%}
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
                                 <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
@@ -196,10 +198,11 @@
                                     <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                                 </span>
+                                {% end %}
                             </td>
-                            {% end %}
                         </tr>
                         {% end %}
+                        {% if visitor == 0%}
                         <!-- Add activity row -->
                         <form action="/newblog/addactivity" method="POST">
                             <tr class="row">
@@ -227,6 +230,7 @@
                                 <input type="hidden" name="newprojectid" value="{{eachactivity[0].project_id}}">
                             </tr>
                         </form><!-- Add activity row -->
+                        {% end %}
                         {% if visitor == 0%}
                         <tr class="addbutton">
                             <td class="py-1">
