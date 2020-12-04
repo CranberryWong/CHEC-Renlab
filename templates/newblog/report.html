@@ -84,6 +84,7 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
+                            {% if visitor == 0%}
                             <td class="col-1 mr-auto text-muted py-2">
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
@@ -94,6 +95,7 @@
                                 </form>
                                 </span>
                             </td>
+                            {% end %}
                         </tr>
                         {% end %}
                         <form action="/newblog/addactivity" method="POST">
@@ -123,6 +125,7 @@
                             </tr>
                         </form>
                         <!-- Add activity row -->
+                        {% if visitor == 0%}
                         <tr class="addbutton">
                             <td class="py-1">
                                 <button class="btn rounded-circle text-muted p-0">
@@ -130,6 +133,7 @@
                                 </button>
                             </td>
                         </tr>
+                        {% end %}
                     </tbody>
                 </table>
             </div>
@@ -182,6 +186,7 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
+                            {% if visitor == 0%}
                             <td class="col-1 mr-auto text-muted py-2">
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
@@ -192,6 +197,7 @@
                                 </form>
                                 </span>
                             </td>
+                            {% end %}
                         </tr>
                         {% end %}
                         <!-- Add activity row -->
@@ -221,6 +227,7 @@
                                 <input type="hidden" name="newprojectid" value="{{eachactivity[0].project_id}}">
                             </tr>
                         </form><!-- Add activity row -->
+                        {% if visitor == 0%}
                         <tr class="addbutton">
                             <td class="py-1">
                                 <button class="btn rounded-circle text-muted p-0">
@@ -228,6 +235,7 @@
                                 </button>
                             </td>
                         </tr>
+                        {% end %}
                     </tbody>
                 </table>
             </div>
