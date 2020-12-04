@@ -50,7 +50,7 @@
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="{% if visitor==1 %}col-5{% else %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="{% if visitor=='1' %}col-5{% else %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
@@ -154,7 +154,7 @@
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="{% if visitor == 1 %}col-5{%else%}col-6{%end%} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="{% if visitor == '1' %}col-5{%else%}col-6{%end%} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data">{{activity.Activity.activity_name}}</span>
                                 </td>
