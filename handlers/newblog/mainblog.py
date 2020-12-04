@@ -1122,6 +1122,9 @@ class LatestBlogHandler(BaseHandler):
         self.activitydata = None
         self.visitor = 0
         
+        self.currentuser = self.user
+        self.currentuseravatarURL = self.avatarURL
+        
         if userName == self.signeduser: 
             self.visitor = 0
         else:
@@ -1177,7 +1180,7 @@ class LatestBlogHandler(BaseHandler):
 
                 # get the prev. weeklyreport id, if the prev has activity, show the prev as next week projectlist and nextweekactivity
                 if self.latestweeklyreports:
-                    if len(self.latestweeklyreports) > 1:
+                    if len(self.latestweeklyreports) >=2 :
                         if (self.latestweeklyreports[0].date_range_start - self.latestweeklyreports[1].date_range_start) <= timedelta(days=7):
                             self.thisweekprojectlist = self.session.query(Project).outerjoin(Activity).filter(Activity.user_id == latestuser.user_id).filter(Activity.weekly_report_id == self.latestweeklyreports[1].weekly_report_id)
                             
@@ -1200,8 +1203,6 @@ class LatestBlogHandler(BaseHandler):
                             self.latestusersdata.append(self.datainside)
 
                         else:
-                            print(self.latestweeklyreports)
-                            print("---")
                             # if the prev does not has activity, show the current as this week and next week will be empty 
 
                             # get next weeklyreport data
@@ -1234,8 +1235,6 @@ class LatestBlogHandler(BaseHandler):
                             self.datainside = {"user_id": latestuser.user_id, "username": latestuser.username, "photoURL": self.photoURL, "daterange": self.daterange, "allactivity": self.allactivity}
                             self.latestusersdata.append(self.datainside)
                     else:
-                        print(self.latestweeklyreports)
-                        print("---")
                         # if the prev does not has activity, show the current as this week and next week will be empty 
 
                         # get next weeklyreport data
