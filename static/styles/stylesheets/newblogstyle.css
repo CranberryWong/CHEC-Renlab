@@ -439,3 +439,10 @@ header .text-lg-center {
 .comment-content, .commentator, .comment-content-stars-text i, .reply-comment-content{
     font-size: 0.8rem;
 }
+
+.back-to-top {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;
+}
