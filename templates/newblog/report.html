@@ -50,7 +50,7 @@
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="{% if visitor == 1 %} col-5 {% else %} col-6 {% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
@@ -84,8 +84,8 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
+                            {% if visitor == 0%}
                             <td class="col-1 mr-auto text-muted py-2">
-                                {% if visitor == 0%}
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
                                 <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
@@ -94,8 +94,8 @@
                                     <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                                 </span>
-                                {% end %}
                             </td>
+                            {% end %}
                         </tr>
                         {% end %}
                         {% if visitor == 0%}
@@ -154,7 +154,7 @@
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="{% if visitor == 1 %} col-5 {% else %} col-6 {% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data">{{activity.Activity.activity_name}}</span>
                                 </td>
@@ -188,8 +188,8 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
+                            {% if visitor == 0%}
                             <td class="col-1 mr-auto text-muted py-2">
-                                {% if visitor == 0%}
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
                                 <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
@@ -198,8 +198,8 @@
                                     <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                                 </span>
-                                {% end %}
                             </td>
+                            {% end %}
                         </tr>
                         {% end %}
                         {% if visitor == 0%}
