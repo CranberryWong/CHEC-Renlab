@@ -26,7 +26,7 @@
                         {% for activity in activitylist%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="{% if visitor==0 %}col-5{% elif visitor == 1  %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
@@ -60,6 +60,7 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
+                            {% if visitor == 0 %}
                             <td class="col-1 mr-auto text-muted py-2">
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
@@ -70,6 +71,7 @@
                                 </form>
                                 </span>
                             </td>
+                            {% end %}
                         </tr>
                         {% end %}
                         {%if visitor == 0%}
