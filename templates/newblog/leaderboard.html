@@ -5,7 +5,7 @@
 <div class="mt-5">
     <button class="btn topboard text-primary py-3" style="display: none;">Show the top</button>
     {% for idx,lboard in enumerate(leaderboard)%}
-    <div class="row border-top border-bottom pt-3 pb-3 {% if lboard[1].user_id == user.user_id%}bg-blue-transparent{% end %} {% if idx < (userrank-3)%}leaderboardtop{%end%} {% if idx > (userrank+3)%} leaderboardbottom {% end %}" style="{% if idx < (userrank-3) or idx > (userrank+3) %}display: none{% end %}">
+    <div class="row border-top border-bottom pt-2 pb-2 {% if lboard[1].user_id == user.user_id%}bg-blue-transparent{% end %} {% if idx < (userrank-3)%}leaderboardtop{%end%} {% if idx > (userrank+3)%} leaderboardbottom {% end %}" style="{% if idx < (userrank-3) or idx > (userrank+3) %}display: none{% end %}">
         <p class="col-md-1 flex-5">{{idx+1}}</p>
         <div class="col-md-6 align-self-center">
             <a href="/newblog/{{lboard[1].username}}" class="text-decoration-none leaderboard-name">
