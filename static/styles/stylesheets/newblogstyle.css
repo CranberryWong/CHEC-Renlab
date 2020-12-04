@@ -436,6 +436,6 @@ header .text-lg-center {
     overflow: auto;
 }
 
-.comment-content, .commentator, .comment-content-stars-text i{
+.comment-content, .commentator, .comment-content-stars-text i, .reply-comment-content{
     font-size: 0.8rem;
 }

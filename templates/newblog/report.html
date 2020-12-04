@@ -286,7 +286,7 @@
                         </form>
                     </div>
                     {% end %}
-                    <div class="d-flex flex-row mx-2 col-md-12 col-sm-12">
+                    <div class="d-flex flex-row mr-2 col-md-12 col-sm-12 px-0">
                         {% if comment.get("liked_by_user") == 1%}
                             <form action="/newblog/deletelike" method="GET" class='delete-like-form-{{comment.get("comment_id")}}'>
                                 <input type="hidden" name="deletelikeid" value='{{comment.get("like_data").like_id}}'/>
@@ -312,13 +312,13 @@
                     <div class="media-body row"> 
                         <div class="comment-section col-md-auto"> 
                             <div class="d-flex flex-row">
-                                <div class="rounded shadow-sm pl-3 py-3 pr-5 col-md-auto"> 
+                                <div class="rounded shadow-sm pl-2 py-1 pr-4 col-md-auto"> 
                                     <a class="text-decoration-none text-body" href='/newblog/{{comment.get("replies_name")[reply.reply_id]}}'>
                                         <b class="commentator">{{comment.get("replies_name")[reply.reply_id]}}</b>
                                     </a>
                                     <p class="reply-comment-content mb-0 mt-1">{{reply.reply_text}}</p> 
                                 </div> 
-                                <div class="like-count rounded col-md-auto align-self-end float-right bg-darkgray text-white py-1 px-2"> 
+                                <div class="like-count rounded col-md-auto align-self-end float-right bg-darkgray text-white py-1 px-1"> 
                                     <i class="fa fa-thumbs-up mr-2"></i>
                                     <span class="number" data-id='{{comment.get("comment_id")}}-{{reply.reply_id}}' data-like-number="{{reply.like_count}}" data-has-like="{{reply.like_count}}">{{reply.like_count}}</span> 
                                 </div> 
@@ -334,7 +334,7 @@
                                 </div>
                                 {% end %}
                             </div>
-                            <div class="d-flex flex-row mx-2 col-md-12"> 
+                            <div class="d-flex flex-row mr-2 col-md-12 col-sm-12 px-0"> 
                                 {% if comment.get("reply_liked_by").get(reply.reply_id) == 1 %}
                                 <form action="/newblog/deletelikereply" method="GET" class='delete-like-form-{{comment.get("comment_id")}}-{{reply.reply_id}}'>
                                     <input type="hidden" name="deletereplylikeid" value='{{comment.get("reply_like_data").get(reply.reply_id).like_reply_id}}'/>
