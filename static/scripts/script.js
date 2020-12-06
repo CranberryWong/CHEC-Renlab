@@ -20,16 +20,6 @@ $(document).ready(function() {
         }
     })
 
-    // show pop up add reflection on friday
-    var todayday = new Date().getDay()
-    //if friday
-    if(todayday == 5){
-        if($(".add-reflection-btn").length !=0 && $("#newreflectionmodal").length != 0){
-            //show popup reflection
-            $('#newreflectionmodal').modal('show');
-        }
-    }
-
     //Choose project select2 function
     $(".select2-project-name").select2({
         placeholder: "Choose Project",
@@ -292,31 +282,6 @@ $(document).ready(function() {
     });
 
     var memberList = [
-        { id: 14, text: "Xinhui Jiang" },
-        { id: 15, text: "Yang Li" },
-        { id: 16, text: "Chen Wang" },
-        { id: 19, text: "Yilin Zheng" },
-        { id: 20, text: "Chunyuan Lan" },
-        { id: 28, text: "Xiaofei Zhu" },
-        { id: 29, text: "Junlin Sun" },
-        { id: 21, text: "Xinpeng Li" },
-        { id: 22, text: "Xi Chen" },
-        { id: 23, text: "Sai Jiang" },
-        { id: 24, text: "Hongyun Lyu" },
-        { id: 25, text: "Jian Zhang" },
-        { id: 26, text: "Zhihang Guo" },
-        { id: 27, text: "Yanyin Zhou" },
-        { id: 30, text: "Akinori Kondo" },
-        { id: 31, text: "Hijiri Kaneko" },
-        { id: 32, text: "Ryota Torii" },
-        { id: 33, text: "Takaaki Kubo" },
-        { id: 34, text: "Yusuke Tokito" },
-        { id: 35, text: "Saki Hiramatsu" },
-        { id: 36, text: "Jiayuan Geng" },
-        { id: 37, text: "Adachi Kenshi" },
-        { id: 38, text: "Miyamoto Daisuke" },
-        { id: 1, text: "Fitra Rahmamuliani" },
-        { id: 18, text: "Xiaoxuan Li" },
         { id: 0, text: "Xiangshi Ren" },
         { id: 17, text: "Kiyoshi Nakahara" },
         { id: 2, text: "Kaechang Park" },
@@ -331,6 +296,31 @@ $(document).ready(function() {
         { id: 11, text: "William Delamare" },
         { id: 12, text: "Hamed Aliyari" },
         { id: 13, text: "Kyoko Hatakenaka" },
+        { id: 14, text: "Xinhui Jiang" },
+        { id: 15, text: "Yang Li" },
+        { id: 16, text: "Chen Wang" },
+        { id: 1, text: "Fitra Rahmamuliani" },
+        { id: 18, text: "Xiaoxuan Li" },
+        { id: 19, text: "Yilin Zheng" },
+        { id: 20, text: "Chunyuan Lan" },
+        { id: 21, text: "Xinpeng Li" },
+        { id: 22, text: "Xi Chen" },
+        { id: 23, text: "Sai Jiang" },
+        { id: 24, text: "Hongyun Lyu" },
+        { id: 25, text: "Jian Zhang" },
+        { id: 26, text: "Zhihang Guo" },
+        { id: 27, text: "Yanyin Zhou" },
+        { id: 28, text: "Xiaofei Zhu" },
+        { id: 29, text: "Junlin Sun" },
+        { id: 30, text: "Akinori Kondo" },
+        { id: 31, text: "Hijiri Kaneko" },
+        { id: 32, text: "Ryota Torii" },
+        { id: 33, text: "Takaaki Kubo" },
+        { id: 34, text: "Yusuke Tokito" },
+        { id: 35, text: "Saki Hiramatsu" },
+        { id: 36, text: "Jiayuan Geng" },
+        { id: 37, text: "Adachi Kenshi" },
+        { id: 38, text: "Miyamoto Daisuke" }
     ];
 
     $("#select-project-member").select2({
@@ -559,21 +549,5 @@ $(document).ready(function() {
             }
         })
     }
-
-    //back to top
-        $(window).scroll(function () {
-                if ($(this).scrollTop() > 50) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
-            });
-            // scroll body to 0px on click
-            $('#back-to-top').click(function () {
-                $('body,html').animate({
-                    scrollTop: 0
-                }, 400);
-                return false;
-            });
 
 });

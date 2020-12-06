@@ -26,7 +26,7 @@
                         {% for activity in activitylist%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="{% if visitor==0 %}col-5{% elif visitor == 1  %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
@@ -49,7 +49,7 @@
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
                                     data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
-                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}" /></span>
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}" /></span>
                                     <span class="edit-activity-data">
                                         {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
                                     </span>
@@ -60,7 +60,6 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
-                            {% if visitor == 0 %}
                             <td class="col-1 mr-auto text-muted py-2">
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
@@ -71,7 +70,6 @@
                                 </form>
                                 </span>
                             </td>
-                            {% end %}
                         </tr>
                         {% end %}
                         {%if visitor == 0%}
@@ -93,7 +91,7 @@
                                     </select>
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress">
-                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" id="percentage " placeholder="Progress percentage" aria-placeholder="Progress percentage"></span>
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" id="percentage " placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
                                 </td>
                                 <td class="col-1 mr-auto">
                                     <input type="hidden" name="activitylocation" value="7"/>
@@ -112,9 +110,6 @@
     </div>
 
 </section>
-
-<!-- Back to top button -->
-<a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top shadow-sm" role="button"><i class="fas fa-chevron-up"></i></a>
 
 <!--Modal for New Activity-->
 <div class="modal fade" id="newactivityadminmodal" tabindex="-1" role="dialog" aria-labelledby="newactivityadminmodallabel" aria-hidden="true">
@@ -165,7 +160,7 @@
                         <div class="col-md-12">
                             <label for="percentage">Percentage</label>
                             <div class="input-group col-md-12">
-                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" id="percentage" placeholder="Progress percentage" aria-placeholder="Progress percentage"></span>
+                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" id="percentage " placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
                             </div>
                         </div>
                     </div>

@@ -197,16 +197,12 @@
 }
 
 .like-count {
-    font-size: 0.7rem;
+    font-size: small;
     z-index: 1000;
     cursor: pointer;
     height: max-content;
     margin-left: -1.5em;
     margin-bottom: 0;
-}
-
-.like-count i{
-    font-size: 0.6rem;
 }
 
 span.glyphicon.glyphicon-chevron-left::before {
@@ -400,8 +396,8 @@ header .text-lg-center {
 }
 
 .photo-leaderboard{
-    width:2.3em;
-    height: 2.3em;
+    width: 3em;
+    height: 3em;
     object-fit: cover;
 }
 
@@ -434,15 +430,4 @@ header .text-lg-center {
 .carousel-item-projects{
     height: 400px;
     overflow: auto;
-}
-
-.comment-content, .commentator, .comment-content-stars-text i, .reply-comment-content{
-    font-size: 0.8rem;
-}
-
-.back-to-top {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    display: none;
 }
