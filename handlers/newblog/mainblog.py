@@ -1099,7 +1099,7 @@ class ViewProjectHandler(BaseHandler):
             reflection_exists = 1
             reflection_content = self.session.query(Reflection).filter(Reflection.weekly_report_id == self.weeklyreport.weekly_report_id).filter(Reflection.user_id == self.user.user_id).first()
         
-        self.render("newblog/projects.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist,reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectdata = self.projectdata, projectmembers = self.projectmembersdata)
+        self.render("newblog/projects.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist,reflection_exists = reflection_exists, reflection_content = reflection_content, projectlist = self.user_projectlist, menu = self.menu, userlevel = self.user_level, minexp = self.minexp, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectdata = self.projectdata, projectmembers = self.projectmembersdata)
         self.session.close()
         
 class LatestBlogHandler(BaseHandler):
@@ -1239,8 +1239,10 @@ class LatestBlogHandler(BaseHandler):
                     print(self.latestusersdata)
                     print("4")
 
-        print(self.latestusersdata)
-        print("total")
-
-        self.render("newblog/latestblog.html", title = self.title, userName = self.signeduser, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, menu = self.menu, userlevel = self.user_level, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectlist = self.user_projectlist, latestuserdatas = self.latestusersdata)
+        # Meeting agenda
+        self.dirDoc = os.path.dirname("documents/publication.md")
+        s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key=self.dirDoc+'/agenda.md')
+        self.meetingagenda = markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'))
+        
+        self.render("newblog/latestblog.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, menu = self.menu, userlevel = self.user_level, minexp = self.minexp, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectlist = self.user_projectlist, latestuserdatas = self.latestusersdata, meetingagenda = self.meetingagenda)
         self.session.close()
