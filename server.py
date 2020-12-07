@@ -6,6 +6,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.locale
+# import asyncio
 # from mongoengine import connect
 
 from tornado.options import define, options
@@ -30,6 +31,7 @@ class Application(tornado.web.Application):
         # connect(options.db)
         
 def main():
+    # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     tornado.locale.load_translations(os.path.join(os.path.dirname(__file__), "csv_translations"))
     #tornado.options.define("log_file_prefix", default=os.path.join(os.path.dirname(__file__), "tornado_main.log"))
     tornado.options.parse_command_line()

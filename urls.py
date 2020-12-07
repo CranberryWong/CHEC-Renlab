@@ -18,7 +18,7 @@ handlers = [
             (r"/projects/(.*)", documents.ProjectShowHandler),
             (r"/publication", documents.PubHandler),
             (r"/curriculum", documents.CurriculumHandler),
-            (r"/pastcurriculum", documents.pastCurriculumHandler),
+            (r"/pastcurriculum", documents.pastcurriculumHandler),
             (r"/resource", documents.ResourceHandler),
 
             # Auth
@@ -59,7 +59,28 @@ handlers = [
             (r"/visualization/sample?", visualize.MainHandler),
 
             # New Blog
-            (r"/newblog/([\w./?%&=]*)?", mainblog.MainHandler),
+            (r"/newblog/addreflection", mainblog.AddReflection),
+            (r"/newblog/addproject", mainblog.AddProjectHandler),
+            (r"/newblog/profileedit", mainblog.ProfileEditHandler),
+            (r"/newblog/addactivity",mainblog.AddActivityHandler),
+            (r"/newblog/editactivity", mainblog.EditActivityHandler),
+            (r"/newblog/deleteactivity", mainblog.DeleteActivity),
+            (r"/newblog/addcomment", mainblog.AddCommentHandler),
+            (r"/newblog/editcomment", mainblog.EditCommentHandler),
+            (r"/newblog/deletecomment",mainblog.DeleteCommentHandler),
+            (r"/newblog/addlike", mainblog.AddLikeHandler),
+            (r"/newblog/deletelike", mainblog.DeleteLikeHandler),
+            (r"/newblog/addreply", mainblog.AddReplyHandler),
+            (r"/newblog/editreply", mainblog.EditReplyHandler),
+            (r"/newblog/deletereply", mainblog.DeleteReplyHandler),
+            (r"/newblog/addlikereply", mainblog.AddReplyLikeHandler),
+            (r"/newblog/deletelikereply", mainblog.DeleteReplyLikeHandler),
+            (r"/newblog/readnotification", mainblog.ReadNofiticationHandler),
+            (r"/newblog/(?P<userName>[\w.%]+)", mainblog.MainHandler),
+            (r"/newblog/(?P<userName>[\w.%]+)(?:/project)?/?$", mainblog.ViewProjectHandler),
+            (r"/newblog/(?P<userName>[\w.%]+)(?:/projectadmin)?/?$", mainblog.ProjectAdminHandler),
+            (r"/newblog/(?P<userName>[\w.%]+)(?:/latestblog)?/?$", mainblog.LatestBlogHandler),
+            (r"/newblog/(?P<userName>[\w.%]+)(?:/leaderboard)?/?$", mainblog.LeaderboardHandler),
 
             # i18n
             (r"/language?", base.I18nHandler),

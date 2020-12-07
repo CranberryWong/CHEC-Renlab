@@ -7,9 +7,13 @@ import hashlib
 import os
 import boto3 
 import botocore
+import urllib.request
 
 from handlers.base import BaseHandler
 from boto3 import Session
+from datetime import datetime
+from models.entity import Account
+from models.entity import db_session
 
 # AWS S3 Configuration
 BUCKET_NAME = 'chec-static'
@@ -55,13 +59,16 @@ class SignInHandler(BaseHandler):
             if md5_password == pwd:
                 self.message = ""
                 self.set_secure_cookie('user', username)
+                self.session = db_session.getSession
+                self.user = self.session.query(Account).filter(Account.username == username).first()
+                self.user.last_login = datetime.now()
+                self.user.last_login_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+                self.session.commit()
                 self.redirect('/')
-            else:
-                self.message = "Wrong Password!"
-                self.redirect('/signin')
-        else:
-            self.message = "Username hasn't been signed up!"
-            self.redirect('/signin')
+                self.session.close()
+            
+        self.message = "Username hasn't been signed up!"
+        self.redirect('/signin')
 
         # memberList = [ x for x in os.listdir(AuthURL)]
         # if username in memberList:

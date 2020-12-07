@@ -1,0 +1,179 @@
+{% extends "main.html" %} {% block content %} {% import uuid %} {% from datetime import datetime %}
+
+<h2 class="mt-2 mb-0"><b>Admin</b></h2>
+
+<!--MEETING LINK!-->
+<a href="" class="float-right"><i class="fa fa-tv text-blue"></i><u>Meeting Link</u></a>
+
+<div class="d-flex flex-row justify-content-start mt-4">
+    <!--Button trigger modal for new activity-->
+    <!-- <button type="button" class="mr-3 btn btn-primary btn-sm" data-toggle="modal" data-target="#newactivityadminmodal">NEW ACTIVITY</button> -->
+    <form id="form-choose-admin-month" action="/newblog/{{userName}}/projectadmin" method="POST">
+        <div class="input-group w-auto admin-month">
+            <input type="text" name="newmonth" class="form-control" aria-describedby="basic-addon2" id="admin-month-picker" data-month="{{adminmonth}}">
+            <i class="fa fa-chevron-down"></i>
+        </div>
+    </form>
+</div>
+
+<!--Reporting and Planning Section-->
+<section class="reporting-planning my-5">
+    <div class="reporting pb-4">
+        <div class="project-section">
+            <div class="d-flex flex-column">
+                <table class="table mt-3 report-table border-bottom">
+                    <tbody>
+                        {% for activity in activitylist%}
+                        <tr class="row editable-report">
+                            <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
+                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                    <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
+                                    <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
+                                </td>
+                                <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
+                                    <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
+                                    <span class="edit-activity-data">
+                                        {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
+                                    </span>
+                                </td>
+                                <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
+                                    <select class="form-control edit-activity-input d-none" name="newpriority">
+                                        <option value="0" disabled hidden>Priority</option>
+                                        <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
+                                        <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
+                                        <option value="3" {% if activity.Activity.priority == 3 %} selected {% end %}> P3</option>
+                                    </select>
+                                    <span class="edit-activity-data">
+                                        <i class="fa fa-flag text-center pr-1 {% if activity.Activity.priority == 1%}text-red{% end %} {% if activity.Activity.priority == 2%}text-orange{% end %} {% if activity.Activity.priority == 3%}text-primary{% end %}"></i> P{{activity.Activity.priority}}
+                                    </span>
+                                </td>
+                                <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
+                                    data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}" /></span>
+                                    <span class="edit-activity-data">
+                                        {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
+                                    </span>
+                                </td> 
+                                <td class="col-1 edit-activity-input d-none">
+                                    <input type="hidden" name="newactivityid" value="{{activity.Activity.activity_id}}"/>
+                                    <input type="hidden" name="activitylocation" value="7"/>
+                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                </td>
+                            </form>
+                            <td class="col-1 mr-auto text-muted py-2">
+                                <span class="edit-activity-data d-flex flex-row">
+                                <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
+                                <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
+                                    <input type="hidden" name="deleteactivityid" value="{{activity.Activity.activity_id}}">
+                                    <input type="hidden" name="activitylocation" value="7"/>
+                                    <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                                </span>
+                            </td>
+                        </tr>
+                        {% end %}
+                        {%if visitor == 0%}
+                        <!-- Add activity row -->
+                        <form action="/newblog/addactivity" method="POST">
+                            <tr class="row">
+                                <td class="col-5 ml-auto">
+                                    <input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity...">
+                                </td>
+                                <td class="col-3 text-wrap">
+                                     <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" />
+                                </td>
+                                <td class="col-2 flex-10 priority">
+                                    <select class="form-control" name="newpriority">
+                                        <option value="0" disabled selected hidden>Priority</option>
+                                        <option value="1"> P1</option>
+                                        <option value="2"> P2</option>
+                                        <option value="3"> P3</option>
+                                    </select>
+                                </td>
+                                <td class="col-2 flex-12 text-center report-progress">
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" id="percentage " placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                </td>
+                                <td class="col-1 mr-auto">
+                                    <input type="hidden" name="activitylocation" value="7"/>
+                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                </td>
+                                <select class="d-none form-control select2-project-name" name="newprojectid" id="admin-project-name" disabled aria-disabled="">
+                                    <option selected value="7">Admin</option>
+                                </select>
+                            </tr>
+                        </form>
+                        {%end%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!--Modal for New Activity-->
+<div class="modal fade" id="newactivityadminmodal" tabindex="-1" role="dialog" aria-labelledby="newactivityadminmodallabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New Activity</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="/newblog/addactivity" method="POST">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="activity-name">Activity</label>
+                            <div class="input-group col-md-12 ">
+                                <input type="text" name="newactivityname" class="form-control" id="activity-name" placeholder="Enter Activity..." aria-placeholder="Enter Activity...">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="admin-project-name">Project</label>
+                            <div class="input-group col-md-12">
+                                <select class="form-control select2-project-name" name="newprojectid" id="admin-project-name" disabled aria-disabled="">
+                                <option selected value="7">Admin</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="date-range">Date Range</label>
+                            <div class="input-group col-md-12" id="date-range">
+                                <input type="text" name="newdaterange" placeholder="Choose Date Range" class="form-control col-md-12 date-range-datepicker" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="priority-level">Priority</label>
+                            <div class="input-group col-md-12">
+                                <select class="form-control" id="priority-level" name="newpriority">
+                                <option value="0" disabled selected hidden>Choose Priority</option>
+                                <option value="1"> P1</option>
+                                <option value="2"> P2</option>
+                                <option value="3"> P3</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="percentage">Percentage</label>
+                            <div class="input-group col-md-12">
+                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" id="percentage " placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gray" data-dismiss="modal">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%end%}

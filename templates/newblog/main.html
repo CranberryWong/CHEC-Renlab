@@ -1,5 +1,202 @@
-{% extends "main_base.html" %} {% block main %} {% block content %} {% import uuid %} {% if current_user.decode('utf8') == userName %}
+{% extends "main_base.html" %} {% block main %} {% import uuid %}
 
-<h1>Hello World, {{ userName }}</h1>
+<div class="row no-gutters ml-0">
+    <!--Left Navigation bar-->
+    <div class="col-md-3 shadow-sm left-nav-bar-blog px-4 pb-5">
+        <div class="d-flex justify-content-center pt-5 left-photo-containter">
+            <img class="rounded-circle left-nav-photo" src="{{avatarURL}}" alt="Profile photo of {{user.username}}" />
+            <button type="button" class="btn" data-toggle="modal" data-target="#fqaModal"><small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">{{userlevel}}</small></button>
+        </div>
+        <h5 class="text-center mt-3">{{user.username}}</h5>
+        <button type="button" class="btn level mt-3 w-100" data-toggle="modal" data-target="#fqaModal">
+            <div class="d-flex flex-row">
+                <small>Level {{userlevel}}</small>
+                <small class="ml-auto">{{user.exp}}/{{ maxexp }} exp</small>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{user.exp / maxexp * 100}}%" aria-valuenow="{{user.exp}}" aria-valuemin="0" aria-valuemax="{{ maxexp }}"></div>
+            </div>
+        </button>
+        <div class="mt-5 nav flex-column nav-pills nav-left-blog">
+            <a class="nav-link {% if menu == 1 %} active {% end %}" href="/newblog/{{userName}}" aria-selected="true">Weekly Report</a> 
+            <a class="nav-link {% if menu == 4 %} active {% end %}" href="/newblog/{{userName}}/latestblog" aria-selected="true">CHEC Latest Blogs</a>
+            <a class="nav-link {% if menu == 2 %} active {% end %}" href="/newblog/{{userName}}/projectadmin" aria-selected="false">Admin</a>
+            <div class="d-flex">
+                <a class="nav-link" href="#sub-project-list" data-toggle="collapse">Projects</a>
+                {%if visitor == 0%}
+                <button type="button" class="ml-auto btn btn-primary btn-sm align-self-center py-2" data-toggle="modal" data-target="#addProjectModal">+ ADD PROJECT</button>
+                {% end %}
+            </div>
+            <div class="collapse show" id="sub-project-list">
+                <div class="nav flex-column nav-pills">
+                    {% for project in projectlist%} {% if project.project_name != "Admin" %}
+                    <a class="nav-link {% if menu == (4 + project.project_id) %} active {% end %}" href="/newblog/{{userName}}/project?name={{project.project_name}}">{{ project.project_name }}</a> {% end %} {% end %}
+                </div>
+            </div>
+            <a class="nav-link {% if menu == 3 %} active {% end %}" href="/newblog/{{userName}}/leaderboard" aria-selected="false">Leaderboard</a>
+            <div class="d-flex flex-row">
+                <h5 class="nav-link">Contact</h5>
+                {% if visitor == 0%}
+                <button type="button" class="btn rounded-circle phone-row" data-toggle="modal" data-target="#editProfileModal">
+                    <i class="text-muted fa fa-edit"></i>
+                </button>
+                {%end%}
+            </div>
+            <div class="d-flex flex-row phone-row mb-3 ml-3">
+                <div class="bg-blue rounded-circle mr-2"><i class="fa fa-phone text-white text-center p-2"></i></div>
+                <a href="tel:{{user.phone_number}}" class="align-self-center">{{user.phone_number}}</a>
+            </div>
+            <div class="d-flex flex-row phone-row mb-3 ml-3">
+                <div class="bg-blue rounded-circle mr-2"><i class="fa fa-at text-white text-center p-2"></i></div>
+                <a href="mailto:{{user.email}}" class="align-self-center">{{user.email}}</a>
+            </div>
+            <div class="d-flex flex-row phone-row mb-3 ml-3">
+                <div class="bg-green rounded-circle mr-2">
+                    <i class="fab fa-weixin text-white text-center p-2"></i>
+                </div>
+                {{user.wechat_id}}
+            </div>
+            <div class="d-flex flex-row social-media-row ml-3 mt-2">
+                <a class="bg-green rounded-circle mr-2" href="https://line.me/R/ti/p/{{user.line_id}}"><i class="fab fa-line text-white text-center p-2"></i></a>
+                <a class="bg-blue rounded-circle mr-2" href="skype:fitrakun?call"><i class="fab fa-skype text-white text-center p-2"></i></a>
+            </div>
+        </div>
+    </div>
+    <!-- Right Parts-->
+    <div class="col-md-9 pt-4 px-4 mb-5">
+        {% block content %} {% end %}
+    </div>
 
-{% end %} {% end %} {% end %}
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <form role="form" action="/newblog/profileedit" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Photo Profile</label>
+                                    <div>
+                                        <small class="text-muted">Warning! Your photo profile will be changed including on the <b>members</b> page!</small>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" name="newphotoprofile" class="custom-file-input" id="customFile" accept="image/*">
+                                        <label class="custom-file-label text-truncate" for="customFile">Choose file</label>
+                                    </div>
+                                    <div class='d-flex justify-content-center pt-5 left-photo-containter'>
+                                        <img class='rounded-circle left-nav-photo' src='{{avatarURL}}' alt='Profile photo of {{user.username}}' id='edit-profile-photo' />
+                                        <button type="button" class="btn"><small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">{{userlevel}}</small></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="account-email">Email address</label>
+                                    <input type="email" name="newemail" class="form-control" id="account-email" value="{{user.email}}" placeholder="name@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="account-phone-number">Phone number</label>
+                                    <input type="tel" name="newphonenumber" class="form-control" id="account-phone-number" value="{{user.phone_number}}" placeholder="+8123456789">
+                                </div>
+                                <div class="form-group">
+                                    <label for="account-wechat-id">WeChat ID</label>
+                                    <input type="text" name="newwechatid" class="form-control" id="account-wechat-id" value="{{ user.wechat_id }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="account-line-id">LINE ID</label>
+                                    <input type="text" name="newlineid" class="form-control" id="account-line-id" value="{{ user.line_id }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="account-skype-id">Skype ID</label>
+                                    <input type="text" name="newskypeid" class="form-control" id="skype-id" value="{{user.skype_id}}">
+                                </div>
+                                <button type="submit" class="btn btn-primary align-self-center">Save changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal for Add Project-->
+    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProjectModalLabel">Add Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/newblog/addproject" method="POST">
+                        <div class="input-group mb-3">
+                            <label>Project Group</label>
+                            <select class="form-control select2-choose-project-group" name="newprojectgroupid">
+                            {% for group in projectgrouplist%}
+                            <option value="{{group.project_group_id}}">{{group.project_group_name}}</option>
+                            {% end %}
+                        </select>
+                        </div>
+                        <label for="project-name">Project Name</label>
+                        <input type="text" id="project-name" name="newprojectname" class="form-control" placeholder="Project Name..." />
+                        <label class="mt-3" for="select-project-member">Members</label>
+                        <div class="w-100">
+                            <select class="w-100 js-states form-control" name="newprojectmembers" id="select-project-member" multiple="multiple"></select>
+                        </div>
+                        <button type="submit" class="mt-3 btn btn-sm btn-primary">+ADD PROJECT</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-gray" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="fqaModal" tabindex="-1" role="dialog" aria-labelledby="fqaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fqaModalLabel">FAQ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body mx-2">
+                    <div class="my-2">
+                        <p class="mb-1"><b>Q: Where can I edit my profile?</b></p>
+                        <p>A: Click edit icon next to the Contact menu to edit your profile. You can also edit your photo profile, but be careful because it will also be changed on the <b>member</b> page and all page that need your photo profile.</p>
+                    </div>
+                    <div class="my-2">
+                        <p class="mb-1"><b>Q: How do we earn the experience point for level?</b></p>
+                        <p>A: You will get <b>3</b> points for filling in the <b>reflection</b>, <b>2</b> points for <b>creating</b> new activity and <b>1</b> point for <b>editing</b> the activity.
+                            <br/> Your point will be decreasing by <b>-1</b> for <b>removing</b> an activity.
+                            <br/> So please be careful on creating an activity.
+                            <br/> You will get extra <b>2</b> points when you have an activity with progress <b>100%</b>.
+                        </p>
+                    </div>
+                    <div class="my-2">
+                        <p class="mb-1"><b>Q: What if we do not write our blog for one week? </b></p>
+                        <p>A: You will get <b>-5</b> points for not writing blog. This score will be checked on <b>Friday, 11 PM.</b></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}

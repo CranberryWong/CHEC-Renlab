@@ -1,0 +1,433 @@
+:root {
+    --text-yellow: #ffe234;
+    --bg-blue: #007BFF;
+}
+
+.btn-gray {
+    color: white;
+    background-color: darkgray;
+}
+
+.btn-primary {
+    background: #007BFF;
+    border: none;
+}
+
+.custom-datalist {
+    display: none;
+}
+
+.bootstrap-datetimepicker-widget tr:hover,
+.bootstrap-datetimepicker-widget td:hover {
+    background-color: lightblue !important;
+}
+
+.input-percentage {
+    border: 1px solid #cccccc;
+    display: inline-block;
+    padding: 6px 12px;
+    width: 100%;
+}
+
+.input-percentage>input {
+    border: 0;
+    outline: none;
+    width: calc(100% - 20px) !important;
+    /* Firefox */
+    width: -moz-calc(100% - 20px) !important;
+    /* WebKit */
+    width: -webkit-calc(100% - 20px) !important;
+    /* Opera */
+    width: -o-calc(100% - 20px) !important;
+    /* Standard */
+    width: calc(100% - 20px) !important;
+}
+
+.input-percentage:after {
+    content: '%';
+}
+
+.select2-container--default .select2-selection--single {
+    height: auto !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding: 6px 12px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 7px;
+}
+
+.modal-body .col-md-12 {
+    padding-bottom: 10px;
+}
+
+.blog-title i {
+    font-size: medium;
+}
+
+.text-project-0{
+    color: #7E57C2;
+}
+
+.text-project-1{
+    color: #00bcd4;
+}
+
+.text-project-2{
+    color: #4caf50;
+}
+
+.text-project-3{
+    color: #009688;
+}
+
+.text-project-4{
+    color: #3f51b5;
+}
+
+.text-project-5{
+    color: #cddc39;
+}
+
+.text-project-6{
+    color: #263238;
+}
+
+.text-project-7{
+    color: #ff5722;
+}
+
+.text-project-8{
+    color: #dd2c00;
+}
+
+.text-project-9{
+    color: #f06292;
+}
+
+.text-project-admin{
+    color: #8D6E63;
+}
+
+.text-purple {
+    color: #7E57C2;
+}
+
+.text-brown {
+    color: #8D6E63;
+}
+
+.text-red {
+    color: #F44336;
+}
+
+.text-orange {
+    color: #FF9800;
+}
+
+.text-yellow {
+    color: var(--text-yellow);
+}
+
+.text-primary {
+    color: #007BFF;
+}
+
+.bg-blue {
+    background: #007BFF;
+}
+
+.bg-blue-transparent {
+    background-color: rgba(0,123,255,0.1);
+}
+
+.bg-green {
+    background: #66BB6A;
+}
+
+.bg-yellow {
+    background: #FFEE58;
+}
+
+.bg-gray {
+    background: #CCCCCC;
+}
+
+.bg-darkgray {
+    background: #707070;
+}
+
+.notification-row{
+    cursor: pointer;
+}
+
+.notification-row:hover{
+    background: rgba(0,123,255,0.1);
+}
+
+.flex-5 {
+    flex: 0 0 5%;
+}
+
+.flex-10 {
+    flex: 0 0 10%;
+}
+
+.flex-12 {
+    flex: 0 0 12.5%;
+}
+
+.seen-by-photo {
+    width: 2.5em;
+    height: 2.5em;
+    object-fit: cover;
+}
+
+.seen-by h5 {
+    font-size: 1.05em;
+}
+
+
+.comment-photo {
+    width: 3em;
+    height: 3em;
+    object-fit: cover;
+}
+
+.like-count {
+    font-size: small;
+    z-index: 1000;
+    cursor: pointer;
+    height: max-content;
+    margin-left: -1.5em;
+    margin-bottom: 0;
+}
+
+span.glyphicon.glyphicon-chevron-left::before {
+    content: '\f053';
+    font-family: fontAwesome;
+}
+
+.bootstrap-datetimepicker-widget table th.next::before {
+    content: '\f054';
+    font-family: fontAwesome;
+}
+
+.admin-month i {
+    position: absolute;
+    right: .5em;
+    height: 100%;
+    top: calc(100% - 50% - 10px);
+}
+
+.home-reflection-section i {
+    font-family: fontAwesome;
+    font-style: normal;
+    font-size: x-large;
+}
+
+.left-nav-photo {
+    width: 8em;
+    height: 8em;
+    object-fit: cover;
+}
+
+.left-photo-containter {
+    position: relative;
+}
+
+.left-photo-containter button {
+    position: absolute;
+    bottom: -1em;
+}
+
+.nav-left-blog>.d-flex>.nav-link,
+.nav-left-blog>.nav-link {
+    color: black;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.nav-left-blog>.d-flex>.nav-link.active,
+.nav-left-blog>.nav-link.active,
+.nav-left-blog .collapse .nav-link.active {
+    color: #007BFF;
+    font-weight: 800;
+    background: none;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15)!important;
+}
+
+.nav-left-blog .collapse .nav-link {
+    color: black;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.left-nav-bar-blog {
+    overflow: auto;
+}
+
+.phone-row i {
+    font-size: large;
+}
+
+.social-media-row i {
+    font-size: x-large;
+}
+
+header .text-lg-center {
+    font-size: large;
+}
+
+.popover-body img {
+    height: 2rem;
+    width: 2rem;
+    object-fit: cover;
+}
+
+.popover-body .unread {
+    font-size: xx-large;
+}
+
+.popover-body {
+    overflow: auto;
+    max-height: 500px;
+}
+
+.notification-icon {
+    cursor: pointer;
+    position: relative;
+}
+
+.notification-icon .badge{
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+}
+
+.member-project-list img {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: cover;
+}
+
+.project-card-list .card {
+    max-height: 500px;
+    overflow: auto;
+}
+
+.project-card-list img {
+    width: 1.75rem;
+    height: 1.75rem;
+    object-fit: cover;
+}
+
+.highlight {
+    background-color: #FFEE58;
+}
+
+.rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+.rating-comment .rating__label{
+    font-size: 0.8em !important;
+}
+
+.hidden--visually {
+    border: 0;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 100px;
+}
+
+.rating__label {
+    cursor: pointer;
+    color: gray;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.rating__icon::before {
+    content: "\f005";
+    font-family: fontAwesome;
+    font-size: 2em;
+}
+
+.rating__input:hover~.rating__label {
+    color: var(--text-yellow);
+}
+
+.rating__input:checked~.rating__label {
+    color: var(--text-yellow);
+}
+
+.align-super {
+    vertical-align: super;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu{
+    width: 100%;
+}
+
+.addbutton button{
+    font-size: 1.5em;
+}
+
+.leaderboard-name{
+    font-size: 1.1em;
+}
+
+.photo-leaderboard{
+    width: 3em;
+    height: 3em;
+    object-fit: cover;
+}
+
+.carousel-control-prev{
+    width: max-content;
+}
+
+.carousel-control-next{
+    width: max-content;
+}
+
+.carousel-control-prev-icon{
+    /* margin-left: -160px;  */
+    /* width: auto; */
+}
+
+.carousel-control-next-icon{
+    /* margin-right: -150px;  */
+    /* width: auto; */
+}
+
+.carousel-indicators{
+    margin-bottom: -4%;
+}
+
+.carousel-indicators li{
+    background-color: var(--bg-blue);
+}
+
+.carousel-item-projects{
+    height: 400px;
+    overflow: auto;
+}

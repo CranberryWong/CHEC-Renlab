@@ -1,13 +1,34 @@
+{% import timeago %}{% from datetime import datetime %} {% from datetime import timedelta%} 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>{{ _(handler.title) }}</title>
-    <link rel="stylesheet" href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}">
+    <!-- <link rel="stylesheet" href="{{ static_url('styles/stylesheets/bootstrap.min.css') }}"> -->
     <link rel="stylesheet" href="{{ static_url('styles/stylesheets/style.css') }}"> {% block costomCSS %}{% end %}
     <link rel="icon" href="{{ static_url('favicon.ico') }}">
     <script src="{{ static_url('libs/holderjs/holder.js') }}"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!--Select2-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
+
+    <!--Datetimepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/brands.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
+
+    <link rel="stylesheet" href="{{ static_url('styles/stylesheets/bootstrap-suggest.css') }}">
+    <link rel="stylesheet" href="{{ static_url('styles/stylesheets/newblogstyle.css') }}">{% block costomCSS %}{% end %}
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32872028-1"></script>
@@ -39,14 +60,42 @@
                 <a class="p-2 text-dark" href="/language?lang=zh_CN">中文版</a>{% end %} {% if handler.lang == "en_US" or handler.lang == "zh_CN" %}
                 <a class="p-2 text-dark" href="/language?lang=ja_JP">日本語</a>{% end %} {% if handler.lang == "ja_JP" or handler.lang == "zh_CN" %}
                 <a class="p-2 text-dark" href="/language?lang=en_US">English</a>{% end %}
-
+                <a tabindex="0" class="p-2 text-primary notification-icon"><i class="text-lg-center fa fa-bell"></i>{% if len([p for p in notifications if p.get("click_by_user") == 0]) > 0 %}<span class="badge">{{len([p for p in notifications if p.get("click_by_user") == 0])}}</span>{% end %}</a>
             </nav>
+            
+            <div class="notification-container" style="overflow: auto; display: none;">
+                <div class="pt-2">
+                    {% for notification in notifications %}
+                    <div class="d-flex flex-row mb-4 notification-row">
+                        <a href='/newblog/{{notification.get("sender_name")}}'>
+                            <img class="rounded-circle mr-2" src='{{notification.get("avatar_url")}}' />
+                        </a>
+                        <div class="notification-content mr-3">
+                            <a href='/newblog/{{notification.get("sender_name")}}' class="text-body text-decoration-none">
+                                <b class="writers-name">{{notification.get("sender_name")}}</b>
+                            </a>
+                            <div class='read-notif read-notification-area-{{notification.get("notification_id")}}'>
+                                <p class="mb-1">{{notification.get("reference_text")}}</p>
+                                <small class="text-muted">{{timeago.format(notification.get("created_on"), datetime.now())}}</small>
+                            </div>
+                        </div>
+                        {% if notification.get("click_by_user") == 0 %}
+                        <div class='unread rounded-circle align-self-center text-primary read-notif read-notification-area-{{notification.get("notification_id")}}' data-id='{{notification.get("notification_id")}}'>&#8226;</div>
+                        {% end %}
+                        <form action="/newblog/readnotification" method="GET" class='readnotificationform-{{notification.get("notification_id")}}'>
+                            <input type="hidden" name="newnotificationid" value='{{notification.get("notification_id")}}'/>
+                            <button type="submit"></button>
+                        </form>
+                    </div>
+                    {% end %}
+                </div>
+            </div>
             <!--<a class="btn btn-outline-primary" href="/" style="margin-right:20px;">Log in</a>-->
             {% if current_user %}
             <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ current_user }}
-        </button>
+            </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/blog/{{ current_user }}">{{ _("Blog") }}</a>
                     <a class="dropdown-item" href="/resource">{{ _("Resource") }}</a>
@@ -123,9 +172,15 @@
             </div>
         </footer>
     </div>
-    <script src="{{ static_url('scripts/popper.js') }}"></script>
-    <script src="{{ static_url('scripts/jquery.min.js') }}"></script>
-    <script src="{{ static_url('scripts/bootstrap.min.js') }}"></script> {% block customJS %}{% end %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js " integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js " integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment-with-locales.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/brands.min.js"></script>
+    <script src="{{ static_url('scripts/bootstrap-suggest.js') }}"></script>
+    <script src="{{ static_url('scripts/script.js') }}"></script>{% block customJS %}{% end %}
 </body>
 
 </html>

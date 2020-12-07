@@ -61,7 +61,7 @@ class ResourceHandler(BaseHandler):
             "Visiting Researcher": ["Kavous Salehzadeh Niksirat", "Huawei Tu", "Kibum Kim", "Sayan Sarcar", "William Delamare"],
             "Assistant Professor": ["Zhenxin Wang"],
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
-            "Master Student": ["Fitra Rahmamuliani","Yilin Zheng","Xinpeng Li","Xi Chen","Sai Jiang","Hongyun Lyu","Jian Zhang","Zhihang Guo","Xiaofei Zhu","Junlin Sun"],
+            "Master Student": ["Yilin Zheng","Xinpeng Li","Xi Chen","Sai Jiang","Hongyun Lyu","Jian Zhang","Zhihang Guo","Xiaofei Zhu","Junlin Sun"],
             "Bachelor Student": [ "Akinori Kondo", "Hijiri Kaneko", "Takaaki Kubo", "Yusuke Tokito", "Saki Hiramatsu", "Adachi Kenshi", "Miyamoto Daisuke"]
         }
         memberList = [ (x, os.stat(BlogURL + '/' + x)) for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
@@ -114,10 +114,11 @@ class CurriculumHandler(BaseHandler):
         self.render("home/curriculum.html", title = self.title, curriculumList = curriculumList)
 
 
-class pastCurriculumHandler(BaseHandler):
+
+class pastcurriculumHandler(BaseHandler):
   def get(self):
     self.title = 'HCI Curriculum'
-    year = ['2017','2016','2014']
+    year = ['2017', '2016', '2014']
     curriculumList = []
     for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter='\\'):
       dir = os.path.dirname(file.key)

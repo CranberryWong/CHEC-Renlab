@@ -61,7 +61,6 @@ class MembersHandler(BaseHandler):
                 "Zhenxin Wang": {},
             },
 
-
             "Ph.D. Students": {
                 "Xinhui Jiang": {},
                 "Yang Li": {},
@@ -69,17 +68,19 @@ class MembersHandler(BaseHandler):
             },
 
             "Master Students": {
-                "Yilin Zheng": {},
-                "Chunyuan Lan": {},
-                #"Xinpeng Li": {},
-                #"Xi Chen": {},
-                #"Sai Jiang": {},
-                #"Hongyun Lyu": {},
-                #"Jian Zhang": {},
-                #"Zhihang Guo": {},
+                # "Fitra Rahmamuliani": {}, 
+                # "Xiaoxuan Li": {}, 
+                "Yilin Zheng": {}, 
+                "Chunyuan Lan": {}, 
+                # "Xinpeng Li": {}, 
+                # "Xi Chen": {}, 
+                # "Sai Jiang": {}, 
+                # "Hongyun Lyu": {}, 
+                # "Jian Zhang": {}, 
+                # "Zhihang Guo": {}, 
+                "Yanyin Zhou": {},
                 "Xiaofei Zhu": {},
                 "Junlin Sun": {},
-                "Fitra Rahmamuliani":{},
             },
 
             "Bachelor Students": {

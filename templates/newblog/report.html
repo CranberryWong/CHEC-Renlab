@@ -1,0 +1,549 @@
+{% extends "main.html" %} {% block content %} {% import uuid %}
+
+<!--Top title with date and prev and next week-->
+<div class="d-flex flex-row justify-content-center align-content-center">
+    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{dateprev.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-prev"><small>Previous week</small> <i class="px-3 fa fa-chevron-left"></i> </a></span>
+    <span class="p-2">
+        <h4 class="blog-title d-flex align-items-center mb-0">
+            <span id="title-date-week">{{daterange}}</span>
+    </h4>
+    </span>
+    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{datenext.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-next"> <i class="fa fa-chevron-right px-3"></i> <small>Next week</small></a></span>
+</div>
+
+<!--Reflection section-->
+{% if reflection_exists == 1 %}
+<section class="home-reflection-section mb-3 shadow-sm py-1 px-3">
+    <div class="d-flex pt-2 justify-content-center text-yellow">
+        {% for i in range(reflection_content.reflection_rate) %}
+        <i class="fas fa-star mx-1"></i>{% end %}
+    </div>
+    <div class="mb-3">
+        <b>This Week Reflection</b>
+        <p class="reflection-text">{{ reflection_content.reflection_text }}</p>
+    </div>
+</section>
+{% end %}
+
+<!--MEETING LINK!-->
+<a href="#" class="float-right"><i class="fa fa-tv text-blue"></i><u>Meeting Link</u></a>
+
+{% if visitor == 0%}
+<div class="d-flex flex-row">
+    <!--Button trigger modal for new activity-->
+    <button type="button" class="mt-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#newactivitymodal">NEW ACTIVITY</button> {% if reflection_exists == 0 %}
+    <!--Button trigger modal for new reflection-->
+    <button type="button" class="ml-3 mt-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#newreflectionmodal">ADD REFLECTION</button> {% end %}
+</div>
+{% end %}
+
+<!--Reporting and Planning Section-->
+<section class="reporting-planning my-5">
+    <div class="reporting pb-3">
+        <h4>What did I do last week?</h4>
+        {% for idx,eachactivity in enumerate(allactivity[0])%}
+        <div class="project-section mb-3">
+            <h6 class="project-name mt-3 {% if eachactivity[0].project_name=='Admin' %}text-project-admin{%else%}text-project-{{eachactivity[0].project_id % 10}}{%end%}">{{eachactivity[0].project_name}}</h6>
+            <div class="d-flex flex-column">
+                <table class="table report-table">
+                    <tbody>
+                        {% for activity in eachactivity[1]%}
+                        <tr class="row editable-report">
+                            <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
+                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                    <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
+                                    <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
+                                </td>
+                                <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
+                                    <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
+                                    <span class="edit-activity-data">
+                                        {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
+                                    </span>
+                                </td>
+                                <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
+                                    <select class="form-control edit-activity-input d-none" name="newpriority">
+                                        <option value="0" disabled hidden>Priority</option>
+                                        <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
+                                        <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
+                                        <option value="3" {% if activity.Activity.priority == 3 %} selected {% end %}> P3</option>
+                                    </select>
+                                    <span class="edit-activity-data">
+                                        <i class="fa fa-flag text-center pr-1 {% if activity.Activity.priority == 1%}text-red{% end %} {% if activity.Activity.priority == 2%}text-orange{% end %} {% if activity.Activity.priority == 3%}text-primary{% end %}"></i> P{{activity.Activity.priority}}
+                                    </span>
+                                </td>
+                                <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
+                                    data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}" /></span>
+                                    <span class="edit-activity-data">
+                                        {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
+                                    </span>
+                                </td> 
+                                <td class="col-1 edit-activity-input d-none">
+                                    <input type="hidden" name="newactivityid" value="{{activity.Activity.activity_id}}"/>
+                                    <input type="hidden" name="activitylocation" value="0"/>
+                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                </td>
+                            </form>
+                            <td class="col-1 mr-auto text-muted py-2">
+                                <span class="edit-activity-data d-flex flex-row">
+                                <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
+                                <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
+                                    <input type="hidden" name="deleteactivityid" value="{{activity.Activity.activity_id}}">
+                                    <input type="hidden" name="activitylocation" value="7"/>
+                                    <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                                </span>
+                            </td>
+                        </tr>
+                        {% end %}
+                        <form action="/newblog/addactivity" method="POST">
+                            <tr class="row">
+                                <td class="col-5 ml-auto">
+                                    <input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity...">
+                                </td>
+                                <td class="col-3 text-wrap">
+                                    <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="1"/>
+                                </td>
+                                <td class="col-2 flex-10 priority">
+                                    <select class="form-control" name="newpriority">
+                                        <option value="0" disabled selected hidden>Priority</option>
+                                        <option value="1"> P1</option>
+                                        <option value="2"> P2</option>
+                                        <option value="3"> P3</option>
+                                    </select>
+                                </td>
+                                <td class="col-2 flex-12 text-center report-progress">
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                </td>
+                                <td class="col-1 mr-auto">
+                                    <input type="hidden" name="activitylocation" value="0"/>
+                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                </td>
+                                <input type="hidden" name="newprojectid" value="{{eachactivity[0].project_id}}">
+                            </tr>
+                        </form>
+                        <!-- Add activity row -->
+                        <tr class="addbutton">
+                            <td class="py-1">
+                                <button class="btn rounded-circle text-muted p-0">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% end %}
+
+    </div>
+    <div class="planning">
+        <h4>What am I doing?</h4>
+        {% for idx,eachactivity in enumerate(allactivity[1])%}
+        <div class="project-section mb-3">
+            <h6 class="project-name mt-3 {% if eachactivity[0].project_name=='Admin' %}text-project-admin{%else%}text-project-{{eachactivity[0].project_id % 10}}{%end%}">{{eachactivity[0].project_name}}</h6>
+            <div class="d-flex flex-column">
+                <table class="table report-table border-bottom">
+                    <tbody>
+                        {% for activity in eachactivity[1]%}
+                        <tr class="row editable-report">
+                            <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
+                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                    <input type="text" class="form-control" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
+                                    <span class="edit-activity-data">{{activity.Activity.activity_name}}</span>
+                                </td>
+                                <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
+                                    <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
+                                    <span class="edit-activity-data">
+                                        {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
+                                    </span>
+                                </td>
+                                <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
+                                    <select class="form-control" name="newpriority">
+                                        <option value="0" disabled hidden>Priority</option>
+                                        <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
+                                        <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
+                                        <option value="3" {% if activity.Activity.priority == 3 %} selected {% end %}> P3</option>
+                                    </select>
+                                    <span class="edit-activity-data">
+                                        <i class="fa fa-flag text-center pr-1 {% if activity.Activity.priority == 1%}text-red{% end %} {% if activity.Activity.priority == 2%}text-orange{% end %} {% if activity.Activity.priority == 3%}text-primary{% end %}"></i> P{{activity.Activity.priority}}
+                                    </span>
+                                </td>
+                                <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
+                                    data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}"></span>
+                                    <span class="edit-activity-data">
+                                        {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
+                                    </span>
+                                </td> 
+                                <td class="col-1">
+                                    <input type="hidden" name="newactivityid" value="{{activity.Activity.activity_id}}"/>
+                                    <input type="hidden" name="activitylocation" value="0"/>
+                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                </td>
+                            </form>
+                            <td class="col-1 mr-auto text-muted py-2">
+                                <span class="edit-activity-data d-flex flex-row">
+                                <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
+                                <form action="/newblog/deleteactivity" method="GET" class="formdeleteactivity-{{activity.Activity.activity_id}}">
+                                    <input type="hidden" name="deleteactivityid" value="{{activity.Activity.activity_id}}">
+                                    <input type="hidden" name="activitylocation" value="0"/>
+                                    <button type="submit" class="btn py-0 deleteactivitybutton" data-id="{{activity.Activity.activity_id}}"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                                </span>
+                            </td>
+                        </tr>
+                        {% end %}
+                        <!-- Add activity row -->
+                        <form action="/newblog/addactivity" method="POST">
+                            <tr class="row">
+                                <td class="col-5 ml-auto">
+                                    <input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity...">
+                                </td>
+                                <td class="col-3 text-wrap">
+                                     <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="2"/>
+                                </td>
+                                <td class="col-2 flex-10 priority">
+                                    <select class="form-control" name="newpriority">
+                                        <option value="0" disabled selected hidden>Priority</option>
+                                        <option value="1"> P1</option>
+                                        <option value="2"> P2</option>
+                                        <option value="3"> P3</option>
+                                    </select>
+                                </td>
+                                <td class="col-2 flex-12 text-center report-progress">
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                </td>
+                                <td class="col-1 mr-auto">
+                                    <input type="hidden" name="activitylocation" value="0"/>
+                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                </td>
+                                <input type="hidden" name="newprojectid" value="{{eachactivity[0].project_id}}">
+                            </tr>
+                        </form><!-- Add activity row -->
+                        <tr class="addbutton">
+                            <td class="py-1">
+                                <button class="btn rounded-circle text-muted p-0">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% end %}
+
+    </div>
+</section>
+
+<!--Seen by section-->
+<section class="seen-by px-3 py-0 mt-5 mb-4">
+    <div class="d-flex flex-row flex-wrap align-content-center py-2">
+        <h5 class="text-muted flex-grow-1 mb-0 align-self-center">Seen by</h5>
+        {% for seenby in seenbydatafull%}
+        <a href="/newblog/{{seenby.get('seen_by_username')}}">
+            <img src="{{seenby.get('avatarURL')}}" alt="Avatar {{seenby.get('seen_by_username')}}" class="rounded-circle seen-by-photo mx-1" data-toggle="tooltip" data-placement="bottom"
+            title="Seen: {{seenby.get('date_seen').strftime("%A, %Y/%m/%d %I:%M %p")}}" />
+        </a>
+        {% end %}
+    </div>
+</section>
+
+<!--Comments Section-->
+<section class="comments px-3">
+    <h5 class="text-muted">Comments{% if len(comments)>0 %}({{len(comments)}}){% end %}</h4>
+    {% for comment in comments %}
+    <div class="my-4">
+        <div class="media position-relative reply-comment-section top-comment-section">
+            <a href='/newblog/{{commentsname[comment.get("comment_id")]}}'>
+                <img src='{{commentsAvatarURL[comment.get("comment_id")]}}' alt='Avatar {{commentsname[comment.get("comment_id")]}}' class="mr-3 rounded-circle comment-photo" />
+            </a>
+            <div class="media-body ml-3">
+                <div class="comment-section row">
+                    <div class="d-flex flex-row">
+                        <div class="rounded shadow-sm py-3 pl-3 pr-5">
+                            <a href='/newblog/{{commentsname[comment.get("comment_id")]}}' class="text-decoration-none text-body"><b class="commentator">{{commentsname[comment.get("comment_id")]}}</b></a>
+                            <div class="comment-content-stars-text">
+                                {% if comment.get("stars") > 0 %}                                 
+                                {% for i in range(comment.get("stars")) %}
+                                <i class="fas fa-star text-yellow"></i>{% end %} {% end %}
+                                <p class="comment-content mb-0 mt-1">{{comment.get("comment_text")}}</p> 
+                            </div>
+                        </div>
+                        <div class="like-count col-md-auto rounded align-self-end bg-darkgray text-white py-1 px-2">
+                            <i class="fa fa-thumbs-up mr-2"></i><span class="number" data-id='{{comment.get("comment_id")}}' data-like-number='{{comment.get("like_count")}}' data-has-like='{{comment.get("like_count")}}'>{{comment.get("like_count")}}</span>
+                        </div>
+                    </div>
+                    {% if currentuser.user_id == comment.get("commented_by") %}
+                    <div class="px-2 align-self-center d-flex flex-row">
+                        <button type="button" class="btn text-muted edit-comment" data-commentid = '{{comment.get("comment_id")}}'>
+                            <i class="fa fa-edit"></i> 
+                        </button>
+                        <form action="/newblog/deletecomment" method="GET" class='formdeletecomment-{{comment.get("comment_id")}}'>
+                            <input type="hidden" name="deletecommentid" value='{{comment.get("comment_id")}}'>
+                            <button type="submit" class="btn text-muted delete-comment" data-id='{{comment.get("comment_id")}}'><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </div>
+                    {% end %}
+                    <div class="d-flex flex-row mx-2 col-md-12 col-sm-12">
+                        {% if comment.get("liked_by_user") == 1%}
+                            <form action="/newblog/deletelike" method="GET" class='delete-like-form-{{comment.get("comment_id")}}'>
+                                <input type="hidden" name="deletelikeid" value='{{comment.get("like_data").like_id}}'/>
+                                <button type="submit" class="btn btn-link text-primary like-comment" data-id="1" data-has-like='{{comment.get("like_count")}}'><small><i class="fas fa-thumbs-up mr-2"></i><b>Like</b></small></button>
+                            </form>
+                        {% else %}
+                        <form action="/newblog/addlike" method="POST" class='add-like-form-{{comment.get("comment_id")}}'>
+                            <input type="hidden" name="newuserid" value="{{currentuser.user_id}}"/>
+                            <input type="hidden" name="newcommentid" value='{{comment.get("comment_id")}}'/>
+                            <input type="hidden" name="newweeklyreportid" value="{{weeklyreportid}}"/>
+                            <button type="submit" class="btn btn-link like-comment text-muted" data-id="1"  data-has-like='{{comment.get("like_count")}}'><small><i class="fas fa-thumbs-up mr-2"></i><b>Like</b></small></button>
+                        </form>
+                        {% end %}
+                        <button class="btn btn-link text-body ml-4 reply-comment text-muted"><small><i class="fas fa-reply mr-2"></i><b>Reply</b></small></button>
+                        <span class="text-black-50 align-self-center ml-5"><small>{{timeago.format(comment.get("created_on"), datetime.now())}}</small></span>
+                    </div>
+                </div>
+                {% for reply in comment.get("replies") %}
+                <div class="media position-relative reply-comment-section w-100 mt-2"> 
+                    <a href='/newblog/{{comment.get("replies_name")[reply.reply_id]}}'>
+                        <img src='{{comment.get("replies_avatar")[reply.reply_id]}}' alt='{{comment.get("replies_name")[reply.reply_id]}} Avatar' class="mr-3 rounded-circle comment-photo" /> 
+                    </a>
+                    <div class="media-body row"> 
+                        <div class="comment-section col-md-auto"> 
+                            <div class="d-flex flex-row">
+                                <div class="rounded shadow-sm pl-3 py-3 pr-5 col-md-auto"> 
+                                    <a class="text-decoration-none text-body" href='/newblog/{{comment.get("replies_name")[reply.reply_id]}}'>
+                                        <b class="commentator">{{comment.get("replies_name")[reply.reply_id]}}</b>
+                                    </a>
+                                    <p class="reply-comment-content mb-0 mt-1">{{reply.reply_text}}</p> 
+                                </div> 
+                                <div class="like-count rounded col-md-auto align-self-end float-right bg-darkgray text-white py-1 px-2"> 
+                                    <i class="fa fa-thumbs-up mr-2"></i>
+                                    <span class="number" data-id='{{comment.get("comment_id")}}-{{reply.reply_id}}' data-like-number="{{reply.like_count}}" data-has-like="{{reply.like_count}}">{{reply.like_count}}</span> 
+                                </div> 
+                                {% if currentuser.user_id == reply.user_id %}
+                                <div class="px-2 align-self-center d-flex flex-row">
+                                    <button type="button" class="btn text-muted edit-reply" data-replyid = '{{reply.reply_id}}'>
+                                        <i class="fa fa-edit"></i> 
+                                    </button>
+                                    <form action="/newblog/deletereply" method="GET" class='formdeletereply-{{reply.reply_id}}'>
+                                        <input type="hidden" name="deletereplyid" value='{{reply.reply_id}}'>
+                                        <button type="submit" class="btn text-muted delete-reply" data-id='{{reply.reply_id}}'><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </div>
+                                {% end %}
+                            </div>
+                            <div class="d-flex flex-row mx-2 col-md-12"> 
+                                {% if comment.get("reply_liked_by").get(reply.reply_id) == 1 %}
+                                <form action="/newblog/deletelikereply" method="GET" class='delete-like-form-{{comment.get("comment_id")}}-{{reply.reply_id}}'>
+                                    <input type="hidden" name="deletereplylikeid" value='{{comment.get("reply_like_data").get(reply.reply_id).like_reply_id}}'/>
+                                    <button type="submit" class="btn btn-link text-primary like-comment" data-id='{{comment.get("comment_id")}}-{{reply.reply_id}}' data-has-like='{{reply.like_count}}'><small><i class="fas fa-thumbs-up mr-2"></i><b>Like</b></small></button>
+                                </form>
+                                {% else %}
+                                <form action="/newblog/addlikereply" method="POST" class='add-like-form-{{comment.get("comment_id")}}-{{reply.reply_id}}'>
+                                    <input type="hidden" name="newuserid" value="{{currentuser.user_id}}"/>
+                                    <input type="hidden" name="newreplyid" value='{{reply.reply_id}}'/>
+                                    <input type="hidden" name="newweeklyreportid" value="{{weeklyreportid}}"/>
+                                    <button type="submit" class="btn btn-link like-comment text-muted" data-id='{{comment.get("comment_id")}}-{{reply.reply_id}}'  data-has-like='{{reply.like_count}}'><small><i class="fas fa-thumbs-up mr-2"></i><b>Like</b></small></button>
+                                </form>
+                                {% end %}
+                                <button class="btn btn-link text-muted ml-4 reply-comment"><small><i class="fas fa-reply mr-2"></i><b>Reply</b></small></button> 
+                                <span class="text-black-50 align-self-center ml-5"><small>{{timeago.format(reply.created_on, datetime.now())}}</small></span> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div>
+                {% end %}
+                <div class = "mt-3 media position-relative d-none reply-form-div">
+                    <img src = "{{currentuseravatarURL}}" alt = "{{currentuser.username}} Avatar" class = "mr-3 rounded-circle comment-photo" /> 
+                    <div class = "media-body align-self-center"> 
+                        <form class = "d-flex flex-row mb-0 reply-comment-form" id="reply-form" action="/newblog/addreply" method="POST">
+                            <input type = "text" name="newreplytext" class = "form-control flex-grow-1 reply-comment-input" placeholder = "Write a reply..." /> 
+                            <input type="hidden" name="newparentcommentid" value='{{comment.get("comment_id")}}'/>
+                            <button type = "submit" class = "btn btn-primary ml-2 reply-comment-submit" > REPLY </button>
+                        </form> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    {% end %}
+    <div class="give-comment">
+        <div class="media position-relative">
+            <img src='{{currentuseravatarURL}}' alt="{{currentuser.username}} Avatar" class="mr-3 rounded-circle comment-photo" />
+            <div class="media-body align-self-center">
+                <form class="mb-0" action="/newblog/addcomment" method="POST">
+                    <div class="rating rating-comment mb-2">
+                        <input class="rating__input hidden--visually" type="radio" id="5-star" name="newstars" value="5">
+                        <label class="rating__label mb-0" for="5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
+
+                        <input class="rating__input hidden--visually" type="radio" id="4-star" name="newstars" value="4">
+                        <label class="rating__label mb-0" for="4-star" title="4 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">4 out of 5 rating</span></label>
+
+                        <input class="rating__input hidden--visually" type="radio" id="3-star" name="newstars" value="3">
+                        <label class="rating__label mb-0" for="3-star" title="3 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">3 out of 5 rating</span></label>
+
+                        <input class="rating__input hidden--visually" type="radio" id="2-star" name="newstars" value="2">
+                        <label class="rating__label mb-0" for="2-star" title="2 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">2 out of 5 rating</span></label>
+
+                        <input class="rating__input hidden--visually" type="radio" id="1-star" name="newstars" value="1">
+                        <label class="rating__label mb-0" for="1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <input type="text" class="form-control flex-grow-1 input-comment" placeholder="Write a comment..." name="newcommentext" />
+                        <input type="hidden" name="newweeklyreportid" value="{{weeklyreportid}}"/>
+                        <input type="hidden" value="{{user.user_id}}" name="newuserid" />
+                        <button type="submit" class="btn btn-primary ml-2">SUBMIT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Modal for Add Reflection-->
+<div class="modal fade" id="newreflectionmodal" tabindex="-1" role="dialog" aria-labelledby="newreflectionlabelmodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newreflectionlabelmodal">REFLECTION</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+            </div>
+            <form action="/newblog/addreflection" method="POST">
+                <div class="modal-body mx-2">
+                    <small class="text-muted">This pop up will show up when you press "ADD REFLECTION" or when you access the blog on <span class="font-weight-bold">Friday</span> for the first time of the week.</small>
+                    <div class="text-center">
+                        <p class="text-dark mt-4"><b>Do you feel the activities you did last week contributed to your goals?</b></p>
+                        <p class="text-dark d-inline align-super mr-2">Not contributed at all</p>
+                        <div class="rating">
+                            <input class="rating__input hidden--visually" type="radio" id="5-star" name="newreflectionrate" value="5" required>
+                            <label class="rating__label mb-0" for="5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="4-star" name="newreflectionrate" value="4">
+                            <label class="rating__label mb-0" for="4-star" title="4 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">4 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="3-star" name="newreflectionrate" value="3">
+                            <label class="rating__label mb-0" for="3-star" title="3 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">3 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="2-star" name="newreflectionrate" value="2">
+                            <label class="rating__label mb-0" for="2-star" title="2 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">2 out of 5 rating</span></label>
+
+                            <input class="rating__input hidden--visually" type="radio" id="1-star" name="newreflectionrate" value="1">
+                            <label class="rating__label mb-0" for="1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
+                        </div>
+                        <p class="text-dark d-inline align-super ml-2">Extremely Contributed</p>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label for="textarea1"><b>Why or why not?</b></label>
+                        <textarea class="form-control" id="textarea1" name="newreflectiontext" rows="4" required placeholder="Write the reason..."></textarea>
+                    </div>
+                    <div class="mt-3 mb-2"><small>You cannot edit your reflection after submit</small></div>
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </div>
+                <!-- <div class="modal-footer align-left">
+                </div> -->
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal for Add Project-->
+<!-- <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProjectModal">Add Project</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form action="/newblog/">
+                    <label for="project-name">Project Name</label>
+                    <input type="text" id="project-name" class="form-control" placeholder="Project Name..." />
+                    <label class="mt-3" for="select-project-member">Members</label>
+                    <div class="w-100">
+                        <select class="w-100 js-states form-control" id="select-project-member" multiple="multiple"></select>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary">+ADD PROJECT</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-gray" data-dismiss="modal">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!--Modal for New Activity-->
+<div class="modal fade" id="newactivitymodal" tabindex="-1" role="dialog" aria-labelledby="newactivitymodallabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New Activity</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="/newblog/addactivity" method="POST">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="activity-name">Activity</label>
+                            <div class="input-group col-md-12 ">
+                                <input type="text" class="form-control"  name="newactivityname" id="activity-name" placeholder="Enter Activity..." aria-placeholder="Enter Activity...">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="newactivity-project-name">Project</label>
+                            <div class="input-group col-md-12">
+                                <select class="form-control select2-project-name" name="newprojectid" id="newactivity-project-name">
+                                    <option></option>
+                                    {% for project in projectlist%}
+                                    <option value={{project.project_id}}>{{project.project_name}}</option>
+                                    {% end %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="date-range">Date Range</label>
+                            <div class="input-group col-md-12" id="date-range">
+                                <input type="text" placeholder="Choose Date Range" class="form-control col-md-12 modal-date-range-datepicker" name="newdaterange" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="priority-level">Priority</label>
+                            <div class="input-group col-md-12">
+                                <select class="form-control" id="priority-level" name="newpriority">
+                                    <option value=" " disabled selected hidden>Choose Priority</option>
+                                    <option value='1'> P1</option>
+                                    <option> P2</option>
+                                    <option> P3</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="percentage ">Percentage</label>
+                            <div class="input-group col-md-12">
+                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="activitylocation" value="0"/>
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gray" data-dismiss="modal">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% end %}
