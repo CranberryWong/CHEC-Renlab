@@ -29,6 +29,7 @@ config.signature_version = botocore.UNSIGNED
 
 DocURL = os.path.join(os.path.dirname('./..'), "static/documents")
 CurriculumURL = os.path.join(DocURL, "HCIcurriculum")
+pastCurriculumURL = os.path.join(DocURL, "HCIcurriculum")
 ProjectURL = os.path.join(DocURL, "projects")
 
 dirDoc = os.path.dirname("documents/publication.md")
@@ -113,6 +114,7 @@ class CurriculumHandler(BaseHandler):
         self.render("home/curriculum.html", title = self.title, curriculumList = curriculumList)
 
 
+
 class pastcurriculumHandler(BaseHandler):
   def get(self):
     self.title = 'HCI Curriculum'
@@ -140,12 +142,12 @@ class IntroHandler(BaseHandler):
 
         if not os.path.exists(dirDoc):
             os.makedirs(dirDoc)
-            
+
         if self.get_cookie('lang') == 'ja_JP':
             filename = "chec_jp.md"
         else:
             filename = "chec.md"
-            
+
         s3.Bucket(BUCKET_NAME).download_file(dirDoc+"/"+filename, dirDoc+"/"+filename)
 
         with open(os.path.join(dirDoc, filename), encoding='utf-8', mode="r") as f:

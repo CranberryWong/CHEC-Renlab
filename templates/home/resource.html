@@ -15,7 +15,7 @@
     bottom: -10%;
 }
 .carousel-indicators li{
-    background-color: #BDBDBD; 
+    background-color: #BDBDBD;
 }
 .carousel-indicators li.active{
     background-color: #0062cc;
@@ -33,10 +33,10 @@
                 <span class="badge badge-light">{{ _(k) }}</span>
             </h4>
             {% for member in v %}
-            <div class="member-mini-list-element"> 
+            <div class="member-mini-list-element">
             <img src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" alt="" class="rounded-circle member-mini-list-element-img mr-2">
                 <a href="/blog/{{ member }}">{{ member }}</a>
-            </div>   
+            </div>
             {% end %}
             {% end %}
             </div>
@@ -64,24 +64,24 @@
                         {% else %}
                             <div class="carousel-item ml-5" style="min-height:305px;width:610px;">
                         {% end %}
-                        <div class="member-mini-list-element"> 
+                        <div class="member-mini-list-element">
                                     <img src="{{ allAvatarURL['members/'+memberval[0]+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="avatar of {{memberval[0]}}">
                                     <span>{{ memberval[0] }}</span>
                                     <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                                     <span>{{blogList[memberval[0]].rstrip(".md")}}</span>
                             </div>
-                            <hr>                                
+                            <hr>
                             <p>{% raw blogContent[memberval[0]] %}</p>
                         </div>
-                    {% end %}    
+                    {% end %}
                     <!-- <div class="carousel-item" style="min-height:305px;width:610px;">
-                            <div class="member-mini-list-element"> 
+                            <div class="member-mini-list-element">
                                     <img data-src="{{ allAvatarURL['members/'+member+'/avatar.png'] }}" class="rounded-circle member-mini-list-element-img mr-2" alt="Generic responsive image">
                                     <span>{{ member }}</span>
                                     <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                                     <span>Blog Title</span>
                             </div>
-                            <hr>                                
+                            <hr>
                             <p>Blog Content</p>
                     </div> -->
 
@@ -108,8 +108,8 @@
             </div>
             <div class="card mb-4">
                 <div class="card-body">
-                <h5 class="lead">{{ _("25th CHEC / 73rd Ren Lab Workshop Info") }}</h5>
-                <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1xjh8ILzUtVzD3tcQESAIjLPgt4w8ZnjfLxHM2ltWqao/edit#gid=1328587438" role="button">Program</a>
+                <h5 class="lead">{{ _("81st CHEC / Ren Lab Workshop Info") }}</h5>
+                <a class="btn btn-primary btn-sm" href="https://docs.google.com/spreadsheets/d/1xjh8ILzUtVzD3tcQESAIjLPgt4w8ZnjfLxHM2ltWqao/edit#gid=119887633" role="button">Program</a>
                 <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1DFHm9lskkFPZCZr5oLayTd5imb7a1zBM?usp=sharing" role="button">Proceedings</a>
                 <a class="btn btn-primary btn-sm" href="https://drive.google.com/drive/folders/1e3ubesnEk-xZHejBj7nHXXKFnF7uwMRE?usp=sharing" role="button">PPT</a>
                 </div>

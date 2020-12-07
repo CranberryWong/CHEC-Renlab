@@ -69,7 +69,7 @@ class MembersHandler(BaseHandler):
 
             "Master Students": {
                 # "Fitra Rahmamuliani": {}, 
-                "Xiaoxuan Li": {}, 
+                # "Xiaoxuan Li": {}, 
                 "Yilin Zheng": {}, 
                 "Chunyuan Lan": {}, 
                 # "Xinpeng Li": {}, 
