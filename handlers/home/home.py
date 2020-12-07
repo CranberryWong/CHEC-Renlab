@@ -5,7 +5,7 @@ import tornado
 import tornado.locale
 import markdown
 import os
-import boto3 
+import boto3
 import botocore
 
 from handlers.base import BaseHandler
@@ -48,7 +48,7 @@ class MembersHandler(BaseHandler):
             "Associate Professors": {
                 "Yukinobu Hoshino":{},
             },
-            
+
             "Visiting Researchers": {
                 "Kavous Salehzadeh Niksirat": {"link": "http://member.acm.org/~kavous"},
                 "Huawei Tu": {},
@@ -62,8 +62,8 @@ class MembersHandler(BaseHandler):
             },
 
             "Ph.D. Students": {
-                "Xinhui Jiang": {}, 
-                "Yang Li": {}, 
+                "Xinhui Jiang": {},
+                "Yang Li": {},
                 "Chen Wang": {},
             },
 
@@ -84,13 +84,12 @@ class MembersHandler(BaseHandler):
             },
 
             "Bachelor Students": {
-                "Akinori Kondo": {}, 
-                "Hijiri Kaneko": {}, 
-                "Ryota Torii": {}, 
-                "Takaaki Kubo": {}, 
-                "Yusuke Tokito": {}, 
-                "Saki Hiramatsu": {}, 
-                "Jiayuan Geng": {},
+                "Akinori Kondo": {},
+                "Hijiri Kaneko": {},
+                "Ryota Torii": {},
+                "Takaaki Kubo": {},
+                "Yusuke Tokito": {},
+                "Saki Hiramatsu": {},
                 "Adachi Kenshi": {},
                 "Miyamoto Daisuke": {},
             },
