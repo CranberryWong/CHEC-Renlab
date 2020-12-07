@@ -33,7 +33,7 @@
     <!--Button trigger modal for new activity-->
     <button type="button" class="mt-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#newactivitymodal">NEW ACTIVITY</button> {% if reflection_exists == 0 %}
     <!--Button trigger modal for new reflection-->
-    <button type="button" class="ml-3 mt-2 btn btn-primary btn-sm" data-toggle="modal" data-target="#newreflectionmodal">ADD REFLECTION</button> {% end %}
+    <button type="button" class="ml-3 mt-2 btn btn-primary btn-sm add-reflection-btn" data-toggle="modal" data-target="#newreflectionmodal">ADD REFLECTION</button> {% end %}
 </div>
 {% end %}
 
@@ -45,12 +45,12 @@
         <div class="project-section mb-3">
             <h6 class="project-name mt-3 {% if eachactivity[0].project_name=='Admin' %}text-project-admin{%else%}text-project-{{eachactivity[0].project_id % 10}}{%end%}">{{eachactivity[0].project_name}}</h6>
             <div class="d-flex flex-column">
-                <table class="table report-table">
+                <table class="table report-table border-bottom">
                     <tbody>
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="{% if visitor=='1' %}col-5{% else %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
@@ -73,7 +73,7 @@
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
                                     data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
-                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}" /></span>
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}" /></span>
                                     <span class="edit-activity-data">
                                         {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
                                     </span>
@@ -84,6 +84,7 @@
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
+                            {% if visitor == 0%}
                             <td class="col-1 mr-auto text-muted py-2">
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
@@ -94,8 +95,10 @@
                                 </form>
                                 </span>
                             </td>
+                            {% end %}
                         </tr>
                         {% end %}
+                        {% if visitor == 0%}
                         <form action="/newblog/addactivity" method="POST">
                             <tr class="row">
                                 <td class="col-5 ml-auto">
@@ -113,7 +116,7 @@
                                     </select>
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress">
-                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage"></span>
                                 </td>
                                 <td class="col-1 mr-auto">
                                     <input type="hidden" name="activitylocation" value="0"/>
@@ -122,7 +125,9 @@
                                 <input type="hidden" name="newprojectid" value="{{eachactivity[0].project_id}}">
                             </tr>
                         </form>
+                        {% end %}
                         <!-- Add activity row -->
+                        {% if visitor == 0%}
                         <tr class="addbutton">
                             <td class="py-1">
                                 <button class="btn rounded-circle text-muted p-0">
@@ -130,6 +135,7 @@
                                 </button>
                             </td>
                         </tr>
+                        {% end %}
                     </tbody>
                 </table>
             </div>
@@ -148,18 +154,18 @@
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="col-5 ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
-                                    <input type="text" class="form-control" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
+                                <td class="{% if visitor == '1' %}col-5{%else%}col-6{%end%} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                    <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data">{{activity.Activity.activity_name}}</span>
                                 </td>
                                 <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
-                                    <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
+                                    <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
                                     <span class="edit-activity-data">
                                         {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
                                     </span>
                                 </td>
                                 <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
-                                    <select class="form-control" name="newpriority">
+                                    <select class="form-control edit-activity-input d-none" name="newpriority">
                                         <option value="0" disabled hidden>Priority</option>
                                         <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
                                         <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
@@ -171,17 +177,18 @@
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
                                     data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
-                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%" value="{{activity.Activity.progress_percentage}}"></span>
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}"></span>
                                     <span class="edit-activity-data">
                                         {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
                                     </span>
                                 </td> 
-                                <td class="col-1">
+                                <td class="col-1 edit-activity-input d-none">
                                     <input type="hidden" name="newactivityid" value="{{activity.Activity.activity_id}}"/>
                                     <input type="hidden" name="activitylocation" value="0"/>
                                     <button type="submit" class="btn btn-primary">SUBMIT</button>
                                 </td>
                             </form>
+                            {% if visitor == 0%}
                             <td class="col-1 mr-auto text-muted py-2">
                                 <span class="edit-activity-data d-flex flex-row">
                                 <button type="button" class="btn py-0 editactivitybutton"data-id="{{activity.Activity.activity_id}}"><i class="fa fa-edit"></i></button>
@@ -192,8 +199,10 @@
                                 </form>
                                 </span>
                             </td>
+                            {% end %}
                         </tr>
                         {% end %}
+                        {% if visitor == 0%}
                         <!-- Add activity row -->
                         <form action="/newblog/addactivity" method="POST">
                             <tr class="row">
@@ -212,7 +221,7 @@
                                     </select>
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress">
-                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                    <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage"></span>
                                 </td>
                                 <td class="col-1 mr-auto">
                                     <input type="hidden" name="activitylocation" value="0"/>
@@ -221,6 +230,8 @@
                                 <input type="hidden" name="newprojectid" value="{{eachactivity[0].project_id}}">
                             </tr>
                         </form><!-- Add activity row -->
+                        {% end %}
+                        {% if visitor == 0%}
                         <tr class="addbutton">
                             <td class="py-1">
                                 <button class="btn rounded-circle text-muted p-0">
@@ -228,6 +239,7 @@
                                 </button>
                             </td>
                         </tr>
+                        {% end %}
                     </tbody>
                 </table>
             </div>
@@ -262,7 +274,7 @@
             <div class="media-body ml-3">
                 <div class="comment-section row">
                     <div class="d-flex flex-row">
-                        <div class="rounded shadow-sm py-3 pl-3 pr-5">
+                        <div class="rounded shadow-sm py-1 pl-2 pr-4">
                             <a href='/newblog/{{commentsname[comment.get("comment_id")]}}' class="text-decoration-none text-body"><b class="commentator">{{commentsname[comment.get("comment_id")]}}</b></a>
                             <div class="comment-content-stars-text">
                                 {% if comment.get("stars") > 0 %}                                 
@@ -286,7 +298,7 @@
                         </form>
                     </div>
                     {% end %}
-                    <div class="d-flex flex-row mx-2 col-md-12 col-sm-12">
+                    <div class="d-flex flex-row mr-2 col-md-12 col-sm-12 px-0">
                         {% if comment.get("liked_by_user") == 1%}
                             <form action="/newblog/deletelike" method="GET" class='delete-like-form-{{comment.get("comment_id")}}'>
                                 <input type="hidden" name="deletelikeid" value='{{comment.get("like_data").like_id}}'/>
@@ -312,13 +324,13 @@
                     <div class="media-body row"> 
                         <div class="comment-section col-md-auto"> 
                             <div class="d-flex flex-row">
-                                <div class="rounded shadow-sm pl-3 py-3 pr-5 col-md-auto"> 
+                                <div class="rounded shadow-sm pl-2 py-1 pr-4 col-md-auto"> 
                                     <a class="text-decoration-none text-body" href='/newblog/{{comment.get("replies_name")[reply.reply_id]}}'>
                                         <b class="commentator">{{comment.get("replies_name")[reply.reply_id]}}</b>
                                     </a>
                                     <p class="reply-comment-content mb-0 mt-1">{{reply.reply_text}}</p> 
                                 </div> 
-                                <div class="like-count rounded col-md-auto align-self-end float-right bg-darkgray text-white py-1 px-2"> 
+                                <div class="like-count rounded col-md-auto align-self-end float-right bg-darkgray text-white py-1 px-1"> 
                                     <i class="fa fa-thumbs-up mr-2"></i>
                                     <span class="number" data-id='{{comment.get("comment_id")}}-{{reply.reply_id}}' data-like-number="{{reply.like_count}}" data-has-like="{{reply.like_count}}">{{reply.like_count}}</span> 
                                 </div> 
@@ -334,7 +346,7 @@
                                 </div>
                                 {% end %}
                             </div>
-                            <div class="d-flex flex-row mx-2 col-md-12"> 
+                            <div class="d-flex flex-row mr-2 col-md-12 col-sm-12 px-0"> 
                                 {% if comment.get("reply_liked_by").get(reply.reply_id) == 1 %}
                                 <form action="/newblog/deletelikereply" method="GET" class='delete-like-form-{{comment.get("comment_id")}}-{{reply.reply_id}}'>
                                     <input type="hidden" name="deletereplylikeid" value='{{comment.get("reply_like_data").get(reply.reply_id).like_reply_id}}'/>
@@ -375,20 +387,20 @@
             <div class="media-body align-self-center">
                 <form class="mb-0" action="/newblog/addcomment" method="POST">
                     <div class="rating rating-comment mb-2">
-                        <input class="rating__input hidden--visually" type="radio" id="5-star" name="newstars" value="5">
-                        <label class="rating__label mb-0" for="5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
+                        <input class="rating__input hidden--visually" type="radio" id="comment-5-star" name="newstars" value="5">
+                        <label class="rating__label mb-0" for="comment-5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
 
-                        <input class="rating__input hidden--visually" type="radio" id="4-star" name="newstars" value="4">
-                        <label class="rating__label mb-0" for="4-star" title="4 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">4 out of 5 rating</span></label>
+                        <input class="rating__input hidden--visually" type="radio" id="comment-4-star" name="newstars" value="4">
+                        <label class="rating__label mb-0" for="comment-4-star" title="4 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">4 out of 5 rating</span></label>
 
-                        <input class="rating__input hidden--visually" type="radio" id="3-star" name="newstars" value="3">
-                        <label class="rating__label mb-0" for="3-star" title="3 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">3 out of 5 rating</span></label>
+                        <input class="rating__input hidden--visually" type="radio" id="comment-3-star" name="newstars" value="3">
+                        <label class="rating__label mb-0" for="comment-3-star" title="3 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">3 out of 5 rating</span></label>
 
-                        <input class="rating__input hidden--visually" type="radio" id="2-star" name="newstars" value="2">
-                        <label class="rating__label mb-0" for="2-star" title="2 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">2 out of 5 rating</span></label>
+                        <input class="rating__input hidden--visually" type="radio" id="comment-2-star" name="newstars" value="2">
+                        <label class="rating__label mb-0" for="comment-2-star" title="2 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">2 out of 5 rating</span></label>
 
-                        <input class="rating__input hidden--visually" type="radio" id="1-star" name="newstars" value="1">
-                        <label class="rating__label mb-0" for="1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
+                        <input class="rating__input hidden--visually" type="radio" id="comment-1-star" name="newstars" value="1">
+                        <label class="rating__label mb-0" for="comment-1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
                     </div>
                     <div class="d-flex flex-row">
                         <input type="text" class="form-control flex-grow-1 input-comment" placeholder="Write a comment..." name="newcommentext" />
@@ -531,7 +543,7 @@
                         <div class="col-md-12">
                             <label for="percentage ">Percentage</label>
                             <div class="input-group col-md-12">
-                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Enter ...%" aria-placeholder="Enter ...%"></span>
+                                <span class="input-percentage "><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage"></span>
                             </div>
                         </div>
                     </div>
