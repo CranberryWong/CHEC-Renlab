@@ -78,7 +78,6 @@ class MembersHandler(BaseHandler):
                 # "Hongyun Lyu": {}, 
                 # "Jian Zhang": {}, 
                 # "Zhihang Guo": {}, 
-                "Yanyin Zhou": {},
                 "Xiaofei Zhu": {},
                 "Junlin Sun": {},
             },
