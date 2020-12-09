@@ -1,0 +1,31 @@
+{% extends "main_base.html" %} {% block main %} {% import uuid %}
+
+<div class="my-2 mx-5">
+    <h3>All Notifications</h3>
+    <div class="mt-4 allnotification notification-container">
+        {% for notification in allnotifications %}
+        <div class="d-flex flex-row mb-2 notification-row px-2 py-1">
+            <a href='/newblog/{{notification.get("sender_name")}}'>
+                <img class="rounded-circle mr-2" src='{{notification.get("avatar_url")}}' />
+            </a>
+            <div class="notification-content col-11">
+                <a href='/newblog/{{notification.get("sender_name")}}' class="text-body text-decoration-none">
+                    <b class="writers-name">{{notification.get("sender_name")}}</b>
+                </a>
+                <div class='read-notif read-notification-area-{{notification.get("notification_id")}}'>
+                    <p class="mb-1">{{notification.get("reference_text")}}</p>
+                    <small class="text-muted">{{timeago.format(notification.get("created_on"), datetime.now())}}</small>
+                </div>
+            </div>
+            {% if notification.get("click_by_user") == 0 %}
+            <div class='unread rounded-circle align-self-center text-primary read-notif read-notification-area-{{notification.get("notification_id")}}' data-id='{{notification.get("notification_id")}}'>&#8226;</div>
+            {% end %}
+            <form action="/newblog/readnotification" method="GET" class='d-none readnotificationform-{{notification.get("notification_id")}}'>
+                <input type="hidden" name="newnotificationid" value='{{notification.get("notification_id")}}'/>
+                <button type="submit invisible"></button>
+            </form>
+        </div>
+        {% end %}
+    </div>
+</div>
+{% end %}

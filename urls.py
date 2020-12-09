@@ -76,6 +76,7 @@ handlers = [
             (r"/newblog/addlikereply", mainblog.AddReplyLikeHandler),
             (r"/newblog/deletelikereply", mainblog.DeleteReplyLikeHandler),
             (r"/newblog/readnotification", mainblog.ReadNofiticationHandler),
+            (r"/newblog/notification", mainblog.NotificationHandler),
             (r"/newblog/(?P<userName>[\w.%]+)", mainblog.MainHandler),
             (r"/newblog/(?P<userName>[\w.%]+)(?:/project)?/?$", mainblog.ViewProjectHandler),
             (r"/newblog/(?P<userName>[\w.%]+)(?:/projectadmin)?/?$", mainblog.ProjectAdminHandler),

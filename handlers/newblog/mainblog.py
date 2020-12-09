@@ -67,7 +67,7 @@ class homeBase(BaseHandler):
         self.minexp = self.session.query(XpEvents.min_xp).filter(self.user_level == XpEvents.level).scalar()
         self.maxexp = self.session.query(XpEvents.min_xp).filter(self.user_level + 1 == XpEvents.level).scalar()
         
-        self.notification_query = self.session.query(Notification).filter(Notification.recipient_id == self.user.user_id).order_by(Notification.created_on.desc()).all()
+        self.notification_query = self.session.query(Notification).filter(Notification.recipient_id == self.user.user_id).order_by(Notification.created_on.desc()).limit(3).all()
         
         self.notifications =  list()
         for notification in self.notification_query:
@@ -1282,3 +1282,23 @@ class LatestBlogHandler(BaseHandler):
         
         self.render("newblog/latestblog.html", title = self.title, userName = userName, user = self.user, avatarURL = self.avatarURL, projectgrouplist = self.projectgrouplist, menu = self.menu, userlevel = self.user_level, minexp = self.minexp, maxexp = self.maxexp, visitor = self.visitor, notifications = self.notifications, projectlist = self.user_projectlist, latestuserdatas = self.latestusersdata, meetingagenda = self.meetingagenda)
         self.session.close()
+
+class NotificationHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        homeBase.init(self)
+        self.title = "All Notifications - New Blog"
+        
+        self.notification_query = self.session.query(Notification).filter(Notification.recipient_id == self.user.user_id).order_by(Notification.created_on.desc()).all()
+        
+        self.allnotifications =  list()
+        for notification in self.notification_query:
+            self.sender = self.session.query(Account).filter(Account.user_id == notification.sender_id).first()
+            self.param = {'Bucket': BUCKET_NAME, 'Key': 'members/' + self.sender.username  + '/avatar.png'}
+            self.notificationavatarURL = s3c.generate_presigned_url('get_object', self.param)
+            self.inside = {"notification_id": notification.notification_id, "avatar_url": self.notificationavatarURL, "sender_name": self.sender.username, "reference_text": notification.reference_text, "click_by_user": notification.click_by_user, "created_on":notification.created_on}
+            self.allnotifications.append(self.inside)
+        
+        self.session.close()
+        
+        self.render("newblog/notification.html", title = self.title, notifications = self.notifications, allnotifications = self.allnotifications)

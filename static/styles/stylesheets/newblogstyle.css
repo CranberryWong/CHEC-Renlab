@@ -446,3 +446,9 @@ header .text-lg-center {
     right: 25px;
     display: none;
 }
+
+.allnotification img{
+    width:2.5em;
+    height: 2.5em;
+    object-fit: cover;
+}
