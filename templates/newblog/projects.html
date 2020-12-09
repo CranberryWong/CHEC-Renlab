@@ -1,4 +1,8 @@
-{% extends "main.html" %} {% block content %} {% import uuid %} {% from datetime import datetime %}
+{% extends "main.html" %}
+{% block costomCSS %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.bootstrap_4.min.css">
+{% end %}
+{% block content %} {% import uuid %} {% from datetime import datetime %}
 <h3 class="mt-2"><b>{{projectdata.project_name}}</b></h3>
 <div class="member-project-list d-flex flex-row my-4">
     <p class="align-self-center">Members:</p>
@@ -53,7 +57,7 @@
                 </div>
                 <div class="card-body">
                     <form class="d-flex flex-rows mt-3">
-                        <div class="dropdown">
+                        <!-- <div class="dropdown mr-3">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Sort
                             </button>
@@ -64,11 +68,19 @@
                                 <a class="dropdown-item sort-report-priority" href="#" data-id="1">Priority</a>
                                 <a class="dropdown-item sort-report-progress" href="#" data-id="1">Progress</a>
                             </div>
-                        </div>
-                        <input class="form-control ml-3 mr-sm-2 search-activity-title" type="search" placeholder="Search Activity..." aria-label="Search" data-id="1">
+                        </div> -->
+                        <input class="form-control mr-sm-2 search-activity-title" type="search" placeholder="Search Activity..." aria-label="Search" data-id="1">
                     </form>
         
                     <table class="table mt-3 report-table" data-id="1">
+                        <thead>
+                            <tr class="row pl-3">
+                                <th class="col-5">Activity Name</th>
+                                <th class="col-3 sorter-date-range-dMMMyyyy">Date Range</th>
+                                <th class="col-1">Priority</th>
+                                <th class="col-3 pl-4 sorter-percentage">%</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {% for activity in member.get("activitydata")%}
                             <tr class="row editable-report">
@@ -79,8 +91,7 @@
                                     </td>
                                     <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
                                         <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
-                                        <span class="edit-activity-data">
-                                            {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
+                                        <span class="edit-activity-data">{{activity.WeeklyReport.date_range_start.strftime("%d %b %Y")}} - {{activity.WeeklyReport.date_range_end.strftime("%d %b %Y")}}
                                         </span>
                                     </td>
                                     <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
@@ -98,7 +109,7 @@
                                         data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
                                         <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}" /></span>
                                         <span class="edit-activity-data">
-                                            {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
+                                            {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}<span>%</span> {% end %} 
                                         </span>
                                     </td> 
                                     <td class="col-1 edit-activity-input d-none">
@@ -329,5 +340,44 @@
         </div>
     </div>
 </div>
-
 {%end%}
+
+{% block customJS %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/parsers/parser-date.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/parsers/parser-date-range.min.js"></script>
+<script>
+    $(function() {
+        $.tablesorter.addParser({
+        // set a unique id
+        id: 'percentage',
+        is: function(s, table, cell, $cell) {
+            // return false so this parser is not auto detected
+            return false;
+        },
+        format: function(s, table, cell, cellIndex) {
+            // format your data for normalization
+            let newstring;
+            if(s.toLowerCase() == "done"){
+                newstring = 100
+            } else if(s.toLowerCase() == "not started"){
+                newstring = 0
+            } else
+                newstring = s.replace("%","")
+            return newstring
+        },
+        // set type, either numeric or text
+        type: 'numeric'
+        });
+        $(".report-table").tablesorter(
+            {   theme: "bootstrap",
+                dateFormat: "dd MM yyyy",
+                headers: {
+                    // 2: {
+                    //     sorter: 'percentage'
+                    // }
+                }
+            });
+    });
+</script>
+{% end %}

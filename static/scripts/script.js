@@ -432,7 +432,7 @@ $(document).ready(function() {
         var id = $(this).attr("data-id");
         if ($('.report-table[data-id="' + id + '"]').is(":visible")) {
             $('.report-table[data-id="' + id + '"] .row').sort(function(a, b) {
-                return $(a).find(".col-6").text() > $(b).find(".col-6").text() ? 1 : -1;
+                return $(a).find(".col-5").text() > $(b).find(".col-5").text() ? 1 : -1;
             }).appendTo('.report-table[data-id="' + id + '"]');
         } else {
             $('.card-report[data-id="' + id + '"] .card').sort(function(a, b) {
@@ -446,8 +446,8 @@ $(document).ready(function() {
         e.preventDefault();
         var id = $(this).attr("data-id");
         if ($('.report-table[data-id="' + id + '"]').is(":visible")) {
-            $('.report-table[data-id="' + id + '"] .row').sort(function(a, b) {
-                return $(a).find(".col-3").text() > $(b).find(".col-3").text() ? 1 : -1;
+            $('.report-table[data-id="' + id + '"]').find('tr').sort(function(a, b) {
+                return $(a).find(".col-3 .edit-activity-data").text() > $(b).find(".col-3 .edit-activity-data") ? 1 : -1;
             }).appendTo('.report-table[data-id="' + id + '"]');
         } else {
             $('.card-report[data-id="' + id + '"] .card').sort(function(a, b) {
