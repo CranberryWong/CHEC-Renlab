@@ -54,7 +54,7 @@ class ResourceHandler(BaseHandler):
         self.title = 'Resource'
         userName = tornado.escape.xhtml_escape(self.current_user)
 
-        memberIgnoreList = ["Yukinobu Hoshino", "Kaechang Park", "Hamed Aliyari","Kibum Kim", "Sayan Sarcar", "Huawei Tu","Zhenxin Wang", "Yugandhara Suren Hiray", "Anran Wu", "Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Zengyi Han","Jingxin Liu", "Ayumu Ono","Heyu Wang","Shuang Wang","Luxi Yang", "Xinyue Hu", "Mengyao Wu","Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou","Ryota Torii"]
+        memberIgnoreList = ["Yukinobu Hoshino", "Kaechang Park", "Hamed Aliyari","Kibum Kim", "Sayan Sarcar", "Huawei Tu","Zhenxin Wang", "Yugandhara Suren Hiray", "Anran Wu", "Yumiko Kakuta", "Haruna Imada", "Kentarou Yoshida", "Arihiro Iwamoto", "Daichi Harada", "Ryutarou Mizuno", "Zengyi Han","Jingxin Liu", "Ayumu Ono","Heyu Wang","Shuang Wang","Luxi Yang", "Xinyue Hu", "Mengyao Wu","Kouya Ono", "Kyoichirou Yonezawa", "Mikina Nambu", "Naoki Higashi", "Seira Itou","Ryota Torii","Yanyin Zhou"]
         memberList2 = {
             "Professor": ["Xiangshi Ren",  "Kaechang Park"],
             "Associate Professor": ["Yukinobu Hoshino"],
