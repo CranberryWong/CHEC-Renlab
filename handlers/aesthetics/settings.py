@@ -114,7 +114,7 @@ WebpageList = [
     '67*news.livedoor.com',
 
     # One more overlap, delete
-    '68*gmo.jp',
+    '68*360.cn',
 
     '69*tokai-tv.com', 
     '70*life-is-tech.com',
@@ -139,7 +139,8 @@ WebpageList = [
     '89*fmltd.co.jp',
 
     # can not show, delete
-    '90*hanakinoboru.com.png',
+    #'90*hanakinoboru.com.png',
+    '90*security.ec-current.com',
 
     '91*heidicohen.com',
     '92*ironwork.jp',
@@ -229,10 +230,10 @@ WebpageList = [
     '165*hongxiu.com',
 
     '166*tapple.me',
-    '167*baihe.com',
+    '167*baihe.com'
 
-    '168*360.cn',
-    '169*security.ec-current.com'
+    #'168*360.cn',->68
+    #'169*security.ec-current.com'->90
 ]
 
 suncolor_sequence = ['#FF1E1E', '#FF7215', '#FFBB04', '#FFF72C', '#D1FF3F',

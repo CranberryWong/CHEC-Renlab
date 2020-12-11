@@ -85,7 +85,7 @@ class WebpageHandler(BaseHandler):
             webpage_path = "images/webpages/ted.com.png"
             self.render("experiment/layout/webpage.html", fixation_path = fixation_path, webpage_path = webpage_path, noise_path = noise_path, title = 'ted.com', wid = wid, ext=ext)
         wid2, title = settingslay.WebpageList[int(wid)].split('*')
-        webpage_path = "images/layout-webpages/" + title + ".png"
+        webpage_path = "images/webpages/" + title + ".png"
         m = self.get_cookie('m')
         print(m)
         g = n_cookie.match(m)
