@@ -329,7 +329,6 @@ $(document).ready(function() {
         { id: 9, text: "Zhenxin Wang" },
         { id: 10, text: "Sayan Sarcar" },
         { id: 11, text: "William Delamare" },
-        { id: 12, text: "Hamed Aliyari" },
         { id: 13, text: "Kyoko Hatakenaka" },
     ];
 
