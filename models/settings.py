@@ -3,7 +3,7 @@
 
 DBSETTINGS = dict(
    db_name = 'postgres',
-   db_host = 'localhost',
+   db_host = 'xrenlabdb.cc3wskflz0nc.ap-northeast-1.rds.amazonaws.com',
    db_user = 'postgres',
    db_password = 'root',
    db_port = 5432,
