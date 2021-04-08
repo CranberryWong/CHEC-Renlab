@@ -330,13 +330,13 @@ $(document).ready(function() {
         { id: 10, text: "Sayan Sarcar" },
         { id: 11, text: "William Delamare" },
         { id: 13, text: "Kyoko Hatakenaka" },
-        { id: 13, text: "Peng Tan" },
-        { id: 13, text: "Yibin Jia" },
-        { id: 13, text: "Tsuda Mahiro" },
-        { id: 13, text: "Torii Misato" },
-        { id: 13, text: "Natsuki Koyama" },
-        { id: 13, text: "Koki Uchida" },
-        { id: 13, text: "Ryo Kumamoto" },
+        { id: 39, text: "Peng Tan" },
+        { id: 44, text: "Yibin Jia" },
+        { id: 43, text: "Tsuda Mahiro" },
+        { id: 42, text: "Torii Misato" },
+        { id: 40, text: "Natsuki Koyama" },
+        { id: 41, text: "Koki Uchida" },
+        { id: 45, text: "Ryo Kumamoto" },
     ];
 
     $("#select-project-member").select2({
