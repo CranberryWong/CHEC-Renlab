@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     // var today = new Date();
     // $("#title-date-week").text(moment(today, "YYYY.MM.DD").day(1).format("MMMM DD") + " - " + moment(today, "YYYY.MM.DD").day(7).format("MMMM DD"));
-    
+
     $('.comment-content, .reply-comment-content, .activity-name-data').each(function(){
         $(this).html($(this).text())
     })
@@ -58,7 +58,7 @@ $(document).ready(function() {
 
     $(".date-range-datepicker").each(function(){
         //Choose date range datepicker function
-        var value = ''; 
+        var value = '';
         if($(this).val() != ''){
             value = $(this).val()
         } else {
@@ -117,7 +117,7 @@ $(document).ready(function() {
     // $(".editable-report").each(function(){
     //     $(this).find("td").on('click tap', function(e){
     //         $(this).closest('tr').find('[data-type="text"]').html('<input type="text" name="newactivityname" class="form-control" placeholder="Add Activity..." aria-placeholder="Add Activity..." value="'+$(this).closest('tr').find('[data-type="text"]').attr("data-value")+'">')
-            
+
     //         $(this).closest('tr').find('[data-type="datepicker"]').html('<input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker" data-week="1"/>')
     //         $(this).closest('tr').find('[data-type="datepicker"]').find('input').datetimepicker({
     //             format: 'YYYY.MM.DD',
@@ -276,7 +276,7 @@ $(document).ready(function() {
     //reply form showing up when press reply button
     $('.reply-comment').one('click tap', function() {
         // $(this).closest('.media-body').append('<div class = "mt-3 media position-relative"><img src = "https://chec-static.s3.amazonaws.com/members/Fitra%20Rahmamuliani/avatar.png?AWSAccessKeyId=AKIAJMTKKG3VUAMWLACA&Signature=c%2FZGb31S1VjB1IXO96hsQe4MHdg%3D&Expires=1597732227" alt = "Avatar" class = "mr-3 rounded-circle comment-photo" /> <div class = "media-body align-self-center"> <form class = "d-flex flex-row mb-0 reply-comment-form" id="reply-form"><input type = "text" class = "form-control flex-grow-1 reply-comment-input" placeholder = "Write a reply..." /> <button type = "button" class = "btn btn-primary ml-2 reply-comment-submit" > COMMENT </button> </form> </div> </div>');
-        if($(this).closest('.top-comment-section').find('.reply-form-div').hasClass('d-none')){   
+        if($(this).closest('.top-comment-section').find('.reply-form-div').hasClass('d-none')){
             $(this).closest('.top-comment-section').find('.reply-form-div').removeClass('d-none');
         }
         $(this).closest('.top-comment-section').find('.reply-form-div').find('.reply-comment-input').focus();
@@ -330,6 +330,13 @@ $(document).ready(function() {
         { id: 10, text: "Sayan Sarcar" },
         { id: 11, text: "William Delamare" },
         { id: 13, text: "Kyoko Hatakenaka" },
+        { id: 13, text: "Peng Tan" },
+        { id: 13, text: "Yibin Jia" },
+        { id: 13, text: "Tsuda Mahiro" },
+        { id: 13, text: "Torii Misato" },
+        { id: 13, text: "Natsuki Koyama" },
+        { id: 13, text: "Koki Uchida" },
+        { id: 13, text: "Ryo Kumamoto" },
     ];
 
     $("#select-project-member").select2({
@@ -414,7 +421,7 @@ $(document).ready(function() {
         $(this).closest(".reply-comment-section").find(".shadow-sm").html('<form class="d-flex flex-row" action="/newblog/editreply" method="POST"> <input name="newreplytext" type="text" class="form-control edit-reply-inputtext" value="'+$(this).closest(".reply-comment-section").find(".reply-comment-content").text()+'"/> <input type="hidden" name="newreplyid" value="'+ $(this).attr("data-replyid") +'"/> <button class="btn btn-primary ml-2" type="submit">SUBMIT</button> </form>');
         $(this).closest(".reply-comment-section").find(".shadow-sm").removeClass("shadow-sm");
         $(this).addClass("d-none")
-        
+
         $('.edit-reply-inputtext').suggest('@', {
             data: memberList,
             map: function(user) {
