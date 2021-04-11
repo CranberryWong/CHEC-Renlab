@@ -1,4 +1,4 @@
-{% import timeago %}{% from datetime import datetime %} {% from datetime import timedelta%} 
+{% import timeago %}{% from datetime import datetime %} {% from datetime import timedelta%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,7 +62,7 @@
                 <a class="p-2 text-dark" href="/language?lang=en_US">English</a>{% end %}
                 <a tabindex="0" class="p-2 text-primary notification-icon"><i class="text-lg-center fa fa-bell"></i>{% if len([p for p in notifications if p.get("click_by_user") == 0]) > 0 %}<span class="badge">{{len([p for p in notifications if p.get("click_by_user") == 0])}}</span>{% end %}</a>
             </nav>
-            
+
             <div class="notification-container" style="overflow: auto; display: none;">
                 <div class="pt-2">
                     {% for notification in notifications %}
@@ -103,6 +103,7 @@
                     <a class="dropdown-item" href="/newblog/{{ current_user }}">{{ _("New Blog") }}</a>
                     <a class="dropdown-item" href="/blog/{{ current_user }}">{{ _("Blog") }}</a>
                     <a class="dropdown-item" href="/resource">{{ _("Resource") }}</a>
+                    <a class="dropdown-item" href="https://www.dropbox.com/request/FFq8w2UUJX5IDxP8uUGn">{{ _("Slide Upload") }}</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/signout">{{ _("Sign Out") }}</a>
                 </div>
