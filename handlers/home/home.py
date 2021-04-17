@@ -62,22 +62,20 @@ class MembersHandler(BaseHandler):
             },
 
             "Ph.D. Students": {
-                "Xinhui Jiang": {},
                 "Yang Li": {},
                 "Chen Wang": {},
+                "Zhihang Guo": {},
+                "Peng Tan": {},
+                "Yibin Jia": {},
             },
 
             "Master Students": {
-                # "Fitra Rahmamuliani": {}, 
-                # "Xiaoxuan Li": {}, 
-                "Yilin Zheng": {}, 
-                "Chunyuan Lan": {}, 
-                # "Xinpeng Li": {}, 
-                # "Xi Chen": {}, 
-                # "Sai Jiang": {}, 
-                # "Hongyun Lyu": {}, 
-                # "Jian Zhang": {}, 
-                # "Zhihang Guo": {}, 
+                "Chunyuan Lan": {},
+                # "Xinpeng Li": {},
+                # "Xi Chen": {},
+                # "Sai Jiang": {},
+                # "Hongyun Lyu": {},
+                # "Jian Zhang": {},
                 "Xiaofei Zhu": {},
                 "Junlin Sun": {},
             },
@@ -91,6 +89,11 @@ class MembersHandler(BaseHandler):
                 "Saki Hiramatsu": {},
                 "Adachi Kenshi": {},
                 "Miyamoto Daisuke": {},
+                "Tsuda Mahiro": {},
+                "Torii Misato": {},
+                "Natsuki Koyama": {},
+                "Koki Uchida": {},
+                "Ryo Kumamoto": {},
             },
         }
 
@@ -119,6 +122,7 @@ class MembersHandler(BaseHandler):
                 "Xinyong Zhang": {"years": '', "job": 'Associate Professor', "affiliation": 'Renmin University of China, China', "avatar": 1},
                 "Jibin Yin": {"years": '', "job": 'Associate Professor', "affiliation": 'Kunming University of Sci. and Tech., China', "avatar": 1},
                 "Jing Kong": {"years": '', "job": 'Research fellow', "affiliation": 'Nagoya University, Japan', "avatar": 0},
+                "Xinhui Jiang": {"years": '2017 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 1},
 
             },
 
@@ -146,6 +150,7 @@ class MembersHandler(BaseHandler):
                 "Ayumu Ono": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Fitra Rahmamuliani": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
                 "Xiaoxuan Li": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
+                "Yilin Zheng": {"years": '2019 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
             }
         }
 
