@@ -55,18 +55,13 @@ class MembersHandler(BaseHandler):
                 "Kibum Kim": {},
                 "Sayan Sarcar": {},
                 "William Delamare": {"link": "http://member.acm.org/~william.delamare"},
-            },
-
-            "Assistant Professors": {
-                "Zhenxin Wang": {},
+                "Yang Li": {},
             },
 
             "Ph.D. Students": {
-                "Yang Li": {},
                 "Chen Wang": {},
                 "Zhihang Guo": {},
                 "Peng Tan": {},
-                "Yibin Jia": {},
             },
 
             "Master Students": {
@@ -78,15 +73,12 @@ class MembersHandler(BaseHandler):
                 # "Jian Zhang": {},
                 "Xiaofei Zhu": {},
                 "Junlin Sun": {},
+                "Yibin Jia": {},
+                "Takaaki Kubo": {},
             },
 
             "Bachelor Students": {
-                "Akinori Kondo": {},
-                "Hijiri Kaneko": {},
                 "Ryota Torii": {},
-                "Takaaki Kubo": {},
-                "Yusuke Tokito": {},
-                "Saki Hiramatsu": {},
                 "Adachi Kenshi": {},
                 "Miyamoto Daisuke": {},
                 "Tsuda Mahiro": {},
@@ -101,18 +93,20 @@ class MembersHandler(BaseHandler):
             "PostDocs": {
                 "William Delamare":{"years": '2017 ~ 2019', "job": 'Assistant Professor', "affiliation": 'ESTIA, France', "link": "http://member.acm.org/~william.delamare", "avatar": 1},
                 "Sayan Sarcar":{"years": '2015 ~ 2018', "job": 'Assistant Professor', "affiliation": 'Tsukuba University, Japan', "avatar": 1},
+                "Zhenxin Wang": {"years": '2015 ~ 2018', "job": 'Chief Technology Officer',"affiliation": 'Changchun Hongda Information Technology Co., Ltd., China', "avatar": 1},
                 "Silpasuwanchai Chaklam":{"years": '2015 ~ 2017', "job": 'Assistant Professor', "affiliation": 'Asian Institute of Technology, Thailand', "avatar": 1},
-                "Zhenxin Wang":{"years": '2015 ~ 2018', "job": 'Chief Technology Officer', "affiliation": 'Changchun Hongda Information Technology Co., Ltd., China', "avatar": 1},
                 "Kibum Kim":{"years": '2012 ~ 2014', "job": 'Associate Professor', "affiliation": 'Hanyang University, South Korea', "avatar": 1},
 
             },
 
             "Ph.D. Students": {
+                "Yang Li": {"years": '2017 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 1},
+                "Xinhui Jiang": {"years": '2017 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 1},
                 "Kavous Salehzadeh Niksirat": {"years": '2015 ~ 2019', "job": 'Postdoctoral Fellow', "affiliation": 'École Polytechnique Fédérale de Lausanne EPFL, Switzerland', "avatar": 1},
                 "Qinglong Wang": {"years": '2015 ~ 2017', "job": 'Postdoc', "affiliation": 'Jilin University, China', "avatar": 1},
                 "Handityo Aulia Putra": {"years": '2013 ~ 2016', "job": 'Assistant Professor', "affiliation": 'Keimyung University, Daegu, Korea', "avatar": 1},
-                "Nem Khan Dim":{"years": '2013 ~ 2016', "job": 'Assistant Professor', "affiliation": 'Yangon University, Myanmar', "avatar": 1},
                 "Mahmoud Mohamed H. Ahmed": {"years": '2015 ~ 2017', "job": 'Assistant Professor', "affiliation": 'South Valley University, Egypt', "avatar": 1},
+                "Nem Khan Dim":{"years": '2013 ~ 2016', "job": 'Assistant Professor', "affiliation": 'Yangon University, Myanmar', "avatar": 1},
                 "Huawei Tu": {"years": '2009 ~ 2012', "job": 'Assistant Professor', "affiliation": 'La Trobe University, Australia', "avatar": 1},
                 "Minghui Sun": {"years": '', "job": 'Assistant Professor', "affiliation": 'Jilin University, China', "avatar": 1},
                 "Feng Wang": {"years": '', "job": 'Prof. & Vice dean', "affiliation": 'Kunming University of Sci. and Tech., China', "avatar": 1},
@@ -122,35 +116,57 @@ class MembersHandler(BaseHandler):
                 "Xinyong Zhang": {"years": '', "job": 'Associate Professor', "affiliation": 'Renmin University of China, China', "avatar": 1},
                 "Jibin Yin": {"years": '', "job": 'Associate Professor', "affiliation": 'Kunming University of Sci. and Tech., China', "avatar": 1},
                 "Jing Kong": {"years": '', "job": 'Research fellow', "affiliation": 'Nagoya University, Japan', "avatar": 0},
-                "Xinhui Jiang": {"years": '2017 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 1},
+
 
             },
 
             "Master Students": {
-                "Ryusuke Ueta": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Masafumi Ogasawara": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Taishi Kato": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Kinya Tamura": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Tomoaki Tsuchida": {"years": '2005 ~ 2007', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Tomoki Ooya": {"years": '2006 ~ 2008', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Fumiya Fukutoku": {"years": '2006 ~ 2008', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Masatoshi Kusuba": {"years": '2010 ~ 2012', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Yusuke Hayashi": {"years": '2010 ~ 2012', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Yoshitaka Ohara": {"years": '2011 ~ 2013', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Masashi Okamoto": {"years": '2012 ~ 2014', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Taiga Machida": {"years": '2012 ~ 2014', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Ryo Mizobata": {"years": '2012 ~ 2014', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Kousuke Kume": {"years": '2013 ~ 2015', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Naoteru Jinjo": {"years": '2013 ~ 2015', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Masaki Obata": {"years": '2014 ~ 2016', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Toshiaki Shiraki": {"years": '2014 ~ 2016', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Fang Qi": {"years": '2015 ~ 2017', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Zengyi Han": {"years": '2017 ~ 2018', "job": '', "affiliation": 'Kochi University of Technology & Jilin University', "avatar": 2},
-                "Jingxin Liu": {"years": '2017 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Ayumu Ono": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Fitra Rahmamuliani": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Xiaoxuan Li": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
-                "Yilin Zheng": {"years": '2019 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
+              "Yilin Zhen": {"years": '2019 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Xiaoxuan Li": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Fitra Rahmamuliani": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Ayumu Ono": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Jingxin Liu": {"years": '2017 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Zengyi Han": {"years": '2017 ~ 2018', "job": '',"affiliation": 'Kochi University of Technology & Jilin University', "avatar": 2},
+              "Fang Qi": {"years": '2015 ~ 2017', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Toshiaki Shiraki": {"years": '2014 ~ 2016', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Masaki Obata": {"years": '2014 ~ 2016', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Naoteru Jinjo": {"years": '2013 ~ 2015', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Kousuke Kume": {"years": '2013 ~ 2015', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Ryo Mizobata": {"years": '2012 ~ 2014', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Taiga Machida": {"years": '2012 ~ 2014', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Masashi Okamoto": {"years": '2012 ~ 2014', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Yoshitaka Ohara": {"years": '2011 ~ 2013', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Yusuke Hayashi": {"years": '2010 ~ 2012', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Masatoshi Kusuba": {"years": '2010 ~ 2012', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Fumiya Fukutoku": {"years": '2006 ~ 2008', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Tomoki Ooya": {"years": '2006 ~ 2008', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Tomoaki Tsuchida": {"years": '2005 ~ 2007', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Kinya Tamura": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Taishi Kato": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Masafumi Ogasawara": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Ryusuke Ueta": {"years": '2002 ~ 2004', "job": '', "affiliation": 'Kochi University of Technology', "avatar": 2},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
         }
 
