@@ -121,7 +121,7 @@ class MembersHandler(BaseHandler):
             },
 
             "Master Students": {
-              "Yilin Zhen": {"years": '2019 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
+              "Yilin Zheng": {"years": '2019 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
               "Xiaoxuan Li": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
               "Fitra Rahmamuliani": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
               "Ayumu Ono": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
