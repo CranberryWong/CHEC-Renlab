@@ -2,7 +2,10 @@
 
 <div class="row no-gutters ml-0">
     <!--Left Navigation bar-->
-    <div class="col-md-3 shadow-sm left-nav-bar-blog px-4 pb-5">
+    <input type="checkbox" id="navTgl">
+	<label for="navTgl" class="open label-nav"><span></span></label>
+	<label for="navTgl" class="close label-nav"></label>
+    <div id="slideL" class="col-md-3 shadow-sm left-nav-bar-blog px-4 pb-5 off">
         <div class="d-flex justify-content-center pt-5 left-photo-containter">
             <img class="rounded-circle left-nav-photo" src="{{avatarURL}}" alt="Profile photo of {{user.username}}" />
             <button type="button" class="btn" data-toggle="modal" data-target="#fqaModal"><small class="align-self-endlevel bg-blue text-white text-center px-4 py-1" id="user-level-1">{{userlevel}}</small></button>
@@ -14,7 +17,7 @@
                 <small class="ml-auto">{{user.exp - minexp}}/{{ maxexp - minexp }} exp</small>
             </div>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ (user.exp - minexp ) / ( maxexp - minexp ) * 100}}%" aria-valuenow="{{user.exp - minexp}}" aria-valuemin="0" aria-valuemax="{{ maxexp - minexp }}"></div>
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ (user.exp - minexp ) / ( maxexp - minexp ) * 100}} %" aria-valuenow="{{user.exp - minexp}}" aria-valuemin="0" aria-valuemax="{{ maxexp - minexp }}"></div>
             </div>
             <small>Total: {{user.exp}} exp</small>
         </button>
@@ -64,6 +67,7 @@
             </div>
         </div>
     </div>
+
     <!-- Right Parts-->
     <div class="col-md-9 pt-4 px-4 mb-5">
         {% block content %} {% end %}
@@ -131,7 +135,6 @@
             </div>
         </div>
     </div>
-
     <!--Modal for Add Project-->
     <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModalLabel" aria-hidden="true">
         <div class="modal-dialog">

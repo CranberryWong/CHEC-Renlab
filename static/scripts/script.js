@@ -583,3 +583,5 @@ $(document).ready(function() {
             });
 
 });
+
+/* Kenshi write */
