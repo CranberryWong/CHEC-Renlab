@@ -96,7 +96,7 @@ class ResourceHandler(BaseHandler):
 class CurriculumHandler(BaseHandler):
     def get(self):
         self.title = 'HCI Curriculum'
-        year = ['2018']
+        year = ['2021u','2021g']
         curriculumList = []
         for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter = '\\'):
             dir = os.path.dirname(file.key)
@@ -118,7 +118,7 @@ class CurriculumHandler(BaseHandler):
 class pastcurriculumHandler(BaseHandler):
   def get(self):
     self.title = 'HCI Curriculum'
-    year = ['2017', '2016', '2014']
+    year = ['2018','2017', '2016', '2014']
     curriculumList = []
     for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter='\\'):
       dir = os.path.dirname(file.key)
