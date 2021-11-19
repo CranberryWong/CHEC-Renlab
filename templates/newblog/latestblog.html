@@ -16,13 +16,13 @@
     </div>
 </div>
 
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div id="carouselExampleIndicators" class="row carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         {% for i in range(len(latestuserdatas)) %}
         <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}" class="{% if i == 0 %}active {% end %}"></li>
         {% end %}
     </ol>
-    <div class="carousel-inner px-5">
+    <div class="carousel-inner px-5 p-25">
 <!--Top title with date-->
 {% for i, latestuserdata in enumerate(latestuserdatas) %}
 <div class="carousel-item {% if i == 0 %}active{% end %}">
