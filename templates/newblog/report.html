@@ -2,13 +2,13 @@
 
 <!--Top title with date and prev and next week-->
 <div class="d-flex flex-row justify-content-center align-content-center">
-    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{dateprev.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-prev"><small class="Lastweek-change">Previous week</small> <i class="px-3 fa fa-chevron-left"></i> </a></span>
+    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{dateprev.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-prev"><small>Previous week</small> <i class="px-3 fa fa-chevron-left"></i> </a></span>
     <span class="p-2">
         <h4 class="blog-title d-flex align-items-center mb-0">
             <span id="title-date-week">{{daterange}}</span>
     </h4>
     </span>
-    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{datenext.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-next"> <i class="fa fa-chevron-right px-3"></i> <small class="Nextweek-change">Next week</small></a></span>
+    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{datenext.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-next"> <i class="fa fa-chevron-right px-3"></i> <small>Next week</small></a></span>
 </div>
 
 <!--Reflection section-->
@@ -432,7 +432,7 @@
                     <small class="text-muted">This pop up will show up when you press "ADD REFLECTION" or when you access the blog on <span class="font-weight-bold">Friday</span> for the first time of the week.</small>
                     <div class="text-center">
                         <p class="text-dark mt-4"><b>Do you feel the activities you did last week contributed to your goals?</b></p>
-                        <p class="text-dark d-inline align-super mr-2 left-value">Not<span class="br"> contributed at all</span></p>
+                        <p class="text-dark d-inline align-super mr-2">Not contributed at all</p>
                         <div class="rating">
                             <input class="rating__input hidden--visually" type="radio" id="5-star" name="newreflectionrate" value="5" required>
                             <label class="rating__label mb-0" for="5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
@@ -449,7 +449,7 @@
                             <input class="rating__input hidden--visually" type="radio" id="1-star" name="newreflectionrate" value="1">
                             <label class="rating__label mb-0" for="1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
                         </div>
-                        <p class="text-dark d-inline align-super ml-2 right-value">Extremely<span class="br"> Contributed</span></p>
+                        <p class="text-dark d-inline align-super ml-2">Extremely Contributed</p>
                     </div>
                     <div class="form-group mt-5">
                         <label for="textarea1"><b>Why or why not?</b></label>
@@ -500,7 +500,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">New Activity</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="Cancel">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <form action="/newblog/addactivity" method="POST">
