@@ -680,7 +680,7 @@ header .text-lg-center {
     .Cancel{
       float: right;
     }
-    .modal-title, .Lastweek-change, .Nextweek-change{
+    .modal-title, .Lastweek-change, .Nextweek-change, .white-space{
       white-space: nowrap;
     }
     .br::before{
@@ -759,12 +759,13 @@ header .text-lg-center {
 
     #slideL {
       width: 350px;
-      z-index: 2;
-      height: auto;
+      z-index: 999;
+      height:100%;
+      overflow-y: auto;
+      max-height: 820px;
       padding: 0 40px 0 0;
       background-color: #fff;
       position: fixed;
-      overflow: auto;
       top: 0;
       left: 0;
       transform: translateX(-100%);
@@ -826,6 +827,34 @@ header .text-lg-center {
     }
     .blog-prev{
       margin-bottom: 32px;
+    }
+    .report-progress{
+      word-wrap: normal;
+    }
+    .overflow-none{
+      overflow: unset!important;
+    }
+
+    body div.no-padding, tr.no-padding{
+      padding-left: 0px!important;
+      padding-right: 0px!important;
+    }
+    body div.p-25{
+      padding-left: 25px!important;
+      padding-right: 25px!important;
+    }
+    body th.common-width{
+      flex: 0 0 16.666667%;
+      max-width: 16.666667%;
+    }
+    body th.mobile-pl-2{
+      padding-left: 0.5rem!important;
+    }
+    body td.no-margin{
+      margin-left: 0px!important;
+    }
+    body td.mobile-flex{
+      flex: 0 0 16.666667%;
     }
   }
   @media screen and (max-width: 480px) {
