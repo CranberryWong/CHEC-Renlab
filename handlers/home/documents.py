@@ -93,10 +93,10 @@ class ResourceHandler(BaseHandler):
 
         self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda, blogList = blogList, blogContent = blogContent, memberList2 = memberList2)
 
-class CurriculumHandler(BaseHandler):
+class CurriculumHandler_U(BaseHandler):
     def get(self):
         self.title = 'HCI Curriculum'
-        year = ['2021u','2021g']
+        year = ['2021u']
         curriculumList = []
         for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter = '\\'):
             dir = os.path.dirname(file.key)
@@ -114,6 +114,26 @@ class CurriculumHandler(BaseHandler):
         self.render("home/curriculum.html", title = self.title, curriculumList = curriculumList)
 
 
+class CurriculumHandler_G(BaseHandler):
+  def get(self):
+    self.title = 'HCI Curriculum'
+    year = ['2021g']
+    curriculumList = []
+    for file in myBucket.objects.filter(Prefix="documents/HCIcurriculum/", Delimiter='\\'):
+      dir = os.path.dirname(file.key)
+      if not os.path.exists(dir):
+        os.makedirs(dir)
+      if file.key[-1] == "/":
+        continue
+      if not os.path.isfile(file.key):
+        s3.Bucket(BUCKET_NAME).download_file(file.key, file.key)
+    for y in year:
+      s3_response_object = s3c.get_object(Bucket=BUCKET_NAME, Key='documents/HCIcurriculum/' + y + '.md')
+      curriculumList.append(markdown.markdown(s3_response_object['Body'].read().decode('utf-8-sig'),
+                                              extensions=['markdown.extensions.tables']))
+      # with open(os.path.join(dir, y + '.md'), encoding='utf-8', mode="r") as f:
+      #     curriculumList.append(markdown.markdown(f.read(), extensions=['markdown.extensions.tables']))
+    self.render("home/curriculum.html", title=self.title, curriculumList=curriculumList)
 
 class pastcurriculumHandler(BaseHandler):
   def get(self):
