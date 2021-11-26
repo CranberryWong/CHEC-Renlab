@@ -93,7 +93,7 @@ class ResourceHandler(BaseHandler):
 
         self.render("home/resource.html", title = self.title, memberList = memberList, allAvatarURL = allAvatarURL, content = content, agenda = agenda, blogList = blogList, blogContent = blogContent, memberList2 = memberList2)
 
-class CurriculumHandler(BaseHandler):
+class CurriculumHandler_U(BaseHandler):
     def get(self):
         self.title = 'HCI Curriculum'
         year = ['2021u']
