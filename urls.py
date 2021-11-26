@@ -17,7 +17,7 @@ handlers = [
             (r"/projects", documents.ProjectsHandler),
             (r"/projects/(.*)", documents.ProjectShowHandler),
             (r"/publication", documents.PubHandler),
-            (r"/curriculum_U", documents.CurriculumHandler),
+            (r"/curriculum_U", documents.CurriculumHandler_U),
             (r"/pastcurriculum", documents.pastcurriculumHandler),
             (r"/resource", documents.ResourceHandler),
 
