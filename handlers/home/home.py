@@ -66,11 +66,6 @@ class MembersHandler(BaseHandler):
 
             "Master Students": {
                 "Chunyuan Lan": {},
-                # "Xinpeng Li": {},
-                # "Xi Chen": {},
-                # "Sai Jiang": {},
-                # "Hongyun Lyu": {},
-                # "Jian Zhang": {},
                 "Xiaofei Zhu": {},
                 "Junlin Sun": {},
                 "Yibin Jia": {},
@@ -79,10 +74,10 @@ class MembersHandler(BaseHandler):
 
             "Bachelor Students": {
                 "Ryota Torii": {},
-                "Adachi Kenshi": {},
-                "Miyamoto Daisuke": {},
-                "Tsuda Mahiro": {},
-                "Torii Misato": {},
+                "Kenshi Adachi": {},
+                "Daisuke Miyamoto": {},
+                "Mahiro Tsuda": {},
+                "Misato Torii": {},
                 "Natsuki Koyama": {},
                 "Koki Uchida": {},
                 "Ryo Kumamoto": {},
