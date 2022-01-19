@@ -62,7 +62,7 @@ class ResourceHandler(BaseHandler):
             "Assistant Professor": ["Zhenxin Wang"],
             "Ph.D. Student": ["Xinhui Jiang", "Yang Li", "Chen Wang"],
             "Master Student": ["Yilin Zheng","Xinpeng Li","Xi Chen","Sai Jiang","Hongyun Lyu","Jian Zhang","Zhihang Guo","Xiaofei Zhu","Junlin Sun"],
-            "Bachelor Student": [ "Akinori Kondo", "Hijiri Kaneko", "Takaaki Kubo", "Yusuke Tokito", "Saki Hiramatsu", "Kenshi Adachi", "Miyamoto Daisuke"]
+            "Bachelor Student": [ "Akinori Kondo", "Hijiri Kaneko", "Takaaki Kubo", "Yusuke Tokito", "Saki Hiramatsu", "Kenshi Adachi", "Daisuke Miyamoto"]
         }
         memberList = [ (x, os.stat(BlogURL + '/' + x)) for x in os.listdir(BlogURL) if x not in ignore_list and x not in memberIgnoreList]
         memberList.sort(key = lambda x: x[1].st_ctime, reverse = True)
