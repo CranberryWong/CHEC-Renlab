@@ -2,13 +2,13 @@
 
 <!--Top title with date and prev and next week-->
 <div class="d-flex flex-row justify-content-center align-content-center">
-    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{dateprev.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-prev"><small>Previous week</small> <i class="px-3 fa fa-chevron-left"></i> </a></span>
+    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{dateprev.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-prev"><small class="Lastweek-change">Previous week</small> <i class="px-3 fa fa-chevron-left"></i> </a></span>
     <span class="p-2">
         <h4 class="blog-title d-flex align-items-center mb-0">
             <span id="title-date-week">{{daterange}}</span>
     </h4>
     </span>
-    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{datenext.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-next"> <i class="fa fa-chevron-right px-3"></i> <small>Next week</small></a></span>
+    <span class="p-2 mt-1 d-flex align-items-center blog-title"><a href="/newblog/{{userName}}?date={{datenext.strftime('%Y-%m-%d %H:%M:%S.%f')}}" class="text-decoration-none text-dark blog-next"> <i class="fa fa-chevron-right px-3"></i> <small class="Nextweek-change">Next week</small></a></span>
 </div>
 
 <!--Reflection section-->
@@ -26,7 +26,7 @@
 {% end %}
 
 <!--MEETING LINK!-->
-<a href="#" class="float-right"><i class="fa fa-tv text-blue"></i><u>Meeting Link</u></a>
+<a href="#" class="float-right ml-10"><i class="fa fa-tv text-blue"></i><u>Meeting Link</u></a>
 
 {% if visitor == 0%}
 <div class="d-flex flex-row">
@@ -50,18 +50,18 @@
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="{% if visitor==0 %}col-5{% elif visitor == 1  %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="{% if visitor==0 %}col-4{% elif visitor == 1  %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
-                                <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
+                                <td class="col-4 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
                                     <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
                                     <span class="edit-activity-data">
                                         {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
                                     </span>
                                 </td>
                                 <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
-                                    <select class="form-control edit-activity-input d-none" name="newpriority">
+                                    <select class="form-control edit-activity-input d-none priority-write" name="newpriority">
                                         <option value="0" disabled hidden>Priority</option>
                                         <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
                                         <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
@@ -73,7 +73,7 @@
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
                                     data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
-                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}" /></span>
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}" style="width: 35px!important; margin-left: -13px;"/></span>
                                     <span class="edit-activity-data">
                                         {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
                                     </span>
@@ -432,7 +432,7 @@
                     <small class="text-muted">This pop up will show up when you press "ADD REFLECTION" or when you access the blog on <span class="font-weight-bold">Friday</span> for the first time of the week.</small>
                     <div class="text-center">
                         <p class="text-dark mt-4"><b>Do you feel the activities you did last week contributed to your goals?</b></p>
-                        <p class="text-dark d-inline align-super mr-2">Not contributed at all</p>
+                        <p class="text-dark d-inline align-super mr-2 left-value">Not<span class="br"> contributed at all</span></p>
                         <div class="rating">
                             <input class="rating__input hidden--visually" type="radio" id="5-star" name="newreflectionrate" value="5" required>
                             <label class="rating__label mb-0" for="5-star" title="5 out of 5 rating"><span class="rating__icon"></span><span class="hidden--visually">5 out of 5 rating</span></label>
@@ -449,7 +449,7 @@
                             <input class="rating__input hidden--visually" type="radio" id="1-star" name="newreflectionrate" value="1">
                             <label class="rating__label mb-0" for="1-star" title="1 out of 5 rating"> <span class="rating__icon"></span> <span class="hidden--visually">1 out of 5 rating</span></label>
                         </div>
-                        <p class="text-dark d-inline align-super ml-2">Extremely Contributed</p>
+                        <p class="text-dark d-inline align-super ml-2 right-value">Extremely<span class="br"> Contributed</span></p>
                     </div>
                     <div class="form-group mt-5">
                         <label for="textarea1"><b>Why or why not?</b></label>
@@ -500,7 +500,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">New Activity</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="Cancel">&times;</span></button> -->
             </div>
             <div class="modal-body">
                 <form action="/newblog/addactivity" method="POST">
