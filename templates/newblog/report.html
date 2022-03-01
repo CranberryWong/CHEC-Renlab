@@ -26,7 +26,7 @@
 {% end %}
 
 <!--MEETING LINK!-->
-<a href="#" class="float-right"><i class="fa fa-tv text-blue"></i><u>Meeting Link</u></a>
+<a href="#" class="float-right ml-10"><i class="fa fa-tv text-blue"></i><u>Meeting Link</u></a>
 
 {% if visitor == 0%}
 <div class="d-flex flex-row">
@@ -50,18 +50,18 @@
                         {% for activity in eachactivity[1]%}
                         <tr class="row editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="{% if visitor==0 %}col-5{% elif visitor == 1  %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="{% if visitor==0 %}col-4{% elif visitor == 1  %}col-6{% end %} ml-auto py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
-                                <td class="col-3 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
+                                <td class="col-4 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
                                     <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
                                     <span class="edit-activity-data">
                                         {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
                                     </span>
                                 </td>
                                 <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
-                                    <select class="form-control edit-activity-input d-none" name="newpriority">
+                                    <select class="form-control edit-activity-input d-none priority-write" name="newpriority">
                                         <option value="0" disabled hidden>Priority</option>
                                         <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
                                         <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
@@ -73,7 +73,7 @@
                                 </td>
                                 <td class="col-2 flex-12 text-center report-progress py-2 {% if activity.Activity.progress_percentage == 0%}bg-gray{% end %} {% if activity.Activity.progress_percentage >= 80 and activity.Activity.progress_percentage <= 100%}bg-green text-white{%end%} {% if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 80%}bg-yellow{%end%}"
                                     data-progress="{{activity.Activity.progress_percentage}}" data-type="number" data-value="{{activity.Activity.progress_percentage}}">
-                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}" /></span>
+                                    <span class="input-percentage edit-activity-input d-none"><input type="number" name="newpercentage" min="0" max="100" placeholder="Progress percentage" aria-placeholder="Progress percentage" value="{{activity.Activity.progress_percentage}}" style="width: 35px!important; margin-left: -13px;"/></span>
                                     <span class="edit-activity-data">
                                         {%if activity.Activity.progress_percentage == 0%}Not started{% end %}{%if activity.Activity.progress_percentage == 100%}DONE{% end %}{%if activity.Activity.progress_percentage > 0 and activity.Activity.progress_percentage < 100%} {{activity.Activity.progress_percentage}}% {% end %} 
                                     </span>
@@ -500,7 +500,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">New Activity</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="Cancel">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="Cancel">&times;</span></button> -->
             </div>
             <div class="modal-body">
                 <form action="/newblog/addactivity" method="POST">

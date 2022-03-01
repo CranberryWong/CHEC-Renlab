@@ -16,7 +16,6 @@
 .custom-datalist {
     display: none;
 }
-
 .bootstrap-datetimepicker-widget tr:hover,
 .bootstrap-datetimepicker-widget td:hover {
     background-color: lightblue !important;
@@ -217,6 +216,7 @@ span.glyphicon.glyphicon-chevron-left::before {
 .bootstrap-datetimepicker-widget table th.next::before {
     content: '\f054';
     font-family: fontAwesome;
+    z-index: 100;
 }
 
 .admin-month i {
@@ -389,6 +389,7 @@ header .text-lg-center {
 
 .bootstrap-datetimepicker-widget.dropdown-menu{
     width: 100%;
+    height: auto;
 }
 
 .addbutton button{
@@ -677,6 +678,14 @@ header .text-lg-center {
   }
 
   @media screen and (max-width: 780px) { 
+    #title-date-week{
+      width: 150px;
+      height: auto;
+    }
+    .mobile-px{
+      padding-left: 1.7rem!important;
+      padding-right: 1.7rem!important;
+    }
     .Cancel{
       float: right;
     }
@@ -709,7 +718,7 @@ header .text-lg-center {
     }
     .open {
       z-index: 100;
-      width: 25px;
+      width: 20px;
       height: 200px;
       background: lightSeaGreen;
       transition: background .6s, transform .6s cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -722,8 +731,8 @@ header .text-lg-center {
     }
     .open::before{
       content: "";
-      width: 15px;
-      height: 15px;
+      width: 13px;
+      height: 13px;
       margin-top: -5px;
       border-top: solid 3px #fff;
       border-right: solid 3px #fff;
@@ -834,7 +843,13 @@ header .text-lg-center {
     .overflow-none{
       overflow: unset!important;
     }
-
+    .agenda-col h3{
+      font-size: 21px;
+      margin-bottom: 30px;
+    }
+    .reporting-block, .planning-block{
+      margin-left: 10px;
+    }
     body div.no-padding, tr.no-padding{
       padding-left: 0px!important;
       padding-right: 0px!important;
@@ -855,6 +870,15 @@ header .text-lg-center {
     }
     body td.mobile-flex{
       flex: 0 0 16.666667%;
+    }
+    .ml-10{
+      margin-left: 10px;
+    }
+    .priority-write{
+      width:45px;
+    }
+    .bootstrap-datetimepicker-widget{
+      width: 300px!important;
     }
   }
   @media screen and (max-width: 480px) {

@@ -10,7 +10,7 @@
 <!-- </div> -->
 {% end %}
 
-<div class="shadow-sm row px-1 py-1 mx-2 mt-5">
+<div class="shadow-sm row px-1 py-1 mx-2 mt-5 agenda-col">
     <div class="card-body">
         {% raw meetingagenda %}
     </div>
@@ -31,7 +31,7 @@
         <a href="/newblog/{{latestuserdata.get("username")}}"><img class="rounded-circle photo-leaderboard" src='{{latestuserdata.get("photoURL")}}' alt='Avatar {{latestuserdata.get("username")}}'></a>
     </span>
     <span class="p-2 align-self-center">
-        <h4 class="mb-0"><a class="text-decoration-none text-body" href="/newblog/{{latestuserdata.get("username")}}">{{latestuserdata.get("username")}} |</a></h4>
+        <h4 class="mb-0"><a class="text-decoration-none text-body" href="/newblog/{{latestuserdata.get("username")}}">{{latestuserdata.get("username")}}<span class="white-space"> |</span></a></h4>
     </span>
     <span class="p-2 align-self-center">
         <h4 class="blog-title d-flex align-items-center mb-0">
@@ -41,7 +41,7 @@
 </div>
 <!--Reporting and Planning Section-->
 <section class="reporting-planning my-2">
-    <div class="reporting pb-3">
+    <div class="reporting pb-3 reporting-block">
         <h4>What did I do last week?</h4>
         {% if latestuserdata.get("allactivity")%}
         {% for idx,eachactivity in enumerate(latestuserdata.get("allactivity")[0])%}
@@ -53,11 +53,11 @@
                         {% for activity in eachactivity[1]%}
                         <tr class="row no-gutters editable-report">
                             <form action="/newblog/editactivity" method="POST" class="formeditactivity-{{activity.Activity.activity_id}}">
-                                <td class="col-5 py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
+                                <td class="col-4 py-2" data-type="text" data-value = "{{activity.Activity.activity_name}}">
                                     <input type="text" class="form-control edit-activity-input d-none" name="newactivityname" value="{{activity.Activity.activity_name}}"/>
                                     <span class="edit-activity-data activity-name-data">{{activity.Activity.activity_name}}</span>
                                 </td>
-                                <td class="col-4 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
+                                <td class="col-5 text-wrap py-2" data-type="datepicker" data-value="{{activity.WeeklyReport.date_range_start.strftime('%B %d')}} - {{activity.WeeklyReport.date_range_end.strftime('%B %d')}}">
                                     <input type="text" name="newdaterange" placeholder="Date Range" class="form-control col-md-12 date-range-datepicker edit-activity-input d-none" value='{{activity.WeeklyReport.date_range_start.strftime("%Y.%m.%d")}} - {{activity.WeeklyReport.date_range_end.strftime("%Y.%m.%d")}}'/>
                                     <span class="edit-activity-data">
                                         {{activity.WeeklyReport.date_range_start.strftime("%B %d")}} - {{activity.WeeklyReport.date_range_end.strftime("%B %d")}}
@@ -140,7 +140,7 @@
         {% end %}
         {% end %}
     </div>
-    <div class="planning">
+    <div class="planning planning-block">
         <h4>What am I doing?</h4>
         {% if latestuserdata.get("allactivity")%}
         {% for idx,eachactivity in enumerate(latestuserdata.get("allactivity")[1])%}
@@ -163,7 +163,7 @@
                                     </span>
                                 </td>
                                 <td class="col-2 flex-10 priority py-2" data-type="select" data-value="{{activity.Activity.priority}}">
-                                    <select class="form-control edit-activity-input d-none" name="newpriority">
+                                    <select class="form-control edit-activity-input d-none " name="newpriority">
                                         <option value="0" disabled hidden>Priority</option>
                                         <option value="1" {% if activity.Activity.priority == 1 %} selected {% end %}> P1</option>
                                         <option value="2" {% if activity.Activity.priority == 2 %} selected {% end %}> P2</option>
