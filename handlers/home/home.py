@@ -65,7 +65,6 @@ class MembersHandler(BaseHandler):
             },
 
             "Master Students": {
-                "Chunyuan Lan": {},
                 "Xiaofei Zhu": {},
                 "Junlin Sun": {},
                 "Yibin Jia": {},
@@ -73,8 +72,6 @@ class MembersHandler(BaseHandler):
             },
 
             "Bachelor Students": {
-                "Ryota Torii": {},
-                "Kenshi Adachi": {},
                 "Daisuke Miyamoto": {},
                 "Mahiro Tsuda": {},
                 "Misato Torii": {},
@@ -116,6 +113,7 @@ class MembersHandler(BaseHandler):
             },
 
             "Master Students": {
+              "Chunyuan Lan": {"years": '2019 ~ 2022', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
               "Yilin Zheng": {"years": '2019 ~ 2021', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
               "Xiaoxuan Li": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
               "Fitra Rahmamuliani": {"years": '2018 ~ 2020', "job": '', "affiliation": 'Kochi University of Technology',"avatar": 2},
