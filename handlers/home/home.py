@@ -80,7 +80,7 @@ class MembersHandler(BaseHandler):
                 "Ryo Kumamoto": {},
                 "Gaku Araki": {},
                 "Yuma Hase": {},
-                "Takeru Shitakawa": {}
+                "Takeru Kawashita": {}
             },
         }
 
