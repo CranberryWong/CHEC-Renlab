@@ -78,7 +78,7 @@ class MembersHandler(BaseHandler):
                 "Natsuki Koyama": {},
                 "Koki Uchida": {},
                 "Ryo Kumamoto": {},
-                "Gaku Araki": {},
+                "Gaku Shinki": {},
                 "Yuma Hase": {},
                 "Takeru Kawashita": {}
             },
