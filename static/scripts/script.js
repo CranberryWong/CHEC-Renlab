@@ -337,6 +337,8 @@ $(document).ready(function() {
         { id: 40, text: "Natsuki Koyama" },
         { id: 41, text: "Koki Uchida" },
         { id: 45, text: "Ryo Kumamoto" },
+        { id: 46, text: "Rina Hirabayashi" },
+        { id: 47, text: "Nozomi Tsunenari" },
     ];
 
     $("#select-project-member").select2({
